@@ -1,0 +1,48 @@
+((
+    .Workspace Configuration.txt
+
+    This source file is part of the SDGCommandLine open source project.
+    https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+
+    Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+
+    Soli Deo gloria.
+
+    Licensed under the Apache Licence, Version 2.0.
+    See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
+    ))
+
+[_Import https://github.com/SDGGiesbrecht/SDG_]
+
+Current Version: 0.0.0
+
+Support iOS: False
+Support watchOS: False
+Support tvOS: False
+
+Project Website: https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+Documentation URL: https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+Repository URL: https://github.com/SDGGiesbrecht/SDGCommandLine
+
+[_Begin Short Project Description_]
+SDGCommandLine provides tools for implementing a command line interface.
+[_End_]
+
+[_Begin Quotation_]
+יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃
+[_End_]
+
+[_Begin Quotation Translation_]
+May they praise the name of the Lord, for He commanded and they came into being!
+[_End_]
+
+Quotation Testament: Old
+Quotation Chapter: Psalm 148
+
+[_Begin Citation_]
+a psalmist
+[_End_]
+
+[_Begin Feature List_]
+[_Workaround: No features yet._]
+[_End_]
