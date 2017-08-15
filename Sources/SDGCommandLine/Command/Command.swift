@@ -89,7 +89,7 @@ public struct Command {
         self.localizedName = { return name.resolved() }
         self.names = Command.list(names: name)
         self.localizedDescription = { return description.resolved() }
-        self.execution = execution ?? help.execution
+        self.execution = execution ?? { _ in try help.execute(with: []) }
         self.subcommands = actualSubcommands
     }
 
@@ -131,8 +131,8 @@ public struct Command {
             // [_Workaround: Help should have improved formatting and colour._]
             print("", to: &output)
 
-            // [_Warning: This should print supercommands as well._]
-            print(name.resolved())
+            let command = Command.stack.dropLast() // Ignoring help.
+            print(StrictString(command.map({ $0.localizedName() }).joined(separator: StrictString(" "))), to: &output)
 
             print("", to: &output)
 
@@ -172,6 +172,10 @@ public struct Command {
         }
     }
 
+    // MARK: - Static Properties
+
+    private static var stack: [Command] = []
+
     // MARK: - Properties
 
     private let names: Set<StrictString>
@@ -210,6 +214,9 @@ public struct Command {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
+
+        Command.stack.append(self)
+        defer { Command.stack.removeLast() }
 
         if let first = arguments.first {
             for subcommand in subcommands where first ∈ subcommand.names {
