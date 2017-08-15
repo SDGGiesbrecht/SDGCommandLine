@@ -139,15 +139,15 @@ public struct Command {
             print(UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                    return "Subcommands:"
+                    return "Subcommands"
                 case .deutschDeutschland:
-                    return "Unterbefehle:"
+                    return "Unterbefehle"
                 case .françaisFrance:
-                    return "Sous‐commandes :"
+                    return "Sous‐commandes"
                 case .ελληνικάΕλλάδα:
-                    return "Υπεντολές:"
+                    return "Υπεντολές"
                 case .עברית־ישראל:
-                    return "תת פקודות:"
+                    return "תת פקודות"
                 }
             }).resolved(), to: &output)
 
