@@ -29,7 +29,7 @@ internal struct Execute {
         case .english:
             return "demonstrates successful execution."
         case .deutsch:
-            return "führt erfolgreiche Ausführung vor."
+            return "führt eine erfolgreiche Ausführung vor."
         }
     }), execution: { (output: inout Command.Output) throws -> Void in
         let greeting = UserFacingText({ (localization: Language, _: Void) -> StrictString in

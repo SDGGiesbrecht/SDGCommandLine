@@ -80,110 +80,32 @@ public struct Command {
         return result
     }
 
-    private init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: ((_ output: inout Command.Output) throws -> Void)?, subcommands: [Command]) {
+    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: ((_ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
-        let help = Command(helpForName: name, subcommands: actualSubcommands)
-        actualSubcommands.append(help)
+        if addHelp {
+            actualSubcommands.append(Command.help)
+        }
 
         self.localizedName = { return name.resolved() }
         self.names = Command.list(names: name)
         self.localizedDescription = { return description.resolved() }
-        self.execution = execution ?? { _ in try help.execute(with: []) }
+        self.execution = execution ?? { _ in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
-    }
-
-    internal init<L : InputLocalization>(helpForName name: UserFacingText<L, Void>, subcommands: [Command]) {
-        let help = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-            switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return "help"
-            case .deutschDeutschland:
-                return "hilfe"
-            case .françaisFrance:
-                return "aide"
-            case .ελληνικάΕλλάδα:
-                return "βοήθεια"
-            case .עברית־ישראל:
-                return "עזרה"
-            }
-        })
-        let helpDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-            switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return "displays usage information."
-            case .deutschDeutschland:
-                return "zeigt Verwendungsinformationen."
-            case .françaisFrance:
-                return "affiche de l’information sur l’utilization."
-            case .ελληνικάΕλλάδα:
-                return "εκθέτει πληροφορίες του χρήσης."
-            case .עברית־ישראל:
-                return "מציגה את מידה השימוש."
-            }
-        })
-
-        self.localizedName = { return help.resolved() }
-        self.names = Command.list(names: help)
-        self.localizedDescription = { return helpDescription.resolved() }
-        self.subcommands = []
-        self.execution = { (output: inout Command.Output) throws -> Void in
-            // [_Workaround: Help should have improved formatting and colour._]
-            print("", to: &output)
-
-            let command = Command.stack.dropLast() // Ignoring help.
-            print(StrictString(command.map({ $0.localizedName() }).joined(separator: StrictString(" "))), to: &output)
-
-            print("", to: &output)
-
-            print(UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                switch localization {
-                case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                    return "Subcommands"
-                case .deutschDeutschland:
-                    return "Unterbefehle"
-                case .françaisFrance:
-                    return "Sous‐commandes"
-                case .ελληνικάΕλλάδα:
-                    return "Υπεντολές"
-                case .עברית־ישראל:
-                    return "תת פקודות"
-                }
-            }).resolved(), to: &output)
-
-            print("", to: &output)
-
-            var subcommandEntries: [StrictString: StrictString] = [:]
-            func addSubcommandEntry(name: () -> StrictString) {
-                let subcommandName = name()
-                subcommandEntries[subcommandName] = subcommandName // [_Warning: This should append a description._]
-            }
-
-            for subcommand in subcommands {
-                addSubcommandEntry(name: subcommand.localizedName)
-            }
-            addSubcommandEntry(name: { help.resolved() })
-
-            for subcommandName in subcommandEntries.keys.sorted() {
-                print(subcommandEntries[subcommandName]!, to: &output)
-            }
-
-            print("", to: &output)
-        }
     }
 
     // MARK: - Static Properties
 
-    private static var stack: [Command] = []
+    internal private(set) static var stack: [Command] = []
 
     // MARK: - Properties
 
     private let names: Set<StrictString>
-    private let localizedName: () -> StrictString
-    private let localizedDescription: () -> StrictString
+    internal let localizedName: () -> StrictString
+    internal let localizedDescription: () -> StrictString
 
     private let execution: (_ output: inout Command.Output) throws -> Void
-    private let subcommands: [Command]
+    internal let subcommands: [Command]
 
     // MARK: - Execution
 
