@@ -68,7 +68,6 @@ class CommandTests : TestCase {
                 })
             }
         }
-
     }
 
     static var allTests: [(String, (CommandTests) -> () throws -> Void)] {

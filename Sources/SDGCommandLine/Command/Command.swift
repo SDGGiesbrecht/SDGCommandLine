@@ -47,6 +47,79 @@ public struct Command {
         self.init(name: name, description: description, execution: defaultSubcommand?.execution, subcommands: subcommands)
     }
 
+    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: ((_ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+        var actualSubcommands = subcommands
+
+        if addHelp {
+            actualSubcommands.append(Command.help)
+        }
+
+        self.localizedName = { return name.resolved() }
+        self.names = Command.list(names: name)
+        self.localizedDescription = { return description.resolved() }
+        self.execution = execution ?? { _ in try Command.help.execute(with: []) }
+        self.subcommands = actualSubcommands
+    }
+
+    // MARK: - Static Properties
+
+    internal private(set) static var stack: [Command] = []
+
+    // MARK: - Properties
+
+    private let names: Set<StrictString>
+    internal let localizedName: () -> StrictString
+    internal let localizedDescription: () -> StrictString
+
+    private let execution: (_ output: inout Command.Output) throws -> Void
+    internal let subcommands: [Command]
+
+    // MARK: - Execution
+
+    /// Executes the command and exits.
+    public func executeAsMain() -> Never { // [_Exempt from Code Coverage_] Not testable.
+        let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Code Coverage_]
+
+        do { // [_Exempt from Code Coverage_]
+            try execute(with: arguments)
+            exit(Int32(Error.successCode))
+        } catch let error as Command.Error { // [_Exempt from Code Coverage_]
+            // [_Workaround: Errors should have improved formatting and colour._]
+            FileHandle.standardError.write((error.describe() + "\n").file)
+            exit(Int32(truncatingBitPattern: error.exitCode))
+        } catch { // [_Exempt from Code Coverage_]
+            // [_Workaround: Errors should have improved formatting and colour._]
+            FileHandle.standardError.write((error.localizedDescription + "\n").file)
+            exit(Int32(truncatingBitPattern: Error.generalErrorCode))
+        }
+    }
+
+    /// Executes the command without exiting.
+    ///
+    /// - Parameters:
+    ///     - arguments: The command line arguments, including subcommands and options, to use. (The command itself should be left out.)
+    ///
+    /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
+    ///
+    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
+    @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
+
+        Command.stack.append(self)
+        defer { Command.stack.removeLast() }
+
+        if let first = arguments.first {
+            for subcommand in subcommands where first ∈ subcommand.names {
+                return try subcommand.execute(with: Array(arguments.dropFirst()))
+            }
+        }
+
+        var output = Output()
+        try execution(&output)
+        return output.output
+    }
+
+    // MARK: - Name Normalization
+
     private static func normalizeToUnicode<L : Localization>(_ string: StrictString, in localization: L) -> StrictString {
         let hyphen: StrictString
         if let contentLocalization = ContentLocalization(reasonableMatchFor: localization.code) {
@@ -78,76 +151,5 @@ public struct Command {
             result.insert(Command.normalizeToAscii(name))
         }
         return result
-    }
-
-    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: ((_ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
-        var actualSubcommands = subcommands
-
-        if addHelp {
-            actualSubcommands.append(Command.help)
-        }
-
-        self.localizedName = { return name.resolved() }
-        self.names = Command.list(names: name)
-        self.localizedDescription = { return description.resolved() }
-        self.execution = execution ?? { _ in try Command.help.execute(with: []) }
-        self.subcommands = actualSubcommands
-    }
-
-    // MARK: - Static Properties
-
-    internal private(set) static var stack: [Command] = []
-
-    // MARK: - Properties
-
-    private let names: Set<StrictString>
-    internal let localizedName: () -> StrictString
-    internal let localizedDescription: () -> StrictString
-
-    private let execution: (_ output: inout Command.Output) throws -> Void
-    internal let subcommands: [Command]
-
-    // MARK: - Execution
-
-    /// Executes the command and exits.
-    public func executeAsMain() -> Never {
-        let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) }
-
-        do {
-            try execute(with: arguments)
-            exit(Int32(Error.successCode))
-        } catch let error as Command.Error {
-            // [_Workaround: Errors should have improved formatting and colour._]
-            FileHandle.standardError.write((error.describe() + "\n").file)
-            exit(Int32(truncatingBitPattern: error.exitCode))
-        } catch {
-            // [_Workaround: Errors should have improved formatting and colour._]
-            FileHandle.standardError.write((error.localizedDescription + "\n").file)
-            exit(Int32(truncatingBitPattern: Error.generalErrorCode))
-        }
-    }
-
-    /// Executes the command without exiting.
-    ///
-    /// - Parameters:
-    ///     - arguments: The command line arguments, including subcommands and options, to use. (The command itself should be left out.)
-    ///
-    /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
-    ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
-    @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
-
-        Command.stack.append(self)
-        defer { Command.stack.removeLast() }
-
-        if let first = arguments.first {
-            for subcommand in subcommands where first ∈ subcommand.names {
-                return try subcommand.execute(with: Array(arguments.dropFirst()))
-            }
-        }
-
-        var output = Output()
-        try execution(&output)
-        return output.output
     }
 }
