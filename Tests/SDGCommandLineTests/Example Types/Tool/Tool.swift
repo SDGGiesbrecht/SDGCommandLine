@@ -19,14 +19,14 @@ internal struct Tool {
 
     internal static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
-        case .english:
+        case .english, .unsupported:
             return "tool"
         case .deutsch:
             return "werkzeug"
         }
     }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
-        case .english:
+        case .english, .unsupported:
             return "serves as an example tool."
         case .deutsch:
             return "dient als Beilspielswerkzeug."

@@ -19,14 +19,14 @@ internal struct Execute {
 
     internal static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
-        case .english:
+        case .english, .unsupported:
             return "execute"
         case .deutsch:
             return "ausführen"
         }
     }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
-        case .english:
+        case .english, .unsupported:
             return "demonstrates successful execution."
         case .deutsch:
             return "führt eine erfolgreiche Ausführung vor."
@@ -34,7 +34,7 @@ internal struct Execute {
     }), execution: { (output: inout Command.Output) throws -> Void in
         let greeting = UserFacingText({ (localization: Language, _: Void) -> StrictString in
             switch localization {
-            case .english:
+            case .english, .unsupported:
                 return "Hello, world!"
             case .deutsch:
                 return "Guten Tag, Welt!"

@@ -21,7 +21,8 @@ internal enum Language : String, InputLocalization {
 
     case english = "en"
     case deutsch = "de"
-    internal static let cases: [Language] = [.english, .deutsch]
+    case unsupported = "zxx"
+    internal static let cases: [Language] = [.english, .deutsch, .unsupported]
 
     // MARK: - Localization
 
