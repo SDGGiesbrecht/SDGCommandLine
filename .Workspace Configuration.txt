@@ -44,5 +44,12 @@ a psalmist
 [_End_]
 
 [_Begin Feature List_]
-[_Workaround: No features yet._]
+- Automatic parsing of subcommands.
+- Automatic `help` subcommand.
+- Localizable interface.
+[_End_]
+
+([_Workaround: This should be removed once Workspace can understand the nesting structure._])
+[_Begin Code Coverage Exemption Tokens for the Same Line_]
+case .englishCanada:
 [_End_]

@@ -1,5 +1,5 @@
 /*
- Command.swift
+ APILocalization.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -12,13 +12,19 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-/// A command.
-public struct Command {
+import SDGCornerstone
 
-    /// Creates a command.
-    public init(execution: @escaping () -> Void) {
-        self.execution = execution
-    }
+internal enum APILocalization : String, Localization {
 
-    private let execution: () -> Void
+    // MARK: - Cases
+
+    case englishCanada = "en\u{2D}CA"
+
+    internal static let cases: [APILocalization] = [
+        .englishCanada
+    ]
+
+    // MARK: - Localization
+
+    internal static let fallbackLocalization: APILocalization = .englishCanada
 }

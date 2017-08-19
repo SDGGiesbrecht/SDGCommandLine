@@ -31,7 +31,9 @@ SDGCommandLine provides tools for implementing a command line interface.
 
 ## Features
 
-[_Workaround: No features yet._]
+- Automatic parsing of subcommands.
+- Automatic `help` subcommand.
+- Localizable interface.
 
 (For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
 
@@ -61,9 +63,56 @@ import SDGCommandLine
 ## Example Usage
 
 ```swift
+/*
+ This example creates a tool with the following interface:
+
+ $ parrot greet
+ Hello, world!
+ */
+
+/*
+ // main.swift must consist of the following lines:
+
+ import SDGCommandLine
+
+ SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot")
+ parrot.executeAsMain()
+
+ */
+
+// The rest can be anywhere in the project:
+// (putting it in a separate, testable library module is recommended)
+
+import SDGCornerstone // See https://sdggiesbrecht.github.io/SDGCornerstone/macOS/
 import SDGCommandLine
 
-// [_Workaround: Nothing to demonstrate yet._]
+public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "parrot" }),
+                            description: UserFacingText<MyLocalizations, Void>({ _, _ in "behaves like a parrot." }),
+                            subcommands: [greet])
+
+let greet = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "greet" }),
+                    description: UserFacingText<MyLocalizations, Void>({ _, _ in "says, “Hello, world!”." }),
+                    execution: { (output: inout Command.Output) throws -> Void in
+
+                        print("Hello, world!", to: &output)
+})
+
+enum MyLocalizations : String, InputLocalization {
+    case english = "en"
+    internal static let cases: [MyLocalizations] = [.english]
+    internal static let fallbackLocalization: MyLocalizations = .english
+}
+
+// It is easy to set up tests:
+
+func testParrot() {
+    do {
+        let output = try parrot.execute(with: ["greet"])
+        XCTAssertEqual(output, "Hello, World!")
+    } catch {
+        XCTFail("The command failed.")
+    }
+}
 ```
 
 ## About
