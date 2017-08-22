@@ -90,8 +90,6 @@ public struct Command {
             FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
             exit(Int32(truncatingBitPattern: Error.generalErrorCode))
         }
-
-        // [_Workaround: The above should obey colour disabling when options are available._]
     }
 
     /// Executes the command without exiting.
