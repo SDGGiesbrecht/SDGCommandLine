@@ -70,9 +70,18 @@ class CommandTests : TestCase {
         }
     }
 
+    func testFormatting() {
+        XCTAssertErrorFree({
+            let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"])
+            XCTAssert(output.contains(StrictString("\u{1B}[1m")), "Bold formatting missing.")
+            XCTAssert(output.contains(StrictString("\u{1B}[22m")), "Bold formatting never reset.")
+        })
+    }
+
     static var allTests: [(String, (CommandTests) -> () throws -> Void)] {
         return [
-            ("testCommand", testCommand)
+            ("testCommand", testCommand),
+            ("testFormatting", testFormatting)
         ]
     }
 }
