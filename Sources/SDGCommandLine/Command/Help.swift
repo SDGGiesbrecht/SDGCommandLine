@@ -47,14 +47,11 @@ extension Command {
     })
 
     static let help = Command(name: helpName, description: helpDescription, execution: { (output: inout Command.Output) throws -> Void in
-        // [_Workaround: Help should have improved formatting and colour._]
         print("", to: &output)
 
         let stack = Command.stack.dropLast() // Ignoring help.
         let command = stack.last!
-        print(StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))) + " " + command.localizedDescription(), to: &output)
-
-        print("", to: &output)
+        print(StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand() + " " + command.localizedDescription(), to: &output)
 
         if ¬command.subcommands.isEmpty {
 
@@ -71,21 +68,20 @@ extension Command {
                 case .עברית־ישראל:
                     return "תת פקודות"
                 }
-            }).resolved(), to: &output)
-
-            print("", to: &output)
+            }).resolved().formattedAsSectionHeader(), to: &output)
 
             var subcommandEntries: [StrictString: StrictString] = [:]
             for subcommand in command.subcommands {
                 let name = subcommand.localizedName()
-                subcommandEntries[name] = name + " " + subcommand.localizedDescription()
+                subcommandEntries[name] = name.formattedAsSubcommand() + " " + subcommand.localizedDescription()
             }
 
             for name in subcommandEntries.keys.sorted() {
                 print(subcommandEntries[name]!, to: &output)
             }
 
-            print("", to: &output)
         }
-    }, addHelp: /* prevents circularity */ false )
+
+        print("", to: &output)
+    }, addHelp: /* prevents circularity */ false)
 }

@@ -84,12 +84,10 @@ public struct Command {
             try execute(with: arguments)
             exit(Int32(Error.successCode))
         } catch let error as Command.Error { // [_Exempt from Code Coverage_]
-            // [_Workaround: Errors should have improved formatting and colour._]
-            FileHandle.standardError.write((error.describe() + "\n").file)
+            FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
             exit(Int32(truncatingBitPattern: error.exitCode))
         } catch { // [_Exempt from Code Coverage_]
-            // [_Workaround: Errors should have improved formatting and colour._]
-            FileHandle.standardError.write((error.localizedDescription + "\n").file)
+            FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
             exit(Int32(truncatingBitPattern: Error.generalErrorCode))
         }
     }
