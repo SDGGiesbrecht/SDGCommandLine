@@ -42,6 +42,7 @@ extension Command {
         // [_Inherit Documentation: SDGCornerstone.TextOutputStream.write(_:)_]
         /// Appends the given string to the stream.
         public mutating func write(_ string: String) {
+             // [_Workaround: This should obey colour disabling when options are available._]
             let strict = StrictString(string)
             internalOutput.append(contentsOf: strict)
             print(strict, terminator: "")
