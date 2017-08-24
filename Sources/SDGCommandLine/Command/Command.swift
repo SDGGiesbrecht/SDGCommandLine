@@ -54,7 +54,7 @@ public struct Command {
             actualSubcommands.append(Command.help)
         }
 
-        self.localizedName = { return name.resolved() }
+        self.localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
         self.names = Command.list(names: name)
         self.localizedDescription = { return description.resolved() }
         self.execution = execution ?? { _ in try Command.help.execute(with: []) }
