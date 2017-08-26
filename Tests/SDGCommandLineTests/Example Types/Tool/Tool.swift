@@ -15,9 +15,9 @@
 import SDGCornerstone
 import SDGCommandLine
 
-internal struct Tool {
+struct Tool {
 
-    internal static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "tool"

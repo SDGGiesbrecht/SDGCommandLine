@@ -15,7 +15,7 @@
 import SDGCornerstone
 import SDGCommandLine
 
-internal enum Language : String, InputLocalization {
+enum Language : String, InputLocalization {
 
     // MARK: - Cases
 

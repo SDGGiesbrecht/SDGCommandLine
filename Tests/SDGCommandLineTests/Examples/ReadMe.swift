@@ -45,7 +45,8 @@ public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ i
 
 let greet = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "greet" }),
                     description: UserFacingText<MyLocalizations, Void>({ _, _ in "says, “Hello, world!”." }),
-                    execution: { (output: inout Command.Output) throws -> Void in
+                    options: [],
+                    execution: { (_, output: inout Command.Output) throws -> Void in
 
                         print("Hello, world!", to: &output)
 })

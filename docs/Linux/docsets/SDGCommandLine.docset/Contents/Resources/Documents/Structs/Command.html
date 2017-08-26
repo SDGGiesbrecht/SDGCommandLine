@@ -70,6 +70,9 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/TextFormat.html">TextFormat</a>
               </li>
             </ul>
@@ -78,6 +81,12 @@
             <a href="../Structs.html">Structs</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Structs/ArgumentType.html">ArgumentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArgumentTypeDefinition.html">ArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Command.html">Command</a>
               </li>
               <li class="nav-group-task">
@@ -85,6 +94,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Command/Output.html">– Output</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Option.html">Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Options.html">Options</a>
               </li>
             </ul>
           </li>
@@ -116,9 +131,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__9executionFzRVS0_6OutputT__S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(name:description:execution:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__9executionFzRVS0_6OutputT__S0_">init(name:description:execution:)</a>
+                    <a name="/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__7optionsGSaPS_9AnyOption__9executionFzTVS_7OptionsRVS0_6Output_T__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(name:description:options:execution:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__7optionsGSaPS_9AnyOption__9executionFzTVS_7OptionsRVS0_6Output_T__S0_">init(name:description:options:execution:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -135,7 +150,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">execution</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a></span><span class="p">],</span> <span class="nv">execution</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Structs/Options.html">Options</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
