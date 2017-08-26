@@ -15,9 +15,9 @@
 import SDGCornerstone
 import SDGCommandLine
 
-internal struct Fail {
+struct Fail {
 
-    internal static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "fail"
@@ -31,11 +31,11 @@ internal struct Fail {
         case .deutsch:
             return "führt einen Fehlschlag vor."
         }
-    }), execution: { (_) throws -> Void in
+    }), options: [], execution: { (_) throws -> Void in
         throw Fail.error
     })
 
-    internal static let error = Command.Error(description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    static let error = Command.Error(description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "I cannot do that."

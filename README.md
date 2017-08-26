@@ -31,8 +31,9 @@ SDGCommandLine provides tools for implementing a command line interface.
 
 ## Features
 
-- Automatic parsing of subcommands.
+- Automatic parsing of options and subcommands.
 - Automatic `help` subcommand.
+- Testable output.
 - Localizable interface.
 
 (For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
@@ -66,7 +67,10 @@ import SDGCommandLine
 /*
  This example creates a tool with the following interface:
 
- $ parrot greet
+ $ parrot speak
+ Squawk!
+
+ $ parrot speak •phrase "Hello, world!"
  Hello, world!
  */
 
@@ -88,14 +92,23 @@ import SDGCommandLine
 
 public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "parrot" }),
                             description: UserFacingText<MyLocalizations, Void>({ _, _ in "behaves like a parrot." }),
-                            subcommands: [greet])
+                            subcommands: [speak])
 
-let greet = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "greet" }),
-                    description: UserFacingText<MyLocalizations, Void>({ _, _ in "says, “Hello, world!”." }),
-                    execution: { (output: inout Command.Output) throws -> Void in
+let speak = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "speak" }),
+                    description: UserFacingText<MyLocalizations, Void>({ _, _ in "speaks." }),
+                    options: [phrase],
+                    execution: { (options: Options, output: inout Command.Output) throws -> Void in
 
-                        print("Hello, world!", to: &output)
+                        if let specific = options.value(for: phrase) {
+                            print(specific, to: &output)
+                        } else {
+                            print("Squawk!", to: &output)
+                        }
 })
+
+let phrase = Option<StrictString>(name: UserFacingText<MyLocalizations, Void>({ _, _ in "phrase" }),
+                                  description: UserFacingText<MyLocalizations, Void>({ _, _ in "A custom phrase to speak." }),
+                                  type: ArgumentType.string)
 
 enum MyLocalizations : String, InputLocalization {
     case english = "en"
@@ -107,10 +120,10 @@ enum MyLocalizations : String, InputLocalization {
 
 func testParrot() {
     do {
-        let output = try parrot.execute(with: ["greet"])
-        XCTAssertEqual(output, "Hello, World!")
+        let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
+        XCTAssertEqual(output, "Hello, world!")
     } catch {
-        XCTFail("The command failed.")
+        XCTFail("The parrot is not co‐operating.")
     }
 }
 ```

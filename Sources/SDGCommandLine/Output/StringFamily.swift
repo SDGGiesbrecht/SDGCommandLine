@@ -66,6 +66,14 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar {
     // MARK: - Help
 
     internal func formattedAsSubcommand() -> Self {
+        return self.in(FontWeight.bold).in(Colour.green)
+    }
+
+    internal func formattedAsOption() -> Self {
         return self.in(FontWeight.bold).in(Colour.cyan)
+    }
+
+    internal func formattedAsType() -> Self {
+        return self.in(Colour.cyan)
     }
 }

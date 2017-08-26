@@ -15,9 +15,9 @@
 import SDGCornerstone
 import SDGCommandLine
 
-internal struct DemonstrateTextFormatting {
+struct DemonstrateTextFormatting {
 
-    internal static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "demonstrate‐text‐formatting"
@@ -31,7 +31,7 @@ internal struct DemonstrateTextFormatting {
         case .deutsch:
             return "führt Textgestaltung vor."
         }
-    }), execution: { (output: inout Command.Output) throws -> Void in
+    }), options: [], execution: { (_, output: inout Command.Output) throws -> Void in
 
         print("Header".formattedAsSectionHeader(), to: &output)
         print("Error".formattedAsError(), to: &output)

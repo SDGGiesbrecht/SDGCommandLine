@@ -69,6 +69,9 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/TextFormat.html">TextFormat</a>
               </li>
             </ul>
@@ -77,6 +80,12 @@
             <a href="Structs.html">Structs</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Structs/ArgumentType.html">ArgumentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ArgumentTypeDefinition.html">ArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Command.html">Command</a>
               </li>
               <li class="nav-group-task">
@@ -84,6 +93,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Command/Output.html">– Output</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Option.html">Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Options.html">Options</a>
               </li>
             </ul>
           </li>
@@ -127,8 +142,9 @@
 <h2 id='features' class='heading'>Features</h2>
 
 <ul>
-<li>Automatic parsing of subcommands.</li>
+<li>Automatic parsing of options and subcommands.</li>
 <li>Automatic <code>help</code> subcommand.</li>
+<li>Testable output.</li>
 <li>Localizable interface.</li>
 </ul>
 
@@ -154,7 +170,10 @@
 <pre class="highlight swift"><code><span class="cm">/*
  This example creates a tool with the following interface:
 
- $ parrot greet
+ $ parrot speak
+ Squawk!
+
+ $ parrot speak •phrase "Hello, world!"
  Hello, world!
  */</span>
 
@@ -176,14 +195,23 @@
 
 <span class="kd">public</span> <span class="k">let</span> <span class="nv">parrot</span> <span class="o">=</span> <span class="kt">Command</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"parrot"</span> <span class="p">}),</span>
                             <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"behaves like a parrot."</span> <span class="p">}),</span>
-                            <span class="nv">subcommands</span><span class="p">:</span> <span class="p">[</span><span class="n">greet</span><span class="p">])</span>
+                            <span class="nv">subcommands</span><span class="p">:</span> <span class="p">[</span><span class="n">speak</span><span class="p">])</span>
 
-<span class="k">let</span> <span class="nv">greet</span> <span class="o">=</span> <span class="kt">Command</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"greet"</span> <span class="p">}),</span>
-                    <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"says, “Hello, world!”."</span> <span class="p">}),</span>
-                    <span class="nv">execution</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt">Output</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+<span class="k">let</span> <span class="nv">speak</span> <span class="o">=</span> <span class="kt">Command</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"speak"</span> <span class="p">}),</span>
+                    <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"speaks."</span> <span class="p">}),</span>
+                    <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="n">phrase</span><span class="p">],</span>
+                    <span class="nv">execution</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="kt">Options</span><span class="p">,</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt">Output</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
 
-                        <span class="nf">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="k">let</span> <span class="nv">specific</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">phrase</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nf">print</span><span class="p">(</span><span class="n">specific</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">)</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="nf">print</span><span class="p">(</span><span class="s">"Squawk!"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">)</span>
+                        <span class="p">}</span>
 <span class="p">})</span>
+
+<span class="k">let</span> <span class="nv">phrase</span> <span class="o">=</span> <span class="kt">Option</span><span class="o">&lt;</span><span class="kt">StrictString</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"phrase"</span> <span class="p">}),</span>
+                                  <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"A custom phrase to speak."</span> <span class="p">}),</span>
+                                  <span class="nv">type</span><span class="p">:</span> <span class="kt">ArgumentType</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
 
 <span class="kd">enum</span> <span class="kt">MyLocalizations</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">InputLocalization</span> <span class="p">{</span>
     <span class="k">case</span> <span class="n">english</span> <span class="o">=</span> <span class="s">"en"</span>
@@ -195,10 +223,10 @@
 
 <span class="kd">func</span> <span class="nf">testParrot</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">do</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">output</span> <span class="o">=</span> <span class="k">try</span> <span class="n">parrot</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="p">[</span><span class="s">"greet"</span><span class="p">])</span>
-        <span class="kt">XCTAssertEqual</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s">"Hello, World!"</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">output</span> <span class="o">=</span> <span class="k">try</span> <span class="n">parrot</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="p">[</span><span class="s">"speak"</span><span class="p">,</span> <span class="s">"•phrase"</span><span class="p">,</span> <span class="s">"Hello, world!"</span><span class="p">])</span>
+        <span class="kt">XCTAssertEqual</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s">"Hello, world!"</span><span class="p">)</span>
     <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-        <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"The command failed."</span><span class="p">)</span>
+        <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"The parrot is not co‐operating."</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>

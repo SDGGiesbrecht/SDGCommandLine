@@ -30,8 +30,8 @@ public struct Command {
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
     ///     - output: The stream for standard output. Use `print(..., to: &output)` for all output that should be captured as part of the return value of `execute()`.
-    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: @escaping (_ output: inout Command.Output) throws -> Void) {
-        self.init(name: name, description: description, execution: execution, subcommands: [])
+    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, options: [AnyOption], execution: @escaping (_ options: Options, _ output: inout Command.Output) throws -> Void) {
+        self.init(name: name, description: description, options: options, execution: execution, subcommands: [])
     }
 
     /// Creates an umbrella command.
@@ -44,21 +44,22 @@ public struct Command {
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
     public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, subcommands: [Command], defaultSubcommand: Command? = nil) {
-        self.init(name: name, description: description, execution: defaultSubcommand?.execution, subcommands: subcommands)
+        self.init(name: name, description: description, options: [], execution: defaultSubcommand?.execution, subcommands: subcommands)
     }
 
-    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, execution: ((_ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, options: [AnyOption], execution: ((_ options: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
             actualSubcommands.append(Command.help)
         }
 
-        self.localizedName = { return name.resolved() }
-        self.names = Command.list(names: name)
-        self.localizedDescription = { return description.resolved() }
-        self.execution = execution ?? { _ in try Command.help.execute(with: []) }
+        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
+        names = Command.list(names: name)
+        localizedDescription = { return description.resolved() }
+        self.execution = execution ?? { (_, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
+        self.options = options
     }
 
     // MARK: - Static Properties
@@ -71,8 +72,9 @@ public struct Command {
     internal let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
-    private let execution: (_ output: inout Command.Output) throws -> Void
+    private let execution: (_ options: Options, _ output: inout Command.Output) throws -> Void
     internal let subcommands: [Command]
+    internal let options: [AnyOption]
 
     // MARK: - Execution
 
@@ -112,13 +114,158 @@ public struct Command {
         }
 
         var output = Output()
-        try execution(&output)
+        try execution(parse(arguments: arguments), &output)
         return output.output
+    }
+
+    // MARK: - Argument Parsing
+
+    private func parse(arguments: [StrictString]) throws -> Options {
+        var options = Options()
+        var remaining: ArraySlice<StrictString> = arguments[arguments.bounds]
+        while let argument = remaining.popFirst() {
+
+            if ¬(try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)) {
+
+                // Not an option.
+
+                let commandStack = Command.stack // Prevent delayed evaluation.
+                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                    var result: StrictString
+                    switch localization {
+                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                        result = StrictString("Unexpected argument: \(argument)")
+                    case .deutschDeutschland:
+                        result = StrictString("Unerwartetes Argument: \(argument)")
+                    case .françaisFrance:
+                        result = StrictString("Argument inattendu : \(argument)")
+                    case .ελληνικάΕλλάδα:
+                        result = StrictString("Απροσδόκητο όρισμα: \(argument)")
+                    case .עברית־ישראל:
+                        result = StrictString("ארגומנט לא צפוי: \(argument)")
+                    }
+                    return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                }))
+            }
+        }
+        return options
+    }
+
+    private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
+
+        var possibleName: StrictString?
+        for marker in Option<Any>.optionMarkers where possibleOption.hasPrefix(marker) {
+            possibleName = possibleOption.dropping(through: marker)
+            break
+        }
+
+        guard let name = possibleName else {
+            // Not an option.
+            return false
+        }
+
+        for option in options where option.matches(name: name) {
+
+            if option.getTypeIdentifier() == ArgumentType.booleanKey {
+                // Boolean flags take no arguments.
+                parsedOptions.add(value: true, for: option)
+                return true
+            }
+
+            guard let argument = remainingArguments.popFirst() else {
+                let commandStack = Command.stack // Prevent delayed evaluation.
+                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                    let optionName = ("•" + option.getLocalizedName())
+                    var result: StrictString
+                    switch localization {
+                    case .englishUnitedKingdom:
+                        result = StrictString("The argument is missing for ‘\(optionName)’.")
+                    case .englishUnitedStates, .englishCanada:
+                        result = StrictString("The argument is missing for “\(optionName)”.")
+                    case .deutschDeutschland:
+                        result = StrictString("Das Argument fehlt für „\(optionName)“.")
+                    case .françaisFrance:
+                        result = StrictString("L’argument manque pour « \(optionName) ».")
+                    case .ελληνικάΕλλάδα:
+                        result = StrictString("Το όρισμα λείπει από «\(optionName)»")
+                    case .עברית־ישראל:
+                        result = StrictString("הארגומנט חסר ל־”\(optionName)“")
+                    }
+                    return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                }))
+            }
+
+            guard let parsed = option.parse(argument: argument) else {
+                let commandStack = Command.stack // Prevent delayed evaluation.
+                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                    let optionName = ("•" + option.getLocalizedName())
+                    var result: StrictString
+                    switch localization {
+                    case .englishUnitedKingdom:
+                        result = StrictString("The argument for ‘\(optionName)’ is invalid.")
+                    case .englishUnitedStates, .englishCanada:
+                        result = StrictString("The argument for “\(optionName)” is invalid.")
+                    case .deutschDeutschland:
+                        result = StrictString("Das Argument für „\(optionName)“ ist ungültig.")
+                    case .françaisFrance:
+                        result = StrictString("L’argument pour « \(optionName) » est invalide.")
+                    case .ελληνικάΕλλάδα:
+                        result = StrictString("Το όρισμα για «\(optionName)» είναι άκυρο.")
+                    case .עברית־ישראל:
+                        result = StrictString("הארגומנט ל־”\(optionName)“ לא בתוקף")
+                    }
+                    return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                }))
+            }
+
+            parsedOptions.add(value: parsed, for: option)
+            return true
+        }
+
+        let commandStack = Command.stack // Prevent delayed evaluation.
+        throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            let optionName = ("•" + name)
+            var result: StrictString
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                result = StrictString("Invalid option: \(optionName)")
+            case .deutschDeutschland:
+                result = StrictString("Ungültige Option: \(optionName)")
+            case .françaisFrance:
+                result = StrictString("Option invalide : \(optionName)")
+            case .ελληνικάΕλλάδα:
+                result = StrictString("Άκυρη επιλογή: \(optionName)")
+            case .עברית־ישראל:
+                result = StrictString("בררה לא בתוקף: \(optionName)")
+            }
+            return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+        }))
+    }
+
+    private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<ContentLocalization, Void> {
+        var command = StrictString(commandStack.map({ $0.localizedName() }).joined(separator: " ".scalars))
+        command.append(contentsOf: " " + Command.help.localizedName())
+        command = command.prepending(contentsOf: "$ ".scalars)
+
+        return UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("See also: \(command)")
+            case .deutschDeutschland:
+                return StrictString("Siehe auch: \(command)")
+            case .françaisFrance:
+                return StrictString("Voir aussi : \(command)")
+            case .ελληνικάΕλλάδα:
+                return StrictString("Βλέπε επίσης: \(command)")
+            case .עברית־ישראל:
+                return StrictString("ראה גם: \(command)")
+            }
+        })
     }
 
     // MARK: - Name Normalization
 
-    private static func normalizeToUnicode<L : Localization>(_ string: StrictString, in localization: L) -> StrictString {
+    internal static func normalizeToUnicode<L : Localization>(_ string: StrictString, in localization: L) -> StrictString {
         let hyphen: StrictString
         if let contentLocalization = ContentLocalization(reasonableMatchFor: localization.code) {
             switch contentLocalization {
@@ -133,7 +280,7 @@ public struct Command {
         return string.replacingMatches(for: StrictString("\u{2D}"), with: hyphen)
     }
 
-    private static func normalizeToAscii(_ string: StrictString) -> StrictString {
+    internal static func normalizeToAscii(_ string: StrictString) -> StrictString {
         let asciiHyphen: StrictString = "\u{2D}"
         var result = string
         result.replaceMatches(for: StrictString("‐"), with: asciiHyphen)
@@ -141,7 +288,7 @@ public struct Command {
         return result
     }
 
-    private static func list<L : InputLocalization>(names: UserFacingText<L, Void>) -> Set<StrictString> {
+    internal static func list<L : InputLocalization>(names: UserFacingText<L, Void>) -> Set<StrictString> {
         var result: Set<StrictString> = []
         for localization in L.cases {
             let name = names.resolved(for: localization)

@@ -42,3 +42,12 @@ internal func XCTAssertThrows<E : Error>(_ error: E, file: StaticString = #file,
         XCTAssertEqual(description(of: thrown), description(of: error), file: file, line: line)
     }
 }
+
+internal func XCTAssertThrowsError(containing searchTerm: StrictString, file: StaticString = #file, line: UInt = #line, _ expression: () throws -> Void) {
+    do {
+        try expression()
+        XCTFail("The expected error was never thrown:\n...\(searchTerm)...", file: file, line: line)
+    } catch let thrown {
+        XCTAssert(description(of: thrown).contains(String(searchTerm)), "Error message does not contain “\(searchTerm)”:\n\(description(of: thrown))", file: file, line: line)
+    }
+}

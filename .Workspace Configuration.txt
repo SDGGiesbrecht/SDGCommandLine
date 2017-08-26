@@ -44,8 +44,9 @@ a psalmist
 [_End_]
 
 [_Begin Feature List_]
-- Automatic parsing of subcommands.
+- Automatic parsing of options and subcommands.
 - Automatic `help` subcommand.
+- Testable output.
 - Localizable interface.
 [_End_]
 
