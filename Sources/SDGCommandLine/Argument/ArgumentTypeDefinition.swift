@@ -27,9 +27,9 @@ public struct ArgumentTypeDefinition<Type> {
     ///     - name: The name of the type.
     ///     - syntaxDescription: A description of the argument syntax. (Printed by the `help` subcommand.)
     ///     - parse: A closure that parses an argument and returns its value. The closure should return `nil` if the argument is invalid.
-    public init<L : InputLocalization>(name: UserFacingText<L, Void>, syntaxDescription: UserFacingText<L, Void>, parse: @escaping (_ argument: StrictString) -> Type?) {
+    public init<L1 : InputLocalization, L2 : InputLocalization>(name: UserFacingText<L1, Void>, syntaxDescription: UserFacingText<L2, Void>, parse: @escaping (_ argument: StrictString) -> Type?) {
 
-        key = name.resolved(for: L.fallbackLocalization)
+        key = name.resolved(for: L1.fallbackLocalization)
         localizedName = { return name.resolved() }
         localizedDescription = { return syntaxDescription.resolved() }
         self.parse = parse
