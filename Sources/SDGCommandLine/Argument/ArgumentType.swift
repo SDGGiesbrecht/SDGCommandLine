@@ -114,9 +114,15 @@ public struct ArgumentType {
                 or = " או "
             }
 
-            let list = labels.map({ openingQuotationMark + $0.resolved() + closingQuotationMark })
+            let period: StrictString
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+                period = "."
+            }
+
+            let list = labels.map({ openingQuotationMark + $0.resolved() + closingQuotationMark }).sorted()
             var result = StrictString(list.dropLast().joined(separator: comma))
-            result.append(contentsOf: or + list.last!)
+            result.append(contentsOf: or + list.last! + period)
             return result
 
         })
