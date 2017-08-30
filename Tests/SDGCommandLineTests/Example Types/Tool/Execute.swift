@@ -33,6 +33,56 @@ struct Execute {
         }
     }), type: ArgumentType.string)
 
+    private static let colourArgumentType = ArgumentType.enumeration(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+        switch localization {
+        case .english, .unsupported:
+            return "colour"
+        case .deutsch:
+            return "farbe"
+        }
+    }), cases: [
+        (Colour.red, UserFacingText({ (localization: Language, _: Void) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "red"
+            case .deutsch:
+                return "rot"
+            }
+        })),
+        (Colour.green, UserFacingText({ (localization: Language, _: Void) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "green"
+            case .deutsch:
+                return "grün"
+            }
+        })),
+        (Colour.blue, UserFacingText({ (localization: Language, _: Void) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "blue"
+            case .deutsch:
+                return "blau"
+            }
+        }))
+        ])
+
+    private static let colourOption = Option(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+        switch localization {
+        case .english, .unsupported:
+            return "colour"
+        case .deutsch:
+            return "Farbe"
+        }
+    }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+        switch localization {
+        case .english, .unsupported:
+            return "A colour for the text."
+        case .deutsch:
+            return "Eine Farbe für den Text."
+        }
+    }), type: Execute.colourArgumentType)
+
     private static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacingText({ (_: Language, _: Void) -> StrictString in
         return "unsatisfiable"
     }), syntaxDescription: UserFacingText({ (_: Language, _: Void) -> StrictString in
@@ -80,11 +130,16 @@ struct Execute {
     }), options: [
         Execute.textOption,
         Execute.unsatisfiableOption,
-        Execute.informalOption
+        Execute.informalOption,
+        Execute.colourOption
         ], execution: { (options: Options, output: inout Command.Output) throws -> Void in
 
             if let text = options.value(for: Execute.textOption) {
-                print(text, to: &output)
+                if let colour = options.value(for: Execute.colourOption) {
+                    print(text.in(colour), to: &output)
+                } else {
+                    print(text, to: &output)
+                }
             } else {
                 let greeting: UserFacingText<Language, Void>
                 if options.value(for: Execute.informalOption) {
@@ -106,7 +161,11 @@ struct Execute {
                         }
                     })
                 }
-                print(greeting.resolved(), to: &output)
+                if let colour = options.value(for: Execute.colourOption) {
+                    print(greeting.resolved().in(colour), to: &output)
+                } else {
+                    print(greeting.resolved(), to: &output)
+                }
             }
     })
 }

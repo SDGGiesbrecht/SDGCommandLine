@@ -66,4 +66,86 @@ public struct ArgumentType {
     public static let string: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: stringName, syntaxDescription: stringDescription, parse: { (argument: StrictString) -> StrictString? in
         return argument
     })
+
+    private static func enumerationSyntax<L : InputLocalization>(labels: [UserFacingText<L, Void>]) -> UserFacingText<ContentLocalization, Void> {
+
+        return UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+
+            let openingQuotationMark: StrictString
+            let closingQuotationMark: StrictString
+            switch localization {
+            case .englishUnitedKingdom:
+                openingQuotationMark = "‘"
+                closingQuotationMark = "’"
+            case .englishUnitedStates, .englishCanada:
+                openingQuotationMark = "“"
+                closingQuotationMark = "”"
+            case .deutschDeutschland:
+                openingQuotationMark = "„"
+                closingQuotationMark = "“"
+            case .françaisFrance:
+                openingQuotationMark = "« "
+                closingQuotationMark = " »"
+            case .ελληνικάΕλλάδα:
+                openingQuotationMark = "«"
+                closingQuotationMark = "»"
+            case .עברית־ישראל:
+                openingQuotationMark = "”"
+                closingQuotationMark = "“"
+            }
+
+            let comma: StrictString
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+                comma = ", "
+            }
+
+            let or: StrictString
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                or = " or "
+            case .deutschDeutschland:
+                or = " oder "
+            case .françaisFrance:
+                or = " ou "
+            case .ελληνικάΕλλάδα:
+                or = " ή "
+            case .עברית־ישראל:
+                or = " או "
+            }
+
+            let period: StrictString
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+                period = "."
+            }
+
+            let list = labels.map({ openingQuotationMark + $0.resolved() + closingQuotationMark }).sorted()
+            var result = StrictString(list.dropLast().joined(separator: comma))
+            result.append(contentsOf: or + list.last! + period)
+            return result
+
+        })
+    }
+
+    /// Creates an enumeration argument type.
+    ///
+    /// Parameters:
+    ///     - name: The name of the option.
+    ///     - cases: An array of enumeration options. Specify each option as a tuple containing the option’s name (for the command line) and the option’s value (for within Swift).
+    public static func enumeration<T, L : InputLocalization>(name: UserFacingText<L, Void>, cases: [(value: T, label: UserFacingText<L, Void>)]) -> ArgumentTypeDefinition<T> {
+
+        var syntaxLabels: [UserFacingText<L, Void>] = []
+        var entries: [StrictString: T] = [:]
+        for option in cases {
+            syntaxLabels.append(option.label)
+            for key in Command.list(names: option.label) {
+                entries[key] = option.value
+            }
+        }
+
+        return ArgumentTypeDefinition(name: name, syntaxDescription: enumerationSyntax(labels: syntaxLabels), parse: { (argument: StrictString) -> T? in
+            return entries[argument]
+        })
+    }
 }
