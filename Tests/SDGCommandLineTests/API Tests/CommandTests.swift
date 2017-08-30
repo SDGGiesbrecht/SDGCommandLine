@@ -103,6 +103,24 @@ class CommandTests : TestCase {
                 try Tool.command.execute(with: ["execute", "•colour", "none"])
             }
         }
+
+        let enumerationLists: [String: StrictString] = [
+            "en\u{2D}GB": "or",
+            "en\u{2D}US": "or",
+            "en": "or",
+            "de": "oder",
+            "fr": "ou",
+            "el": "ή",
+            "he": "או"
+        ]
+        for (language, or) in enumerationLists {
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertErrorFree({
+                    let output = try Tool.command.execute(with: ["execute", "help"])
+                    XCTAssert(output.contains(or), "Expected output missing: \(or)")
+                })
+            }
+        }
     }
 
     func testOption() {
