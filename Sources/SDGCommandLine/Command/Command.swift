@@ -29,7 +29,7 @@ public struct Command {
     ///     - name: The name.
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
-    ///     - output: The stream for standard output. Use `print(..., to: &output)` for all output that should be captured as part of the return value of `execute()`.
+    ///     - output: The stream for standard output. Use `print(..., to: &output)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
     public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, options: [AnyOption], execution: @escaping (_ options: Options, _ output: inout Command.Output) throws -> Void) {
         self.init(name: name, description: description, options: options, execution: execution, subcommands: [])
     }
@@ -59,7 +59,7 @@ public struct Command {
         localizedDescription = { return description.resolved() }
         self.execution = execution ?? { (_, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
-        self.options = options
+        self.options = options.appending(Options.noColour)
     }
 
     // MARK: - Static Properties
@@ -113,8 +113,14 @@ public struct Command {
             }
         }
 
+        let options = try parse(arguments: arguments)
+
         var output = Output()
-        try execution(parse(arguments: arguments), &output)
+        if options.value(for: Options.noColour) {
+            output.filterFormatting = true
+        }
+
+        try execution(options, &output)
         return output.output
     }
 

@@ -27,6 +27,8 @@ extension Command {
 
         // MARK: - Properties
 
+        internal var filterFormatting = false
+
         private static let newLine: StrictString = "\n"
         private var internalOutput: StrictString
         internal var output: StrictString {
@@ -42,7 +44,12 @@ extension Command {
         // [_Inherit Documentation: SDGCornerstone.TextOutputStream.write(_:)_]
         /// Appends the given string to the stream.
         public mutating func write(_ string: String) {
-            let strict = StrictString(string)
+            var strict = StrictString(string)
+
+            if filterFormatting {
+                strict.removeCommandLineFormatting()
+            }
+
             internalOutput.append(contentsOf: strict)
             print(strict, terminator: "")
         }

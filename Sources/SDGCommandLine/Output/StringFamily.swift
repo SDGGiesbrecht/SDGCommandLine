@@ -14,8 +14,8 @@
 
 import SDGCornerstone
 
-extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar {
-    // MARK: - where ScalarView.Iterator.Element == UnicodeScalar
+extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar, ScalarView.SubSequence : Collection, ScalarView.SubSequence.Iterator.Element == ScalarView.Iterator.Element {
+    // MARK: - where ScalarView.Iterator.Element == UnicodeScalar, ScalarView.SubSequence : Collection, ScalarView.SubSequence.Iterator.Element == ScalarView.Iterator.Element
     // [_Workaround: When this constraint can be added to the protocol, it will be redundant here. (SDGCornerstone 0.4.2)_]
 
     // MARK: - Semantic
@@ -42,11 +42,19 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar {
 
     // MARK: - General
 
+    private static var escape: UnicodeScalar {
+        return "\u{1B}"
+    }
+    private static var endOfCode: UnicodeScalar {
+        return "m"
+    }
+
+
     /// Returns a string formed by applying the specified format to the entire string.
     public func `in`(_ format: TextFormat) -> Self {
 
         func apply(code: Int) -> String {
-            return "\u{1B}[\(code)m"
+            return "\(Self.escape)[\(code)\(Self.endOfCode)"
         }
 
         var copy = self
@@ -61,6 +69,14 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar {
         copy.scalars.prepend("\n")
         copy.scalars.append("\n")
         return copy
+    }
+
+    internal mutating func removeCommandLineFormatting() {
+        scalars.replaceMatches(for: [
+            LiteralPattern([Self.escape]),
+            RepetitionPattern(ConditionalPattern(condition: { _ in true }), consumption: .lazy),
+            LiteralPattern([Self.endOfCode])
+            ], with: [])
     }
 
     // MARK: - Help

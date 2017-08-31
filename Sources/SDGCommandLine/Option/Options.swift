@@ -17,6 +17,44 @@ import SDGCornerstone
 /// A set of specified options.
 public struct Options {
 
+    // MARK: - Static Properties
+
+    private static let noColourName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishCanada:
+            return "no‐colour"
+        case .englishUnitedStates:
+            return "no‐color"
+        case .deutschDeutschland:
+            return "ohne‐farbe"
+        case .françaisFrance:
+            return "sans‐couleur"
+        case .ελληνικάΕλλάδα:
+            return "χορίς‐χρώμα"
+        case .עברית־ישראל:
+            return "ללא־צבע"
+        }
+    })
+
+    private static let noColourDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishCanada:
+            return "Removes colour from the output."
+        case .englishUnitedStates:
+            return "Removes color from the output."
+        case .deutschDeutschland:
+            return "Entfernt Farben von der Ausgabe."
+        case .françaisFrance:
+            return "Supprime les couleurs des sorties."
+        case .ελληνικάΕλλάδα:
+            return "Αφαιρεί τα χρώματα από την έξοδο."
+        case .עברית־ישראל:
+            return "מסירה את הצבעים מהפלט."
+        }
+    })
+
+    internal static let noColour = Option(name: noColourName, description: noColourDescription, type: ArgumentType.boolean)
+
     // MARK: - Initialization
 
     internal init() {
