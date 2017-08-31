@@ -49,7 +49,6 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar, Scala
         return "m"
     }
 
-
     /// Returns a string formed by applying the specified format to the entire string.
     public func `in`(_ format: TextFormat) -> Self {
 
