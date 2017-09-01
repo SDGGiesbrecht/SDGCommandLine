@@ -123,6 +123,13 @@ class CommandTests : TestCase {
         }
     }
 
+    func testNoColour() {
+        XCTAssertErrorFree({
+            let output =  try Tool.command.execute(with: ["help", "•no‐colour"])
+            XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+        })
+    }
+
     func testOption() {
         XCTAssertErrorFree({
             let text: StrictString = "Changed using an option."
@@ -256,6 +263,7 @@ class CommandTests : TestCase {
             ("testCommand", testCommand),
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
+            ("testNoColour", testNoColour),
             ("testOption", testOption)
         ]
     }
