@@ -55,6 +55,38 @@ public struct Options {
 
     internal static let noColour = Option(name: noColourName, description: noColourDescription, type: ArgumentType.boolean)
 
+    private static let languageName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "language"
+        case .deutschDeutschland:
+            return "sprache"
+        case .françaisFrance:
+            return "langue"
+        case .ελληνικάΕλλάδα:
+            return "γλώσσα"
+        case .עברית־ישראל:
+            return "שפה"
+        }
+    })
+
+    private static let languageDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "A language to use instead of the one specified in preferences."
+        case .deutschDeutschland:
+            return "Eine Sprache zur Verwendung anstatt deren, die allgemein eingestellt ist."
+        case .françaisFrance:
+            return "Une langue à utiliser au lieu de celle dans les préférences."
+        case .ελληνικάΕλλάδα:
+            return "Μία γλώσσα που πρέπει να χρησιμοποιείται αντί αυτής, που ορίξεται στης προτιμήσεις."
+        case .עברית־ישראל:
+            return "שפה להשתמש במקום שלה שבהעדקות."
+        }
+    })
+
+    internal static let language = Option(name: languageName, description: languageDescription, type: ArgumentType.languagePreference)
+
     // MARK: - Initialization
 
     internal init() {

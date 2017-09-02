@@ -123,6 +123,20 @@ class CommandTests : TestCase {
         }
     }
 
+    func testLanguage() {
+        XCTAssertErrorFree({
+            let expected: StrictString = "עזרה"
+            let output = try Tool.command.execute(with: ["help", "•language", "he"])
+            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
+        })
+
+        XCTAssertErrorFree({
+            let expected: StrictString = "βοήθεια"
+            let output = try Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
+            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
+        })
+    }
+
     func testNoColour() {
         XCTAssertErrorFree({
             let output =  try Tool.command.execute(with: ["help", "•no‐colour"])

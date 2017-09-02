@@ -44,10 +44,13 @@ a psalmist
 [_End_]
 
 [_Begin Feature List_]
-- Automatic parsing of options and subcommands.
-- Automatic `help` subcommand.
-- Testable output.
-- Localizable interface.
+- Automatic parsing of options and subcommands
+- Automatic `help` subcommand
+- Testable output
+- Colour formatting tools
+  - Automatic `•no‐colour` option
+- Interface localization
+  - Automatic `•language` option
 [_End_]
 
 ([_Workaround: This should be removed once Workspace can understand the nesting structure._])
