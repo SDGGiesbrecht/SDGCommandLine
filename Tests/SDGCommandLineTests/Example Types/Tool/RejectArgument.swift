@@ -1,5 +1,5 @@
 /*
- Tool.swift
+ ReceiveArgument.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -15,21 +15,22 @@
 import SDGCornerstone
 import SDGCommandLine
 
-struct Tool {
+struct RejectArgument {
 
     static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
-            return "tool"
+            return "reject‐argument"
         case .deutsch:
-            return "werkzeug"
+            return "argument‐ablehnen"
         }
     }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {
         case .english, .unsupported:
-            return "serves as an example tool."
+            return "demonstrates rejection of an argument."
         case .deutsch:
-            return "dient als Beilspielswerkzeug."
+            return "führt die Ablehnung eines Arguments vor."
         }
-    }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command])
+    }), directArguments: [Execute.unsatisfiableArgument], options: [], execution: { (_, _, _) throws -> Void in
+    })
 }

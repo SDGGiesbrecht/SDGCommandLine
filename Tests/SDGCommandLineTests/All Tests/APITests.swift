@@ -1,5 +1,5 @@
 /*
- CommandTests.swift
+ APITests.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -16,7 +16,25 @@ import XCTest
 import SDGCornerstone
 import SDGCommandLine
 
-class CommandTests : TestCase {
+class APITests : TestCase {
+
+    func testArgument() {
+        let invalidArgumentMessages: [String: StrictString] = [
+            "en": "invalid",
+            "en\u{2D}US": "invalid",
+            "de": "ungültig",
+            "fr": "invalide",
+            "el": "άκυρο",
+            "he": "לא בתוקף"
+        ]
+        for (language, invalidArgument) in invalidArgumentMessages {
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertThrowsError(containing: invalidArgument) {
+                    try Tool.command.execute(with: ["reject‐argument", "..."])
+                }
+            }
+        }
+    }
 
     func testCommand() {
         for (language, searchTerm) in [
@@ -272,11 +290,14 @@ class CommandTests : TestCase {
         }
     }
 
-    static var allTests: [(String, (CommandTests) -> () throws -> Void)] {
+    static var allTests: [(String, (APITests) -> () throws -> Void)] {
         return [
+            ("testArgument", testArgument),
             ("testCommand", testCommand),
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
+            ("testEnumerationOption", testEnumerationOption),
+            ("testLanguage", testLanguage),
             ("testNoColour", testNoColour),
             ("testOption", testOption)
         ]

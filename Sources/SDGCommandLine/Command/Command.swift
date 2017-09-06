@@ -82,19 +82,19 @@ public struct Command {
 
     // MARK: - Execution
 
+    internal func withRootBehaviour() -> Command {
+        var copy = self
+        copy.subcommands.append(Command.setLanguage)
+        return copy
+    }
+
     /// Executes the command and exits.
     public func executeAsMain() -> Never { // [_Exempt from Code Coverage_] Not testable.
-
-        // Modify to behave as the root command.
-        var rootCommand = self
-        rootCommand.subcommands.append(Command.setLanguage)
-
-        // Execute modified command.
 
         let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Code Coverage_]
 
         do { // [_Exempt from Code Coverage_]
-            try rootCommand.execute(with: arguments)
+            try self.withRootBehaviour().execute(with: arguments)
             exit(Int32(Error.successCode))
         } catch let error as Command.Error { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)

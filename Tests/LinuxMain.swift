@@ -16,5 +16,6 @@ import XCTest
 @testable import SDGCommandLineTests
 
 XCTMain([
-    testCase(CommandTests.allTests)
+    testCase(APITests.allTests),
+    testCase(InternalTests.allTests)
 ])

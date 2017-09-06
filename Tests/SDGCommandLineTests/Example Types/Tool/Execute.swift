@@ -83,7 +83,7 @@ struct Execute {
         }
     }), type: Execute.colourArgumentType)
 
-    private static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacingText({ (_: Language, _: Void) -> StrictString in
+    internal static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacingText({ (_: Language, _: Void) -> StrictString in
         return "unsatisfiable"
     }), syntaxDescription: UserFacingText({ (_: Language, _: Void) -> StrictString in
         return "An argument type that always fails to parse."
