@@ -48,8 +48,9 @@ public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ i
 
 let speak = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "speak" }),
                     description: UserFacingText<MyLocalizations, Void>({ _, _ in "speaks." }),
+                    directArguments: [],
                     options: [phrase],
-                    execution: { (options: Options, output: inout Command.Output) throws -> Void in
+                    execution: { (_, options: Options, output: inout Command.Output) throws -> Void in
 
                         if let specific = options.value(for: phrase) {
                             print(specific, to: &output)

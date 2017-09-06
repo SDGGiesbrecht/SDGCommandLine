@@ -31,7 +31,7 @@ struct DemonstrateTextFormatting {
         case .deutsch:
             return "führt Textgestaltung vor."
         }
-    }), options: [], execution: { (_, output: inout Command.Output) throws -> Void in
+    }), directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
 
         print("Header".formattedAsSectionHeader(), to: &output)
         print("Error".formattedAsError(), to: &output)

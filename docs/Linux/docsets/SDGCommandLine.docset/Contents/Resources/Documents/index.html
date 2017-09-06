@@ -69,6 +69,9 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Protocols.html#/s:P14SDGCommandLine25AnyArgumentTypeDefinition">AnyArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a>
               </li>
               <li class="nav-group-task">
@@ -84,6 +87,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ArgumentTypeDefinition.html">ArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Arguments.html">Arguments</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Command.html">Command</a>
@@ -142,10 +148,20 @@
 <h2 id='features' class='heading'>Features</h2>
 
 <ul>
-<li>Automatic parsing of options and subcommands.</li>
-<li>Automatic <code>help</code> subcommand.</li>
-<li>Testable output.</li>
-<li>Localizable interface.</li>
+<li>Automatic parsing of options and subcommands</li>
+<li>Automatic <code>help</code> subcommand</li>
+<li>Testable output</li>
+<li>Colour formatting tools
+
+<ul>
+<li>Automatic <code>•no‐colour</code> option</li>
+</ul></li>
+<li>Interface localization
+
+<ul>
+<li>Automatic <code>set‐language</code> subcommand to set language preferences.</li>
+<li>Automatic <code>•language</code> option to run in a specific language only once.</li>
+</ul></li>
 </ul>
 
 <h2 id='importing' class='heading'>Importing</h2>
@@ -199,8 +215,9 @@
 
 <span class="k">let</span> <span class="nv">speak</span> <span class="o">=</span> <span class="kt">Command</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"speak"</span> <span class="p">}),</span>
                     <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">MyLocalizations</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span> <span class="s">"speaks."</span> <span class="p">}),</span>
+                    <span class="nv">directArguments</span><span class="p">:</span> <span class="p">[],</span>
                     <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="n">phrase</span><span class="p">],</span>
-                    <span class="nv">execution</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="kt">Options</span><span class="p">,</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt">Output</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+                    <span class="nv">execution</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="kt">Options</span><span class="p">,</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt">Output</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
 
                         <span class="k">if</span> <span class="k">let</span> <span class="nv">specific</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">phrase</span><span class="p">)</span> <span class="p">{</span>
                             <span class="nf">print</span><span class="p">(</span><span class="n">specific</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">)</span>

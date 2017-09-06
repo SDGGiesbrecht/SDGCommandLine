@@ -50,7 +50,8 @@ a psalmist
 - Colour formatting tools
   - Automatic `•no‐colour` option
 - Interface localization
-  - Automatic `•language` option
+  - Automatic `set‐language` subcommand to set language preferences.
+  - Automatic `•language` option to run in a specific language only once.
 [_End_]
 
 ([_Workaround: This should be removed once Workspace can understand the nesting structure._])

@@ -28,10 +28,12 @@ public struct Command {
     /// - Parameters:
     ///     - name: The name.
     ///     - description: A brief description. (Printed by the `help` subcommand.)
+    ///     - directArguments: A list of direct command line arguments to accept.
+    ///     - options: A list of command line options to accept.
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
     ///     - output: The stream for standard output. Use `print(..., to: &output)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, options: [AnyOption], execution: @escaping (_ options: Options, _ output: inout Command.Output) throws -> Void) {
-        self.init(name: name, description: description, options: options, execution: execution, subcommands: [])
+    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void) {
+        self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
     }
 
     /// Creates an umbrella command.
@@ -44,10 +46,10 @@ public struct Command {
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
     public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, subcommands: [Command], defaultSubcommand: Command? = nil) {
-        self.init(name: name, description: description, options: [], execution: defaultSubcommand?.execution, subcommands: subcommands)
+        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands)
     }
 
-    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, options: [AnyOption], execution: ((_ options: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
@@ -57,8 +59,9 @@ public struct Command {
         localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
-        self.execution = execution ?? { (_, _) in try Command.help.execute(with: []) }
+        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
+        self.directArguments = directArguments
         self.options = options.appending(contentsOf: [Options.noColour, Options.language])
     }
 
@@ -72,18 +75,26 @@ public struct Command {
     internal let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
-    private let execution: (_ options: Options, _ output: inout Command.Output) throws -> Void
-    internal let subcommands: [Command]
+    private let execution: (_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void
+    internal var subcommands: [Command]
+    internal let directArguments: [AnyArgumentTypeDefinition]
     internal let options: [AnyOption]
 
     // MARK: - Execution
 
     /// Executes the command and exits.
     public func executeAsMain() -> Never { // [_Exempt from Code Coverage_] Not testable.
+
+        // Modify to behave as the root command.
+        var rootCommand = self
+        rootCommand.subcommands.append(Command.setLanguage)
+
+        // Execute modified command.
+
         let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Code Coverage_]
 
         do { // [_Exempt from Code Coverage_]
-            try execute(with: arguments)
+            try rootCommand.execute(with: arguments)
             exit(Int32(Error.successCode))
         } catch let error as Command.Error { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
@@ -113,7 +124,7 @@ public struct Command {
             }
         }
 
-        let options = try parse(arguments: arguments)
+        let (directArguments, options) = try parse(arguments: arguments)
 
         var output = Output()
         if options.value(for: Options.noColour) {
@@ -125,42 +136,83 @@ public struct Command {
 
             warnAboutSecondLanguages(&output)
 
-            try execution(options, &output)
+            try execution(directArguments, options, &output)
         }
         return output.output
     }
 
     // MARK: - Argument Parsing
 
-    private func parse(arguments: [StrictString]) throws -> Options {
+    private func parse(arguments: [StrictString]) throws -> (Arguments, Options) {
+        var directArguments = Arguments()
         var options = Options()
+
         var remaining: ArraySlice<StrictString> = arguments[arguments.bounds]
+        var expected: ArraySlice<AnyArgumentTypeDefinition> = self.directArguments[self.directArguments.bounds]
         while let argument = remaining.popFirst() {
 
             if ¬(try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)) {
 
                 // Not an option.
 
-                let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    var result: StrictString
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        result = StrictString("Unexpected argument: \(argument)")
-                    case .deutschDeutschland:
-                        result = StrictString("Unerwartetes Argument: \(argument)")
-                    case .françaisFrance:
-                        result = StrictString("Argument inattendu : \(argument)")
-                    case .ελληνικάΕλλάδα:
-                        result = StrictString("Απροσδόκητο όρισμα: \(argument)")
-                    case .עברית־ישראל:
-                        result = StrictString("ארגומנט לא צפוי: \(argument)")
-                    }
-                    return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                }))
+                if ¬(try parse(possibleDirectArgument: argument, parsedArguments: &directArguments, expectedArguments: &expected)) {
+
+                    // Not a direct argument.
+
+                    let commandStack = Command.stack // Prevent delayed evaluation.
+                    throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                        var result: StrictString
+                        switch localization {
+                        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                            result = StrictString("Unexpected argument: \(argument)")
+                        case .deutschDeutschland:
+                            result = StrictString("Unerwartetes Argument: \(argument)")
+                        case .françaisFrance:
+                            result = StrictString("Argument inattendu : \(argument)")
+                        case .ελληνικάΕλλάδα:
+                            result = StrictString("Απροσδόκητο όρισμα: \(argument)")
+                        case .עברית־ישראל:
+                            result = StrictString("ארגומנט לא צפוי: \(argument)")
+                        }
+                        return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                    }))
+                }
             }
         }
-        return options
+        return (directArguments, options)
+    }
+
+    private func parse(possibleDirectArgument: StrictString, parsedArguments: inout Arguments, expectedArguments: inout ArraySlice<AnyArgumentTypeDefinition>) throws -> Bool {
+
+        guard let definition = expectedArguments.popFirst() else {
+            return false // Not a direct argument.
+        }
+
+        guard let parsed = definition.parse(argument: possibleDirectArgument) else {
+            let commandStack = Command.stack // Prevent delayed evaluation.
+            throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                let commandName = self.localizedName()
+                var result: StrictString
+                switch localization {
+                case .englishUnitedKingdom:
+                    result = StrictString("An argument for ‘\(commandName)’ is invalid: \(possibleDirectArgument)")
+                case .englishUnitedStates, .englishCanada:
+                    result = StrictString("An argument for “\(commandName)” is invalid: \(possibleDirectArgument)")
+                case .deutschDeutschland:
+                    result = StrictString("Ein Argument für „\(commandName)“ ist ungültig: \(possibleDirectArgument)")
+                case .françaisFrance:
+                    result = StrictString("Un argument pour « \(commandName) » est invalide : \(possibleDirectArgument)")
+                case .ελληνικάΕλλάδα:
+                    result = StrictString("Ένα όρισμα για «\(commandName)» είναι άκυρο: \(possibleDirectArgument)")
+                case .עברית־ישראל:
+                    /*א*/ result = StrictString("ארגומנט ל־”\(commandName)“ לא בתוקף: \(possibleDirectArgument)")
+                }
+                return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+            }))
+        }
+
+        parsedArguments.add(value: parsed)
+        return true
     }
 
     private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
@@ -214,17 +266,17 @@ public struct Command {
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
-                        result = StrictString("The argument for ‘\(optionName)’ is invalid.")
+                        result = StrictString("The argument for ‘\(optionName)’ is invalid: \(argument)")
                     case .englishUnitedStates, .englishCanada:
-                        result = StrictString("The argument for “\(optionName)” is invalid.")
+                        result = StrictString("The argument for “\(optionName)” is invalid: \(argument)")
                     case .deutschDeutschland:
-                        result = StrictString("Das Argument für „\(optionName)“ ist ungültig.")
+                        result = StrictString("Das Argument für „\(optionName)“ ist ungültig: \(argument)")
                     case .françaisFrance:
-                        result = StrictString("L’argument pour « \(optionName) » est invalide.")
+                        result = StrictString("L’argument pour « \(optionName) » est invalide : \(argument)")
                     case .ελληνικάΕλλάδα:
-                        result = StrictString("Το όρισμα για «\(optionName)» είναι άκυρο.")
+                        result = StrictString("Το όρισμα για «\(optionName)» είναι άκυρο: \(argument)")
                     case .עברית־ישראל:
-                        result = StrictString("הארגומנט ל־”\(optionName)“ לא בתוקף")
+                        /*א*/ result = StrictString("הארגומנט ל־”\(optionName)“ לא בתוקף: \(argument)")
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 }))
@@ -308,66 +360,5 @@ public struct Command {
             result.insert(Command.normalizeToAscii(name))
         }
         return result
-    }
-
-    private func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) {
-
-        if BuildConfiguration.current == .debug {
-            if LocalizationSetting.current.value.resolved() as ContentLocalization ∉ Set<ContentLocalization>([
-                .englishUnitedKingdom,
-                .englishUnitedStates,
-                .englishCanada]) {
-                let warning = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        unreachable()
-                    case .deutschDeutschland:
-                        return "Achtung: Das Deutsch von SDGCommandLine ist noch von keinem Muttersprachler geprüft worden. Falls Sie dabei helfen möchten, melden Sie sich unter:"
-                    case .françaisFrance:
-                        return "Attention : Le français de SDGCommandLine n’a pas été vérifié par un locuteur natif. Si vous voudriez nous aider, inscrivez‐vous par ici :"
-                    case .ελληνικάΕλλάδα:
-                        return "Προειδοποίηση: Τα ελληνικά του SDGCommandLine δεν ελέγχεται από ενός φυσικού ομιλητή. Αν θέλετε να μας βοηθήσετε, εγγράψτε εδώ:"
-                    case .עברית־ישראל:
-                        /*א*/ return "זהירות: העברית של SDGCommandLine לא נבדקה אל יד של דובר שפת אם. אם אתה/את רוצה לעזור לנו, הירשם/הירשמי כאן:"
-                    }
-                })
-                let issueTitle = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        unreachable()
-                    case .deutschDeutschland:
-                        return "Deutsch prüfen"
-                    case .françaisFrance:
-                        return "Vérifier le français"
-                    case .ελληνικάΕλλάδα:
-                        return "Έλεγχος των ελληνικών"
-                    case .עברית־ישראל:
-                        return "בדיקה של העברית"
-                    }
-                })
-                let issueBody = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        unreachable()
-                    case .deutschDeutschland:
-                        return "Ich würde gern helfen. Bitte erklären Sie mir wie."
-                    case .françaisFrance:
-                        return "Je voudrais assister. S’il vous plaît, expliquez‐moi comment."
-                    case .ελληνικάΕλλάδα:
-                        return "Θα ήθελα να βοηθήσω. Παρακαλώ, εξηγήστε πώς."
-                    case .עברית־ישראל:
-                        return "אני רוצה לעזור. נא הסבר איך."
-                    }
-                })
-                var message: StrictString = "⚠ "
-                message += warning.resolved()
-                message += "\n"
-                message += "https://github.com/SDGGiesbrecht/SDGCommandLine/issues/new?title="
-                message += StrictString(String(issueTitle.resolved()).addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
-                message += "&body="
-                message += StrictString(String(issueBody.resolved()).addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
-                print(message.formattedAsWarning(), to: &output)
-            }
-        }
     }
 }

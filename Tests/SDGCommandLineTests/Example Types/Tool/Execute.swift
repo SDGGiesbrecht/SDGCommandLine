@@ -127,12 +127,12 @@ struct Execute {
         case .deutsch:
             return "führt eine erfolgreiche Ausführung vor."
         }
-    }), options: [
+    }), directArguments: [], options: [
         Execute.textOption,
         Execute.unsatisfiableOption,
         Execute.informalOption,
         Execute.colourOption
-        ], execution: { (options: Options, output: inout Command.Output) throws -> Void in
+        ], execution: { (_, options: Options, output: inout Command.Output) throws -> Void in
 
             if let text = options.value(for: Execute.textOption) {
                 if let colour = options.value(for: Execute.colourOption) {

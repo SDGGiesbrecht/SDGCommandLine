@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Options Struct Reference</title>
+    <title>Arguments Struct Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/Options" class="dashAnchor"></a>
-    <a title="Options Struct Reference"></a>
+    <a name="//apple_ref/swift/Struct/Arguments" class="dashAnchor"></a>
+    <a title="Arguments Struct Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">SDGCommandLine Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">SDGCommandLine Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Options Struct Reference
+        Arguments Struct Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -114,14 +114,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Options</h1>
+            <h1>Arguments</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Options</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Arguments</span></code></pre>
 
                 </div>
               </div>
-            <p>A set of specified options.</p>
+            <p>Direct command arguments.</p>
 
           </section>
           <section class="section task-group-section">
@@ -137,9 +137,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV14SDGCommandLine7Options5valueurFT3forGVS_6Optionx__GSqx_"></a>
-                    <a name="//apple_ref/swift/Method/value(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV14SDGCommandLine7Options5valueurFT3forGVS_6Optionx__GSqx_">value(for:)</a>
+                    <a name="/s:FV14SDGCommandLine9Arguments8argumenturFT2atSi2asGVS_22ArgumentTypeDefinitionx__GSqx_"></a>
+                    <a name="//apple_ref/swift/Method/argument(at:as:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV14SDGCommandLine9Arguments8argumenturFT2atSi2asGVS_22ArgumentTypeDefinitionx__GSqx_">argument(at:as:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -147,41 +147,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the value of the specified option, or <code>nil</code> if the option is not defined.</p>
+                        <p>Returns the value of the specified argument, or <code>nil</code> if the argument is not defined.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">for</span> <span class="nv">option</span><span class="p">:</span> <span class="kt"><a href="../Structs/Option.html">Option</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV14SDGCommandLine7Options5valueFT3forGVS_6OptionSb__Sb"></a>
-                    <a name="//apple_ref/swift/Method/value(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV14SDGCommandLine7Options5valueFT3forGVS_6OptionSb__Sb">value(for:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns <code>true</code> if the Boolean flag is active and <code>false</code> if it is not.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">value</span><span class="p">(</span><span class="k">for</span> <span class="nv">option</span><span class="p">:</span> <span class="kt"><a href="../Structs/Option.html">Option</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">argument</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">as</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Structs/ArgumentTypeDefinition.html">ArgumentTypeDefinition</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

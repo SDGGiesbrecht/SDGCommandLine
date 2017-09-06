@@ -17,7 +17,7 @@ import SDGCornerstone
 /// An argument type definition.
 ///
 /// For standard definitions provided by SDGCommandLine, see `ArgumentType`.
-public struct ArgumentTypeDefinition<Type> {
+public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
 
     // MARK: - Initialization
 
@@ -42,4 +42,16 @@ public struct ArgumentTypeDefinition<Type> {
     internal let localizedDescription: () -> StrictString
 
     internal let parse: (_ argument: StrictString) -> Type?
+
+    // MARK: - AnyArgumentTypeDefinition
+
+    /// :nodoc:
+    public func parse(argument: StrictString) -> Any? {
+        return parse(argument)
+    }
+
+    /// :nodoc:
+    public func getLocalizedName() -> StrictString {
+        return localizedName()
+    }
 }
