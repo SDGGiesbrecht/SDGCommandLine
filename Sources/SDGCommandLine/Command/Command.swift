@@ -23,7 +23,7 @@ public struct Command {
 
     /// Creates a command.
     ///
-    /// Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.
+    /// - Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.
     ///
     /// - Parameters:
     ///     - name: The name.
@@ -38,7 +38,7 @@ public struct Command {
 
     /// Creates an umbrella command.
     ///
-    /// Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.
+    /// - Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.
     ///
     /// - Parameters:
     ///     - name: The name.

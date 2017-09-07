@@ -1,5 +1,5 @@
 /*
- ReceiveArgument.swift
+ RejectArgument.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS

@@ -189,14 +189,11 @@ public struct ArgumentType {
         let groups = argument.components(separatedBy: ConditionalPattern(condition: { $0 ∈ Set([";", "·"]) })).map({ StrictString($0.contents) })
         let languages = groups.map({ $0.components(separatedBy: [","]).map({ (component: PatternMatch<StrictString>) -> String in
 
-            let string = StrictString(component.contents)
-            if let language = ContentLocalization(icon: string) {
-                // [_Warning: Needs a more universal way to confert icons to codes._]
-                // Icon
-                return language.code
+            let iconOrCode = StrictString(component.contents)
+            if let code = ContentLocalization.code(for: iconOrCode) {
+                return code
             } else {
-                // Code
-                return String(string)
+                return String(iconOrCode)
             }
         }) })
         return LocalizationSetting(orderOfPrecedence: languages)
