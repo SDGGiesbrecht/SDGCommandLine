@@ -46,12 +46,21 @@ extension Command {
         }
     })
 
-    static let help = Command(name: helpName, description: helpDescription, options: [], execution: { (_, output: inout Command.Output) throws -> Void in
+    static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
         print("", to: &output)
 
         let stack = Command.stack.dropLast() // Ignoring help.
         let command = stack.last!
-        print(StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand() + " " + command.localizedDescription(), to: &output)
+
+        let formatType = { (type: StrictString) -> StrictString in
+            return ("[" + type + "]").formattedAsType()
+        }
+
+        var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand()
+        for directArgument in command.directArguments {
+            commandName += " " + formatType(directArgument.getLocalizedName())
+        }
+        print(commandName + " " + command.localizedDescription(), to: &output)
 
         func printSection<T>(header: UserFacingText<ContentLocalization, Void>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
 
@@ -82,14 +91,10 @@ extension Command {
                 case .עברית־ישראל:
                     return "תת פקודות"
                 }
-            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() }, getDescription: { $0.localizedDescription() })
+            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.getLocalizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
 
         if ¬command.options.isEmpty {
-
-            let formatType = { (type: StrictString) -> StrictString in
-                return ("[" + type + "]").formattedAsType()
-            }
 
             let formatOption = { (option: AnyOption) -> StrictString in
                 var result = ("•" + option.getLocalizedName()).formattedAsOption()

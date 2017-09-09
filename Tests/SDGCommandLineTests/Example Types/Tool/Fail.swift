@@ -31,7 +31,7 @@ struct Fail {
         case .deutsch:
             return "führt einen Fehlschlag vor."
         }
-    }), options: [], execution: { (_) throws -> Void in
+    }), directArguments: [], options: [], execution: { (_) throws -> Void in
         throw Fail.error
     })
 

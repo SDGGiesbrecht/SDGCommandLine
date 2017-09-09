@@ -70,6 +70,9 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:P14SDGCommandLine25AnyArgumentTypeDefinition">AnyArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a>
               </li>
               <li class="nav-group-task">
@@ -94,6 +97,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Command/Output.html">– Output</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DirectArguments.html">DirectArguments</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Option.html">Option</a>
@@ -131,9 +137,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__7optionsGSaPS_9AnyOption__9executionFzTVS_7OptionsRVS0_6Output_T__S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(name:description:options:execution:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__7optionsGSaPS_9AnyOption__9executionFzTVS_7OptionsRVS0_6Output_T__S0_">init(name:description:options:execution:)</a>
+                    <a name="/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__15directArgumentsGSaPS_25AnyArgumentTypeDefinition__7optionsGSaPS_9AnyOption__9executionFzTVS_15DirectArgumentsVS_7OptionsRVS0_6Output_T__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(name:description:directArguments:options:execution:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV14SDGCommandLine7CommandcuRx14SDGCornerstone17InputLocalizationrFT4nameGVS1_14UserFacingTextxT__11descriptionGS3_xT__15directArgumentsGSaPS_25AnyArgumentTypeDefinition__7optionsGSaPS_9AnyOption__9executionFzTVS_15DirectArgumentsVS_7OptionsRVS0_6Output_T__S0_">init(name:description:directArguments:options:execution:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -142,15 +148,18 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Creates a command.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
 
-<p>Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a></span><span class="p">],</span> <span class="nv">execution</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Structs/Options.html">Options</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">directArguments</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:P14SDGCommandLine25AnyArgumentTypeDefinition">AnyArgumentTypeDefinition</a></span><span class="p">],</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:P14SDGCommandLine9AnyOption">AnyOption</a></span><span class="p">],</span> <span class="nv">execution</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">parsedDirectArguments</span><span class="p">:</span> <span class="kt"><a href="../Structs/DirectArguments.html">DirectArguments</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">parsedOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Options.html">Options</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -185,12 +194,60 @@
                             <tr>
                               <td>
                                 <code>
+                                <em>directArguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A list of direct command line arguments to accept.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A list of command line options to accept.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>execution</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
                                   <p>A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of <code>Command.Error</code>. (Do not call <code>exit()</code> or other <code>Never</code>‐returning functions.)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parsedDirectArguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The parsed direct arguments.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parsedOptions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The parsed options.</p>
                                 </div>
                               </td>
                             </tr>
@@ -226,8 +283,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Creates an umbrella command.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
 
-<p>Warning: The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
+</div>
 
                       </div>
                       <div class="declaration">

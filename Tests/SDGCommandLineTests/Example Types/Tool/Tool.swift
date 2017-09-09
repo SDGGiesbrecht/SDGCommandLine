@@ -31,5 +31,5 @@ struct Tool {
         case .deutsch:
             return "dient als Beilspielswerkzeug."
         }
-    }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command])
+    }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command])
 }

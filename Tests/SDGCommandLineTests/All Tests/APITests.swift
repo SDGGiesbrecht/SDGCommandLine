@@ -1,5 +1,5 @@
 /*
- CommandTests.swift
+ APITests.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -16,7 +16,7 @@ import XCTest
 import SDGCornerstone
 import SDGCommandLine
 
-class CommandTests : TestCase {
+class APITests : TestCase {
 
     func testCommand() {
         for (language, searchTerm) in [
@@ -66,6 +66,24 @@ class CommandTests : TestCase {
                     let output = try Tool.command.execute(with: [help])
                     XCTAssert(output.contains(StrictString("hilfe")), "Expected output missing from “de”: hilfe")
                 })
+            }
+        }
+    }
+
+    func testDirectArgument() {
+        let invalidArgumentMessages: [String: StrictString] = [
+            "en": "invalid",
+            "en\u{2D}US": "invalid",
+            "de": "ungültig",
+            "fr": "invalide",
+            "el": "άκυρο",
+            "he": "לא בתוקף"
+        ]
+        for (language, invalidArgument) in invalidArgumentMessages {
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertThrowsError(containing: invalidArgument) {
+                    try Tool.command.execute(with: ["reject‐argument", "..."])
+                }
             }
         }
     }
@@ -121,6 +139,20 @@ class CommandTests : TestCase {
                 })
             }
         }
+    }
+
+    func testLanguage() {
+        XCTAssertErrorFree({
+            let expected: StrictString = "עזרה"
+            let output = try Tool.command.execute(with: ["help", "•language", "he"])
+            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
+        })
+
+        XCTAssertErrorFree({
+            let expected: StrictString = "βοήθεια"
+            let output = try Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
+            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
+        })
     }
 
     func testNoColour() {
@@ -258,11 +290,14 @@ class CommandTests : TestCase {
         }
     }
 
-    static var allTests: [(String, (CommandTests) -> () throws -> Void)] {
+    static var allTests: [(String, (APITests) -> () throws -> Void)] {
         return [
             ("testCommand", testCommand),
+            ("testDirectArgument", testDirectArgument),
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
+            ("testEnumerationOption", testEnumerationOption),
+            ("testLanguage", testLanguage),
             ("testNoColour", testNoColour),
             ("testOption", testOption)
         ]

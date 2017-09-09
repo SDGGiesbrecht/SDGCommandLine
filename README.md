@@ -31,10 +31,14 @@ SDGCommandLine provides tools for implementing a command line interface.
 
 ## Features
 
-- Automatic parsing of options and subcommands.
-- Automatic `help` subcommand.
-- Testable output.
-- Localizable interface.
+- Automatic parsing of options and subcommands
+- Automatic `help` subcommand
+- Testable output
+- Colour formatting tools
+  - Automatic `•no‐colour` option
+- Interface localization
+  - Automatic `set‐language` subcommand to set language preferences.
+  - Automatic `•language` option to run in a specific language only once.
 
 (For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
 
@@ -96,8 +100,9 @@ public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ i
 
 let speak = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "speak" }),
                     description: UserFacingText<MyLocalizations, Void>({ _, _ in "speaks." }),
+                    directArguments: [],
                     options: [phrase],
-                    execution: { (options: Options, output: inout Command.Output) throws -> Void in
+                    execution: { (_, options: Options, output: inout Command.Output) throws -> Void in
 
                         if let specific = options.value(for: phrase) {
                             print(specific, to: &output)

@@ -148,4 +148,54 @@ public struct ArgumentType {
             return entries[argument]
         })
     }
+
+    private static let languagePreferenceName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "language preference"
+        case .deutschDeutschland:
+            return "Spracheinstellung"
+        case .françaisFrance:
+            return "préférence de langue"
+        case .ελληνικάΕλλάδα:
+            return "προτίμηση της γλώσσας"
+        case .עברית־ישראל:
+            return "העדפה של שפה"
+        }
+    })
+
+    private static let languagePreferenceDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom:
+            return "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en\u{2D}GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French"
+        case .englishUnitedStates:
+            return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish"
+        case .englishCanada:
+            return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}CA” or “🇨🇦EN” → Canadian English, “cwd,en;fr” → both Woods Cree and English, otherwise French"
+        case .deutschDeutschland:
+            return "Eine Liste von IETF‐Sprachkennungen oder SDGCornerstone Sprachsymbole. Strichpunkte bezeichnen die Ersatzreihenfolge. Kommas bezeichnen die Verwendung mehreren Sprachen. Beispiele: “de\u{2D}DE” oder “🇩🇪DE” → Deutsch (Deutschland), “hab,de;fr” → sowohl Obersorbisch als auch Deutsch, sonst Französisch"
+        case .françaisFrance:
+            return "Une liste des étiquettes de langue IETF ou des icônes de langue SDGCornerstone. Des point‐virgules indique l’ordre de remplacement. Des virgules indique l’utilisation de plusieurs langues. Examples: « fr\u{2D}FR » or “🇫🇷FR” → français (France), “oc,fr;en” → à la fois occitan et français, sinon anglais"
+        case .ελληνικάΕλλάδα:
+            return "Ένας κατάλογος του IETF κωδικών γλώσσες ή SDGCornerstone icons γλώσσες. Άνω τελείες σημαίνει την σειρά της αντικατάστασης. Κόμματα σημαίνει ότι πολλαπλές γλώσσες πρέπει να χρησιμοποιούται. Παραδείγματα: «el\u{2D}GR» ή «🇬🇷ΕΛ» → ελληνικά (Ελλάδα), “aat,el·en” → αρβανίτικα και ελληνικά, διαφορετικά αγγλικά"
+        case .עברית־ישראל:
+            /*א*/ return "רשימה של IETF קודי שפות או SDGCornerstone צלמיות שקות. נקודות ופסיקים מאותתים fallback order. קסיקים מאותתים שימוש של יותר משפה אחת. דוגמאות: ”he\u{2D}IL“ או ”🇮🇱עב“ ← עברית (ישראל), “ydd,he;en” ← יידיש וגם עברית, ואם לא, אנגלית"
+        }
+    })
+
+    /// An argument type representing a language preference.
+    public static let languagePreference: ArgumentTypeDefinition<LocalizationSetting> = ArgumentTypeDefinition(name: languagePreferenceName, syntaxDescription: languagePreferenceDescription, parse: { (argument: StrictString) -> LocalizationSetting? in
+
+        let groups = argument.components(separatedBy: ConditionalPattern(condition: { $0 ∈ Set([";", "·"]) })).map({ StrictString($0.contents) })
+        let languages = groups.map({ $0.components(separatedBy: [","]).map({ (component: PatternMatch<StrictString>) -> String in
+
+            let iconOrCode = StrictString(component.contents)
+            if let code = ContentLocalization.code(for: iconOrCode) {
+                return code
+            } else {
+                return String(iconOrCode)
+            }
+        }) })
+        return LocalizationSetting(orderOfPrecedence: languages)
+    })
 }
