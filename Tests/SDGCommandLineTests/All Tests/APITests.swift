@@ -18,24 +18,6 @@ import SDGCommandLine
 
 class APITests : TestCase {
 
-    func testArgument() {
-        let invalidArgumentMessages: [String: StrictString] = [
-            "en": "invalid",
-            "en\u{2D}US": "invalid",
-            "de": "ungültig",
-            "fr": "invalide",
-            "el": "άκυρο",
-            "he": "לא בתוקף"
-        ]
-        for (language, invalidArgument) in invalidArgumentMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: invalidArgument) {
-                    try Tool.command.execute(with: ["reject‐argument", "..."])
-                }
-            }
-        }
-    }
-
     func testCommand() {
         for (language, searchTerm) in [
             "en": "Hello",
@@ -84,6 +66,24 @@ class APITests : TestCase {
                     let output = try Tool.command.execute(with: [help])
                     XCTAssert(output.contains(StrictString("hilfe")), "Expected output missing from “de”: hilfe")
                 })
+            }
+        }
+    }
+
+    func testDirectArgument() {
+        let invalidArgumentMessages: [String: StrictString] = [
+            "en": "invalid",
+            "en\u{2D}US": "invalid",
+            "de": "ungültig",
+            "fr": "invalide",
+            "el": "άκυρο",
+            "he": "לא בתוקף"
+        ]
+        for (language, invalidArgument) in invalidArgumentMessages {
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertThrowsError(containing: invalidArgument) {
+                    try Tool.command.execute(with: ["reject‐argument", "..."])
+                }
             }
         }
     }
@@ -292,8 +292,8 @@ class APITests : TestCase {
 
     static var allTests: [(String, (APITests) -> () throws -> Void)] {
         return [
-            ("testArgument", testArgument),
             ("testCommand", testCommand),
+            ("testDirectArgument", testDirectArgument),
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
             ("testEnumerationOption", testEnumerationOption),

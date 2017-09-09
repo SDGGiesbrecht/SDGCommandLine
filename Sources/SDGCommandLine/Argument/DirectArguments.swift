@@ -1,5 +1,5 @@
 /*
- Arguments.swift
+ DirectArguments.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -14,8 +14,10 @@
 
 import SDGCornerstone
 
-/// Parsed direct arguments.
-public struct Arguments {
+/// Parsed direct (ordered) arguments.
+///
+/// - SeeAlso: `Options`
+public struct DirectArguments {
 
     // MARK: - Initialization
 

@@ -57,8 +57,8 @@ extension Command {
         }
 
         var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand()
-        for argument in command.directArguments {
-            commandName += " " + formatType(argument.getLocalizedName())
+        for directArgument in command.directArguments {
+            commandName += " " + formatType(directArgument.getLocalizedName())
         }
         print(commandName + " " + command.localizedDescription(), to: &output)
 

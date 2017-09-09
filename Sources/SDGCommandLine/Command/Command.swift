@@ -31,8 +31,10 @@ public struct Command {
     ///     - directArguments: A list of direct command line arguments to accept.
     ///     - options: A list of command line options to accept.
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
+    ///     - parsedDirectArguments: The parsed direct arguments.
+    ///     - parsedOptions: The parsed options.
     ///     - output: The stream for standard output. Use `print(..., to: &output)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void) {
+    public init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void) {
         self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
     }
 
@@ -49,7 +51,7 @@ public struct Command {
         self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands)
     }
 
-    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<L : InputLocalization>(name: UserFacingText<L, Void>, description: UserFacingText<L, Void>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
@@ -75,7 +77,7 @@ public struct Command {
     internal let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
-    private let execution: (_ arguments: Arguments, _ options: Options, _ output: inout Command.Output) throws -> Void
+    private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void
     internal var subcommands: [Command]
     internal let directArguments: [AnyArgumentTypeDefinition]
     internal let options: [AnyOption]
@@ -143,8 +145,8 @@ public struct Command {
 
     // MARK: - Argument Parsing
 
-    private func parse(arguments: [StrictString]) throws -> (Arguments, Options) {
-        var directArguments = Arguments()
+    private func parse(arguments: [StrictString]) throws -> (DirectArguments, Options) {
+        var directArguments = DirectArguments()
         var options = Options()
 
         var remaining: ArraySlice<StrictString> = arguments[arguments.bounds]
@@ -155,7 +157,7 @@ public struct Command {
 
                 // Not an option.
 
-                if ¬(try parse(possibleDirectArgument: argument, parsedArguments: &directArguments, expectedArguments: &expected)) {
+                if ¬(try parse(possibleDirectArgument: argument, parsedDirectArguments: &directArguments, expectedDirectArguments: &expected)) {
 
                     // Not a direct argument.
 
@@ -182,9 +184,9 @@ public struct Command {
         return (directArguments, options)
     }
 
-    private func parse(possibleDirectArgument: StrictString, parsedArguments: inout Arguments, expectedArguments: inout ArraySlice<AnyArgumentTypeDefinition>) throws -> Bool {
+    private func parse(possibleDirectArgument: StrictString, parsedDirectArguments: inout DirectArguments, expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>) throws -> Bool {
 
-        guard let definition = expectedArguments.popFirst() else {
+        guard let definition = expectedDirectArguments.popFirst() else {
             return false // Not a direct argument.
         }
 
@@ -211,7 +213,7 @@ public struct Command {
             }))
         }
 
-        parsedArguments.add(value: parsed)
+        parsedDirectArguments.add(value: parsed)
         return true
     }
 
