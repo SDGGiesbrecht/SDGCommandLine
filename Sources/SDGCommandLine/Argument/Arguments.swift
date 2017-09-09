@@ -14,7 +14,7 @@
 
 import SDGCornerstone
 
-/// Direct command arguments.
+/// Parsed direct arguments.
 public struct Arguments {
 
     // MARK: - Initialization

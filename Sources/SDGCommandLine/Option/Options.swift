@@ -14,7 +14,7 @@
 
 import SDGCornerstone
 
-/// A set of specified options.
+/// Parsed options.
 public struct Options {
 
     // MARK: - Static Properties
