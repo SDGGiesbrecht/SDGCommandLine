@@ -46,7 +46,7 @@ extension Command {
         }
     })
 
-    static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
+    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
         print("", to: &output)
 
         let stack = Command.stack.dropLast() // Ignoring help.

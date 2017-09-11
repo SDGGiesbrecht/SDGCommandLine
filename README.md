@@ -83,7 +83,7 @@ import SDGCommandLine
 
  import SDGCommandLine
 
- SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot")
+ SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", verison: Version(1, 0, 0))
  parrot.executeAsMain()
 
  */

@@ -17,8 +17,16 @@ import Foundation
 import SDGCornerstone
 
 /// Initializes SDGCommandLine and SDGCornerstone. Call this before calling anything else from SDGCommandLine.
-public func initialize(applicationIdentifier: String, applicationPreferencesClass: Preferences.Type = Preferences.self) {
+///
+/// - Parameters:
+///     - applicationIdentifier: An application identifier in reverse domain form (tld.Developper.Tool).
+///     - version: The semantic version of the tool’s package. This will be displayed by the `version` subcommand. It is recommended to set this to `nil` in between stable releases.
+///     - applicationPreferencesClass: A subclass of `SDGCornerstone.Preferences` to use for the application preferences instance. Defaults to the `Preferences` class itself.
+public func initialize(applicationIdentifier: String, version: Version?, applicationPreferencesClass: Preferences.Type = Preferences.self) {
+
     SDGCornerstone.initialize(mode: .commandLineTool, applicationIdentifier: applicationIdentifier, applicationPreferencesClass: applicationPreferencesClass)
+
+    Version.currentToolVersion = version
 }
 
 private var warnedLocalizations: Set<ContentLocalization> = []

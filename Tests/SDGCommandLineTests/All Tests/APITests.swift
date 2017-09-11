@@ -88,27 +88,6 @@ class APITests : TestCase {
         }
     }
 
-    func testFormatting() {
-        XCTAssertErrorFree({
-            let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"])
-            XCTAssert(output.contains(StrictString("\u{1B}[1m")), "Bold formatting missing.")
-            XCTAssert(output.contains(StrictString("\u{1B}[22m")), "Bold formatting never reset.")
-        })
-    }
-
-    func testHelp() {
-        LocalizationSetting(orderOfPrecedence: ["en"]).do {
-            XCTAssertErrorFree({
-                let output = try Tool.command.execute(with: ["execute", "help"])
-                XCTAssert(output.contains(StrictString("tool")), "Root command missing.")
-                XCTAssert(output.contains(StrictString("help")), "Subcommand missing.")
-                XCTAssert(output.contains(StrictString("•string")), "Option missing.")
-                XCTAssert(output.contains(StrictString("[string]")), "Argument type missing.")
-                XCTAssert(¬output.contains(StrictString("[Boolean]")), "Boolean type not handled uniquely.")
-            })
-        }
-    }
-
     func testEnumerationOption() {
         LocalizationSetting(orderOfPrecedence: ["en"]).do {
             XCTAssertErrorFree({
@@ -138,6 +117,27 @@ class APITests : TestCase {
                     XCTAssert(output.contains(or), "Expected output missing: \(or)")
                 })
             }
+        }
+    }
+
+    func testFormatting() {
+        XCTAssertErrorFree({
+            let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"])
+            XCTAssert(output.contains(StrictString("\u{1B}[1m")), "Bold formatting missing.")
+            XCTAssert(output.contains(StrictString("\u{1B}[22m")), "Bold formatting never reset.")
+        })
+    }
+
+    func testHelp() {
+        LocalizationSetting(orderOfPrecedence: ["en"]).do {
+            XCTAssertErrorFree({
+                let output = try Tool.command.execute(with: ["execute", "help"])
+                XCTAssert(output.contains(StrictString("tool")), "Root command missing.")
+                XCTAssert(output.contains(StrictString("help")), "Subcommand missing.")
+                XCTAssert(output.contains(StrictString("•string")), "Option missing.")
+                XCTAssert(output.contains(StrictString("[string]")), "Argument type missing.")
+                XCTAssert(¬output.contains(StrictString("[Boolean]")), "Boolean type not handled uniquely.")
+            })
         }
     }
 
@@ -290,16 +290,37 @@ class APITests : TestCase {
         }
     }
 
+    func testVersion() {
+        let version = Version(1, 2, 3)
+        XCTAssertEqual(version.compatibleVersions.lowerBound, version)
+        XCTAssertEqual(version.compatibleVersions.upperBound, Version(2, 0, 0))
+
+        let zero = Version(0, 1, 2)
+        XCTAssertEqual(zero.compatibleVersions.lowerBound, zero)
+        XCTAssertEqual(zero.compatibleVersions.upperBound, Version(0, 2, 0))
+
+        XCTAssertEqual("1.2.3", Version(1, 2, 3))
+        XCTAssertEqual("1.2", Version(1, 2, 0))
+        XCTAssertEqual("1", Version(1, 0, 0))
+
+        XCTAssertNil(Version(""))
+        XCTAssertNil(Version("A"))
+        XCTAssertNil(Version("1.B"))
+        XCTAssertNil(Version("1.2.C"))
+        XCTAssertNil(Version("1.2.3.D"))
+    }
+
     static var allTests: [(String, (APITests) -> () throws -> Void)] {
         return [
             ("testCommand", testCommand),
             ("testDirectArgument", testDirectArgument),
+            ("testEnumerationOption", testEnumerationOption),
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
-            ("testEnumerationOption", testEnumerationOption),
             ("testLanguage", testLanguage),
             ("testNoColour", testNoColour),
-            ("testOption", testOption)
+            ("testOption", testOption),
+            ("testVersion", testVersion)
         ]
     }
 }

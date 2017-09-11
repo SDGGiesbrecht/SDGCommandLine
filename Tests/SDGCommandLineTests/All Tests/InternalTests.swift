@@ -19,16 +19,17 @@ import SDGCornerstone
 
 class InternalTests : TestCase {
 
+    static let rootCommand = Tool.command.withRootBehaviour()
+
     func testSetLanguage() {
-        let root = Tool.command.withRootBehaviour()
 
         XCTAssertErrorFree({
-            try root.execute(with: ["set‐language", "zxx"])
+            try InternalTests.rootCommand.execute(with: ["set‐language", "zxx"])
         })
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
         XCTAssertErrorFree({
-            try root.execute(with: ["set‐language"])
+            try InternalTests.rootCommand.execute(with: ["set‐language"])
         })
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
@@ -41,16 +42,26 @@ class InternalTests : TestCase {
             ] as [String: StrictString] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
-                        let output =  try root.execute(with: ["help"])
+                        let output =  try InternalTests.rootCommand.execute(with: ["help"])
                         XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                     })
                 }
         }
     }
 
+    func testVersionSubcommand() {
+        LocalizationSetting(orderOfPrecedence: [["en"]]).do {
+            XCTAssertErrorFree({
+                let output =  try InternalTests.rootCommand.execute(with: ["version"])
+                XCTAssertEqual(output, "1.2.3")
+            })
+        }
+    }
+
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
-            ("testSetLanguage", testSetLanguage)
+            ("testSetLanguage", testSetLanguage),
+            ("testVersionSubcommand", testVersionSubcommand)
         ]
     }
 }

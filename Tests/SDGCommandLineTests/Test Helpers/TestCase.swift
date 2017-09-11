@@ -25,7 +25,7 @@ class TestCase : XCTestCase {
     override func setUp() {
         if ¬TestCase.initialized {
             TestCase.initialized = true
-            SDGCommandLine.initialize(applicationIdentifier: "ca.solideogloria.SDGCommandLine.Tests")
+            SDGCommandLine.initialize(applicationIdentifier: "ca.solideogloria.SDGCommandLine.Tests", version: Version(1, 2, 3))
         }
         super.setUp()
     }
