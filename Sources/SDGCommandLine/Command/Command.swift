@@ -235,7 +235,7 @@ public struct Command {
 
         for option in options where option.matches(name: name) {
 
-            if option.getTypeIdentifier() == ArgumentType.booleanKey {
+            if option.getType().getIdentifier() == ArgumentType.booleanKey {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
                 return true
@@ -264,7 +264,7 @@ public struct Command {
                 }))
             }
 
-            guard let parsed = option.parse(argument: argument) else {
+            guard let parsed = option.getType().parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
                 throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
                     let optionName = ("•" + option.getLocalizedName())

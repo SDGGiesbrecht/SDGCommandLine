@@ -21,5 +21,11 @@ public protocol AnyArgumentTypeDefinition {
     func parse(argument: StrictString) -> Any?
 
     /// :nodoc:
+    func getIdentifier() -> StrictString
+
+    /// :nodoc:
     func getLocalizedName() -> StrictString
+
+    /// :nodoc:
+    func getLocalizedDescription() -> StrictString
 }

@@ -98,8 +98,8 @@ extension Command {
 
             let formatOption = { (option: AnyOption) -> StrictString in
                 var result = ("•" + option.getLocalizedName()).formattedAsOption()
-                if option.getTypeIdentifier() ≠ ArgumentType.booleanKey {
-                    result += " " + formatType(option.getLocalizedType())
+                if option.getType().getIdentifier() ≠ ArgumentType.booleanKey {
+                    result += " " + formatType(option.getType().getLocalizedName())
                 }
                 return result
             }
@@ -120,10 +120,10 @@ extension Command {
             }), entries: command.options, getHeadword: { $0.getLocalizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.getLocalizedDescription() })
 
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
-            for option in command.options {
-                let key = option.getTypeIdentifier()
+            for type in command.directArguments + command.options.map({ $0.getType() }) {
+                let key = type.getIdentifier()
                 if key ≠ ArgumentType.booleanKey {
-                    argumentTypes[key] = (type: option.getLocalizedType(), description: option.getLocalizedTypeDescription())
+                    argumentTypes[key] = (type: type.getLocalizedName(), description: type.getLocalizedDescription())
                 }
             }
             printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
