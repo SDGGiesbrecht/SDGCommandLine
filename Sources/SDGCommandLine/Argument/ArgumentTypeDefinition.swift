@@ -51,7 +51,17 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
     }
 
     /// :nodoc:
+    public func getIdentifier() -> StrictString {
+        return key
+    }
+
+    /// :nodoc:
     public func getLocalizedName() -> StrictString {
         return localizedName()
+    }
+
+    /// :nodoc:
+    public func getLocalizedDescription() -> StrictString {
+        return localizedDescription()
     }
 }

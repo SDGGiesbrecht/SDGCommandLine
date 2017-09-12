@@ -24,20 +24,11 @@ public protocol AnyOption {
     func matches(name: StrictString) -> Bool
 
     /// :nodoc:
-    func parse(argument: StrictString) -> Any?
-
-    /// :nodoc:
     func getLocalizedName() -> StrictString
 
     /// :nodoc:
     func getLocalizedDescription() -> StrictString
 
     /// :nodoc:
-    func getTypeIdentifier() -> StrictString
-
-    /// :nodoc:
-    func getLocalizedType() -> StrictString
-
-    /// :nodoc:
-    func getLocalizedTypeDescription() -> StrictString
+    func getType() -> AnyArgumentTypeDefinition
 }

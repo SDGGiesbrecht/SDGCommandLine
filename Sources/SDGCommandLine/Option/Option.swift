@@ -65,11 +65,6 @@ public struct Option<Type> : AnyOption {
     }
 
     /// :nodoc:
-    public func parse(argument: StrictString) -> Any? {
-        return type.parse(argument)
-    }
-
-    /// :nodoc:
     public func getLocalizedName() -> StrictString {
         return localizedName()
     }
@@ -80,17 +75,7 @@ public struct Option<Type> : AnyOption {
     }
 
     /// :nodoc:
-    public func getTypeIdentifier() -> StrictString {
-        return type.key
-    }
-
-    /// :nodoc:
-    public func getLocalizedType() -> StrictString {
-        return type.localizedName()
-    }
-
-    /// :nodoc:
-    public func getLocalizedTypeDescription() -> StrictString {
-        return type.localizedDescription()
+    public func getType() -> AnyArgumentTypeDefinition {
+        return type
     }
 }
