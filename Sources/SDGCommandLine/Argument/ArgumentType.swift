@@ -198,4 +198,66 @@ public struct ArgumentType {
         }) })
         return LocalizationSetting(orderOfPrecedence: languages)
     })
+
+    private static let versionName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "version"
+        case .deutschDeutschland:
+            return "Version"
+        case .françaisFrance:
+            return "version"
+        case .ελληνικάΕλλάδα:
+            return "έκδοση"
+        case .עברית־ישראל:
+            return "גירסה"
+        }
+    })
+
+    private static let developmentCase = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "development"
+        case .deutschDeutschland:
+            return "entwicklung"
+        case .françaisFrance:
+            return "développement"
+        case .ελληνικάΕλλάδα:
+            return "ανάπτυξη"
+        case .עברית־ישראל:
+            return "פיתוח"
+        }
+    })
+
+    private static let versionDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        let development = ArgumentType.developmentCase.resolved(for: localization)
+        switch localization {
+        case .englishUnitedKingdom:
+            return StrictString("A version number or ‘\(development)’.")
+        case .englishUnitedStates, .englishCanada:
+            return StrictString("A version number or “\(development)”.")
+        case .deutschDeutschland:
+            return StrictString("Eine Versionsnummer oder „\(development)“.")
+        case .françaisFrance:
+            return StrictString("Un numéro de version ou « \(development) ».")
+        case .ελληνικάΕλλάδα:
+            return StrictString("Ένα αριθμός έκδοσης ή «\(development)».")
+        case .עברית־ישראל:
+            return StrictString("גירסת מספר או ”\(development)“.")
+        }
+    })
+
+    internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(name: versionName, syntaxDescription: versionDescription, parse: { (argument: StrictString) -> Build? in
+
+        if let version = Version(String(argument)) {
+            return Build.version(version)
+        } else {
+            for localization in ContentLocalization.cases {
+                if argument == ArgumentType.developmentCase.resolved(for: localization) {
+                    return Build.development
+                }
+            }
+            return nil
+        }
+    })
 }
