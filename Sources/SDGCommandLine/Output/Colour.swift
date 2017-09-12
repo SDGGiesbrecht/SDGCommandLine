@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-/// A font weight.
+/// A font colour.
 public enum Colour : Int, TextFormat {
 
     /// Black.

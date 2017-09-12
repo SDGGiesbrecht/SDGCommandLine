@@ -46,7 +46,7 @@ extension Command {
         }
     })
 
-    static let setLanguage = Command(name: setLanguageName, description: setLanguageDescription, directArguments: [ArgumentType.languagePreference], options: [], execution: { (directArguments: DirectArguments, _, _) throws -> Void in
+    internal static let setLanguage = Command(name: setLanguageName, description: setLanguageDescription, directArguments: [ArgumentType.languagePreference], options: [], execution: { (directArguments: DirectArguments, _, _) throws -> Void in
 
         LocalizationSetting.setApplicationPreferences(to: directArguments.argument(at: 0, as: ArgumentType.languagePreference))
     })

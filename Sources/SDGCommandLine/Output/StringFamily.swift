@@ -18,7 +18,7 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar, Scala
     // MARK: - where ScalarView.Iterator.Element == UnicodeScalar, ScalarView.SubSequence : Collection, ScalarView.SubSequence.Iterator.Element == ScalarView.Iterator.Element
     // [_Workaround: When this constraint can be added to the protocol, it will be redundant here. (SDGCornerstone 0.4.2)_]
 
-    // MARK: - Semantic
+    // MARK: - Semantic Formatting
 
     /// Returns the string formatted as a section header.
     public func formattedAsSectionHeader() -> Self {
@@ -40,7 +40,7 @@ extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar, Scala
         return self.in(FontWeight.bold).in(Colour.green)
     }
 
-    // MARK: - General
+    // MARK: - General Formatting
 
     private static var escape: UnicodeScalar {
         return "\u{1B}"

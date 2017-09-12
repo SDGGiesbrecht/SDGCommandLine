@@ -86,7 +86,10 @@ public struct Command {
 
     internal func withRootBehaviour() -> Command {
         var copy = self
-        copy.subcommands.append(Command.setLanguage)
+        copy.subcommands.append(contentsOf: [
+            Command.version,
+            Command.setLanguage
+            ])
         return copy
     }
 
