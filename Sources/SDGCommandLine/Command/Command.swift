@@ -132,7 +132,7 @@ public struct Command {
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
 
         if let package = Package.current,
-            let (version, otherArguments) = parseVersion(from: arguments),
+            let (version, otherArguments) = try parseVersion(from: arguments),
             version ≠ Build.current {
 
             return try package.execute(version, of: names, with: otherArguments)
@@ -238,15 +238,16 @@ public struct Command {
         return true
     }
 
+    private func removeOptionMarker(from possibleOption: StrictString) -> StrictString? {
+        for marker in Option<Any>.optionMarkers where possibleOption.hasPrefix(marker) {
+            return possibleOption.dropping(through: marker)
+        }
+        return nil
+    }
+
     private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
 
-        var possibleName: StrictString?
-        for marker in Option<Any>.optionMarkers where possibleOption.hasPrefix(marker) {
-            possibleName = possibleOption.dropping(through: marker)
-            break
-        }
-
-        guard let name = possibleName else {
+        guard let name = removeOptionMarker(from: possibleOption) else {
             // Not an option.
             return false
         }
@@ -329,8 +330,26 @@ public struct Command {
         }))
     }
 
-    private func parseVersion(from arguments: [StrictString]) -> (version: Build, otherArguments: [StrictString])? {
-        notImplementedYet()
+    private func parseVersion(from arguments: [StrictString]) throws -> (version: Build, otherArguments: [StrictString])? {
+
+        var remaining = arguments[arguments.bounds]
+
+        while let argument = remaining.popFirst() {
+
+            if let name = removeOptionMarker(from: argument),
+                Options.useVersion.matches(name: name) {
+
+                var options = Options()
+                if try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options),
+                    let version = options.value(for: Options.useVersion) {
+
+                    let index = arguments.endIndex − remaining.count − 2
+                    let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
+                    return (version: version, otherArguments: otherArguments)
+                }
+            }
+        }
+
         return nil
     }
 

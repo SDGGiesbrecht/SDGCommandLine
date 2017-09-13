@@ -87,7 +87,7 @@ public struct Options {
 
     internal static let language = Option(name: languageName, description: languageDescription, type: ArgumentType.languagePreference)
 
-    private static let useVersionName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    internal static let useVersionName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "use‐version"

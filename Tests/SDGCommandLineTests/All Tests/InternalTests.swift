@@ -49,6 +49,14 @@ class InternalTests : TestCase {
         }
     }
 
+    func testVersionSelection() {
+        let currentPackage = Package.current
+        defer { Package.current = currentPackage }
+
+        let testPackageURL = FileManager.default.url(in: .temporary, at: "TestPackage")
+        Package.current = Package(url: testPackageURL)
+    }
+
     func testVersionSubcommand() {
         LocalizationSetting(orderOfPrecedence: [["en"]]).do {
             XCTAssertErrorFree({
