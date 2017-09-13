@@ -14,6 +14,7 @@
 
 import XCTest
 
+// [_Warning: This should be refactored to use a customized usage example that clearly distinguishes files, especially main.swift._]
 // [_Define Example: Read‐Me_]
 
 /*

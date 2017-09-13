@@ -105,7 +105,7 @@ public struct Options {
     private static let useVersionDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "Attempts to download and temporarily use the specified version insead of one installed version."
+            return "Attempts to download and temporarily use the specified version insead of one which is installed."
         case .deutschDeutschland:
             return "Versucht die angegebene Version herunterzuladen und anstatt deren zu verwenden, die installiert ist."
         case .françaisFrance:
