@@ -41,7 +41,7 @@ SDGCommandLine provides tools for implementing a command line interface.
   - Automatic `•language` option to run in a specific language only once.
 - Versioning tools
   - Automatic `version` subcommand
-  - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed. (Swift packages only)
+  - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
 (For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
 

@@ -55,6 +55,20 @@ class InternalTests : TestCase {
 
         let testPackageURL = FileManager.default.url(in: .temporary, at: "TestPackage")
         Package.current = Package(url: testPackageURL)
+
+        XCTAssertErrorFree {
+            try FileManager.default.do(in: testPackageURL) {
+                try Shell.default.run(command: ["swift", "package", "init", "\u{2D}\u{2D}type", "executable"])
+                try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22}\u{22}))".save(to: testPackageURL.appendingPathComponent("Sources/main.swift"))
+                try Shell.default.run(command: ["git", "init"])
+                try Shell.default.run(command: ["git", "add", "."])
+                try Shell.default.run(command: ["git", "commit", "\u{2D}\u{2D}m", "Commit"])
+                try Shell.default.run(command: ["git", "tag", "1.0.0"])
+            }
+
+            let output = try Tool.command.execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            XCTAssertEqual(output, "some‐invalid‐argument another‐invalid‐argument")
+        }
     }
 
     func testVersionSubcommand() {
