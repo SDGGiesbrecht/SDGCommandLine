@@ -14,6 +14,8 @@
 
 import Foundation
 
+import SDGCornerstone
+
 /// A Swift package.
 public struct Package {
 
@@ -32,4 +34,11 @@ public struct Package {
 
     /// The package URL.
     public let url: URL
+
+    // MARK: - Usage
+
+    internal func execute(_ version: Build, of names: Set<StrictString>, with arguments: [StrictString]) throws -> StrictString {
+        notImplementedYet()
+        return ""
+    }
 }

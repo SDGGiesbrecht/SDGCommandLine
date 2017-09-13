@@ -131,6 +131,13 @@ public struct Command {
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
 
+        if let package = Package.current,
+            let (version, otherArguments) = parseVersion(from: arguments),
+            version ≠ Build.current {
+
+            return try package.execute(version, of: names, with: otherArguments)
+        }
+
         Command.stack.append(self)
         defer { Command.stack.removeLast() }
 
@@ -320,6 +327,11 @@ public struct Command {
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
         }))
+    }
+
+    private func parseVersion(from arguments: [StrictString]) -> (version: Build, otherArguments: [StrictString])? {
+        notImplementedYet()
+        return nil
     }
 
     private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<ContentLocalization, Void> {
