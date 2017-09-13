@@ -19,6 +19,19 @@ import SDGCornerstone
 /// A command.
 public struct Command {
 
+    // MARK: - Static Properties
+
+    private static let standardOptions: [AnyOption] = {
+        var options: [AnyOption] = [
+            Options.noColour,
+            Options.language
+        ]
+        if Package.current ≠ nil {
+            options.append(Options.useVersion)
+        }
+        return options
+    }()
+
     // MARK: - Initialization
 
     /// Creates a command.
@@ -64,14 +77,12 @@ public struct Command {
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
-        self.options = options.appending(contentsOf: [Options.noColour, Options.language, Options.useVersion])
+        self.options = options.appending(contentsOf: Command.standardOptions)
     }
 
-    // MARK: - Static Properties
+    // MARK: - Properties
 
     internal private(set) static var stack: [Command] = []
-
-    // MARK: - Properties
 
     private let names: Set<StrictString>
     internal let localizedName: () -> StrictString
