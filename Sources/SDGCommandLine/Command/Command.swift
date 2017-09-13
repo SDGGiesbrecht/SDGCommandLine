@@ -64,7 +64,7 @@ public struct Command {
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
-        self.options = options.appending(contentsOf: [Options.noColour, Options.language])
+        self.options = options.appending(contentsOf: [Options.noColour, Options.language, Options.useVersion])
     }
 
     // MARK: - Static Properties
