@@ -22,12 +22,17 @@ class InternalTests : TestCase {
     static let rootCommand = Tool.command.withRootBehaviour()
 
     func testExternalToolVersions() {
-        // [_Warning: Needs to verify testing versions match expectations._]
-        LocalizationSetting(orderOfPrecedence: [["en"]]).do {
-            XCTAssertErrorFree({
-
-            })
-        }
+        XCTAssertErrorFree({
+            let tools: [ExternalTool] = [
+                Git.default,
+                SwiftTool.default
+                ]
+            for tool in tools {
+                var output = Command.Output()
+                try tool.checkVersion(output: &output)
+                XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output)")
+            }
+        })
     }
 
     func testSetLanguage() {
