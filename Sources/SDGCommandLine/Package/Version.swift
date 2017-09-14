@@ -107,7 +107,6 @@ public struct Version : Comparable, Equatable, ExpressibleByTextLiterals {
             let versionScalars: Set<UnicodeScalar> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
             return scalar ∈ versionScalars
         }), count: 1 ..< Int.max)
-        let first = StrictString(string).firstMatch(for: versionPattern)
         let components = StrictString(string).matches(for: versionPattern).lazy.map({ String(StrictString($0.contents)) })
 
         for possibleMatch in components {

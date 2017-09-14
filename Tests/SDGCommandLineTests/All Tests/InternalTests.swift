@@ -30,7 +30,7 @@ class InternalTests : TestCase {
             for tool in tools {
                 var output = Command.Output()
                 try tool.checkVersion(output: &output)
-                XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output)")
+                XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
             }
         })
     }
