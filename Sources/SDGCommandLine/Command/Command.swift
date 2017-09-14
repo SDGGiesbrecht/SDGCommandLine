@@ -21,7 +21,7 @@ public struct Command {
 
     // MARK: - Static Properties
 
-    private static let standardOptions: [AnyOption] = {
+    private static var standardOptions: [AnyOption] {
         var options: [AnyOption] = [
             Options.noColour,
             Options.language
@@ -30,7 +30,7 @@ public struct Command {
             options.append(Options.useVersion)
         }
         return options
-    }()
+    }
 
     // MARK: - Initialization
 

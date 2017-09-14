@@ -39,7 +39,7 @@ internal class ExternalTool {
 
     // MARK: - Usage
 
-    private func checkVersion(output: inout Command.Output) throws {
+    internal func checkVersion(output: inout Command.Output) throws {
         if ¬hasValidatedVersion {
             hasValidatedVersion = true
         }
@@ -91,6 +91,12 @@ internal class ExternalTool {
     }
 
     internal func execute(with arguments: [StrictString]) throws -> StrictString {
-        return StrictString(try Shell.default.run(command: ([command] + arguments).map({ String($0) })))
+        var output = Command.Output()
+        return try execute(with: arguments, output: &output)
+    }
+
+    internal func execute(with arguments: [StrictString], output: inout Command.Output) throws -> StrictString {
+        // [_Warning: Needs to check version match expectations._]
+        return StrictString(try Shell.default.run(command: ([command] + arguments).map({ String($0) }), alternatePrint: { print($0, to: &output) }))
     }
 }

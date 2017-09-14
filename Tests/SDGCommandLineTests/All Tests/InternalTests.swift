@@ -21,6 +21,15 @@ class InternalTests : TestCase {
 
     static let rootCommand = Tool.command.withRootBehaviour()
 
+    func testExternalToolVersions() {
+        // [_Warning: Needs to verify testing versions match expectations._]
+        LocalizationSetting(orderOfPrecedence: [["en"]]).do {
+            XCTAssertErrorFree({
+
+            })
+        }
+    }
+
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -54,19 +63,19 @@ class InternalTests : TestCase {
         defer { Package.current = currentPackage }
 
         let testPackageURL = FileManager.default.url(in: .temporary, at: "TestPackage")
+        defer { FileManager.default.delete(.temporary) }
         Package.current = Package(url: testPackageURL)
 
         XCTAssertErrorFree {
             try FileManager.default.do(in: testPackageURL) {
-                try Shell.default.run(command: ["swift", "package", "init", "\u{2D}\u{2D}type", "executable"])
+                try SwiftTool.default.initializeExecutablePackage()
                 try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22}\u{22}))".save(to: testPackageURL.appendingPathComponent("Sources/main.swift"))
-                try Shell.default.run(command: ["git", "init"])
-                try Shell.default.run(command: ["git", "add", "."])
-                try Shell.default.run(command: ["git", "commit", "\u{2D}\u{2D}m", "Commit"])
-                try Shell.default.run(command: ["git", "tag", "1.0.0"])
+                try Git.default.initializeRepository()
+                try Git.default.commit(message: "Initialized.")
+                try Git.default.tag(version: Version(1, 0, 0))
             }
 
-            let output = try Tool.command.execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            let output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
             XCTAssertEqual(output, "some‐invalid‐argument another‐invalid‐argument")
         }
     }
@@ -82,6 +91,7 @@ class InternalTests : TestCase {
 
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
+            ("testExternalToolVersions", testExternalToolVersions),
             ("testSetLanguage", testSetLanguage),
             ("testVersionSubcommand", testVersionSubcommand)
         ]

@@ -14,7 +14,7 @@
 
 import Foundation
 
-// [_Warning: This file duplicates SDGCornerstone until its next release._]
+// [_Workaround: Pending SDGCornerstone updates. (SDGCornerstone 0.4.3)_]
 
 extension FileManager {
     public func `do`(in directory: URL, closure: () throws -> Void) throws {
