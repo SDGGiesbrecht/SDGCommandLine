@@ -17,7 +17,7 @@ import Foundation
 // [_Workaround: Pending SDGCornerstone updates. (SDGCornerstone 0.4.3)_]
 
 extension FileManager {
-    public func `do`(in directory: URL, closure: () throws -> Void) throws {
+    internal func `do`(in directory: URL, closure: () throws -> Void) throws {
 
         try createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
 

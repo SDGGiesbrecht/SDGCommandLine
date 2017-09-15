@@ -26,7 +26,7 @@ class InternalTests : TestCase {
             let tools: [ExternalTool] = [
                 Git.default,
                 SwiftTool.default
-                ]
+            ]
             for tool in tools {
                 var output = Command.Output()
                 try tool.checkVersion(output: &output)
@@ -67,21 +67,32 @@ class InternalTests : TestCase {
         let currentPackage = Package.current
         defer { Package.current = currentPackage }
 
-        let testPackageURL = FileManager.default.url(in: .temporary, at: "TestPackage")
-        defer { FileManager.default.delete(.temporary) }
-        Package.current = Package(url: testPackageURL)
-
         XCTAssertErrorFree {
-            try FileManager.default.do(in: testPackageURL) {
-                try SwiftTool.default.initializeExecutablePackage()
-                try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22}\u{22}))".save(to: testPackageURL.appendingPathComponent("Sources/main.swift"))
-                try Git.default.initializeRepository()
-                try Git.default.commit(message: "Initialized.")
-                try Git.default.tag(version: Version(1, 0, 0))
-            }
+            var ignored = Command.Output()
+            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: "tool"), output: &ignored)
+            defer { FileManager.default.delete(.temporary) }
 
-            let output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
-            XCTAssertEqual(output, "some‐invalid‐argument another‐invalid‐argument")
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22}\u{22}))".save(to: testPackage.url(for: "Sources/main.swift"))
+            try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
+            try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
+
+            Package.current = testPackage.package
+
+            // When the cache is empty...
+            var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+
+            // When the cache exists...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+
+            // When the cache is empty...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+
+            // When the cache exists...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
         }
     }
 

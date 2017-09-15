@@ -130,12 +130,14 @@ public struct Command {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
+        var output = Output()
 
         if let package = Package.current,
             let (version, otherArguments) = try parseVersion(from: arguments),
             version ≠ Build.current {
 
-            return try package.execute(version, of: names, with: otherArguments)
+            try package.execute(version, of: names, with: otherArguments, output: &output)
+            return output.output
         }
 
         Command.stack.append(self)
@@ -149,7 +151,6 @@ public struct Command {
 
         let (directArguments, options) = try parse(arguments: arguments)
 
-        var output = Output()
         if options.value(for: Options.noColour) {
             output.filterFormatting = true
         }

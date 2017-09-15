@@ -94,11 +94,6 @@ internal class ExternalTool {
         }
     }
 
-    internal func execute(with arguments: [StrictString]) throws -> StrictString {
-        var output = Command.Output()
-        return try execute(with: arguments, output: &output)
-    }
-
     internal func execute(with arguments: [StrictString], output: inout Command.Output) throws -> StrictString {
         try checkVersionOnce(output: &output)
         return StrictString(try Shell.default.run(command: ([command] + arguments).map({ String($0) }), alternatePrint: { print($0, to: &output) }))

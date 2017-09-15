@@ -18,7 +18,7 @@ internal class SwiftTool : ExternalTool {
 
     // MARK: - Static Properties
 
-    #if Linux
+    #if os(Linux)
     private static let version = Version(3, 1, 1)
     #else
     private static let version = Version(3, 1, 0)
@@ -48,7 +48,7 @@ internal class SwiftTool : ExternalTool {
 
     // MARK: - Usage
 
-    internal func initializeExecutablePackage() throws {
-        _ = try execute(with: ["package", "init", "\u{2D}\u{2D}type", "executable"])
+    internal func initializeExecutablePackage(output: inout Command.Output) throws {
+        _ = try execute(with: ["package", "init", "\u{2D}\u{2D}type", "executable"], output: &output)
     }
 }

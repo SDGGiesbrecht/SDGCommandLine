@@ -23,6 +23,9 @@ public struct Package {
 
     internal static var current: Package?
 
+    private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
+    private static let developmentCache = versionsCache.appendingPathComponent("Development")
+
     // MARK: - Initialization
 
     /// Creates a package instance.
@@ -37,8 +40,19 @@ public struct Package {
 
     // MARK: - Usage
 
-    internal func execute(_ version: Build, of names: Set<StrictString>, with arguments: [StrictString]) throws -> StrictString {
+    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: inout Command.Output) throws {
+
+        let cache = try cacheDirectory(for: version, output: &output)
+
         notImplementedYet()
-        return ""
+    }
+
+    private func cacheDirectory(for version: Build, output: inout Command.Output) throws -> URL {
+        switch version {
+        case .version(let specific):
+            return Package.versionsCache.appendingPathComponent(specific.string)
+        case .development:
+            return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: &output)))
+        }
     }
 }

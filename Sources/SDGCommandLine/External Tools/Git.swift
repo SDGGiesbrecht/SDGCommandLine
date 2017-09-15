@@ -12,15 +12,17 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCornerstone
 
 internal class Git : ExternalTool {
 
     // MARK: - Static Properties
 
-    #if Linux
+    #if os(Linux)
          // [_Warning: This should be looked up._]
-         private static let version = Version(0, 0, 0)
+         private static let version = Version(2, 14, 1)
     #else
          private static let version = Version(2, 11, 0)
     #endif
@@ -49,16 +51,25 @@ internal class Git : ExternalTool {
 
     // MARK: - Usage
 
-    internal func initializeRepository() throws {
-        _ = try execute(with: ["init"])
+    internal func initializeRepository(output: inout Command.Output) throws {
+        _ = try execute(with: ["init"], output: &output)
     }
 
-    internal func commit(message: StrictString) throws {
-        _ = try execute(with: ["add", "."])
-        _ = try execute(with: ["commit", "\u{2D}\u{2D}m", message])
+    internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
+        _ = try execute(with: ["add", "."], output: &output)
+        _ = try execute(with: ["commit", "\u{2D}\u{2D}m", description], output: &output)
     }
 
-    internal func tag(version: Version) throws {
-        _ = try execute(with: ["tag", StrictString(version.string)])
+    internal func tag(version: Version, output: inout Command.Output) throws {
+        _ = try execute(with: ["tag", StrictString(version.string)], output: &output)
+    }
+
+    internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
+        var url = StrictString(package.url.absoluteString)
+        // [_Workaround: Pending SDGCornerstone updates. (SDGCornerstone 0.4.3)_]
+        url.replaceMatches(for: "(".scalars, with: "%28".scalars)
+        url.replaceMatches(for: ")".scalars, with: "%29".scalars)
+
+        return StrictString(try execute(with: ["ls\u{2D}remote", url, "master"], output: &output).truncated(before: "\u{9}".scalars))
     }
 }
