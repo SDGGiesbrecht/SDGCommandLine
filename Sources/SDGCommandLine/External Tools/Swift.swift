@@ -51,4 +51,8 @@ internal class SwiftTool : ExternalTool {
     internal func initializeExecutablePackage(output: inout Command.Output) throws {
         _ = try execute(with: ["package", "init", "\u{2D}\u{2D}type", "executable"], output: &output)
     }
+
+    internal func buildForRelease(output: inout Command.Output) throws {
+        _ = try execute(with: ["build", "\u{2D}\u{2D}configuration", "release"], output: &output)
+    }
 }

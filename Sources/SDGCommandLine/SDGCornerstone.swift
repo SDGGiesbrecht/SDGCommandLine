@@ -14,7 +14,9 @@
 
 import Foundation
 
-// [_Workaround: Pending SDGCornerstone updates. (SDGCornerstone 0.4.3)_]
+import SDGCornerstone
+
+// [_Workaround: Pending release of SDGCornerstone 0.4.4. (SDGCornerstone 0.4.3)_]
 
 extension FileManager {
     internal func `do`(in directory: URL, closure: () throws -> Void) throws {
@@ -26,5 +28,23 @@ extension FileManager {
         defer { changeCurrentDirectoryPath(previous) }
 
         try closure()
+    }
+
+    internal func move(_ source: URL, to destination: URL) throws {
+
+        try createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+
+        try moveItem(at: source, to: destination)
+    }
+}
+
+extension Shell {
+
+    internal static func quote(_ argument: String) -> String {
+        if argument.contains(" ") {
+            return argument
+        } else {
+            return "\u{22}" + argument + "\u{22}"
+        }
     }
 }

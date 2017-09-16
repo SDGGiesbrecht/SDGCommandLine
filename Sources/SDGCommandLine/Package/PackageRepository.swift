@@ -18,6 +18,10 @@ import SDGCornerstone
 
 internal struct PackageRepository {
 
+    // MARK: - Static Properties
+
+    private static let releaseProductsDirectory = ".build/release"
+
     // MARK: - Initialization
 
     internal init(initializingAt location: URL, output: inout Command.Output) throws {
@@ -28,7 +32,29 @@ internal struct PackageRepository {
             try SwiftTool.default.initializeExecutablePackage(output: &output)
             try Git.default.initializeRepository(output: &output)
         }
-        try commitChanges(description: "Initialized.", output: &output)
+        try commitChanges(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            switch localization {
+            case .englishUnitedKingdom:
+                return "Initialised."
+            case .englishUnitedStates, .englishCanada:
+                return "Initialized."
+            case .deutschDeutschland:
+                return "Initialisiert."
+            case .françaisFrance:
+                return "Initialisé."
+            case .ελληνικάΕλλάδα:
+                return "Αρχικοποίησα."
+            case .עברית־ישראל:
+                return "אתחלתי."
+            }
+        }).resolved(), output: &output)
+    }
+
+    internal init(cloning package: Package, to location: URL, output: inout Command.Output) throws {
+        self.location = location
+        self.package = package
+
+        try Git.default.clone(repository: package.url, to: location, output: &output)
     }
 
     // MARK: - Properties
@@ -42,6 +68,15 @@ internal struct PackageRepository {
         return location.appendingPathComponent(relativePath)
     }
 
+    // MARK: - Actions
+
+    internal func buildForRelease(output: inout Command.Output) throws -> URL {
+        try FileManager.default.do(in: location) {
+            try SwiftTool.default.buildForRelease(output: &output)
+        }
+        return location.appendingPathComponent(PackageRepository.releaseProductsDirectory)
+    }
+
     // MARK: - Modifications
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
@@ -53,6 +88,12 @@ internal struct PackageRepository {
     internal func tag(version: Version, output: inout Command.Output) throws {
         try FileManager.default.do(in: location) {
             try Git.default.tag(version: version, output: &output)
+        }
+    }
+
+    internal func checkout(_ version: Version, output: inout Command.Output) throws {
+        try FileManager.default.do(in: location) {
+            try Git.default.checkout(version, output: &output)
         }
     }
 }

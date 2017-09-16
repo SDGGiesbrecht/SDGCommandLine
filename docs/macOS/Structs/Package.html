@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Underline Enum Reference</title>
+    <title>Package Struct Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/Underline" class="dashAnchor"></a>
-    <a title="Underline Enum Reference"></a>
+    <a name="//apple_ref/swift/Struct/Package" class="dashAnchor"></a>
+    <a title="Package Struct Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">SDGCommandLine Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">SDGCommandLine Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Underline Enum Reference
+        Package Struct Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -120,25 +120,32 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Underline</h1>
+            <h1>Package</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Underline</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TextFormat.html">TextFormat</a></span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Package</span></code></pre>
 
                 </div>
               </div>
-            <p>An underline.</p>
+            <p>A Swift package.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FO14SDGCommandLine9Underline10underlinedFMS0_S0_"></a>
-                    <a name="//apple_ref/swift/Element/underlined" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FO14SDGCommandLine9Underline10underlinedFMS0_S0_">underlined</a>
+                    <a name="/s:FV14SDGCommandLine7PackagecFT3urlV10Foundation3URL_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(url:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV14SDGCommandLine7PackagecFT3urlV10Foundation3URL_S0_">init(url:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -146,14 +153,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Underlined.</p>
+                        <p>Creates a package instance.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">case</span> <span class="n">underlined</span> <span class="o">=</span> <span class="mi">4</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -164,19 +171,19 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/TextFormat"></a>
-                <a name="//apple_ref/swift/Section/TextFormat" class="dashAnchor"></a>
-                <a href="#/TextFormat">
-                  <h3 class="section-name">TextFormat</h3>
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vO14SDGCommandLine9Underline9startCodeSi"></a>
-                    <a name="//apple_ref/swift/Property/startCode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vO14SDGCommandLine9Underline9startCodeSi">startCode</a>
+                    <a name="/s:vV14SDGCommandLine7Package3urlV10Foundation3URL"></a>
+                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV14SDGCommandLine7Package3urlV10Foundation3URL">url</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -184,41 +191,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The ANSI start code.</p>
+                        <p>The package URL.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">startCode</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:ZvO14SDGCommandLine9Underline9resetCodeSi"></a>
-                    <a name="//apple_ref/swift/Variable/resetCode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZvO14SDGCommandLine9Underline9resetCodeSi">resetCode</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The ANSI reset code.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">resetCode</span> <span class="o">=</span> <span class="mi">24</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span></code></pre>
 
                         </div>
                       </div>

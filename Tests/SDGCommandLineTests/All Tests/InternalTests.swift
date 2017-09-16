@@ -64,6 +64,9 @@ class InternalTests : TestCase {
     }
 
     func testVersionSelection() {
+        FileManager.default.delete(.cache)
+        defer { FileManager.default.delete(.cache) }
+
         let currentPackage = Package.current
         defer { Package.current = currentPackage }
 
@@ -72,7 +75,7 @@ class InternalTests : TestCase {
             let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: "tool"), output: &ignored)
             defer { FileManager.default.delete(.temporary) }
 
-            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22}\u{22}))".save(to: testPackage.url(for: "Sources/main.swift"))
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
 
@@ -80,19 +83,19 @@ class InternalTests : TestCase {
 
             // When the cache is empty...
             var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
 
             // When the cache exists...
             output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
 
             // When the cache is empty...
             output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
 
             // When the cache exists...
             output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument".scalars))
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
         }
     }
 

@@ -21,7 +21,6 @@ internal class Git : ExternalTool {
     // MARK: - Static Properties
 
     #if os(Linux)
-         // [_Warning: This should be looked up._]
          private static let version = Version(2, 14, 1)
     #else
          private static let version = Version(2, 11, 0)
@@ -55,6 +54,14 @@ internal class Git : ExternalTool {
         _ = try execute(with: ["init"], output: &output)
     }
 
+    internal func clone(repository remote: URL, to local: URL, output: inout Command.Output) throws {
+        _ = try execute(with: ["clone", StrictString(Shell.quote(remote.absoluteString)), StrictString(Shell.quote(local.path))], output: &output)
+    }
+
+    internal func checkout(_ version: Version, output: inout Command.Output) throws {
+        _ = try execute(with: ["checkout", StrictString(version.string)], output: &output)
+    }
+
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
         _ = try execute(with: ["add", "."], output: &output)
         _ = try execute(with: ["commit", "\u{2D}\u{2D}m", description], output: &output)
@@ -65,11 +72,6 @@ internal class Git : ExternalTool {
     }
 
     internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
-        var url = StrictString(package.url.absoluteString)
-        // [_Workaround: Pending SDGCornerstone updates. (SDGCornerstone 0.4.3)_]
-        url.replaceMatches(for: "(".scalars, with: "%28".scalars)
-        url.replaceMatches(for: ")".scalars, with: "%29".scalars)
-
-        return StrictString(try execute(with: ["ls\u{2D}remote", url, "master"], output: &output).truncated(before: "\u{9}".scalars))
+        return StrictString(try execute(with: ["ls\u{2D}remote", StrictString(Shell.quote(package.url.absoluteString)), "master"], output: &output).truncated(before: "\u{9}".scalars))
     }
 }

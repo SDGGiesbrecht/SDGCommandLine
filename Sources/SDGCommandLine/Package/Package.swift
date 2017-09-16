@@ -43,8 +43,24 @@ public struct Package {
     internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: inout Command.Output) throws {
 
         let cache = try cacheDirectory(for: version, output: &output)
+        if ¬FileManager.default.fileExists(atPath: cache.path) {
 
-        notImplementedYet()
+            switch version {
+            case .development:
+                // Clean up older builds.
+                try? FileManager.default.removeItem(at: Package.developmentCache)
+            case .version:
+                break
+            }
+
+            try build(version, to: cache, output: &output)
+        }
+
+        for executable in try FileManager.default.contentsOfDirectory(at: cache, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
+
+            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), alternatePrint: { print($0, to: &output) })
+            return
+        }
     }
 
     private func cacheDirectory(for version: Build, output: inout Command.Output) throws -> URL {
@@ -54,5 +70,22 @@ public struct Package {
         case .development:
             return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: &output)))
         }
+    }
+
+    private func build(_ version: Build, to destination: URL, output: inout Command.Output) throws {
+        let temporaryCloneLocation = FileManager.default.url(in: .temporary, at: "Package Clones/" + url.lastPathComponent)
+        let temporaryRepository = try PackageRepository(cloning: self, to: temporaryCloneLocation, output: &output)
+        defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
+
+        switch version {
+        case .version(let specific):
+            try temporaryRepository.checkout(specific, output: &output)
+        case .development:
+            break
+        }
+
+        let products = try temporaryRepository.buildForRelease(output: &output)
+
+        try FileManager.default.move(products, to: destination)
     }
 }
