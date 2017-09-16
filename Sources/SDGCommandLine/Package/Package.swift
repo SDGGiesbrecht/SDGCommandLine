@@ -16,8 +16,7 @@ import Foundation
 
 import SDGCornerstone
 
-/// A Swift package.
-public struct Package {
+internal struct Package {
 
     // MARK: - Static Properties
 
@@ -28,15 +27,13 @@ public struct Package {
 
     // MARK: - Initialization
 
-    /// Creates a package instance.
-    public init(url: URL) {
+    internal init(url: URL) {
         self.url = url
     }
 
     // MARK: - Properties
 
-    /// The package URL.
-    public let url: URL
+    internal let url: URL
 
     // MARK: - Usage
 
