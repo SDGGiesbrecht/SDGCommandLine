@@ -22,17 +22,21 @@ class InternalTests : TestCase {
     static let rootCommand = Tool.command.withRootBehaviour()
 
     func testExternalToolVersions() {
-        XCTAssertErrorFree({
-            let tools: [ExternalTool] = [
-                Git.default,
-                SwiftTool.default
-            ]
-            for tool in tools {
-                var output = Command.Output()
-                try tool.checkVersion(output: &output)
-                XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
-            }
-        })
+        if ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
+            ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
+            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil {
+            XCTAssertErrorFree({
+                let tools: [ExternalTool] = [
+                    Git.default,
+                    SwiftTool.default
+                ]
+                for tool in tools {
+                    var output = Command.Output()
+                    try tool.checkVersion(output: &output)
+                    XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
+                }
+            })
+        }
     }
 
     func testSetLanguage() {
