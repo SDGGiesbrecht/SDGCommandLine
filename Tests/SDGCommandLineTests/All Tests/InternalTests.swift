@@ -27,9 +27,10 @@ class InternalTests : TestCase {
     }
 
     func testExternalToolVersions() {
-        if ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
+        if ProcessInfo.processInfo.environment["__XCODE_BUILT_PRODUCTS_DIR_PATHS"] == nil
+            ∧ (ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
             ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
-            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil {
+            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil) {
             XCTAssertErrorFree({
                 let tools: [ExternalTool] = [
                     Git.default,

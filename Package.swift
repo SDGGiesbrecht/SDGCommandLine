@@ -19,6 +19,6 @@ import PackageDescription
 let package = Package(
     name: "SDGCommandLine",
     dependencies: [
-        .Package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", versions: Version(0, 4, 3) ..< Version(0, 5, 0))
+        .Package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", versions: Version(0, 4, 4) ..< Version(0, 5, 0))
     ]
 )
