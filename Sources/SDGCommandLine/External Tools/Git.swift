@@ -30,7 +30,7 @@ internal class Git : ExternalTool {
 
     // MARK: - Initialization
 
-    private init(version: Version) {
+    internal init(version: Version) {
         super.init(name: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
@@ -41,8 +41,8 @@ internal class Git : ExternalTool {
                 return "גיט"
             }
         }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-            switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+            switch localization { // [_Exempt from Code Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return "git\u{2D}scm.com"
             }
         }), command: "git", version: version, versionCheck: ["version"])

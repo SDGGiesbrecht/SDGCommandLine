@@ -28,7 +28,7 @@ internal class SwiftTool : ExternalTool {
 
     // MARK: - Initialization
 
-    private init(version: Version) {
+    internal init(version: Version) {
         super.init(name: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
@@ -39,8 +39,8 @@ internal class SwiftTool : ExternalTool {
                 return "סוויפט"
             }
         }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-            switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+            switch localization { // [_Exempt from Code Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return "swift.org"
             }
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
