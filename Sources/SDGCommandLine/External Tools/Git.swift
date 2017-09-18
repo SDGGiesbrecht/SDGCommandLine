@@ -23,7 +23,7 @@ internal class Git : ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 14, 1)
     #else
-         private static let version = Version(2, 11, 0)
+         private static let version = Version(2, 13, 1)
     #endif
 
     internal static let `default` = Git(version: Git.version)
@@ -40,7 +40,7 @@ internal class Git : ExternalTool {
             case .עברית־ישראל:
                 return "גיט"
             }
-        }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
             switch localization { // [_Exempt from Code Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return "git\u{2D}scm.com"

@@ -38,7 +38,7 @@ internal class SwiftTool : ExternalTool {
             case .עברית־ישראל:
                 return "סוויפט"
             }
-        }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
             switch localization { // [_Exempt from Code Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return "swift.org"

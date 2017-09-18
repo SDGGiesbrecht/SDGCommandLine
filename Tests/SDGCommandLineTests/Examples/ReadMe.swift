@@ -32,7 +32,7 @@ import XCTest
 
  import SDGCommandLine
 
- SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", verison: Version(1, 0, 0))
+ SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: "https://website.tld/Parrot")
  parrot.executeAsMain()
 
  */
