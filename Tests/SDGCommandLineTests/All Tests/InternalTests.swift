@@ -27,10 +27,16 @@ class InternalTests : TestCase {
     }
 
     func testExternalToolVersions() {
-        if ProcessInfo.processInfo.environment["__XCODE_BUILT_PRODUCTS_DIR_PATHS"] == nil
-            ∧ (ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
+        var shouldTest = ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
             ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
-            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil) {
+            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil
+
+        #if os(macOS)
+            // Xcode version differs from Travis version found first by the Swift Package Manager.
+            shouldTest ∧= ProcessInfo.processInfo.environment["__XCODE_BUILT_PRODUCTS_DIR_PATHS"] ≠ nil
+        #endif
+
+        if shouldTest {
             XCTAssertErrorFree({
                 let tools: [ExternalTool] = [
                     Git.default,
