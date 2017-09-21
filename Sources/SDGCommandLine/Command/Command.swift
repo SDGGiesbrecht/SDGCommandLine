@@ -19,6 +19,19 @@ import SDGCornerstone
 /// A command.
 public struct Command {
 
+    // MARK: - Static Properties
+
+    private static var standardOptions: [AnyOption] {
+        var options: [AnyOption] = [
+            Options.noColour,
+            Options.language
+        ]
+        if Package.current ≠ nil {
+            options.append(Options.useVersion)
+        }
+        return options
+    }
+
     // MARK: - Initialization
 
     /// Creates a command.
@@ -64,14 +77,12 @@ public struct Command {
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
-        self.options = options.appending(contentsOf: [Options.noColour, Options.language])
+        self.options = options.appending(contentsOf: Command.standardOptions)
     }
 
-    // MARK: - Static Properties
+    // MARK: - Properties
 
     internal private(set) static var stack: [Command] = []
-
-    // MARK: - Properties
 
     private let names: Set<StrictString>
     internal let localizedName: () -> StrictString
@@ -119,6 +130,15 @@ public struct Command {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
+        var output = Output()
+
+        if let package = Package.current,
+            let (version, otherArguments) = try parseVersion(from: arguments),
+            version ≠ Build.current {
+
+            try package.execute(version, of: names, with: otherArguments, output: &output)
+            return output.output
+        }
 
         Command.stack.append(self)
         defer { Command.stack.removeLast() }
@@ -131,7 +151,6 @@ public struct Command {
 
         let (directArguments, options) = try parse(arguments: arguments)
 
-        var output = Output()
         if options.value(for: Options.noColour) {
             output.filterFormatting = true
         }
@@ -220,15 +239,16 @@ public struct Command {
         return true
     }
 
+    private func removeOptionMarker(from possibleOption: StrictString) -> StrictString? {
+        for marker in Option<Any>.optionMarkers where possibleOption.hasPrefix(marker) {
+            return possibleOption.dropping(through: marker)
+        }
+        return nil
+    }
+
     private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
 
-        var possibleName: StrictString?
-        for marker in Option<Any>.optionMarkers where possibleOption.hasPrefix(marker) {
-            possibleName = possibleOption.dropping(through: marker)
-            break
-        }
-
-        guard let name = possibleName else {
+        guard let name = removeOptionMarker(from: possibleOption) else {
             // Not an option.
             return false
         }
@@ -309,6 +329,29 @@ public struct Command {
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
         }))
+    }
+
+    private func parseVersion(from arguments: [StrictString]) throws -> (version: Build, otherArguments: [StrictString])? {
+
+        var remaining = arguments[arguments.bounds]
+
+        while let argument = remaining.popFirst() {
+
+            if let name = removeOptionMarker(from: argument),
+                Options.useVersion.matches(name: name) {
+
+                var options = Options()
+                if try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options),
+                    let version = options.value(for: Options.useVersion) {
+
+                    let index = arguments.endIndex − remaining.count − 2
+                    let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
+                    return (version: version, otherArguments: otherArguments)
+                }
+            }
+        }
+
+        return nil
     }
 
     private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<ContentLocalization, Void> {

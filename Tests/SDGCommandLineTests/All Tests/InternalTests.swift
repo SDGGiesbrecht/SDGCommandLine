@@ -21,6 +21,77 @@ class InternalTests : TestCase {
 
     static let rootCommand = Tool.command.withRootBehaviour()
 
+    func testBuild() {
+        XCTAssertEqual(Build.development, Build.development)
+        XCTAssertNotEqual(Build.version(Version(1, 0, 0)), Build.development)
+    }
+
+    func testExternalToolVersions() {
+        var shouldTest = ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
+            ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
+            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil
+
+        #if os(macOS)
+            // Xcode version differs from Travis version found first by the Swift Package Manager.
+            shouldTest ∧= ProcessInfo.processInfo.environment["__XCODE_BUILT_PRODUCTS_DIR_PATHS"] ≠ nil
+        #endif
+
+        if shouldTest {
+            XCTAssertErrorFree({
+                let tools: [ExternalTool] = [
+                    Git.default,
+                    SwiftTool.default
+                ]
+                for tool in tools {
+                    var output = Command.Output()
+                    try tool.checkVersion(output: &output)
+                    XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
+                }
+            })
+        }
+
+        for (language, searchTerm) in [
+            "en": "Attempting",
+            "de": "Versucht",
+            "fr": "Tente",
+            "el": "Προσπαθεί",
+            "he": "מנסה"
+            ] as [String: StrictString] {
+                LocalizationSetting(orderOfPrecedence: [language]).do {
+                    XCTAssertErrorFree({
+                        var output = Command.Output()
+                        let swift = SwiftTool(version: Version(0, 0, 0))
+                        try swift.checkVersion(output: &output)
+                        XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
+
+                        output = Command.Output()
+                        let git = Git(version: Version(0, 0, 0))
+                        try git.checkVersion(output: &output)
+                        XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
+                    })
+                    XCTAssertThrowsError(containing: "Nonexistent") {
+                        var output = Command.Output()
+                        let nonexistent = ExternalTool(name: UserFacingText<ContentLocalization, Void>({ (_, _) in return "Nonexistent" }), webpage: UserFacingText<ContentLocalization, Void>({ (_, _) in return "" }), command: "nonexistent", version: Version(0, 0, 0), versionCheck: ["version"])
+                        try nonexistent.checkVersion(output: &output)
+                    }
+                }
+        }
+    }
+
+    func testPackageRepository() {
+        for language in ["en", "en\u{2D}US", "de", "fr", "el", "he"] {
+                LocalizationSetting(orderOfPrecedence: [language]).do {
+                    XCTAssertErrorFree({
+                        let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
+
+                        var output = Command.Output()
+                        _ = try PackageRepository(initializingAt: packageLocation, output: &output)
+                        defer { FileManager.default.delete(.temporary) }
+                    })
+                }
+        }
+    }
+
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -49,6 +120,53 @@ class InternalTests : TestCase {
         }
     }
 
+    func testVersion() {
+        XCTAssertNil(Version(firstIn: "Blah blah blah..."))
+    }
+
+    func testVersionSelection() {
+        FileManager.default.delete(.cache)
+        defer { FileManager.default.delete(.cache) }
+
+        let currentPackage = Package.current
+        defer { Package.current = currentPackage }
+
+        XCTAssertErrorFree {
+            var ignored = Command.Output()
+            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: "tool"), output: &ignored)
+            defer { FileManager.default.delete(.temporary) }
+
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/main.swift"))
+            try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
+            try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
+
+            Package.current = testPackage.package
+
+            // When the cache is empty...
+            var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+
+            // When the cache exists...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+
+            // When the cache is empty...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+
+            // When the cache exists...
+            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
+            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+
+            LocalizationSetting(orderOfPrecedence: [["en"]]).do {
+                // Looking for version when it does not exist...
+                XCTAssertThrowsError(containing: "some‐invalid‐argument") {
+                    _ = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "another‐invalid‐argument"])
+                }
+            }
+        }
+    }
+
     func testVersionSubcommand() {
         LocalizationSetting(orderOfPrecedence: [["en"]]).do {
             XCTAssertErrorFree({
@@ -60,7 +178,12 @@ class InternalTests : TestCase {
 
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
+            ("testBuild", testBuild),
+            ("testExternalToolVersions", testExternalToolVersions),
+            ("testPackageRepository", testPackageRepository),
             ("testSetLanguage", testSetLanguage),
+            ("testVersion", testVersion),
+            ("testVersionSelection", testVersionSelection),
             ("testVersionSubcommand", testVersionSubcommand)
         ]
     }

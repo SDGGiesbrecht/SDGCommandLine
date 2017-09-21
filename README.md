@@ -39,6 +39,9 @@ SDGCommandLine provides tools for implementing a command line interface.
 - Interface localization
   - Automatic `set‐language` subcommand to set language preferences.
   - Automatic `•language` option to run in a specific language only once.
+- Versioning tools
+  - Automatic `version` subcommand
+  - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
 (For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
 
@@ -81,9 +84,10 @@ import SDGCommandLine
 /*
  // main.swift must consist of the following lines:
 
+ import Foundation
  import SDGCommandLine
 
- SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", verison: Version(1, 0, 0))
+ SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
  parrot.executeAsMain()
 
  */

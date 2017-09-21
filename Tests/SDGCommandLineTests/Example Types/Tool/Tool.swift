@@ -17,19 +17,23 @@ import SDGCommandLine
 
 struct Tool {
 
-    static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
-        switch localization {
-        case .english, .unsupported:
-            return "tool"
-        case .deutsch:
-            return "werkzeug"
-        }
-    }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
-        switch localization {
-        case .english, .unsupported:
-            return "serves as an example tool."
-        case .deutsch:
-            return "dient als Beilspielswerkzeug."
-        }
-    }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command])
+    static let command = createCommand()
+
+    static func createCommand() -> Command {
+        return Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "tool"
+            case .deutsch:
+                return "werkzeug"
+            }
+        }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "serves as an example tool."
+            case .deutsch:
+                return "dient als Beilspielswerkzeug."
+            }
+        }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command])
+    }
 }

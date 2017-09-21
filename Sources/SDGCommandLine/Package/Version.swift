@@ -101,6 +101,24 @@ public struct Version : Comparable, Equatable, ExpressibleByTextLiterals {
         }
     }
 
+    /// Creates an instance representing the first version in a string.
+    public init?(firstIn string: String) {
+        let versionPattern = RepetitionPattern(ConditionalPattern(condition: { (scalar: UnicodeScalar) in
+            let versionScalars: Set<UnicodeScalar> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
+            return scalar ∈ versionScalars
+        }), count: 1 ..< Int.max)
+        let components = StrictString(string).matches(for: versionPattern).lazy.map({ String(StrictString($0.contents)) })
+
+        for possibleMatch in components {
+            if let version = Version(possibleMatch) {
+                self = version
+                return
+            }
+        }
+
+        return nil
+    }
+
     // MARK: - Comparable
 
     // [_Inherit Documentation: SDGCornerstone.Comparable.<_]
