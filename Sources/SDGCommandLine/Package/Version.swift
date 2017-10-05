@@ -15,7 +15,7 @@
 import SDGCornerstone
 
 /// A semantic version.
-public struct Version : Comparable, Equatable, ExpressibleByTextLiterals {
+public struct Version : Comparable, Equatable, ExpressibleByStringLiteral {
 
     // MARK: - Static Properties
 
@@ -143,9 +143,9 @@ public struct Version : Comparable, Equatable, ExpressibleByTextLiterals {
         return (lhs.major, lhs.minor, lhs.patch) == (rhs.major, rhs.minor, rhs.patch)
     }
 
-    // MARK: - ExpressibleByTextLiterals
+    // MARK: - ExpressibleByStringLiteral
 
-    // [_Inherit Documentation: SDGCornerstone.ExpressibleByTextLiterals.init(stringLiteral:)_]
+    // [_Inherit Documentation: SDGCornerstone.ExpressibleByStringLiteral.init(stringLiteral:)_]
     /// Creates an instance from a string literal.
     ///
     /// - Parameters:
