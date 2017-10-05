@@ -114,10 +114,10 @@ public struct Command {
             exit(Int32(Error.successCode))
         } catch let error as Command.Error { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
-            exit(Int32(truncatingBitPattern: error.exitCode))
+            exit(Int32(truncatingIfNeeded: error.exitCode))
         } catch { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
-            exit(Int32(truncatingBitPattern: Error.generalErrorCode))
+            exit(Int32(truncatingIfNeeded: Error.generalErrorCode))
         }
     }
 
