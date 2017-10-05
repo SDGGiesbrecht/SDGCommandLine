@@ -14,9 +14,7 @@
 
 import SDGCornerstone
 
-extension StringFamily where ScalarView.Iterator.Element == UnicodeScalar, ScalarView.SubSequence : Collection, ScalarView.SubSequence.Iterator.Element == ScalarView.Iterator.Element {
-    // MARK: - where ScalarView.Iterator.Element == UnicodeScalar, ScalarView.SubSequence : Collection, ScalarView.SubSequence.Iterator.Element == ScalarView.Iterator.Element
-    // [_Workaround: When this constraint can be added to the protocol, it will be redundant here. (SDGCornerstone 0.4.2)_]
+extension StringFamily {
 
     // MARK: - Semantic Formatting
 

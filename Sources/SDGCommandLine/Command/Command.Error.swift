@@ -32,7 +32,7 @@ extension Command {
         ///     - exitCode: An optional specific exit code. (If not specified, the exit code will simply be all ones.)
         ///
         /// - Precondition: `exitCode` ≠ 0
-        public init<L : Localization>(description: UserFacingText<L, Void>, exitCode: Int = Int.max) {
+        public init<L>(description: UserFacingText<L, Void>, exitCode: Int = Int.max) {
 
             self.describeClosure = { description.resolved() }
 
