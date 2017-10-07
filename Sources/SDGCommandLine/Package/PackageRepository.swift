@@ -74,7 +74,7 @@ internal struct PackageRepository {
         try FileManager.default.do(in: location) {
             try SwiftTool.default.buildForRelease(output: &output)
         }
-        return location.appendingPathComponent(PackageRepository.releaseProductsDirectory)
+        return location.appendingPathComponent(PackageRepository.releaseProductsDirectory).resolvingSymlinksInPath()
     }
 
     // MARK: - Modifications

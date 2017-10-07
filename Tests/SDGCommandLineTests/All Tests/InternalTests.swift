@@ -133,10 +133,11 @@ class InternalTests : TestCase {
 
         XCTAssertErrorFree {
             var ignored = Command.Output()
-            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: "tool"), output: &ignored)
+            let testToolName = "tool"
+            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), output: &ignored)
             defer { FileManager.default.delete(.temporary) }
 
-            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/main.swift"))
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/" + testToolName + "/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
 
