@@ -18,11 +18,7 @@ internal class SwiftTool : ExternalTool {
 
     // MARK: - Static Properties
 
-    #if os(Linux)
-    private static let version = Version(3, 1, 1)
-    #else
-    private static let version = Version(3, 1, 0)
-    #endif
+    private static let version = Version(4, 0, 0)
 
     internal static let `default` = SwiftTool(version: SwiftTool.version)
 
