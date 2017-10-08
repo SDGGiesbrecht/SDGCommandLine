@@ -28,7 +28,7 @@ let package = Package(
         .library(name: library, targets: [library])
     ],
     dependencies: [
-        .package(url: sdgGiesbrecht + sdgCornerstone, from: Version(0, 5, 0))
+        .package(url: sdgGiesbrecht + sdgCornerstone, .upToNextMinor(from: Version(0, 6, 0)))
     ],
     targets: [
         .target(name: library, dependencies: [
