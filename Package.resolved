@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SDGCornerstone",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
+        "state": {
+          "branch": null,
+          "revision": "4f0ffc2ed92b81af84217219dfcd827077acab51",
+          "version": "0.6.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

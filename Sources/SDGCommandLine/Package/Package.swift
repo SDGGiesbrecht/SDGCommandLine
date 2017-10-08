@@ -83,6 +83,18 @@ internal struct Package {
 
         let products = try temporaryRepository.buildForRelease(output: &output)
 
-        try FileManager.default.move(products, to: destination)
+        let intermediateDirectory = FileManager.default.url(in: .temporary, at: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: intermediateDirectory) }
+        for component in try FileManager.default.contentsOfDirectory(at: products, includingPropertiesForKeys: nil, options: []) {
+            let filename = component.lastPathComponent
+
+            if filename ≠ "ModuleCache",
+                ¬filename.hasSuffix(".build"),
+                ¬filename.hasSuffix(".swiftdoc") {
+
+                try FileManager.default.move(component, to: intermediateDirectory.appendingPathComponent(filename))
+            }
+        }
+        try FileManager.default.move(intermediateDirectory, to: destination)
     }
 }

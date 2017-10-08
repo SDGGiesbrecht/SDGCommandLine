@@ -1,4 +1,4 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 
 /*
  Package.swift
@@ -16,9 +16,24 @@
 
 import PackageDescription
 
+let library = "SDGCommandLine"
+let tests = library + "Tests"
+
+let sdgGiesbrecht = "https://github.com/SDGGiesbrecht/"
+let sdgCornerstone = "SDGCornerstone"
+
 let package = Package(
-    name: "SDGCommandLine",
+    name: library,
+    products: [
+        .library(name: library, targets: [library])
+    ],
     dependencies: [
-        .Package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", versions: Version(0, 4, 5) ..< Version(0, 5, 0))
+        .package(url: sdgGiesbrecht + sdgCornerstone, .upToNextMinor(from: Version(0, 6, 0)))
+    ],
+    targets: [
+        .target(name: library, dependencies: [
+            .productItem(name: sdgCornerstone, package: sdgCornerstone)
+            ]),
+        .testTarget(name: tests, dependencies: [.targetItem(name: library)])
     ]
 )

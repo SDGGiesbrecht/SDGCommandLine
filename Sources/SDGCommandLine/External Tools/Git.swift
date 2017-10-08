@@ -23,7 +23,7 @@ internal class Git : ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 14, 1)
     #else
-         private static let version = Version(2, 11, 0)
+         private static let version = Version(2, 13, 5)
     #endif
 
     internal static let `default` = Git(version: Git.version)
