@@ -56,8 +56,3 @@ a psalmist
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 [_End_]
-
-([_Workaround: This should be removed once Workspace can understand the nesting structure._])
-[_Begin Code Coverage Exemption Tokens for the Same Line_]
-case .englishCanada:
-[_End_]
