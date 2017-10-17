@@ -109,16 +109,18 @@ public struct Command {
 
         let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Code Coverage_]
 
+        let exitCode: Int
         do { // [_Exempt from Code Coverage_]
             try self.withRootBehaviour().execute(with: arguments)
-            exit(Int32(Error.successCode))
+            exitCode = Error.successCode
         } catch let error as Command.Error { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
-            exit(Int32(truncatingIfNeeded: error.exitCode))
+            exitCode = error.exitCode
         } catch { // [_Exempt from Code Coverage_]
             FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
-            exit(Int32(truncatingIfNeeded: Error.generalErrorCode))
-        }
+            exitCode = Error.generalErrorCode
+        } // [_Exempt from Code Coverage_]
+        exit(Int32(truncatingIfNeeded: exitCode))
     }
 
     /// Executes the command without exiting.
