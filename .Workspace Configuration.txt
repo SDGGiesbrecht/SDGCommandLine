@@ -14,7 +14,7 @@
 
 [_Import https://github.com/SDGGiesbrecht/SDG_]
 
-Current Version: 0.0.0
+Current Version: 0.1.0
 
 Support iOS: False
 Support watchOS: False
