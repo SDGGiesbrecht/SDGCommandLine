@@ -15,7 +15,7 @@
 import SDGCornerstone
 import SDGCommandLine
 
-struct Execute {
+enum Execute {
 
     private static let textOption = Option(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {

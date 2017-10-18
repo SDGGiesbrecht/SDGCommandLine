@@ -15,7 +15,7 @@
 import SDGCornerstone
 
 /// A standard argument type provided by SDGCommandLine.
-public struct ArgumentType {
+public enum ArgumentType {
 
     private static func keyOnly(_ key: StrictString) -> UserFacingText<InterfaceLocalization, Void> {
         return UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in
