@@ -46,7 +46,7 @@ extension Command {
         }
     })
 
-    internal static let version = Command(name: versionName, description: versionDescription, directArguments: [ArgumentType.languagePreference], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
+    internal static let version = Command(name: versionName, description: versionDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
 
         if let stable = Version.currentToolVersion {
             print(stable.string, to: &output)
