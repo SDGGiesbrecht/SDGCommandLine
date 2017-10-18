@@ -16,7 +16,7 @@ import SDGCornerstone
 
 extension Command {
 
-    private static let helpName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let helpName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "help"
@@ -31,7 +31,7 @@ extension Command {
         }
     })
 
-    private static let helpDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let helpDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays usage information."
@@ -62,7 +62,7 @@ extension Command {
         }
         print(commandName + " " + command.localizedDescription(), to: &output)
 
-        func printSection<T>(header: UserFacingText<ContentLocalization, Void>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
+        func printSection<T>(header: UserFacingText<InterfaceLocalization, Void>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
 
             print(header.resolved().formattedAsSectionHeader(), to: &output)
 
@@ -78,7 +78,7 @@ extension Command {
 
         if ¬command.subcommands.isEmpty {
 
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
@@ -104,7 +104,7 @@ extension Command {
                 return result
             }
 
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Options"
@@ -126,7 +126,7 @@ extension Command {
                     argumentTypes[key] = (type: type.getLocalizedName(), description: type.getLocalizedDescription())
                 }
             }
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Argument Types"

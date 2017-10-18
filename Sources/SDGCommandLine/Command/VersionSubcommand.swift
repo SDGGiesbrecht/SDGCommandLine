@@ -16,7 +16,7 @@ import SDGCornerstone
 
 extension Command {
 
-    private static let versionName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let versionName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
@@ -31,7 +31,7 @@ extension Command {
         }
     })
 
-    private static let versionDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let versionDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays the version in use."
@@ -51,7 +51,7 @@ extension Command {
         if let stable = Version.currentToolVersion {
             print(stable.string, to: &output)
         } else {
-            print(UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            print(UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Not a stable version."
