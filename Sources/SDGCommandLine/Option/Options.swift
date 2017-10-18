@@ -132,7 +132,7 @@ public struct Options {
     // MARK: - Usage
 
     internal mutating func add(value: Any, for option: AnyOption) {
-        options[option.uniqueKey] = value
+        options[option._uniqueKey] = value
     }
 
     /// Returns the value of the specified option, or `nil` if the option is not defined.

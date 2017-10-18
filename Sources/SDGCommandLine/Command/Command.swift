@@ -214,7 +214,7 @@ public struct Command {
             return false // Not a direct argument.
         }
 
-        guard let parsed = definition.parse(argument: possibleDirectArgument) else {
+        guard let parsed = definition._parse(argument: possibleDirectArgument) else {
             let commandStack = Command.stack // Prevent delayed evaluation.
             throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 let commandName = self.localizedName()
@@ -255,9 +255,9 @@ public struct Command {
             return false
         }
 
-        for option in options where option.matches(name: name) {
+        for option in options where option._matches(name: name) {
 
-            if option.getType().getIdentifier() == ArgumentType.booleanKey {
+            if option._type()._identifier() == ArgumentType.booleanKey {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
                 return true
@@ -266,7 +266,7 @@ public struct Command {
             guard let argument = remainingArguments.popFirst() else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
                 throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
-                    let optionName = ("•" + option.getLocalizedName())
+                    let optionName = ("•" + option._localizedName())
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
@@ -286,10 +286,10 @@ public struct Command {
                 }))
             }
 
-            guard let parsed = option.getType().parse(argument: argument) else {
+            guard let parsed = option._type()._parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
                 throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
-                    let optionName = ("•" + option.getLocalizedName())
+                    let optionName = ("•" + option._localizedName())
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
@@ -340,7 +340,7 @@ public struct Command {
         while let argument = remaining.popFirst() {
 
             if let name = removeOptionMarker(from: argument),
-                Options.useVersion.matches(name: name) {
+                Options.useVersion._matches(name: name) {
 
                 var options = Options()
                 if try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options),

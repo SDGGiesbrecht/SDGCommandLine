@@ -18,17 +18,17 @@ import SDGCornerstone
 public protocol AnyOption {
 
     /// :nodoc:
-    var uniqueKey: StrictString { get }
+    var _uniqueKey: StrictString { get }
 
     /// :nodoc:
-    func matches(name: StrictString) -> Bool
+    func _matches(name: StrictString) -> Bool
 
     /// :nodoc:
-    func getLocalizedName() -> StrictString
+    func _localizedName() -> StrictString
 
     /// :nodoc:
-    func getLocalizedDescription() -> StrictString
+    func _localizedDescription() -> StrictString
 
     /// :nodoc:
-    func getType() -> AnyArgumentTypeDefinition
+    func _type() -> AnyArgumentTypeDefinition
 }
