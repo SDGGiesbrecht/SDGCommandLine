@@ -29,3 +29,22 @@ public protocol AnyArgumentTypeDefinition {
     /// :nodoc:
     func _localizedDescription() -> StrictString
 }
+
+extension AnyArgumentTypeDefinition {
+
+    internal func parse(argument: StrictString) -> Any? {
+        return _parse(argument: argument)
+    }
+
+    internal func identifier() -> StrictString {
+        return _identifier()
+    }
+
+    internal func localizedName() -> StrictString {
+        return _localizedName()
+    }
+
+    internal func localizedDescription() -> StrictString {
+        return _localizedDescription()
+    }
+}

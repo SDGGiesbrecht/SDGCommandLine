@@ -58,7 +58,7 @@ extension Command {
 
         var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand()
         for directArgument in command.directArguments {
-            commandName += " " + formatType(directArgument._localizedName())
+            commandName += " " + formatType(directArgument.localizedName())
         }
         print(commandName + " " + command.localizedDescription(), to: &output)
 
@@ -91,15 +91,15 @@ extension Command {
                 case .עברית־ישראל:
                     return "תת פקודות"
                 }
-            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0._localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
+            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
 
         if ¬command.options.isEmpty {
 
             let formatOption = { (option: AnyOption) -> StrictString in
-                var result = ("•" + option._localizedName()).formattedAsOption()
-                if option._type()._identifier() ≠ ArgumentType.booleanKey {
-                    result += " " + formatType(option._type()._localizedName())
+                var result = ("•" + option.localizedName()).formattedAsOption()
+                if option.type().identifier() ≠ ArgumentType.booleanKey {
+                    result += " " + formatType(option.type().localizedName())
                 }
                 return result
             }
@@ -117,13 +117,13 @@ extension Command {
                 case .עברית־ישראל:
                     return "ברירות"
                 }
-            }), entries: command.options, getHeadword: { $0._localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0._localizedDescription() })
+            }), entries: command.options, getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
 
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
-            for type in command.directArguments + command.options.map({ $0._type() }) {
-                let key = type._identifier()
+            for type in command.directArguments + command.options.map({ $0.type() }) {
+                let key = type.identifier()
                 if key ≠ ArgumentType.booleanKey {
-                    argumentTypes[key] = (type: type._localizedName(), description: type._localizedDescription())
+                    argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
                 }
             }
             printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in

@@ -32,3 +32,26 @@ public protocol AnyOption {
     /// :nodoc:
     func _type() -> AnyArgumentTypeDefinition
 }
+
+extension AnyOption {
+
+    internal var uniqueKey: StrictString {
+        return _uniqueKey
+    }
+
+    internal func matches(name: StrictString) -> Bool {
+        return _matches(name: name)
+    }
+
+    internal func localizedName() -> StrictString {
+        return _localizedName()
+    }
+
+    internal func localizedDescription() -> StrictString {
+        return _localizedDescription()
+    }
+
+    internal func type() -> AnyArgumentTypeDefinition {
+        return _type()
+    }
+}
