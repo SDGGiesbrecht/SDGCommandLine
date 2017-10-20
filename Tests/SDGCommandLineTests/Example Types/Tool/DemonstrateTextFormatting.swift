@@ -15,7 +15,7 @@
 import SDGCornerstone
 import SDGCommandLine
 
-struct DemonstrateTextFormatting {
+enum DemonstrateTextFormatting {
 
     static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
         switch localization {

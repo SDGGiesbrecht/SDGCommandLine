@@ -16,7 +16,7 @@ import SDGCornerstone
 
 extension Command {
 
-    private static let helpName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let helpName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "help"
@@ -31,7 +31,7 @@ extension Command {
         }
     })
 
-    private static let helpDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let helpDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays usage information."
@@ -58,11 +58,11 @@ extension Command {
 
         var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: StrictString(" "))).formattedAsSubcommand()
         for directArgument in command.directArguments {
-            commandName += " " + formatType(directArgument.getLocalizedName())
+            commandName += " " + formatType(directArgument.localizedName())
         }
         print(commandName + " " + command.localizedDescription(), to: &output)
 
-        func printSection<T>(header: UserFacingText<ContentLocalization, Void>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
+        func printSection<T>(header: UserFacingText<InterfaceLocalization, Void>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
 
             print(header.resolved().formattedAsSectionHeader(), to: &output)
 
@@ -78,7 +78,7 @@ extension Command {
 
         if ¬command.subcommands.isEmpty {
 
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
@@ -91,20 +91,20 @@ extension Command {
                 case .עברית־ישראל:
                     return "תת פקודות"
                 }
-            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.getLocalizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
+            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
 
         if ¬command.options.isEmpty {
 
             let formatOption = { (option: AnyOption) -> StrictString in
-                var result = ("•" + option.getLocalizedName()).formattedAsOption()
-                if option.getType().getIdentifier() ≠ ArgumentType.booleanKey {
-                    result += " " + formatType(option.getType().getLocalizedName())
+                var result = ("•" + option.localizedName()).formattedAsOption()
+                if option.type().identifier() ≠ ArgumentType.booleanKey {
+                    result += " " + formatType(option.type().localizedName())
                 }
                 return result
             }
 
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Options"
@@ -117,16 +117,16 @@ extension Command {
                 case .עברית־ישראל:
                     return "ברירות"
                 }
-            }), entries: command.options, getHeadword: { $0.getLocalizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.getLocalizedDescription() })
+            }), entries: command.options, getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
 
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
-            for type in command.directArguments + command.options.map({ $0.getType() }) {
-                let key = type.getIdentifier()
+            for type in command.directArguments + command.options.map({ $0.type() }) {
+                let key = type.identifier()
                 if key ≠ ArgumentType.booleanKey {
-                    argumentTypes[key] = (type: type.getLocalizedName(), description: type.getLocalizedDescription())
+                    argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
                 }
             }
-            printSection(header: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            printSection(header: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Argument Types"

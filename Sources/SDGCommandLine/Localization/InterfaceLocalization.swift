@@ -1,5 +1,5 @@
 /*
- ContentLocalization.swift
+ InterfaceLocalization.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/macOS
@@ -14,7 +14,7 @@
 
 import SDGCornerstone
 
-internal enum ContentLocalization : String, InputLocalization {
+internal enum InterfaceLocalization : String, InputLocalization {
 
     // MARK: - Cases
 
@@ -30,7 +30,7 @@ internal enum ContentLocalization : String, InputLocalization {
 
     case עברית־ישראל = "he\u{2D}IL"
 
-    internal static let cases: [ContentLocalization] = [
+    internal static let cases: [InterfaceLocalization] = [
 
         .englishUnitedKingdom,
         .englishUnitedStates,
@@ -47,5 +47,5 @@ internal enum ContentLocalization : String, InputLocalization {
 
     // MARK: - Localization
 
-    internal static let fallbackLocalization: ContentLocalization = .עברית־ישראל
+    internal static let fallbackLocalization: InterfaceLocalization = .עברית־ישראל
 }

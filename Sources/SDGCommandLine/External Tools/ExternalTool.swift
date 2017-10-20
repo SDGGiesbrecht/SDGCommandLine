@@ -20,7 +20,7 @@ internal class ExternalTool {
 
     // MARK: - Initialization
 
-    internal init(name: UserFacingText<ContentLocalization, Void>, webpage: UserFacingText<ContentLocalization, Void>, command: StrictString, version: Version, versionCheck: [StrictString]) {
+    internal init(name: UserFacingText<InterfaceLocalization, Void>, webpage: UserFacingText<InterfaceLocalization, Void>, command: StrictString, version: Version, versionCheck: [StrictString]) {
         self.name = name
         self.webpage = webpage
         self.command = command
@@ -30,8 +30,8 @@ internal class ExternalTool {
 
     // MARK: - Properties
 
-    private let name: UserFacingText<ContentLocalization, Void>
-    private let webpage: UserFacingText<ContentLocalization, Void>
+    private let name: UserFacingText<InterfaceLocalization, Void>
+    private let webpage: UserFacingText<InterfaceLocalization, Void>
     private let command: StrictString
     private let version: Version
     private let versionCheck: [StrictString]
@@ -56,7 +56,7 @@ internal class ExternalTool {
                 installedVersion == version {
                 return
             } else {
-                print(UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                print(UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                     let name = self.name.resolved(for: localization)
                     let version = self.version.string
                     switch localization {
@@ -75,7 +75,7 @@ internal class ExternalTool {
             }
         } catch {
             // version check failed
-            throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 let name = self.name.resolved(for: localization)
                 let url = self.webpage.resolved(for: localization).in(Underline.underlined)
                 switch localization {

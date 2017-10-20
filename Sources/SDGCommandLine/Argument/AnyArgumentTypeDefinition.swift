@@ -18,14 +18,33 @@ import SDGCornerstone
 public protocol AnyArgumentTypeDefinition {
 
     /// :nodoc:
-    func parse(argument: StrictString) -> Any?
+    func _parse(argument: StrictString) -> Any?
 
     /// :nodoc:
-    func getIdentifier() -> StrictString
+    func _identifier() -> StrictString
 
     /// :nodoc:
-    func getLocalizedName() -> StrictString
+    func _localizedName() -> StrictString
 
     /// :nodoc:
-    func getLocalizedDescription() -> StrictString
+    func _localizedDescription() -> StrictString
+}
+
+extension AnyArgumentTypeDefinition {
+
+    internal func parse(argument: StrictString) -> Any? {
+        return _parse(argument: argument)
+    }
+
+    internal func identifier() -> StrictString {
+        return _identifier()
+    }
+
+    internal func localizedName() -> StrictString {
+        return _localizedName()
+    }
+
+    internal func localizedDescription() -> StrictString {
+        return _localizedDescription()
+    }
 }

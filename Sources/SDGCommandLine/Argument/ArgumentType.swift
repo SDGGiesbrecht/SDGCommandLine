@@ -15,14 +15,14 @@
 import SDGCornerstone
 
 /// A standard argument type provided by SDGCommandLine.
-public struct ArgumentType {
+public enum ArgumentType {
 
-    private static func keyOnly(_ key: StrictString) -> UserFacingText<ContentLocalization, Void> {
-        return UserFacingText({ (_: ContentLocalization, _: Void) -> StrictString in
+    private static func keyOnly(_ key: StrictString) -> UserFacingText<InterfaceLocalization, Void> {
+        return UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in
             return key
         })
     }
-    private static let unused = UserFacingText({ (_: ContentLocalization, _: Void) -> StrictString in
+    private static let unused = UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in
         unreachable()
     })
 
@@ -32,7 +32,7 @@ public struct ArgumentType {
         unreachable()
     })
 
-    private static let stringName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let stringName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "string"
@@ -47,7 +47,7 @@ public struct ArgumentType {
         }
     })
 
-    private static let stringDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let stringDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "An arbitrary string."
@@ -67,9 +67,9 @@ public struct ArgumentType {
         return argument
     })
 
-    private static func enumerationSyntax<L : InputLocalization>(labels: [UserFacingText<L, Void>]) -> UserFacingText<ContentLocalization, Void> {
+    private static func enumerationSyntax<L : InputLocalization>(labels: [UserFacingText<L, Void>]) -> UserFacingText<InterfaceLocalization, Void> {
 
-        return UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        return UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
 
             let openingQuotationMark: StrictString
             let closingQuotationMark: StrictString
@@ -149,7 +149,7 @@ public struct ArgumentType {
         })
     }
 
-    private static let languagePreferenceName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let languagePreferenceName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language preference"
@@ -164,7 +164,7 @@ public struct ArgumentType {
         }
     })
 
-    private static let languagePreferenceDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let languagePreferenceDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom:
             return "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en\u{2D}GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French"
@@ -190,7 +190,7 @@ public struct ArgumentType {
         let languages = groups.map({ $0.components(separatedBy: [","]).map({ (component: PatternMatch<StrictString>) -> String in
 
             let iconOrCode = StrictString(component.contents)
-            if let code = ContentLocalization.code(for: iconOrCode) {
+            if let code = InterfaceLocalization.code(for: iconOrCode) {
                 return code
             } else {
                 return String(iconOrCode)
@@ -199,7 +199,7 @@ public struct ArgumentType {
         return LocalizationSetting(orderOfPrecedence: languages)
     })
 
-    private static let versionName = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let versionName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
@@ -214,7 +214,7 @@ public struct ArgumentType {
         }
     })
 
-    private static let developmentCase = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let developmentCase = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "development"
@@ -229,7 +229,7 @@ public struct ArgumentType {
         }
     })
 
-    private static let versionDescription = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+    private static let versionDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
         let development = ArgumentType.developmentCase.resolved(for: localization)
         switch localization {
         case .englishUnitedKingdom:
@@ -252,7 +252,7 @@ public struct ArgumentType {
         if let version = Version(String(argument)) {
             return Build.version(version)
         } else {
-            for localization in ContentLocalization.cases {
+            for localization in InterfaceLocalization.cases {
                 if argument == ArgumentType.developmentCase.resolved(for: localization) {
                     return Build.development
                 }
