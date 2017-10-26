@@ -16,7 +16,9 @@ import Foundation
 
 import SDGCornerstone
 
-internal struct PackageRepository {
+internal typealias PackageRepository = _PackageRepository
+/// :nodoc: (Shared with Workspace.)
+public struct _PackageRepository {
 
     // MARK: - Static Properties
 
@@ -26,7 +28,6 @@ internal struct PackageRepository {
 
     internal init(initializingAt location: URL, output: inout Command.Output) throws {
         self.location = location
-        self.package = Package(url: location)
 
         try FileManager.default.do(in: location) {
             try SwiftTool.default.initializeExecutablePackage(output: &output)
@@ -52,15 +53,25 @@ internal struct PackageRepository {
 
     internal init(cloning package: Package, to location: URL, output: inout Command.Output) throws {
         self.location = location
-        self.package = package
 
         try Git.default.clone(repository: package.url, to: location, output: &output)
     }
 
+    internal init(alreadyAt location: URL) {
+        self.init(_alreadyAt: location)
+    }
+    /// :nodoc: (Shared with Workspace.)
+    public init(_alreadyAt location: URL) {
+        self.location = location
+    }
+
     // MARK: - Properties
 
-    internal let package: Package
     private let location: URL
+    /// :nodoc: (Shared with Workspace.)
+    public var _location: URL {
+        return location
+    }
 
     // MARK: - Information
 
