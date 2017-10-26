@@ -17,7 +17,7 @@ import Foundation
 import SDGCornerstone
 
 internal typealias PackageRepository = _PackageRepository
-/// :nodoc: (Shared with Workspace.)
+/// :nodoc: (Shared to Workspace.)
 public struct _PackageRepository {
 
     // MARK: - Static Properties
@@ -57,10 +57,7 @@ public struct _PackageRepository {
         try Git.default.clone(repository: package.url, to: location, output: &output)
     }
 
-    internal init(alreadyAt location: URL) {
-        self.init(_alreadyAt: location)
-    }
-    /// :nodoc: (Shared with Workspace.)
+    /// :nodoc: (Shared to Workspace.)
     public init(_alreadyAt location: URL) {
         self.location = location
     }
@@ -68,17 +65,14 @@ public struct _PackageRepository {
     // MARK: - Properties
 
     private let location: URL
-    /// :nodoc: (Shared with Workspace.)
+    /// :nodoc: (Shared to Workspace.)
     public var _location: URL {
         return location
     }
 
     // MARK: - Information
 
-    internal func url(for relativePath: String) -> URL {
-        return _url(for: relativePath)
-    }
-    /// :nodoc: (Shared with Workspace.)
+    /// :nodoc: (Shared to Workspace.)
     public func _url(for relativePath: String) -> URL {
         return location.appendingPathComponent(relativePath)
     }

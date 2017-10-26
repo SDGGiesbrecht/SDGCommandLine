@@ -15,16 +15,16 @@
 import SDGCornerstone
 
 internal typealias SwiftTool = _Swift
-/// :nodoc: (Shared with Workspace.)
+/// :nodoc: (Shared to Workspace.)
 public class _Swift : _ExternalTool {
 
     // MARK: - Static Properties
 
     private static let version = Version(4, 0, 0)
 
-    internal static let `default` = _Swift(version: SwiftTool.version)
-    /// :nodoc: (Shared with Workspace.)
-    public static let _default = `default`
+    /// :nodoc: (Shared to Workspace.)
+    public static let _default: _Swift = SwiftTool(version: SwiftTool.version)
+    internal static let `default` = _default
 
     // MARK: - Initialization
 
@@ -46,7 +46,7 @@ public class _Swift : _ExternalTool {
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
     }
 
-    // MARK: - Usage
+    // MARK: - Usage: Workflow
 
     internal func initializeExecutablePackage(output: inout Command.Output) throws {
         _ = try execute(with: ["package", "init", "\u{2D}\u{2D}type", "executable"], output: &output)
@@ -55,4 +55,6 @@ public class _Swift : _ExternalTool {
     internal func buildForRelease(output: inout Command.Output) throws {
         _ = try execute(with: ["build", "\u{2D}\u{2D}configuration", "release"], output: &output)
     }
+
+    // MARK: - Usage: Information
 }

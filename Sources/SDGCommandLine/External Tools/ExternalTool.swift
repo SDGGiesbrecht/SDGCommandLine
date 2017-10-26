@@ -15,7 +15,7 @@
 import SDGCornerstone
 
 internal typealias ExternalTool = _ExternalTool
-/// :nodoc: (Shared with Workspace.)
+/// :nodoc: (Shared to Workspace.)
 public class _ExternalTool {
 
     // MARK: - Static Properties

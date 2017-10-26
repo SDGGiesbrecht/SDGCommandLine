@@ -17,7 +17,7 @@ import Foundation
 import SDGCornerstone
 
 internal typealias Git = _Git
-/// :nodoc: (Shared with Workspace.)
+/// :nodoc: (Shared to Workspace.)
 public class _Git : _ExternalTool {
 
     // MARK: - Static Properties
@@ -28,9 +28,9 @@ public class _Git : _ExternalTool {
          private static let version = Version(2, 13, 5)
     #endif
 
-    internal static let `default`: _Git = Git(version: Git.version)
-    /// :nodoc: (Shared with Workspace.)
-    public static let _default = `default`
+    /// :nodoc: (Shared to Workspace.)
+    public static let _default: _Git = Git(version: Git.version)
+    internal static let `default` = _default
 
     // MARK: - Initialization
 
@@ -52,7 +52,7 @@ public class _Git : _ExternalTool {
         }), command: "git", version: version, versionCheck: ["version"])
     }
 
-    // MARK: - Usage
+    // MARK: - Usage: Workflow
 
     internal func initializeRepository(output: inout Command.Output) throws {
         _ = try execute(with: ["init"], output: &output)
@@ -75,14 +75,14 @@ public class _Git : _ExternalTool {
         _ = try execute(with: ["tag", StrictString(version.string)], output: &output)
     }
 
+    // MARK: - Usage: Information
+
     internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
         return StrictString(try execute(with: ["ls\u{2D}remote", StrictString(Shell.quote(package.url.absoluteString)), "master"], output: &output).truncated(before: "\u{9}".scalars))
     }
 
+    /// :nodoc: (Shared to Workspace.)
     public func _ignoredFiles(output: inout Command.Output) throws -> [URL] {
-        return try ignoredFiles(output: &output)
-    }
-    private func ignoredFiles(output: inout Command.Output) throws -> [URL] {
 
         let ignoredSummary = try executeInCompatibilityMode(with: ["status", "\u{2D}\u{2D}ignored"], output: &output, silently: true)
 
