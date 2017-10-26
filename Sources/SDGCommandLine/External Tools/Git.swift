@@ -16,7 +16,9 @@ import Foundation
 
 import SDGCornerstone
 
-internal class Git : ExternalTool {
+internal typealias Git = _Git
+/// :nodoc: (Shared with Workspace.)
+public class _Git : _ExternalTool {
 
     // MARK: - Static Properties
 
@@ -26,7 +28,9 @@ internal class Git : ExternalTool {
          private static let version = Version(2, 13, 5)
     #endif
 
-    internal static let `default` = Git(version: Git.version)
+    internal static let `default`: _Git = Git(version: Git.version)
+    /// :nodoc: (Shared with Workspace.)
+    public static let _default = `default`
 
     // MARK: - Initialization
 
@@ -73,5 +77,25 @@ internal class Git : ExternalTool {
 
     internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
         return StrictString(try execute(with: ["ls\u{2D}remote", StrictString(Shell.quote(package.url.absoluteString)), "master"], output: &output).truncated(before: "\u{9}".scalars))
+    }
+
+    public func _ignoredFiles(output: inout Command.Output) throws -> [URL] {
+        return try ignoredFiles(output: &output)
+    }
+    private func ignoredFiles(output: inout Command.Output) throws -> [URL] {
+
+        let ignoredSummary = String(try execute(with: ["status", "\u{2D}\u{2D}ignored"], output: &output, silently: true))
+
+        let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+
+        var result: [URL] = []
+        if let headerRange = ignoredSummary.scalars.firstMatch(for: "Ignored files:".scalars)?.range {
+            let remainder = String(ignoredSummary[headerRange.upperBound...])
+            for line in remainder.lines.lazy.dropFirst(3).lazy.map({ $0.line }) where ¬line.isEmpty {
+                let relativePath = String(StrictString(line.dropFirst()))
+                result.append(repositoryRoot.appendingPathComponent(relativePath))
+            }
+        }
+        return result
     }
 }
