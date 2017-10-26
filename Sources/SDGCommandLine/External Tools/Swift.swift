@@ -14,13 +14,17 @@
 
 import SDGCornerstone
 
-internal class SwiftTool : ExternalTool {
+internal typealias SwiftTool = _Swift
+/// :nodoc: (Shared with Workspace.)
+public class _Swift : _ExternalTool {
 
     // MARK: - Static Properties
 
     private static let version = Version(4, 0, 0)
 
-    internal static let `default` = SwiftTool(version: SwiftTool.version)
+    internal static let `default` = _Swift(version: SwiftTool.version)
+    /// :nodoc: (Shared with Workspace.)
+    public static let _default = `default`
 
     // MARK: - Initialization
 
