@@ -84,7 +84,7 @@ public class _Git : _ExternalTool {
     }
     private func ignoredFiles(output: inout Command.Output) throws -> [URL] {
 
-        let ignoredSummary = String(try execute(with: ["status", "\u{2D}\u{2D}ignored"], output: &output, silently: true))
+        let ignoredSummary = try executeInCompatibilityMode(with: ["status", "\u{2D}\u{2D}ignored"], output: &output, silently: true)
 
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 
