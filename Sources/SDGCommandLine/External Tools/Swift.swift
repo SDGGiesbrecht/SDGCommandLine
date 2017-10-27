@@ -12,6 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCornerstone
 
 internal typealias SwiftTool = _Swift
@@ -57,4 +59,53 @@ public class _Swift : _ExternalTool {
     }
 
     // MARK: - Usage: Information
+
+    /// :nodoc: (Shared to Workspace.)
+    public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
+
+        let json = try executeInCompatibilityMode(with: ["package", "dump-package"], output: &output, silently: true)
+
+        let parseError = Command.Error(description: UserFacingText<ContentLocalization, Void>({ (localization, _) in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("Could not parse package description:\n\(json)")
+            case .deutschDeutschland:
+                notImplementedYetAndCannotReturn()
+            case .françaisFrance:
+                notImplementedYetAndCannotReturn()
+            case .ελληνικάΕλλάδα:
+                notImplementedYetAndCannotReturn()
+            case .עברית־ישראל:
+                notImplementedYetAndCannotReturn()
+            }
+        }))
+
+        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as(NSDictionary.self),
+            let targets = (properties["targets"] as? PropertyListValue)?.as(NSArray.self) else {
+                throw parseError
+        }
+
+        let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+
+        return try targets.map() { (targetValue) -> (name: String, location: URL) in
+            guard let targetInformation = (targetValue as? PropertyListValue)?.as(NSDictionary.self),
+                let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else {
+                    throw parseError
+            }
+
+            var path: String
+            if let specific = (targetInformation["path"] as? PropertyListValue)?.as(String.self) {
+                path = specific
+            } else {
+                if (targetInformation["isTest"] as? PropertyListValue)?.as(Bool.self) == true {
+                    path = "Tests/" + name
+                } else {
+                    path = "Sources/" + name
+                }
+            }
+            // [_Warning: Needs to look for tests in Tests instead of sources._]
+
+            return (name, repositoryRoot.appendingPathComponent(path))
+        }
+    }
 }
