@@ -65,7 +65,7 @@ public class _Swift : _ExternalTool {
 
         let json = try executeInCompatibilityMode(with: ["package", "dump-package"], output: &output, silently: true)
 
-        let parseError = Command.Error(description: UserFacingText<ContentLocalization, Void>({ (localization, _) in
+        let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return StrictString("Could not parse package description:\n\(json)")
