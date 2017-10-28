@@ -34,12 +34,12 @@ public func initialize(applicationIdentifier: String, version: Version?, package
     }
 }
 
-private var warnedLocalizations: Set<ContentLocalization> = []
+private var warnedLocalizations: Set<InterfaceLocalization> = []
 internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) {
 
     if BuildConfiguration.current == .debug {
-        let localization = LocalizationSetting.current.value.resolved() as ContentLocalization
-        if localization ∉ Set<ContentLocalization>([
+        let localization = LocalizationSetting.current.value.resolved() as InterfaceLocalization
+        if localization ∉ Set<InterfaceLocalization>([
             .englishUnitedKingdom,
             .englishUnitedStates,
             .englishCanada]),
@@ -47,7 +47,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
 
             warnedLocalizations.insert(localization)
 
-            let warning = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            let warning = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()
@@ -61,7 +61,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
                     /*א*/ return "זהירות: העברית של SDGCommandLine לא נבדקה אל יד של דובר שפת אם. אם אתה/את רוצה לעזור לנו, הירשם/הירשמי כאן:"
                 }
             })
-            let issueTitle = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            let issueTitle = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()
@@ -75,7 +75,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
                     return "בדיקה של העברית"
                 }
             })
-            let issueBody = UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            let issueBody = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()

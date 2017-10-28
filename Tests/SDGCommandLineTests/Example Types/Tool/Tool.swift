@@ -15,7 +15,7 @@
 import SDGCornerstone
 import SDGCommandLine
 
-struct Tool {
+enum Tool {
 
     static let command = createCommand()
 

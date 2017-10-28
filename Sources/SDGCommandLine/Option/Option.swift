@@ -55,27 +55,27 @@ public struct Option<Type> : AnyOption {
     // MARK: - AnyOption
 
     /// :nodoc:
-    public var uniqueKey: StrictString {
+    public var _uniqueKey: StrictString {
         return key
     }
 
     /// :nodoc:
-    public func matches(name: StrictString) -> Bool {
+    public func _matches(name: StrictString) -> Bool {
         return name ∈ names
     }
 
     /// :nodoc:
-    public func getLocalizedName() -> StrictString {
+    public func _localizedName() -> StrictString {
         return localizedName()
     }
 
     /// :nodoc:
-    public func getLocalizedDescription() -> StrictString {
+    public func _localizedDescription() -> StrictString {
         return localizedDescription()
     }
 
     /// :nodoc:
-    public func getType() -> AnyArgumentTypeDefinition {
+    public func _type() -> AnyArgumentTypeDefinition {
         return type
     }
 }

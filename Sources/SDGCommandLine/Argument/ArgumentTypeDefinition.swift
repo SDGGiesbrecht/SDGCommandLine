@@ -46,22 +46,22 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
     // MARK: - AnyArgumentTypeDefinition
 
     /// :nodoc:
-    public func parse(argument: StrictString) -> Any? {
+    public func _parse(argument: StrictString) -> Any? {
         return parse(argument)
     }
 
     /// :nodoc:
-    public func getIdentifier() -> StrictString {
+    public func _identifier() -> StrictString {
         return key
     }
 
     /// :nodoc:
-    public func getLocalizedName() -> StrictString {
+    public func _localizedName() -> StrictString {
         return localizedName()
     }
 
     /// :nodoc:
-    public func getLocalizedDescription() -> StrictString {
+    public func _localizedDescription() -> StrictString {
         return localizedDescription()
     }
 }

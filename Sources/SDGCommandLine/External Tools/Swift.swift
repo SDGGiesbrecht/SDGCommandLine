@@ -31,7 +31,7 @@ public class _Swift : _ExternalTool {
     // MARK: - Initialization
 
     internal init(version: Version) {
-        super.init(name: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        super.init(name: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
                 return "Swift"
@@ -40,7 +40,7 @@ public class _Swift : _ExternalTool {
             case .עברית־ישראל:
                 return "סוויפט"
             }
-        }), webpage: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
+        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
             switch localization { // [_Exempt from Code Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return "swift.org"

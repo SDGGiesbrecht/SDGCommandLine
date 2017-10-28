@@ -71,7 +71,7 @@ class InternalTests : TestCase {
                     })
                     XCTAssertThrowsError(containing: "Nonexistent") {
                         var output = Command.Output()
-                        let nonexistent = ExternalTool(name: UserFacingText<ContentLocalization, Void>({ (_, _) in return "Nonexistent" }), webpage: UserFacingText<ContentLocalization, Void>({ (_, _) in return "" }), command: "nonexistent", version: Version(0, 0, 0), versionCheck: ["version"])
+                        let nonexistent = ExternalTool(name: UserFacingText<InterfaceLocalization, Void>({ (_, _) in return "Nonexistent" }), webpage: UserFacingText<InterfaceLocalization, Void>({ (_, _) in return "" }), command: "nonexistent", version: Version(0, 0, 0), versionCheck: ["version"])
                         try nonexistent.checkVersion(output: &output)
                     }
                 }

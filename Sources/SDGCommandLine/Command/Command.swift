@@ -198,7 +198,7 @@ public struct Command {
                     // Not a direct argument.
 
                     let commandStack = Command.stack // Prevent delayed evaluation.
-                    throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+                    throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                         var result: StrictString
                         switch localization {
                         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
@@ -228,7 +228,7 @@ public struct Command {
 
         guard let parsed = definition.parse(argument: possibleDirectArgument) else {
             let commandStack = Command.stack // Prevent delayed evaluation.
-            throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+            throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
                 let commandName = self.localizedName()
                 var result: StrictString
                 switch localization {
@@ -269,7 +269,7 @@ public struct Command {
 
         for option in options where option.matches(name: name) {
 
-            if option.getType().getIdentifier() == ArgumentType.booleanKey {
+            if option.type().identifier() == ArgumentType.booleanKey {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
                 return true
@@ -277,8 +277,8 @@ public struct Command {
 
             guard let argument = remainingArguments.popFirst() else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    let optionName = ("•" + option.getLocalizedName())
+                throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+                    let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
@@ -298,10 +298,10 @@ public struct Command {
                 }))
             }
 
-            guard let parsed = option.getType().parse(argument: argument) else {
+            guard let parsed = option.type().parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
-                    let optionName = ("•" + option.getLocalizedName())
+                throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+                    let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
@@ -326,7 +326,7 @@ public struct Command {
         }
 
         let commandStack = Command.stack // Prevent delayed evaluation.
-        throw Command.Error(description: UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
             let optionName = ("•" + name)
             var result: StrictString
             switch localization {
@@ -368,12 +368,12 @@ public struct Command {
         return nil
     }
 
-    private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<ContentLocalization, Void> {
+    private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<InterfaceLocalization, Void> {
         var command = StrictString(commandStack.map({ $0.localizedName() }).joined(separator: " ".scalars))
         command.append(contentsOf: " " + Command.help.localizedName())
         command = command.prepending(contentsOf: "$ ".scalars)
 
-        return UserFacingText({ (localization: ContentLocalization, _: Void) -> StrictString in
+        return UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return StrictString("See also: \(command)")
@@ -393,8 +393,8 @@ public struct Command {
 
     internal static func normalizeToUnicode<L : Localization>(_ string: StrictString, in localization: L) -> StrictString {
         let hyphen: StrictString
-        if let contentLocalization = ContentLocalization(reasonableMatchFor: localization.code) {
-            switch contentLocalization {
+        if let interfaceLocalization = InterfaceLocalization(reasonableMatchFor: localization.code) {
+            switch interfaceLocalization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα:
                 hyphen = "‐"
             case .עברית־ישראל:
