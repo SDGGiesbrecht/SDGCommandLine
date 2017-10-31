@@ -63,7 +63,7 @@ public class _Swift : _ExternalTool {
     /// :nodoc: (Shared to Workspace.)
     public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
 
-        let json = try executeInCompatibilityMode(with: ["package", "dump-package"], output: &output, silently: true)
+        let json = try executeInCompatibilityMode(with: ["package", "dump\u{2D}package"], output: &output, silently: true)
 
         let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in
             switch localization {
@@ -103,7 +103,6 @@ public class _Swift : _ExternalTool {
                     path = "Sources/" + name
                 }
             }
-            // [_Warning: Needs to look for tests in Tests instead of sources._]
 
             return (name, repositoryRoot.appendingPathComponent(path))
         }
