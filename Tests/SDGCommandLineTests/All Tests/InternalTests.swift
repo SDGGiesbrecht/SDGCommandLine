@@ -141,7 +141,7 @@ class InternalTests : TestCase {
             try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
 
-            Package.current = testPackage.package
+            Package.current = Package(url: testPackage.location)
 
             // When the cache is empty...
             var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])

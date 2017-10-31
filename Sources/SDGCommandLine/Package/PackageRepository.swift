@@ -27,7 +27,7 @@ public struct _PackageRepository {
     // MARK: - Initialization
 
     internal init(initializingAt location: URL, output: inout Command.Output) throws {
-        self.location = location
+        self._location = location
 
         try FileManager.default.do(in: location) {
             try SwiftTool.default.initializeExecutablePackage(output: &output)
@@ -52,26 +52,29 @@ public struct _PackageRepository {
     }
 
     internal init(cloning package: Package, to location: URL, output: inout Command.Output) throws {
-        self.location = location
+        self._location = location
 
         try Git.default.clone(repository: package.url, to: location, output: &output)
     }
 
     /// :nodoc: (Shared to Workspace.)
     public init(_alreadyAt location: URL) {
-        self.location = location
+        self._location = location
     }
 
     // MARK: - Properties
 
-    private let location: URL
     /// :nodoc: (Shared to Workspace.)
-    public var _location: URL {
-        return location
+    public let _location: URL
+    internal var location: URL {
+        return _location
     }
 
     // MARK: - Information
 
+    internal func url(for relativePath: String) -> URL {
+        return _url(for: relativePath)
+    }
     /// :nodoc: (Shared to Workspace.)
     public func _url(for relativePath: String) -> URL {
         return location.appendingPathComponent(relativePath)
