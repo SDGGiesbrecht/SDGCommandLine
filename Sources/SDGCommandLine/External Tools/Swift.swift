@@ -68,15 +68,15 @@ public class _Swift : _ExternalTool {
         let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return StrictString("Could not parse package description:\n\(json)")
+                return StrictString("Error loading package description:\n\(json)")
             case .deutschDeutschland:
-                notImplementedYetAndCannotReturn()
+                return StrictString("Fehlschlag beim Laden der Paketbeschreibung:\n\(json)")
             case .françaisFrance:
-                notImplementedYetAndCannotReturn()
+                return StrictString("Échec du chargement de la description du paquet:\n\(json)")
             case .ελληνικάΕλλάδα:
-                notImplementedYetAndCannotReturn()
+                return StrictString("Αποτυχία της φόρτωσης της περιγραφής του δέματος:\n\(json)")
             case .עברית־ישראל:
-                notImplementedYetAndCannotReturn()
+                return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
 
