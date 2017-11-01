@@ -26,6 +26,18 @@ class InternalTests : TestCase {
         XCTAssertNotEqual(Build.version(Version(1, 0, 0)), Build.development)
     }
 
+    func testGit() {
+        do {
+            try FileManager.default.do(in: repositoryRoot) {
+                var output = Command.Output()
+                let ignored = try Git.default._ignoredFiles(output: &output)
+                XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
+            }
+        } catch {
+            XCTFail("Unexpected error.")
+        }
+    }
+
     func testExternalToolVersions() {
         var shouldTest = ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
             ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
@@ -80,16 +92,17 @@ class InternalTests : TestCase {
 
     func testPackageRepository() {
         for language in ["en", "en\u{2D}US", "de", "fr", "el", "he"] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertErrorFree({
+                    let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
 
-                        var output = Command.Output()
-                        _ = try PackageRepository(initializingAt: packageLocation, output: &output)
-                        defer { FileManager.default.delete(.temporary) }
-                    })
-                }
+                    var output = Command.Output()
+                    _ = try PackageRepository(initializingAt: packageLocation, output: &output)
+                    defer { FileManager.default.delete(.temporary) }
+                })
+            }
         }
+        XCTAssertEqual(PackageRepository(_alreadyAt: repositoryRoot).location, repositoryRoot)
     }
 
     func testSetLanguage() {
@@ -117,6 +130,19 @@ class InternalTests : TestCase {
                         XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                     })
                 }
+        }
+    }
+
+    func testSwift() {
+        do {
+            try FileManager.default.do(in: repositoryRoot) {
+                var output = Command.Output()
+                let targets = try SwiftTool.default._targets(output: &output)
+                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLine" }))
+                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLineTests" }))
+            }
+        } catch {
+            XCTFail("Unexpected error.")
         }
     }
 
@@ -181,8 +207,10 @@ class InternalTests : TestCase {
         return [
             ("testBuild", testBuild),
             ("testExternalToolVersions", testExternalToolVersions),
+            ("testGit", testGit),
             ("testPackageRepository", testPackageRepository),
             ("testSetLanguage", testSetLanguage),
+            ("testSwift", testSwift),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
             ("testVersionSubcommand", testVersionSubcommand)

@@ -65,23 +65,23 @@ public class _Swift : _ExternalTool {
 
         let json = try executeInCompatibilityMode(with: ["package", "dump\u{2D}package"], output: &output, silently: true)
 
-        let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in
+        let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Code Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
-            case .deutschDeutschland:
+            case .deutschDeutschland: // [_Exempt from Code Coverage_]
                 return StrictString("Fehlschlag beim Laden der Paketbeschreibung:\n\(json)")
-            case .françaisFrance:
+            case .françaisFrance: // [_Exempt from Code Coverage_]
                 return StrictString("Échec du chargement de la description du paquet:\n\(json)")
-            case .ελληνικάΕλλάδα:
+            case .ελληνικάΕλλάδα: // [_Exempt from Code Coverage_]
                 return StrictString("Αποτυχία της φόρτωσης της περιγραφής του δέματος:\n\(json)")
-            case .עברית־ישראל:
+            case .עברית־ישראל: // [_Exempt from Code Coverage_]
                 return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
 
         guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as(NSDictionary.self),
-            let targets = (properties["targets"] as? PropertyListValue)?.as(NSArray.self) else {
+            let targets = (properties["targets"] as? PropertyListValue)?.as(NSArray.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                 throw parseError
         }
 
@@ -89,12 +89,12 @@ public class _Swift : _ExternalTool {
 
         return try targets.map() { (targetValue) -> (name: String, location: URL) in
             guard let targetInformation = (targetValue as? PropertyListValue)?.as(NSDictionary.self),
-                let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else {
+                let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError
             }
 
             var path: String
-            if let specific = (targetInformation["path"] as? PropertyListValue)?.as(String.self) {
+            if let specific = (targetInformation["path"] as? PropertyListValue)?.as(String.self) { // [_Exempt from Code Coverage_]
                 path = specific
             } else {
                 if (targetInformation["isTest"] as? PropertyListValue)?.as(Bool.self) == true {
