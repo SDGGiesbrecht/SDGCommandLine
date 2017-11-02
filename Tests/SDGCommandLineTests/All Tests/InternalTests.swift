@@ -91,15 +91,13 @@ class InternalTests : TestCase {
     }
 
     func testGit() {
-        do {
+        XCTAssertErrorFree({
             try FileManager.default.do(in: repositoryRoot) {
                 var output = Command.Output()
                 let ignored = try Git.default._ignoredFiles(output: &output)
                 XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
             }
-        } catch {
-            XCTFail("Unexpected error.")
-        }
+        })
     }
 
     func testPackageRepository() {
@@ -146,16 +144,14 @@ class InternalTests : TestCase {
     }
 
     func testSwift() {
-        do {
+        XCTAssertErrorFree({
             try FileManager.default.do(in: repositoryRoot) {
                 var output = Command.Output()
                 let targets = try SwiftTool.default._targets(output: &output)
                 XCTAssert(targets.contains(where: { $0.name == "SDGCommandLine" }))
                 XCTAssert(targets.contains(where: { $0.name == "SDGCommandLineTests" }))
             }
-        } catch {
-            XCTFail("Unexpected error.")
-        }
+        })
     }
 
     func testVersion() {
