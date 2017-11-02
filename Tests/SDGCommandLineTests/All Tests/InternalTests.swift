@@ -26,18 +26,6 @@ class InternalTests : TestCase {
         XCTAssertNotEqual(Build.version(Version(1, 0, 0)), Build.development)
     }
 
-    func testGit() {
-        do {
-            try FileManager.default.do(in: repositoryRoot) {
-                var output = Command.Output()
-                let ignored = try Git.default._ignoredFiles(output: &output)
-                XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
-            }
-        } catch {
-            XCTFail("Unexpected error.")
-        }
-    }
-
     func testExternalToolVersions() {
         var shouldTest = ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
             ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
@@ -87,6 +75,30 @@ class InternalTests : TestCase {
                         try nonexistent.checkVersion(output: &output)
                     }
                 }
+        }
+
+        XCTAssertErrorFree({
+            let versionOutput = try Shell.default.run(command: ["swift", "\u{2D}\u{2D}version"])
+            guard let systemVersion = Version(firstIn: versionOutput) else {
+                XCTFail("Failed to detect system Swift version.")
+                return
+            }
+
+            var output = Command.Output()
+            let swift = SwiftTool(version: systemVersion)
+            _ = try swift.execute(with: ["\u{2D}\u{2D}version"], output: &output)
+        })
+    }
+
+    func testGit() {
+        do {
+            try FileManager.default.do(in: repositoryRoot) {
+                var output = Command.Output()
+                let ignored = try Git.default._ignoredFiles(output: &output)
+                XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
+            }
+        } catch {
+            XCTFail("Unexpected error.")
         }
     }
 
