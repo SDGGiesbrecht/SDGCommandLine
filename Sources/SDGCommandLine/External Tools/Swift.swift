@@ -80,15 +80,15 @@ public class _Swift : _ExternalTool {
             }
         }))
 
-        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as(NSDictionary.self),
-            let targets = (properties["targets"] as? PropertyListValue)?.as(NSArray.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self),
+            let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                 throw parseError
         }
 
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 
         return try targets.map() { (targetValue) -> (name: String, location: URL) in
-            guard let targetInformation = (targetValue as? PropertyListValue)?.as(NSDictionary.self),
+            guard let targetInformation = (targetValue as? PropertyListValue)?.as([String: Any].self),
                 let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError
             }
