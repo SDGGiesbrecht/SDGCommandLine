@@ -14,7 +14,9 @@
 
 import SDGCornerstone
 
-internal class ExternalTool {
+internal typealias ExternalTool = _ExternalTool
+/// :nodoc: (Shared to Workspace.)
+public class _ExternalTool {
 
     // MARK: - Static Properties
 
@@ -94,8 +96,12 @@ internal class ExternalTool {
         }
     }
 
-    internal func execute(with arguments: [StrictString], output: inout Command.Output) throws -> StrictString {
+    internal func execute(with arguments: [StrictString], output: inout Command.Output, silently: Bool = false) throws -> StrictString {
+        return StrictString(try executeInCompatibilityMode(with: arguments.map({ String($0) }), output: &output, silently: silently))
+    }
+
+    internal func executeInCompatibilityMode(with arguments: [String], output: inout Command.Output, silently: Bool = false) throws -> String {
         try checkVersionOnce(output: &output)
-        return StrictString(try Shell.default.run(command: ([command] + arguments).map({ String($0) }), alternatePrint: { print($0, to: &output) }))
+        return try Shell.default.run(command: ([String(command)] + arguments), silently: silently, alternatePrint: { print($0, to: &output) })
     }
 }

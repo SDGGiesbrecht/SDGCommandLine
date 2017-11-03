@@ -76,20 +76,43 @@ class InternalTests : TestCase {
                     }
                 }
         }
+
+        XCTAssertErrorFree({
+            let versionOutput = try Shell.default.run(command: ["swift", "\u{2D}\u{2D}version"])
+            guard let systemVersion = Version(firstIn: versionOutput) else {
+                XCTFail("Failed to detect system Swift version.")
+                return
+            }
+
+            var output = Command.Output()
+            let swift = SwiftTool(version: systemVersion)
+            _ = try swift.execute(with: ["\u{2D}\u{2D}version"], output: &output)
+        })
+    }
+
+    func testGit() {
+        XCTAssertErrorFree({
+            try FileManager.default.do(in: repositoryRoot) {
+                var output = Command.Output()
+                let ignored = try Git.default._ignoredFiles(output: &output)
+                XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
+            }
+        })
     }
 
     func testPackageRepository() {
         for language in ["en", "en\u{2D}US", "de", "fr", "el", "he"] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
+            LocalizationSetting(orderOfPrecedence: [language]).do {
+                XCTAssertErrorFree({
+                    let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
 
-                        var output = Command.Output()
-                        _ = try PackageRepository(initializingAt: packageLocation, output: &output)
-                        defer { FileManager.default.delete(.temporary) }
-                    })
-                }
+                    var output = Command.Output()
+                    _ = try PackageRepository(initializingAt: packageLocation, output: &output)
+                    defer { FileManager.default.delete(.temporary) }
+                })
+            }
         }
+        XCTAssertEqual(PackageRepository(_alreadyAt: repositoryRoot).location, repositoryRoot)
     }
 
     func testSetLanguage() {
@@ -120,6 +143,17 @@ class InternalTests : TestCase {
         }
     }
 
+    func testSwift() {
+        XCTAssertErrorFree({
+            try FileManager.default.do(in: repositoryRoot) {
+                var output = Command.Output()
+                let targets = try SwiftTool.default._targets(output: &output)
+                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLine" }))
+                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLineTests" }))
+            }
+        })
+    }
+
     func testVersion() {
         XCTAssertNil(Version(firstIn: "Blah blah blah..."))
     }
@@ -141,7 +175,7 @@ class InternalTests : TestCase {
             try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
 
-            Package.current = testPackage.package
+            Package.current = Package(url: testPackage.location)
 
             // When the cache is empty...
             var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
@@ -181,8 +215,10 @@ class InternalTests : TestCase {
         return [
             ("testBuild", testBuild),
             ("testExternalToolVersions", testExternalToolVersions),
+            ("testGit", testGit),
             ("testPackageRepository", testPackageRepository),
             ("testSetLanguage", testSetLanguage),
+            ("testSwift", testSwift),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
             ("testVersionSubcommand", testVersionSubcommand)
