@@ -16,7 +16,9 @@ import Foundation
 
 import SDGCornerstone
 
-internal struct Package {
+internal typealias Package = _Package
+/// :nodoc: (Shared to Workspace.)
+public struct _Package {
 
     // MARK: - Static Properties
 
@@ -28,7 +30,11 @@ internal struct Package {
     // MARK: - Initialization
 
     internal init(url: URL) {
-        self.url = url
+        self.init(_url: url)
+    }
+    /// :nodoc: (Shared to Workspace.)
+    public init(_url: URL) {
+        self.url = _url
     }
 
     // MARK: - Properties
