@@ -15,7 +15,7 @@
 import SDGCornerstone
 
 /// A semantic version.
-public struct Version : Comparable, Equatable, ExpressibleByStringLiteral {
+public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hashable {
 
     // MARK: - Static Properties
 
@@ -160,5 +160,13 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral {
             }))
         }
         self = result
+    }
+
+    // MARK: - Hashable
+
+    // [_Inherit Documentation: SDGCornerstone.Hashable.hashValue_]
+    /// The hash value.
+    public var hashValue: Int {
+        return string.hashValue
     }
 }
