@@ -18,8 +18,12 @@ matrix:
         - JOB="macOS"
       osx_image: xcode9
       script:
-        - "bash ./Refresh\\ Workspace\\ \\(macOS\\).command"
-        - "bash ./Validate\\ Changes\\ \\(macOS\\).command"
+        - "git clone https://github.com/SDGGiesbrecht/Workspace ~/Workspace"
+        - "cd ~/Workspace"
+        - "git checkout 0.1.0"
+        - "swift build --configuration release"
+        - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+	- "~/Workspace/.build/release/workspace validate"
     - os: linux
       dist: trusty
       env:
@@ -27,8 +31,12 @@ matrix:
         - SWIFT_VERSION=4.0
       script:
         - "eval \"$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)\""
-        - "bash ./Refresh\\ Workspace\\ \\(macOS\\).command"
-        - "bash ./Validate\\ Changes\\ \\(macOS\\).command"
+        - "git clone https://github.com/SDGGiesbrecht/Workspace ~/Workspace"
+        - "cd ~/Workspace"
+        - "git checkout 0.1.0"
+        - "swift build --configuration release"
+        - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+	- "~/Workspace/.build/release/workspace validate"
     - os: osx
       env:
         - JOB="Misc."
@@ -36,8 +44,12 @@ matrix:
       script:
         - "brew update"
         - "brew outdated swiftlint || brew upgrade swiftlint"
-        - "bash ./Refresh\\ Workspace\\ \\(macOS\\).command"
-        - "bash ./Validate\\ Changes\\ \\(macOS\\).command"
+        - "git clone https://github.com/SDGGiesbrecht/Workspace ~/Workspace"
+        - "cd ~/Workspace"
+        - "git checkout 0.1.0"
+        - "swift build --configuration release"
+        - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+	- "~/Workspace/.build/release/workspace validate"
 
 cache:
   directories:
