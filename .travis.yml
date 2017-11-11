@@ -23,6 +23,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+        - "~/Workspace/.build/release/workspace refresh"
         - "~/Workspace/.build/release/workspace validate"
     - os: linux
       dist: trusty
@@ -36,6 +37,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+        - "~/Workspace/.build/release/workspace refresh"
         - "~/Workspace/.build/release/workspace validate"
     - os: osx
       env:
@@ -49,6 +51,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
+        - "~/Workspace/.build/release/workspace refresh"
         - "~/Workspace/.build/release/workspace validate"
 
 cache:
