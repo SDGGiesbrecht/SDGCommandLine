@@ -23,7 +23,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
-	- "~/Workspace/.build/release/workspace validate"
+        - "~/Workspace/.build/release/workspace validate"
     - os: linux
       dist: trusty
       env:
@@ -36,7 +36,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
-	- "~/Workspace/.build/release/workspace validate"
+        - "~/Workspace/.build/release/workspace validate"
     - os: osx
       env:
         - JOB="Misc."
@@ -49,7 +49,7 @@ matrix:
         - "git checkout 0.1.0"
         - "swift build --configuration release"
         - "cd ~/build/SDGGiesbrecht/SDGCommandLine"
-	- "~/Workspace/.build/release/workspace validate"
+        - "~/Workspace/.build/release/workspace validate"
 
 cache:
   directories:
