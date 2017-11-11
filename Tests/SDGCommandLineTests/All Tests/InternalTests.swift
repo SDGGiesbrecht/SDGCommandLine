@@ -98,6 +98,10 @@ class InternalTests : TestCase {
                 XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
             }
         })
+        XCTAssertErrorFree({
+            var output = Command.Output()
+            XCTAssert(try Git.default._versions(of: Package(_url: URL(string: "https://github.com/realm/SwiftLint")!), output: &output).contains(Version(0, 1, 0)), "Failed to detect remote versions.")
+        })
     }
 
     func testPackageRepository() {
