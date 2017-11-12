@@ -56,6 +56,3 @@ a psalmist
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 [_End_]
-
-([_Workaround: Pending Workspace 0.2.0._])
-Manage Continuous Integration: False
