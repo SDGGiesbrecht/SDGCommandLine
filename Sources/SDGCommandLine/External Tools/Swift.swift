@@ -51,11 +51,18 @@ public class _Swift : _ExternalTool {
     // MARK: - Usage: Workflow
 
     internal func initializeExecutablePackage(output: inout Command.Output) throws {
-        _ = try execute(with: ["package", "init", "\u{2D}\u{2D}type", "executable"], output: &output)
+        _ = try execute(with: [
+            "package", "init",
+            "\u{2D}\u{2D}type", "executable"
+            ], output: &output)
     }
 
     internal func buildForRelease(output: inout Command.Output) throws {
-        _ = try execute(with: ["build", "\u{2D}\u{2D}configuration", "release"], output: &output)
+        _ = try execute(with: [
+            "build",
+            "\u{2D}\u{2D}configuration", "release",
+            "\u{2D}\u{2D}static\u{2D}swift\u{2D}stdlib"
+            ], output: &output)
     }
 
     // MARK: - Usage: Information
@@ -63,7 +70,10 @@ public class _Swift : _ExternalTool {
     /// :nodoc: (Shared to Workspace.)
     public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
 
-        let json = try executeInCompatibilityMode(with: ["package", "dump\u{2D}package"], output: &output, silently: true)
+        let json = try executeInCompatibilityMode(with: [
+            "package",
+            "dump\u{2D}package"
+            ], output: &output, silently: true)
 
         let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             switch localization {
