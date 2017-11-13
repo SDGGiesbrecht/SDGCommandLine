@@ -68,6 +68,7 @@ public class _Git : _ExternalTool {
 
     internal func checkout(_ version: Version, output: inout Command.Output) throws {
         _ = try execute(with: [
+            "\u{2D}c", "advice.detachedHead=false",
             "checkout",
             StrictString(version.string)
             ], output: &output)
