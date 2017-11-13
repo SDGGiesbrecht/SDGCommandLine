@@ -59,27 +59,49 @@ public class _Git : _ExternalTool {
     }
 
     internal func clone(repository remote: URL, to local: URL, output: inout Command.Output) throws {
-        _ = try execute(with: ["clone", StrictString(Shell.quote(remote.absoluteString)), StrictString(Shell.quote(local.path))], output: &output)
+        _ = try execute(with: [
+            "clone",
+            StrictString(Shell.quote(remote.absoluteString)),
+            StrictString(Shell.quote(local.path))
+            ], output: &output)
     }
 
     internal func checkout(_ version: Version, output: inout Command.Output) throws {
-        _ = try execute(with: ["checkout", StrictString(version.string)], output: &output)
+        _ = try execute(with: [
+            "\u{2D}c", "advice.detachedHead=false",
+            "checkout",
+            StrictString(version.string)
+            ], output: &output)
     }
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
-        _ = try execute(with: ["add", "."], output: &output)
-        _ = try execute(with: ["commit", "\u{2D}\u{2D}m", description], output: &output)
+        _ = try execute(with: [
+            "add",
+            "."
+            ], output: &output)
+
+        _ = try execute(with: [
+            "commit",
+            "\u{2D}\u{2D}m", description
+            ], output: &output)
     }
 
     internal func tag(version: Version, output: inout Command.Output) throws {
-        _ = try execute(with: ["tag", StrictString(version.string)], output: &output)
+        _ = try execute(with: [
+            "tag",
+            StrictString(version.string)
+            ], output: &output)
     }
 
     // MARK: - Usage: Information
 
     /// :nodoc: (Shared to Workspace.)
     public func _versions(of package: _Package, output: inout Command.Output) throws -> Set<Version> {
-        let output = try execute(with: ["ls\u{2D}remote", "\u{2D}\u{2D}tags", StrictString(Shell.quote(package.url.absoluteString))], output: &output, silently: true)
+        let output = try execute(with: [
+            "ls\u{2D}remote",
+            "\u{2D}\u{2D}tags",
+            StrictString(Shell.quote(package.url.absoluteString))
+            ], output: &output, silently: true)
 
         var versions: Set<Version> = []
         for line in output.lines.map({ $0.line }) {
@@ -94,13 +116,20 @@ public class _Git : _ExternalTool {
     }
 
     internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
-        return StrictString(try execute(with: ["ls\u{2D}remote", StrictString(Shell.quote(package.url.absoluteString)), "master"], output: &output).truncated(before: "\u{9}".scalars))
+        return StrictString(try execute(with: [
+            "ls\u{2D}remote",
+            StrictString(Shell.quote(package.url.absoluteString)),
+            "master"
+            ], output: &output).truncated(before: "\u{9}".scalars))
     }
 
     /// :nodoc: (Shared to Workspace.)
     public func _ignoredFiles(output: inout Command.Output) throws -> [URL] {
 
-        let ignoredSummary = try executeInCompatibilityMode(with: ["status", "\u{2D}\u{2D}ignored"], output: &output, silently: true)
+        let ignoredSummary = try executeInCompatibilityMode(with: [
+            "status",
+            "\u{2D}\u{2D}ignored"
+            ], output: &output, silently: true)
 
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 

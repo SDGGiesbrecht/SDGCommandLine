@@ -96,7 +96,8 @@ public struct _Package {
 
             if filename ≠ "ModuleCache",
                 ¬filename.hasSuffix(".build"),
-                ¬filename.hasSuffix(".swiftdoc") {
+                ¬filename.hasSuffix(".swiftdoc"),
+                ¬filename.hasSuffix(".swiftmodule") {
 
                 try FileManager.default.move(component, to: intermediateDirectory.appendingPathComponent(filename))
             }
