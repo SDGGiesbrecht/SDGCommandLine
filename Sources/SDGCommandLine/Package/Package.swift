@@ -51,7 +51,7 @@ public struct _Package {
         try execute(Build.version(version), of: executableNames, with: arguments, cacheDirectory: cacheDirectory, output: &output)
     }
     internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: inout Command.Output) throws {
-        
+
         if ¬FileManager.default.fileExists(atPath: cacheDirectory.path) {
 
             switch version {
