@@ -67,15 +67,8 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Information
 
-    /// :nodoc: (Shared to Workspace.)
-    public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
-
-        let json = try executeInCompatibilityMode(with: [
-            "package",
-            "dump\u{2D}package"
-            ], output: &output, silently: true)
-
-        let parseError = Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+    private func parseError(packageDescription json: String) -> Command.Error {
+        return Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Code Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
@@ -89,10 +82,57 @@ public class _Swift : _ExternalTool {
                 return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
+    }
 
-        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self),
-            let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
-                throw parseError
+    private func packageDescription(output: inout Command.Output) throws -> (properties: [String: Any], json: String) {
+
+        let json = try executeInCompatibilityMode(with: [
+            "package",
+            "dump\u{2D}package"
+            ], output: &output, silently: true)
+
+        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                throw parseError(packageDescription: json)
+        }
+        return (properties, json)
+    }
+
+    /// :nodoc: (Shared to Workspace.)
+    public func _libraryProductTargets(output: inout Command.Output) throws -> Set<String> {
+
+        let (properties, json) = try packageDescription(output: &output)
+        guard let products = (properties["products"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+            throw parseError(packageDescription: json)
+        }
+
+        var result: Set<String> = []
+
+        for productEntry in products {
+            guard let information = (productEntry as? PropertyListValue)?.as([String: Any].self),
+                let type = (information["product_type"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                    throw parseError(packageDescription: json)
+            }
+
+            if type == "library" {
+                guard let targets = (information["targets"] as? PropertyListValue)?.as([String].self) else {
+                    throw parseError(packageDescription: json)
+                }
+
+                for target in targets {
+                    result.insert(target)
+                }
+            }
+        }
+
+        return result
+    }
+
+    /// :nodoc: (Shared to Workspace.)
+    public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
+
+        let (properties, json) = try packageDescription(output: &output)
+        guard let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                throw parseError(packageDescription: json)
         }
 
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
@@ -100,7 +140,7 @@ public class _Swift : _ExternalTool {
         return try targets.map() { (targetValue) -> (name: String, location: URL) in
             guard let targetInformation = (targetValue as? PropertyListValue)?.as([String: Any].self),
                 let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
-                    throw parseError
+                    throw parseError(packageDescription: json)
             }
 
             var path: String
