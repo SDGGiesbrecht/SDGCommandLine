@@ -96,7 +96,7 @@ public class _Swift : _ExternalTool {
         }
         return (properties, json)
     }
-    
+
     /// :nodoc: (Shared to Workspace.)
     public func _packageName(output: inout Command.Output) throws -> String {
         let (properties, json) = try packageDescription(output: &output)
