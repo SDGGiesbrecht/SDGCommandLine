@@ -17,6 +17,7 @@ import SDGCornerstone
 /// :nodoc: (Shared to Workspace.)
 public class _Xcode : _ExternalTool {
 
+    /// :nodoc: (Shared to Workspace.)
     public init(_version version: Version) {
         super.init(name: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
             switch localization {
