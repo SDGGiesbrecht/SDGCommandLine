@@ -28,7 +28,7 @@ public class _Xcode : _ExternalTool {
             case .עברית־ישראל:
                 return "אקסקוד"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
+        }), webpage: UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
             return "applestore.com/mac/apple/xcode" // Automatically redirected to localized page by Apple.
         }), command: "xcodebuild", version: version, versionCheck: ["\u{2D}version"])
     }

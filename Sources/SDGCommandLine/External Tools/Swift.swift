@@ -67,8 +67,8 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Information
 
-    private func parseError(packageDescription json: String) -> Command.Error {
-        return Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+    private func parseError(packageDescription json: String) -> Command.Error { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        return Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_]
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Code Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
