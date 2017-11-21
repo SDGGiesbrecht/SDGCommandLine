@@ -226,10 +226,12 @@ class InternalTests : TestCase {
     }
 
     func testXcode() {
-        XCTAssertErrorFree({
-            var output = Command.Output()
-            _ = try _Xcode(_version: Version(9, 1)).execute(with: ["\u{2D}version"], output: &output)
-        })
+        #if !os(Linux)
+            XCTAssertErrorFree({
+                var output = Command.Output()
+                _ = try _Xcode(_version: Version(9, 1)).execute(with: ["\u{2D}version"], output: &output)
+            })
+        #endif
     }
 
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
