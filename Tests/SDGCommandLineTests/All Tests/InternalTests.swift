@@ -154,6 +154,11 @@ class InternalTests : TestCase {
                 let targets = try SwiftTool.default._targets(output: &output)
                 XCTAssert(targets.contains(where: { $0.name == "SDGCommandLine" }))
                 XCTAssert(targets.contains(where: { $0.name == "SDGCommandLineTests" }))
+
+                let libraryProducts = try SwiftTool.default._libraryProductTargets(output: &output)
+                XCTAssert("SDGCommandLine" ∈ libraryProducts)
+
+                XCTAssertEqual(try SwiftTool.default._packageName(output: &output), "SDGCommandLine")
             }
         })
     }
@@ -203,6 +208,11 @@ class InternalTests : TestCase {
                     _ = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "another‐invalid‐argument"])
                 }
             }
+
+            let temporaryCache = FileManager.default.url(in: .temporary, at: UUID().uuidString)
+            defer { try? FileManager.default.removeItem(at: temporaryCache) }
+            var outputStream = Command.Output()
+            try Package(url: testPackage.location)._execute(Version(1, 0, 0), of: [StrictString(testToolName)], with: [], cacheDirectory: temporaryCache, output: &outputStream)
         }
     }
 
@@ -215,6 +225,19 @@ class InternalTests : TestCase {
         }
     }
 
+    func testXcode() {
+        #if !os(Linux)
+            for language in ["en", "el", "he"] {
+                LocalizationSetting(orderOfPrecedence: [language]).do {
+                    XCTAssertErrorFree({
+                        var output = Command.Output()
+                        _ = try _Xcode(_version: Version(8, 0)).execute(with: ["\u{2D}version"], output: &output)
+                    })
+                }
+            }
+        #endif
+    }
+
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
             ("testBuild", testBuild),
@@ -225,7 +248,8 @@ class InternalTests : TestCase {
             ("testSwift", testSwift),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
-            ("testVersionSubcommand", testVersionSubcommand)
+            ("testVersionSubcommand", testVersionSubcommand),
+            ("testXcode", testXcode)
         ]
     }
 }

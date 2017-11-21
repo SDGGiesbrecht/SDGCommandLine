@@ -44,9 +44,15 @@ public struct _Package {
     // MARK: - Usage
 
     internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: inout Command.Output) throws {
+        try execute(version, of: executableNames, with: arguments, cacheDirectory: try cacheDirectory(for: version, output: &output), output: &output)
+    }
+    /// :nodoc: (Shared to Workspace)
+    public func _execute(_ version: Version, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: inout Command.Output) throws {
+        try execute(Build.version(version), of: executableNames, with: arguments, cacheDirectory: cacheDirectory, output: &output)
+    }
+    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: inout Command.Output) throws {
 
-        let cache = try cacheDirectory(for: version, output: &output)
-        if ¬FileManager.default.fileExists(atPath: cache.path) {
+        if ¬FileManager.default.fileExists(atPath: cacheDirectory.path) {
 
             switch version {
             case .development:
@@ -56,10 +62,10 @@ public struct _Package {
                 break
             }
 
-            try build(version, to: cache, output: &output)
+            try build(version, to: cacheDirectory, output: &output)
         }
 
-        for executable in try FileManager.default.contentsOfDirectory(at: cache, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
+        for executable in try FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
 
             try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), alternatePrint: { print($0, to: &output) })
             return
