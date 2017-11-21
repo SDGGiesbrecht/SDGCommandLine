@@ -227,10 +227,14 @@ class InternalTests : TestCase {
 
     func testXcode() {
         #if !os(Linux)
-            XCTAssertErrorFree({
-                var output = Command.Output()
-                _ = try _Xcode(_version: Version(9, 1)).execute(with: ["\u{2D}version"], output: &output)
-            })
+            for language in ["en", "el", "he"] {
+                LocalizationSetting(orderOfPrecedence: [language]).do {
+                    XCTAssertErrorFree({
+                        var output = Command.Output()
+                        _ = try _Xcode(_version: Version(9, 0)).execute(with: ["\u{2D}version"], output: &output)
+                    })
+                }
+            }
         #endif
     }
 

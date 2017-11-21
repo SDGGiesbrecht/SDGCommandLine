@@ -100,8 +100,7 @@ public class _Swift : _ExternalTool {
     /// :nodoc: (Shared to Workspace.)
     public func _packageName(output: inout Command.Output) throws -> String {
         let (properties, json) = try packageDescription(output: &output)
-        guard let name = (properties["name"] as? PropertyListValue)?.as(String.self) else {
-            // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let name = (properties["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
         return name
@@ -124,7 +123,7 @@ public class _Swift : _ExternalTool {
             }
 
             if type == "library" {
-                guard let targets = (information["targets"] as? PropertyListValue)?.as([String].self) else {
+                guard let targets = (information["targets"] as? PropertyListValue)?.as([String].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
                 }
 
