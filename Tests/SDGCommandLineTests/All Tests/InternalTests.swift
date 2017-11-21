@@ -231,7 +231,7 @@ class InternalTests : TestCase {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
                         var output = Command.Output()
-                        _ = try _Xcode(_version: Version(9, 0)).execute(with: ["\u{2D}version"], output: &output)
+                        _ = try _Xcode(_version: Version(8, 0)).execute(with: ["\u{2D}version"], output: &output)
                     })
                 }
             }
