@@ -12,35 +12,20 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
 import XCTest
 
-// [_Workaround: This should be refactored to use a customized usage example that clearly distinguishes files—especially main.swift—once Workspace can do that._]
-// [_Define Example: Read‐Me 🇨🇦EN_]
+import SDGCornerstone
+import SDGCommandLine
 
-/*
- This example creates a tool with the following interface:
+func main() {
+    // [_Define Example: main.swift 🇨🇦EN_]
+    SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
+    parrot.executeAsMain()
+    // [_End_]
+}
 
- $ parrot speak
- Squawk!
-
- $ parrot speak •phrase "Hello, world!"
- Hello, world!
- */
-
-/*
- // main.swift must consist of the following lines:
-
- import Foundation
- import SDGCommandLine
-
- SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
- parrot.executeAsMain()
-
- */
-
-// The rest can be anywhere in the project:
-// (putting it in a separate, testable library module is recommended)
-
+// [_Define Example: ParrotLibrary 🇨🇦EN_]
 import SDGCornerstone // See https://sdggiesbrecht.github.io/SDGCornerstone/macOS/
 import SDGCommandLine
 
@@ -70,9 +55,9 @@ enum MyLocalizations : String, InputLocalization {
     internal static let cases: [MyLocalizations] = [.english]
     internal static let fallbackLocalization: MyLocalizations = .english
 }
+// [_End_]
 
-// It is easy to set up tests:
-
+// [_Define Example: ParrotTests 🇨🇦EN_]
 func testParrot() {
     do {
         let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
@@ -81,5 +66,4 @@ func testParrot() {
         XCTFail("The parrot is not co‐operating.")
     }
 }
-
 // [_End_]

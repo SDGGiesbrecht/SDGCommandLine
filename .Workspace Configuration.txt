@@ -65,6 +65,28 @@ a psalmist
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 [_End_]
 
+[_Begin Example Usage_]
+[_🇨🇦EN_]
+This example creates a tool with the following interface:
+```shell
+ $ parrot speak
+ Squawk!
+
+ $ parrot speak •phrase "Hello, world!"
+ Hello, world!
+```
+
+`main.swift` must consist of the following lines:
+[_Example: main.swift 🇨🇦EN_]
+
+The rest can be anywhere in the project
+(but putting it in a separate, testable library module is recommended):
+[_Example: ParrotLibrary 🇨🇦EN_]
+
+Tests are easy to set up:
+[_Example: ParrotTests 🇨🇦EN_]
+[_End_]
+
 ([_Workaround: This should be centralized._])
 [_Begin Read‐Me About Section_]
 [_🇨🇦EN_]

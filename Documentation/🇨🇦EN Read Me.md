@@ -1,5 +1,5 @@
 <!--
- README.md
+ 🇨🇦EN Read Me.md
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-[🇨🇦EN](Documentation/🇨🇦EN%20Read%20Me.md) <!--Skip in Jazzy-->
+[🇨🇦EN](🇨🇦EN%20Read%20Me.md) <!--Skip in Jazzy-->
 
 macOS • Linux
 
@@ -38,7 +38,7 @@ SDGCommandLine provides tools for implementing a command line interface.
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
-(For a list of related projects, see [here](Documentation/🇨🇦EN%20Related%20Projects.md).) <!--Skip in Jazzy-->
+(For a list of related projects, see [here](🇨🇦EN%20Related%20Projects.md).) <!--Skip in Jazzy-->
 
 ## Importing
 
