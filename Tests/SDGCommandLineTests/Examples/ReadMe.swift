@@ -2,7 +2,7 @@
  ReadMe.swift
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+ https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
  Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -15,7 +15,7 @@
 import XCTest
 
 // [_Workaround: This should be refactored to use a customized usage example that clearly distinguishes files—especially main.swift—once Workspace can do that._]
-// [_Define Example: Read‐Me_]
+// [_Define Example: Read‐Me 🇨🇦EN_]
 
 /*
  This example creates a tool with the following interface:
