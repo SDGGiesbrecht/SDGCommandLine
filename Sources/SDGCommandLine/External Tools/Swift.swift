@@ -22,7 +22,11 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Static Properties
 
-    private static let version = Version(4, 0, 0)
+    #if os(Linux)
+        private static let version = Version(4, 0, 0)
+    #else
+        private static let version = Version(4, 0, 2)
+    #endif
 
     /// :nodoc: (Shared to Workspace.)
     public static let _default: _Swift = SwiftTool(version: SwiftTool.version)
