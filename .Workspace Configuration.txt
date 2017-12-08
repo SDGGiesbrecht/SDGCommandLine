@@ -2,7 +2,7 @@
     .Workspace Configuration.txt
 
     This source file is part of the SDGCommandLine open source project.
-    https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+    https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
     Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -20,11 +20,16 @@ Support iOS: False
 Support watchOS: False
 Support tvOS: False
 
-Project Website: https://sdggiesbrecht.github.io/SDGCommandLine/macOS
-Documentation URL: https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+Project Website: https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
+Documentation URL: https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 Repository URL: https://github.com/SDGGiesbrecht/SDGCommandLine
 
+[_Begin Localizations_]
+🇨🇦EN
+[_End_]
+
 [_Begin Short Project Description_]
+[_🇨🇦EN_]
 SDGCommandLine provides tools for implementing a command line interface.
 [_End_]
 
@@ -33,17 +38,20 @@ SDGCommandLine provides tools for implementing a command line interface.
 [_End_]
 
 [_Begin Quotation Translation_]
+[_🇨🇦EN_]
 May they praise the name of the Lord, for He commanded and they came into being!
 [_End_]
 
-Quotation Testament: Old
+Quotation Testament: תנ״ך
 Quotation Chapter: Psalm 148
 
 [_Begin Citation_]
+[_🇨🇦EN_]
 a psalmist
 [_End_]
 
 [_Begin Feature List_]
+[_🇨🇦EN_]
 - Automatic parsing of options and subcommands
 - Automatic `help` subcommand
 - Testable output
@@ -55,4 +63,45 @@ a psalmist
 - Versioning tools
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
+[_End_]
+
+[_Begin Example Usage_]
+[_🇨🇦EN_]
+This example creates a tool with the following interface:
+```shell
+ $ parrot speak
+ Squawk!
+
+ $ parrot speak •phrase "Hello, world!"
+ Hello, world!
+```
+
+`main.swift` must consist of the following lines:
+[_Example: main.swift 🇨🇦EN_]
+
+The rest can be anywhere in the project
+(but putting it in a separate, testable library module is recommended):
+[_Example: ParrotLibrary 🇨🇦EN_]
+
+Tests are easy to set up:
+[_Example: ParrotTests 🇨🇦EN_]
+[_End_]
+
+([_Workaround: This should be centralized._])
+[_Begin Read‐Me About Section_]
+[_🇨🇦EN_]
+The [_Project_] project is maintained by Jeremy David Giesbrecht.
+
+If [_Project_] saves you money, consider giving some of it as a [donation](https://paypal.me/JeremyGiesbrecht).
+
+If [_Project_] saves you time, consider devoting some of it to [contributing]([_Repository URL_]) back to the project.
+
+> [Ἄξιος γὰρ ὁ ἐργάτης τοῦ μισθοῦ αὐτοῦ ἐστι.<br>For the worker is worthy of his wages.](https://www.biblegateway.com/passage/?search=Luke+10&version=SBLGNT;NIV)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;―‎ישוע/Yeshuʼa
+[_End_]
+
+([_Workaround: This should be centralized._])
+[_Begin Related Projects_]
+https://github.com/SDGGiesbrecht/Workspace
+https://github.com/SDGGiesbrecht/SDGCommandLine
+https://github.com/SDGGiesbrecht/SDGCornerstone
 [_End_]

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Command Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/Command" class="dashAnchor"></a>
+    <a title="Command Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SDGCommandLine Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/SDGGiesbrecht/SDGCommandLine"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SDGCommandLine Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Command Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../en-read-me.html">🇨🇦EN Read Me</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../en-related-projects.html">🇨🇦EN Related Projects</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ArgumentType.html">ArgumentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Colour.html">Colour</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FontWeight.html">FontWeight</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Underline.html">Underline</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/StringFamily.html">StringFamily</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:14SDGCommandLine10initializeySS21applicationIdentifier_AA7VersionVSg7version10Foundation3URLVSg07packageI014SDGCornerstone11PreferencesCm0dL5ClasstF">initialize(applicationIdentifier:version:packageURL:applicationPreferencesClass:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:14SDGCommandLine25AnyArgumentTypeDefinitionP">AnyArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:14SDGCommandLine9AnyOptionP">AnyOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextFormat.html">TextFormat</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArgumentTypeDefinition.html">ArgumentTypeDefinition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Command.html">Command</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Command/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Command/Output.html">– Output</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DirectArguments.html">DirectArguments</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Option.html">Option</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Options.html">Options</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Command</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Command</span></code></pre>
+
+                </div>
+              </div>
+            <p>A command.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandVAC14SDGCornerstone14UserFacingTextVyxytG4name_AG11descriptionSayAA25AnyArgumentTypeDefinition_pG15directArgumentsSayAA0J6Option_pG7optionsyAA06DirectO0V_AA7OptionsVAC6OutputVztKc9executiontcAD17InputLocalizationRzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:description:directArguments:options:execution:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandVAC14SDGCornerstone14UserFacingTextVyxytG4name_AG11descriptionSayAA25AnyArgumentTypeDefinition_pG15directArgumentsSayAA0J6Option_pG7optionsyAA06DirectO0V_AA7OptionsVAC6OutputVztKc9executiontcAD17InputLocalizationRzlufc">init(name:description:directArguments:options:execution:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a command.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">directArguments</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:14SDGCommandLine25AnyArgumentTypeDefinitionP">AnyArgumentTypeDefinition</a></span><span class="p">],</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols.html#/s:14SDGCommandLine9AnyOptionP">AnyOption</a></span><span class="p">],</span> <span class="nv">execution</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">parsedDirectArguments</span><span class="p">:</span> <span class="kt"><a href="../Structs/DirectArguments.html">DirectArguments</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">parsedOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Options.html">Options</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A brief description. (Printed by the <code>help</code> subcommand.)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>directArguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A list of direct command line arguments to accept.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A list of command line options to accept.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>execution</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of <code><a href="../Structs/Command/Error.html">Command.Error</a></code>. (Do not call <code>exit()</code> or other <code>Never</code>‐returning functions.)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parsedDirectArguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The parsed direct arguments.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parsedOptions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The parsed options.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>output</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The stream for standard output. Use <code>print(..., to: &amp;output)</code> for everything intendend for standard output. Anything printed by other means will not be filtered by <code>•no‐colour</code>, not be captured for the return value of <code>execute()</code> and not be available to any other specialized handling.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandVAC14SDGCornerstone14UserFacingTextVyxytG4name_AG11descriptionSayACG11subcommandsACSg17defaultSubcommandtcAD17InputLocalizationRzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:description:subcommands:defaultSubcommand:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandVAC14SDGCornerstone14UserFacingTextVyxytG4name_AG11descriptionSayACG11subcommandsACSg17defaultSubcommandtcAD17InputLocalizationRzlufc">init(name:description:subcommands:defaultSubcommand:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an umbrella command.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>The main umbrella command should match the name of the executable module and be a single word with no spaces or hyphens. If it is localized, the package must also provide an identical executable module for each alternate name.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">L</span> <span class="p">:</span> <span class="kt">InputLocalization</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">UserFacingText</span><span class="o">&lt;</span><span class="kt">L</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">subcommands</span><span class="p">:</span> <span class="p">[</span><span class="kt">Command</span><span class="p">],</span> <span class="n">defaultSubcommand</span><span class="p">:</span> <span class="kt">Command</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A brief description. (Printed by the <code>help</code> subcommand.)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subcommands</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The subcommands.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>defaultSubcommand</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The subcommand to execute if no subcommand is specified. (This should be an entry from <code>subcommands</code>.) Pass <code>nil</code> or leave this argument out to default to the help subcommand.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Execution"></a>
+                <a name="//apple_ref/swift/Section/Execution" class="dashAnchor"></a>
+                <a href="#/Execution">
+                  <h3 class="section-name">Execution</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandV13executeAsMains5NeverOyF"></a>
+                    <a name="//apple_ref/swift/Method/executeAsMain()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandV13executeAsMains5NeverOyF">executeAsMain()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Executes the command and exits.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">executeAsMain</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Never</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandV7execute14SDGCornerstone12StrictStringVSayAGG4with_tKF"></a>
+                    <a name="//apple_ref/swift/Method/execute(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandV7execute14SDGCornerstone12StrictStringVSayAGG4with_tKF">execute(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Executes the command without exiting.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>Whatever error is thrown by the <code>execution</code> closure provided when the command was initialized.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">with</span> <span class="nv">arguments</span><span class="p">:</span> <span class="p">[</span><span class="kt">StrictString</span><span class="p">])</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">StrictString</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>arguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The command line arguments, including subcommands and options, to use. (The command itself should be left out.)</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The output. (For output to be captured properly, it must printed to the provided stream. See <code>init(name:execution:)</code>.)</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandV7executeyAA15DirectArgumentsV04withF0_AA7OptionsV7optionsAC6OutputVz6outputtKF"></a>
+                    <a name="//apple_ref/swift/Method/execute(withArguments:options:output:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandV7executeyAA15DirectArgumentsV04withF0_AA7OptionsV7optionsAC6OutputVz6outputtKF">execute(withArguments:options:output:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Executes the command without exiting.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>Whatever error is thrown by the <code>execution</code> closure provided when the command was initialized.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">withArguments</span> <span class="nv">arguments</span><span class="p">:</span> <span class="kt"><a href="../Structs/DirectArguments.html">DirectArguments</a></span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Structs/Options.html">Options</a></span><span class="p">,</span> <span class="nv">output</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Command</span><span class="o">.</span><span class="kt"><a href="../Structs/Command/Output.html">Output</a></span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>arguments</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Parsed arguments.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Parsed options.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>output</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The output stream.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandV5ErrorV"></a>
+                    <a name="//apple_ref/swift/Struct/Error" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandV5ErrorV">Error</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A command line failure.</p>
+
+                        <a href="../Structs/Command/Error.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Error</span> <span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14SDGCommandLine7CommandV6OutputV"></a>
+                    <a name="//apple_ref/swift/Struct/Output" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14SDGCommandLine7CommandV6OutputV">Output</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The output stream for standard output.</p>
+
+                        <a href="../Structs/Command/Output.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Output</span> <span class="p">:</span> <span class="kt">TextOutputStream</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

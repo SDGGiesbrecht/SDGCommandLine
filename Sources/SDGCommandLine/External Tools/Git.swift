@@ -2,7 +2,7 @@
  Git.swift
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+ https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
  Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -25,7 +25,7 @@ public class _Git : _ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 14, 1)
     #else
-         private static let version = Version(2, 13, 5)
+         private static let version = Version(2, 13, 6)
     #endif
 
     /// :nodoc: (Shared to Workspace.)

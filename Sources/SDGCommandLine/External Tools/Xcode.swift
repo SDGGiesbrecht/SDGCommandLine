@@ -2,7 +2,7 @@
  Xcode.swift
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+ https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
  Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -13,6 +13,7 @@
  */
 
 #if !os(Linux)
+    // MARK: - #if !os(Linux)
 
     import SDGCornerstone
 

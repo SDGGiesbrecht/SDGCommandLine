@@ -2,7 +2,7 @@
  README.md
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/macOS
+ https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
  Copyright ©2017 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -12,16 +12,11 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-<!--
- !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!!
- This file is managed by Workspace.
- Manual changes will not persist.
- For more information, see:
- https://github.com/SDGGiesbrecht/Workspace/blob/master/Documentation/Read‐Me.md
- !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!! !!!!!!!
- -->
+[🇨🇦EN](Documentation/🇨🇦EN%20Read%20Me.md) <!--Skip in Jazzy-->
 
-APIs: [macOS](https://sdggiesbrecht.github.io/SDGCommandLine/macOS) • [Linux](https://sdggiesbrecht.github.io/SDGCommandLine/Linux)
+macOS • Linux
+
+APIs: [SDGCommandLine](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine/SDGCommandLine)
 
 # SDGCommandLine
 
@@ -43,26 +38,29 @@ SDGCommandLine provides tools for implementing a command line interface.
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
-(For a list of related projecs, see [here](Documentation/Related%20Projects.md).) <!--Skip in Jazzy-->
+(For a list of related projects, see [here](Documentation/🇨🇦EN%20Related%20Projects.md).) <!--Skip in Jazzy-->
 
 ## Importing
 
-SDGCommandLine is intended for use with the [Swift Package Manager](https://swift.org/package-manager/).
+`SDGCommandLine` is intended for use with the [Swift Package Manager](https://swift.org/package-manager/).
 
-Simply add SDGCommandLine as a dependency in `Package.swift`:
+Simply add `SDGCommandLine` as a dependency in `Package.swift`:
 
 ```swift
 let package = Package(
-    ...
+    name: "MyPackage",
     dependencies: [
-        ...
-        .Package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", versions: "0.1.3" ..< "0.2.0"),
-        ...
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", .upToNextMinor(from: Version(0, 1, 3))),
+    ],
+    targets: [
+        .target(name: "MyTarget", dependencies: [
+            .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
+        ])
     ]
 )
 ```
 
-SDGCommandLine can then be imported in source files:
+`SDGCommandLine` can then be imported in source files:
 
 ```swift
 import SDGCommandLine
@@ -70,31 +68,24 @@ import SDGCommandLine
 
 ## Example Usage
 
-```swift
-/*
- This example creates a tool with the following interface:
-
+This example creates a tool with the following interface:
+```shell
  $ parrot speak
  Squawk!
 
  $ parrot speak •phrase "Hello, world!"
  Hello, world!
- */
+```
 
-/*
- // main.swift must consist of the following lines:
+`main.swift` must consist of the following lines:
+```swift
+SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
+parrot.executeAsMain()
+```
 
- import Foundation
- import SDGCommandLine
-
- SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
- parrot.executeAsMain()
-
- */
-
-// The rest can be anywhere in the project:
-// (putting it in a separate, testable library module is recommended)
-
+The rest can be anywhere in the project
+(but putting it in a separate, testable library module is recommended):
+```swift
 import SDGCornerstone // See https://sdggiesbrecht.github.io/SDGCornerstone/macOS/
 import SDGCommandLine
 
@@ -124,9 +115,10 @@ enum MyLocalizations : String, InputLocalization {
     internal static let cases: [MyLocalizations] = [.english]
     internal static let fallbackLocalization: MyLocalizations = .english
 }
+```
 
-// It is easy to set up tests:
-
+Tests are easy to set up:
+```swift
 func testParrot() {
     do {
         let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
