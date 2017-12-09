@@ -71,7 +71,7 @@ public class _Git : _ExternalTool {
         }
         command += [
             "\u{2D}\u{2D}depth", "1",
-            "\u{2D}c", "advice.detachedHead=false"
+            "\u{2D}\u{2D}config", "advice.detachedHead=false"
         ]
         _ = try executeInCompatibilityMode(with: command, output: &output)
     }
