@@ -61,6 +61,13 @@ public class _Swift : _ExternalTool {
             ], output: &output)
     }
 
+    private func resolve(output: inout Command.Output) throws {
+        _ = try execute(with: [
+            "package",
+            "resolve"
+            ], output: &output)
+    }
+
     internal func buildForRelease(output: inout Command.Output) throws {
         _ = try execute(with: [
             "build",
@@ -88,7 +95,10 @@ public class _Swift : _ExternalTool {
         }))
     }
 
-    private func packageDescription(output: inout Command.Output) throws -> (properties: [String: Any], json: String) {
+    /// :nodoc: (Shared to Workspace.)
+    public func _packageStructure(output: inout Command.Output) throws -> (name: String, libraryProductTargets: [String], targets: [(name: String, location: URL)]) {
+
+        try resolve(output: &output) // If resolution interrupts the dump, the output is invalid JSON.
 
         let json = try executeInCompatibilityMode(with: [
             "package",
@@ -96,30 +106,19 @@ public class _Swift : _ExternalTool {
             ], output: &output, silently: true)
 
         guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
-                throw parseError(packageDescription: json)
+            throw parseError(packageDescription: json)
         }
-        return (properties, json)
-    }
 
-    /// :nodoc: (Shared to Workspace.)
-    public func _packageName(output: inout Command.Output) throws -> String {
-        let (properties, json) = try packageDescription(output: &output)
         guard let name = (properties["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
-        return name
-    }
 
-    /// :nodoc: (Shared to Workspace.)
-    public func _libraryProductTargets(output: inout Command.Output) throws -> Set<String> {
-
-        let (properties, json) = try packageDescription(output: &output)
         guard let products = (properties["products"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
 
-        var result: Set<String> = []
-
+        var libraryProductTargets: [String] = [] // Maintain order from Package.swift
+        var libraryProductTargetsSet: Set<String> = []
         for productEntry in products {
             guard let information = (productEntry as? PropertyListValue)?.as([String: Any].self),
                 let type = (information["product_type"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
@@ -127,30 +126,22 @@ public class _Swift : _ExternalTool {
             }
 
             if type == "library" {
-                guard let targets = (information["targets"] as? PropertyListValue)?.as([String].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                guard let subtargets = (information["targets"] as? PropertyListValue)?.as([String].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
                 }
 
-                for target in targets {
-                    result.insert(target)
+                for target in subtargets where target ∉ libraryProductTargetsSet {
+                    libraryProductTargetsSet.insert(target)
+                    libraryProductTargets.append(target)
                 }
             }
         }
 
-        return result
-    }
-
-    /// :nodoc: (Shared to Workspace.)
-    public func _targets(output: inout Command.Output) throws -> [(name: String, location: URL)] {
-
-        let (properties, json) = try packageDescription(output: &output)
         guard let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
-                throw parseError(packageDescription: json)
+            throw parseError(packageDescription: json)
         }
-
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-
-        return try targets.map() { (targetValue) -> (name: String, location: URL) in
+        let targetList = try targets.map() { (targetValue) -> (name: String, location: URL) in
             guard let targetInformation = (targetValue as? PropertyListValue)?.as([String: Any].self),
                 let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
@@ -169,5 +160,7 @@ public class _Swift : _ExternalTool {
 
             return (name, repositoryRoot.appendingPathComponent(path))
         }
+
+        return (name: name, libraryProductTargets: libraryProductTargets, targets: targetList)
     }
 }

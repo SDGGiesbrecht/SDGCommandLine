@@ -151,14 +151,15 @@ class InternalTests : TestCase {
         XCTAssertErrorFree({
             try FileManager.default.do(in: repositoryRoot) {
                 var output = Command.Output()
-                let targets = try SwiftTool.default._targets(output: &output)
-                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLine" }))
-                XCTAssert(targets.contains(where: { $0.name == "SDGCommandLineTests" }))
 
-                let libraryProducts = try SwiftTool.default._libraryProductTargets(output: &output)
-                XCTAssert("SDGCommandLine" ∈ libraryProducts)
+                let packageStructure = try SwiftTool.default._packageStructure(output: &output)
 
-                XCTAssertEqual(try SwiftTool.default._packageName(output: &output), "SDGCommandLine")
+                XCTAssertEqual(packageStructure.name, "SDGCommandLine")
+
+                XCTAssertEqual(packageStructure.libraryProductTargets, ["SDGCommandLine"])
+
+                XCTAssertEqual(packageStructure.targets[0].name, "SDGCommandLine")
+                XCTAssertEqual(packageStructure.targets[1].name, "SDGCommandLineTests")
             }
         })
     }
