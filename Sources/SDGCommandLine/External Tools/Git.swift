@@ -58,20 +58,22 @@ public class _Git : _ExternalTool {
         _ = try execute(with: ["init"], output: &output)
     }
 
-    internal func clone(repository remote: URL, to local: URL, output: inout Command.Output) throws {
-        _ = try execute(with: [
+    internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: inout Command.Output) throws {
+        var command = [
             "clone",
-            StrictString(Shell.quote(remote.absoluteString)),
-            StrictString(Shell.quote(local.path))
-            ], output: &output)
-    }
-
-    internal func checkout(_ version: Version, output: inout Command.Output) throws {
-        _ = try execute(with: [
-            "\u{2D}c", "advice.detachedHead=false",
-            "checkout",
-            StrictString(version.string)
-            ], output: &output)
+            Shell.quote(remote.absoluteString),
+            Shell.quote(local.path)
+            ]
+        if let checkout = tagOrBranch {
+            command += [
+                "\u{2D}\u{2D}branch", checkout
+                ]
+        }
+        command += [
+            "\u{2D}\u{2D}depth", "1",
+            "\u{2D}\u{2D}config", "advice.detachedHead=false"
+        ]
+        _ = try executeInCompatibilityMode(with: command, output: &output)
     }
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {

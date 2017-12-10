@@ -51,10 +51,18 @@ public struct _PackageRepository {
         }).resolved(), output: &output)
     }
 
-    internal init(cloning package: Package, to location: URL, output: inout Command.Output) throws {
+    internal init(shallowlyCloning package: Package, to location: URL, at version: Build, output: inout Command.Output) throws {
         self._location = location
 
-        try Git.default.clone(repository: package.url, to: location, output: &output)
+        var tag: String?
+        switch version {
+        case .development:
+            break
+        case .version(let stable):
+            tag = stable.string
+        }
+
+        try Git.default.shallowlyClone(repository: package.url, to: location, at: tag, output: &output)
     }
 
     /// :nodoc: (Shared to Workspace.)
@@ -100,12 +108,6 @@ public struct _PackageRepository {
     internal func tag(version: Version, output: inout Command.Output) throws {
         try FileManager.default.do(in: location) {
             try Git.default.tag(version: version, output: &output)
-        }
-    }
-
-    internal func checkout(_ version: Version, output: inout Command.Output) throws {
-        try FileManager.default.do(in: location) {
-            try Git.default.checkout(version, output: &output)
         }
     }
 }

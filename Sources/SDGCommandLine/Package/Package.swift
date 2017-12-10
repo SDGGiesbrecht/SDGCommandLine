@@ -83,15 +83,8 @@ public struct _Package {
 
     private func build(_ version: Build, to destination: URL, output: inout Command.Output) throws {
         let temporaryCloneLocation = FileManager.default.url(in: .temporary, at: "Package Clones/" + url.lastPathComponent)
-        let temporaryRepository = try PackageRepository(cloning: self, to: temporaryCloneLocation, output: &output)
+        let temporaryRepository = try PackageRepository(shallowlyCloning: self, to: temporaryCloneLocation, at: version, output: &output)
         defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
-
-        switch version {
-        case .version(let specific):
-            try temporaryRepository.checkout(specific, output: &output)
-        case .development:
-            break
-        }
 
         let products = try temporaryRepository.buildForRelease(output: &output)
 
