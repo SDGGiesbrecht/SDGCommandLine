@@ -57,13 +57,22 @@ enum MyLocalizations : String, InputLocalization {
 }
 // [_End_]
 
-// [_Define Example: ParrotTests 🇨🇦EN_]
-func testParrot() {
-    do {
-        let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
-        XCTAssertEqual(output, "Hello, world!")
-    } catch {
-        XCTFail("The parrot is not co‐operating.")
+class ReadMeExampleTests : TestCase {
+
+    // [_Define Example: ParrotTests 🇨🇦EN_]
+    func testParrot() {
+        do {
+            let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
+            XCTAssertEqual(output, "Hello, world!")
+        } catch {
+            XCTFail("The parrot is not co‐operating.")
+        }
+    }
+    // [_End_]
+
+    static var allTests: [(String, (ReadMeExampleTests) -> () throws -> Void)] {
+        return [
+            ("testParrot", testParrot)
+        ]
     }
 }
-// [_End_]
