@@ -54,31 +54,34 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func initializeExecutablePackage(output: inout Command.Output) throws {
-        _ = try execute(with: [
-            "package", "init",
-            "\u{2D}\u{2D}type", "executable"
-            ], output: &output)
+    internal func initializePackage(executable: Bool, output: inout Command.Output) throws {
+        var arguments: [StrictString] = [
+            "package", "init"
+        ]
+        if executable {
+            arguments += [
+                "\u{2D}\u{2D}type", "executable"
+            ]
+        }
+        _ = try execute(with: arguments, output: &output)
     }
 
     private func resolve(output: inout Command.Output) throws {
         _ = try execute(with: [
-            "package",
-            "resolve"
+            "package", "resolve"
             ], output: &output)
     }
 
     /// :nodoc: (Shared to Workspace.)
     public func _generateXcodeProject(output: inout Command.Output) throws {
         _ = try execute(with: [
-            "package",
-            "generate\u{2D}xcodeproj",
+            "package", "generate\u{2D}xcodeproj",
             "\u{2D}\u{2D}enable\u{2D}code\u{2D}coverage"
         ], output: &output)
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _test(output: inout Command.Output) throws {
+    public func _test(output: inout Command.Output) throws { // [_Exempt from Code Coverage_] Incorrectly rerouted within xcodebuild.
         _ = try execute(with: [
             "test"
             ], output: &output)
@@ -117,8 +120,7 @@ public class _Swift : _ExternalTool {
         try resolve(output: &output) // If resolution interrupts the dump, the output is invalid JSON.
 
         let json = try executeInCompatibilityMode(with: [
-            "package",
-            "dump\u{2D}package"
+            "package", "dump\u{2D}package"
             ], output: &output, silently: true)
 
         guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.

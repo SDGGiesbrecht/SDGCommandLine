@@ -92,7 +92,7 @@ public class _Git : _ExternalTool {
             "diff",
             "\u{2D}\u{2D}exit\u{2D}code",
             "\u{2D}\u{2D}",
-            ".",
+            "."
             ] + excludePatterns.map({ "':(exclude)\($0)'" }), output: &output, autoquote: false)
     }
 
