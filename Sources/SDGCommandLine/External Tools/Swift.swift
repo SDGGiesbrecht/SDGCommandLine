@@ -68,6 +68,22 @@ public class _Swift : _ExternalTool {
             ], output: &output)
     }
 
+    /// :nodoc: (Shared to Workspace.)
+    public func _generateXcodeProject(output: inout Command.Output) throws {
+        _ = try execute(with: [
+            "package",
+            "generate\u{2D}xcodeproj",
+            "\u{2D}\u{2D}enable\u{2D}code\u{2D}coverage"
+        ], output: &output)
+    }
+
+    /// :nodoc: (Shared to Workspace.)
+    public func _test(output: inout Command.Output) throws {
+        _ = try execute(with: [
+            "test"
+            ], output: &output)
+    }
+
     internal func buildForRelease(output: inout Command.Output) throws {
         _ = try execute(with: [
             "build",

@@ -28,7 +28,7 @@ let package = Package(
         .library(name: library, targets: [library])
     ],
     dependencies: [
-        .package(url: sdgGiesbrecht + sdgCornerstone, .upToNextMinor(from: Version(0, 7, 1)))
+    .package(url: sdgGiesbrecht + sdgCornerstone, .branch("autoquote‐override")) // .upToNextMinor(from: Version(0, 7, 3))) [_Warning: Do not merge without stable version._]
     ],
     targets: [
         .target(name: library, dependencies: [
