@@ -96,7 +96,7 @@ public class _Swift : _ExternalTool {
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _packageStructure(output: inout Command.Output) throws -> (name: String, libraryProductTargets: [String], targets: [(name: String, location: URL)]) {
+    public func _packageStructure(output: inout Command.Output) throws -> (name: String, libraryProductTargets: [String], executableProducts: [String], targets: [(name: String, location: URL)]) {
 
         try resolve(output: &output) // If resolution interrupts the dump, the output is invalid JSON.
 
@@ -118,6 +118,7 @@ public class _Swift : _ExternalTool {
         }
 
         var libraryProductTargets: [String] = [] // Maintain order from Package.swift
+        var executableProducts: [String] = [] // Maintain order from Package.swift
         var libraryProductTargetsSet: Set<String> = []
         for productEntry in products {
             guard let information = (productEntry as? PropertyListValue)?.as([String: Any].self),
@@ -134,6 +135,11 @@ public class _Swift : _ExternalTool {
                     libraryProductTargetsSet.insert(target)
                     libraryProductTargets.append(target)
                 }
+            } else if type == "executable" {
+                guard let name = (information["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                    throw parseError(packageDescription: json)
+                }
+                executableProducts.append(name)
             }
         }
 
@@ -161,6 +167,6 @@ public class _Swift : _ExternalTool {
             return (name, repositoryRoot.appendingPathComponent(path))
         }
 
-        return (name: name, libraryProductTargets: libraryProductTargets, targets: targetList)
+        return (name: name, libraryProductTargets: libraryProductTargets, executableProducts: executableProducts, targets: targetList)
     }
 }
