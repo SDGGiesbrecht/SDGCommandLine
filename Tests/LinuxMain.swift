@@ -17,5 +17,8 @@ import XCTest
 
 XCTMain([
     testCase(APITests.allTests),
+
+    testCase(ReadMeExampleTests.allTests),
+
     testCase(InternalTests.allTests)
 ])
