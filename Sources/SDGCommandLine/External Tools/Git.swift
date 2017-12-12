@@ -55,6 +55,10 @@ public class _Git : _ExternalTool {
     // MARK: - Usage: Workflow
 
     internal func initializeRepository(output: inout Command.Output) throws {
+        try _initializeRepository(output: &output)
+    }
+    /// :nodoc: (Shared to Workspace.)
+    public func _initializeRepository(output: inout Command.Output) throws {
         _ = try execute(with: ["init"], output: &output)
     }
 
@@ -74,6 +78,22 @@ public class _Git : _ExternalTool {
             "\u{2D}\u{2D}config", "advice.detachedHead=false"
         ]
         _ = try executeInCompatibilityMode(with: command, output: &output)
+    }
+
+    /// :nodoc: (Shared to Workspace.)
+    public func _differences(excluding excludePatterns: [String], output: inout Command.Output) throws {
+        _ = try execute(with: [
+            "add",
+            ".",
+            "\u{2D}\u{2D}intent\u{2D}to\u{2D}add"
+            ], output: &output, silently: true)
+
+        _ = try executeInCompatibilityMode(with: [
+            "diff",
+            "\u{2D}\u{2D}exit\u{2D}code",
+            "\u{2D}\u{2D}",
+            ".",
+            ] + excludePatterns.map({ "':(exclude)\($0)'" }), output: &output, autoquote: false)
     }
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
