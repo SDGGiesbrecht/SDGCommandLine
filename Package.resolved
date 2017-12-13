@@ -5,9 +5,9 @@
         "package": "SDGCornerstone",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
-          "branch": "autoquote‐override",
-          "revision": "8e9f65483bddd148801305c39f045ff5486a4a2d",
-          "version": null
+          "branch": null,
+          "revision": "c1799688ccc498367d2159b1394887b4ca27da61",
+          "version": "0.7.3"
         }
       }
     ]
