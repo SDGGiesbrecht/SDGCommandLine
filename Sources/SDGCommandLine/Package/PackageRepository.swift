@@ -26,11 +26,11 @@ public struct _PackageRepository {
 
     // MARK: - Initialization
 
-    internal init(initializingAt location: URL, output: inout Command.Output) throws {
+    internal init(initializingAt location: URL, executable: Bool, output: inout Command.Output) throws {
         self._location = location
 
         try FileManager.default.do(in: location) {
-            try SwiftTool.default.initializeExecutablePackage(output: &output)
+            try SwiftTool.default.initializePackage(executable: executable, output: &output)
             try Git.default.initializeRepository(output: &output)
         }
         try commitChanges(description: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in

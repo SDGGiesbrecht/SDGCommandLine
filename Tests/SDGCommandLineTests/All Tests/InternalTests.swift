@@ -111,7 +111,7 @@ class InternalTests : TestCase {
                     let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
 
                     var output = Command.Output()
-                    _ = try PackageRepository(initializingAt: packageLocation, output: &output)
+                    _ = try PackageRepository(initializingAt: packageLocation, executable: true, output: &output)
                     defer { FileManager.default.delete(.temporary) }
                 })
             }
@@ -162,6 +162,34 @@ class InternalTests : TestCase {
                 XCTAssertEqual(packageStructure.targets[1].name, "SDGCommandLineTests")
             }
         })
+
+        XCTAssertErrorFree({
+            let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
+            var output = Command.Output()
+
+            let repository = try PackageRepository(initializingAt: location, executable: true, output: &output)
+            defer { try? FileManager.default.removeItem(at: location) }
+
+            try FileManager.default.do(in: location) {
+
+                try "...".save(to: location.appendingPathComponent("File.md"))
+                try Git.default._differences(excluding: ["*.md"], output: &output)
+                do {
+                    try Git.default._differences(excluding: [], output: &output)
+                    XCTFail("Difference unnoticed.")
+                } catch {
+                    // Expected
+                }
+
+                try SwiftTool.default._generateXcodeProject(output: &output)
+
+                let manifestLocation = location.appendingPathComponent("Package.swift")
+                var manifest = try String(from: manifestLocation)
+                manifest.replaceMatches(for: "dependencies: [\n", with: "products: [.executable(name: \u{22}ExecutablePackageTest\u{22}, targets: [\u{22}ExecutablePackageTest\u{22}])], dependencies: [\n")
+                try manifest.save(to: manifestLocation)
+                XCTAssert(try SwiftTool.default._packageStructure(output: &output).executableProducts.count == 1)
+            }
+        })
     }
 
     func testVersion() {
@@ -178,7 +206,7 @@ class InternalTests : TestCase {
         XCTAssertErrorFree {
             var ignored = Command.Output()
             let testToolName = "tool"
-            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), output: &ignored)
+            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), executable: true, output: &ignored)
             defer { FileManager.default.delete(.temporary) }
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/" + testToolName + "/main.swift"))

@@ -96,20 +96,20 @@ public class _ExternalTool {
         }
     }
 
-    internal func execute(with arguments: [StrictString], output: inout Command.Output, silently: Bool = false) throws -> StrictString {
-        return try _execute(with: arguments, output: &output, silently: silently)
+    internal func execute(with arguments: [StrictString], output: inout Command.Output, silently: Bool = false, autoquote: Bool = true) throws -> StrictString {
+        return try _execute(with: arguments, output: &output, silently: silently, autoquote: autoquote)
     }
     /// :nodoc: (Shared to Workspace.)
-    public func _execute(with arguments: [StrictString], output: inout Command.Output, silently: Bool) throws -> StrictString {
-        return StrictString(try _executeInCompatibilityMode(with: arguments.map({ String($0) }), output: &output, silently: silently))
+    public func _execute(with arguments: [StrictString], output: inout Command.Output, silently: Bool, autoquote: Bool) throws -> StrictString {
+        return StrictString(try _executeInCompatibilityMode(with: arguments.map({ String($0) }), output: &output, silently: silently, autoquote: autoquote))
     }
 
-    internal func executeInCompatibilityMode(with arguments: [String], output: inout Command.Output, silently: Bool = false) throws -> String {
-        return try _executeInCompatibilityMode(with: arguments, output: &output, silently: silently)
+    internal func executeInCompatibilityMode(with arguments: [String], output: inout Command.Output, silently: Bool = false, autoquote: Bool = true) throws -> String {
+        return try _executeInCompatibilityMode(with: arguments, output: &output, silently: silently, autoquote: autoquote)
     }
     /// :nodoc: (Shared to Workspace.)
-    public func _executeInCompatibilityMode(with arguments: [String], output: inout Command.Output, silently: Bool) throws -> String {
+    public func _executeInCompatibilityMode(with arguments: [String], output: inout Command.Output, silently: Bool, autoquote: Bool) throws -> String {
         try checkVersionOnce(output: &output)
-        return try Shell.default.run(command: ([String(command)] + arguments), silently: silently, alternatePrint: { print($0, to: &output) })
+        return try Shell.default.run(command: ([String(command)] + arguments), silently: silently, autoquote: autoquote, alternatePrint: { print($0, to: &output) })
     }
 }
