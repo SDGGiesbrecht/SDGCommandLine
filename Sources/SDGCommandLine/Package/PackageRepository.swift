@@ -78,16 +78,6 @@ public struct _PackageRepository {
         return _location
     }
 
-    // MARK: - Information
-
-    internal func url(for relativePath: String) -> URL {
-        return _url(for: relativePath)
-    }
-    /// :nodoc: (Shared to Workspace.)
-    public func _url(for relativePath: String) -> URL {
-        return location.appendingPathComponent(relativePath)
-    }
-
     // MARK: - Actions
 
     internal func buildForRelease(output: inout Command.Output) throws -> URL {

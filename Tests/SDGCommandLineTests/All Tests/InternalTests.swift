@@ -209,7 +209,7 @@ class InternalTests : TestCase {
             let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), executable: true, output: &ignored)
             defer { FileManager.default.delete(.temporary) }
 
-            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.url(for: "Sources/" + testToolName + "/main.swift"))
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
 
