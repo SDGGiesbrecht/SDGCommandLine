@@ -44,9 +44,9 @@ public class _Swift : _ExternalTool {
             case .עברית־ישראל:
                 return "סוויפט"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
-            switch localization { // [_Exempt from Code Coverage_]
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
+        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Test Coverage_]
+            switch localization { // [_Exempt from Test Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
                 return "swift.org"
             }
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
@@ -81,7 +81,7 @@ public class _Swift : _ExternalTool {
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _test(output: inout Command.Output) throws { // [_Exempt from Code Coverage_] Incorrectly rerouted within xcodebuild.
+    public func _test(output: inout Command.Output) throws { // [_Exempt from Test Coverage_] Incorrectly rerouted within xcodebuild.
         _ = try execute(with: [
             "test"
             ], output: &output)
@@ -97,18 +97,18 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Information
 
-    private func parseError(packageDescription json: String) -> Command.Error { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
-        return Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Code Coverage_]
+    private func parseError(packageDescription json: String) -> Command.Error { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
+        return Command.Error(description: UserFacingText<InterfaceLocalization, Void>({ (localization, _) in // [_Exempt from Test Coverage_]
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Code Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Test Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
-            case .deutschDeutschland: // [_Exempt from Code Coverage_]
+            case .deutschDeutschland: // [_Exempt from Test Coverage_]
                 return StrictString("Fehlschlag beim Laden der Paketbeschreibung:\n\(json)")
-            case .françaisFrance: // [_Exempt from Code Coverage_]
+            case .françaisFrance: // [_Exempt from Test Coverage_]
                 return StrictString("Échec du chargement de la description du paquet:\n\(json)")
-            case .ελληνικάΕλλάδα: // [_Exempt from Code Coverage_]
+            case .ελληνικάΕλλάδα: // [_Exempt from Test Coverage_]
                 return StrictString("Αποτυχία της φόρτωσης της περιγραφής του δέματος:\n\(json)")
-            case .עברית־ישראל: // [_Exempt from Code Coverage_]
+            case .עברית־ישראל: // [_Exempt from Test Coverage_]
                 return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
@@ -123,15 +123,15 @@ public class _Swift : _ExternalTool {
             "package", "dump\u{2D}package"
             ], output: &output, silently: true)
 
-        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let properties = (try JSONSerialization.jsonObject(with: json.file, options: []) as? PropertyListValue)?.as([String: Any].self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
 
-        guard let name = (properties["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let name = (properties["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
 
-        guard let products = (properties["products"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let products = (properties["products"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
 
@@ -140,12 +140,12 @@ public class _Swift : _ExternalTool {
         var libraryProductTargetsSet: Set<String> = []
         for productEntry in products {
             guard let information = (productEntry as? PropertyListValue)?.as([String: Any].self),
-                let type = (information["product_type"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                let type = (information["product_type"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
             }
 
             if type == "library" {
-                guard let subtargets = (information["targets"] as? PropertyListValue)?.as([String].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                guard let subtargets = (information["targets"] as? PropertyListValue)?.as([String].self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
                 }
 
@@ -154,25 +154,25 @@ public class _Swift : _ExternalTool {
                     libraryProductTargets.append(target)
                 }
             } else if type == "executable" {
-                guard let name = (information["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                guard let name = (information["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
                 }
                 executableProducts.append(name)
             }
         }
 
-        guard let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+        guard let targets = (properties["targets"] as? PropertyListValue)?.as([Any].self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)
         }
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         let targetList = try targets.map() { (targetValue) -> (name: String, location: URL) in
             guard let targetInformation = (targetValue as? PropertyListValue)?.as([String: Any].self),
-                let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Code Coverage_] Reachable only with an incompatible version of Swift.
+                let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
             }
 
             var path: String
-            if let specific = (targetInformation["path"] as? PropertyListValue)?.as(String.self) { // [_Exempt from Code Coverage_]
+            if let specific = (targetInformation["path"] as? PropertyListValue)?.as(String.self) { // [_Exempt from Test Coverage_]
                 path = specific
             } else {
                 if (targetInformation["isTest"] as? PropertyListValue)?.as(Bool.self) == true {
