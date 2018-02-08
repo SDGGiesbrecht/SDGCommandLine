@@ -107,7 +107,7 @@ public struct Command {
     /// Executes the command and exits.
     public func executeAsMain() -> Never { // [_Exempt from Test Coverage_] Not testable.
 
-        let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Test Coverage_]
+        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) } // [_Exempt from Test Coverage_]
 
         let exitCode: Int
         do { // [_Exempt from Test Coverage_]

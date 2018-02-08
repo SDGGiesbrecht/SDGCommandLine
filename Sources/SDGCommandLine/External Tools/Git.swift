@@ -93,7 +93,7 @@ public class _Git : _ExternalTool {
             "\u{2D}\u{2D}exit\u{2D}code",
             "\u{2D}\u{2D}",
             "."
-            ] + excludePatterns.map({ "':(exclude)\($0)'" }), output: &output, autoquote: false)
+            ] + excludePatterns.map({ "\u{27}:(exclude)\($0)\u{27}" }), output: &output, autoquote: false)
     }
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {

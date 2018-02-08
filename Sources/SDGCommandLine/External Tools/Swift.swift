@@ -165,7 +165,7 @@ public class _Swift : _ExternalTool {
             throw parseError(packageDescription: json)
         }
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-        let targetList = try targets.map() { (targetValue) -> (name: String, location: URL) in
+        let targetList = try targets.map { (targetValue) -> (name: String, location: URL) in
             guard let targetInformation = (targetValue as? PropertyListValue)?.as([String: Any].self),
                 let name = (targetInformation["name"] as? PropertyListValue)?.as(String.self) else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
                     throw parseError(packageDescription: json)
