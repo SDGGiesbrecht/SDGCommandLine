@@ -29,7 +29,7 @@ public func initialize(applicationIdentifier: String, version: Version?, package
 
     Version.currentToolVersion = version
 
-    if let url = packageURL { // [_Exempt from Code Coverage_]
+    if let url = packageURL { // [_Exempt from Test Coverage_]
         Package.current = Package(url: url)
     }
 }

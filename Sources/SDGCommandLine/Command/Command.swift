@@ -105,21 +105,21 @@ public struct Command {
     }
 
     /// Executes the command and exits.
-    public func executeAsMain() -> Never { // [_Exempt from Code Coverage_] Not testable.
+    public func executeAsMain() -> Never { // [_Exempt from Test Coverage_] Not testable.
 
-        let arguments = CommandLine.arguments.dropFirst().map() { StrictString($0) } // [_Exempt from Code Coverage_]
+        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) } // [_Exempt from Test Coverage_]
 
         let exitCode: Int
-        do { // [_Exempt from Code Coverage_]
+        do { // [_Exempt from Test Coverage_]
             try self.withRootBehaviour().execute(with: arguments)
             exitCode = Error.successCode
-        } catch let error as Command.Error { // [_Exempt from Code Coverage_]
+        } catch let error as Command.Error { // [_Exempt from Test Coverage_]
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
             exitCode = error.exitCode
-        } catch { // [_Exempt from Code Coverage_]
+        } catch { // [_Exempt from Test Coverage_]
             FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
             exitCode = Error.generalErrorCode
-        } // [_Exempt from Code Coverage_]
+        } // [_Exempt from Test Coverage_]
         exit(Int32(truncatingIfNeeded: exitCode))
     }
 

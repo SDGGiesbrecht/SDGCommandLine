@@ -25,7 +25,7 @@ class APITests : TestCase {
             ] as [String: StrictString] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
-                        let output =  try Tool.command.execute(with: ["execute"])
+                        let output = try Tool.command.execute(with: ["execute"])
                         XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                     })
                 }
@@ -157,7 +157,7 @@ class APITests : TestCase {
 
     func testNoColour() {
         XCTAssertErrorFree({
-            let output =  try Tool.command.execute(with: ["help", "•no‐colour"])
+            let output = try Tool.command.execute(with: ["help", "•no‐colour"])
             XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
         })
     }
@@ -165,20 +165,20 @@ class APITests : TestCase {
     func testOption() {
         XCTAssertErrorFree({
             let text: StrictString = "Changed using an option."
-            let output =  try Tool.command.execute(with: ["execute", "•string", text])
+            let output = try Tool.command.execute(with: ["execute", "•string", text])
             XCTAssert(output.contains(text), "Expected output missing: \(text)")
         })
 
         XCTAssertErrorFree({
             let text: StrictString = "Changed using an option."
-            let output =  try Tool.command.execute(with: ["execute", "\u{2D}\u{2D}string", text])
+            let output = try Tool.command.execute(with: ["execute", "\u{2D}\u{2D}string", text])
             XCTAssert(output.contains(text), "Expected output missing: \(text)")
         })
 
         LocalizationSetting(orderOfPrecedence: ["en"]).do {
             XCTAssertErrorFree({
                 let text: StrictString = "Hi!"
-                let output =  try Tool.command.execute(with: ["execute", "•informal"])
+                let output = try Tool.command.execute(with: ["execute", "•informal"])
                 XCTAssert(output.contains(text), "Expected output missing: \(text)")
             })
         }

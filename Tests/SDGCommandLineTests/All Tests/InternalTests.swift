@@ -140,7 +140,7 @@ class InternalTests : TestCase {
             ] as [String: StrictString] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
-                        let output =  try InternalTests.rootCommand.execute(with: ["help"])
+                        let output = try InternalTests.rootCommand.execute(with: ["help"])
                         XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                     })
                 }
@@ -248,7 +248,7 @@ class InternalTests : TestCase {
     func testVersionSubcommand() {
         LocalizationSetting(orderOfPrecedence: [["en"]]).do {
             XCTAssertErrorFree({
-                let output =  try InternalTests.rootCommand.execute(with: ["version"])
+                let output = try InternalTests.rootCommand.execute(with: ["version"])
                 XCTAssertEqual(output, "1.2.3")
             })
         }

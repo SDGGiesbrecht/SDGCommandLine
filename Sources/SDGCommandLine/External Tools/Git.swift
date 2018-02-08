@@ -25,7 +25,7 @@ public class _Git : _ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 15, 1)
     #else
-         private static let version = Version(2, 13, 6)
+         private static let version = Version(2, 14, 3)
     #endif
 
     /// :nodoc: (Shared to Workspace.)
@@ -44,9 +44,9 @@ public class _Git : _ExternalTool {
             case .עברית־ישראל:
                 return "גיט"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Code Coverage_]
-            switch localization { // [_Exempt from Code Coverage_]
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Code Coverage_]
+        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Test Coverage_]
+            switch localization { // [_Exempt from Test Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
                 return "git\u{2D}scm.com"
             }
         }), command: "git", version: version, versionCheck: ["version"])
@@ -93,7 +93,7 @@ public class _Git : _ExternalTool {
             "\u{2D}\u{2D}exit\u{2D}code",
             "\u{2D}\u{2D}",
             "."
-            ] + excludePatterns.map({ "':(exclude)\($0)'" }), output: &output, autoquote: false)
+            ] + excludePatterns.map({ "\u{27}:(exclude)\($0)\u{27}" }), output: &output, autoquote: false)
     }
 
     internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
