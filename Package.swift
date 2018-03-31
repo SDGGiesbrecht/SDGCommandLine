@@ -16,24 +16,19 @@
 
 import PackageDescription
 
-let library = "SDGCommandLine"
-let tests = library + "Tests"
-
-let sdgGiesbrecht = "https://github.com/SDGGiesbrecht/"
-let sdgCornerstone = "SDGCornerstone"
-
 let package = Package(
-    name: library,
+    name: "SDGCommandLine",
     products: [
-        .library(name: library, targets: [library])
+        .library(name: "SDGCommandLine", targets: ["SDGCommandLine"])
     ],
     dependencies: [
-    .package(url: sdgGiesbrecht + sdgCornerstone, .upToNextMinor(from: Version(0, 7, 3)))
+        // [_Warning: Use particular version._]
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .branch("swift‐4.1"))
     ],
     targets: [
-        .target(name: library, dependencies: [
-            .productItem(name: sdgCornerstone, package: sdgCornerstone)
+        .target(name: "SDGCommandLine", dependencies: [
+            .productItem(name: "SDGCornerstone", package: "SDGCornerstone"),
             ]),
-        .testTarget(name: tests, dependencies: [.targetItem(name: library)])
+        .testTarget(name: "SDGCommandLineTests", dependencies: ["SDGCommandLine"])
     ]
 )
