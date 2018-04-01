@@ -67,7 +67,7 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
 
     /// Creates a version from its string representation.
     public init?(_ string: String) {
-        let parsed = string.components(separatedBy: ".")
+        let parsed: [String] = string.components(separatedBy: ".").map { String($0.contents) }
         var sections = parsed[parsed.bounds]
 
         self = Version(0) // Initialize empty to allow use of property references below.
@@ -103,7 +103,7 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
 
     /// Creates an instance representing the first version in a string.
     public init?(firstIn string: String) {
-        let versionPattern = RepetitionPattern(ConditionalPattern(condition: { (scalar: UnicodeScalar) in
+        let versionPattern = RepetitionPattern(ConditionalPattern({ (scalar: UnicodeScalar) in
             let versionScalars: Set<UnicodeScalar> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
             return scalar ∈ versionScalars
         }), count: 1 ..< Int.max)
@@ -152,7 +152,7 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
     ///     - stringLiteral: The string literal.
     public init(stringLiteral: String) {
         guard let result = Version(stringLiteral) else {
-            preconditionFailure(UserFacingText({ (localization: APILocalization, _: Void) -> StrictString in
+            preconditionFailure(UserFacingText({ (localization: APILocalization) -> StrictString in
                 switch localization {
                 case .englishCanada: // [_Exempt from Test Coverage_]
                     return StrictString("“\(stringLiteral)” is not a version number.")

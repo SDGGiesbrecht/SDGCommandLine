@@ -17,12 +17,12 @@ import SDGCornerstone
 /// A standard argument type provided by SDGCommandLine.
 public enum ArgumentType {
 
-    private static func keyOnly(_ key: StrictString) -> UserFacingText<InterfaceLocalization, Void> {
-        return UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in
+    private static func keyOnly(_ key: StrictString) -> UserFacingText<InterfaceLocalization> {
+        return UserFacingText({ (_: InterfaceLocalization) -> StrictString in
             return key
         })
     }
-    private static let unused = UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in
+    private static let unused = UserFacingText({ (_: InterfaceLocalization) -> StrictString in
         unreachable()
     })
 
@@ -32,7 +32,7 @@ public enum ArgumentType {
         unreachable()
     })
 
-    private static let stringName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let stringName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "string"
@@ -47,7 +47,7 @@ public enum ArgumentType {
         }
     })
 
-    private static let stringDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let stringDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "An arbitrary string."
@@ -67,9 +67,9 @@ public enum ArgumentType {
         return argument
     })
 
-    private static func enumerationSyntax<L : InputLocalization>(labels: [UserFacingText<L, Void>]) -> UserFacingText<InterfaceLocalization, Void> {
+    private static func enumerationSyntax<L : InputLocalization>(labels: [UserFacingText<L>]) -> UserFacingText<InterfaceLocalization> {
 
-        return UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+        return UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
 
             let openingQuotationMark: StrictString
             let closingQuotationMark: StrictString
@@ -133,9 +133,9 @@ public enum ArgumentType {
     /// Parameters:
     ///     - name: The name of the option.
     ///     - cases: An array of enumeration options. Specify each option as a tuple containing the option’s name (for the command line) and the option’s value (for within Swift).
-    public static func enumeration<T, L : InputLocalization>(name: UserFacingText<L, Void>, cases: [(value: T, label: UserFacingText<L, Void>)]) -> ArgumentTypeDefinition<T> {
+    public static func enumeration<T, L : InputLocalization>(name: UserFacingText<L>, cases: [(value: T, label: UserFacingText<L>)]) -> ArgumentTypeDefinition<T> {
 
-        var syntaxLabels: [UserFacingText<L, Void>] = []
+        var syntaxLabels: [UserFacingText<L>] = []
         var entries: [StrictString: T] = [:]
         for option in cases {
             syntaxLabels.append(option.label)
@@ -149,7 +149,7 @@ public enum ArgumentType {
         })
     }
 
-    private static let languagePreferenceName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let languagePreferenceName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language preference"
@@ -164,7 +164,7 @@ public enum ArgumentType {
         }
     })
 
-    private static let languagePreferenceDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let languagePreferenceDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom:
             return "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en\u{2D}GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French"
@@ -186,7 +186,7 @@ public enum ArgumentType {
     /// An argument type representing a language preference.
     public static let languagePreference: ArgumentTypeDefinition<LocalizationSetting> = ArgumentTypeDefinition(name: languagePreferenceName, syntaxDescription: languagePreferenceDescription, parse: { (argument: StrictString) -> LocalizationSetting? in
 
-        let groups = argument.components(separatedBy: ConditionalPattern(condition: { $0 ∈ Set([";", "·"]) })).map({ StrictString($0.contents) })
+        let groups = argument.components(separatedBy: ConditionalPattern({ $0 ∈ Set<UnicodeScalar>([";", "·"]) })).map({ StrictString($0.contents) })
         let languages = groups.map({ $0.components(separatedBy: [","]).map({ (component: PatternMatch<StrictString>) -> String in
 
             let iconOrCode = StrictString(component.contents)
@@ -199,7 +199,7 @@ public enum ArgumentType {
         return LocalizationSetting(orderOfPrecedence: languages)
     })
 
-    private static let versionName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let versionName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
@@ -214,7 +214,7 @@ public enum ArgumentType {
         }
     })
 
-    private static let developmentCase = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let developmentCase = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "development"
@@ -229,7 +229,7 @@ public enum ArgumentType {
         }
     })
 
-    private static let versionDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let versionDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         let development = ArgumentType.developmentCase.resolved(for: localization)
         switch localization {
         case .englishUnitedKingdom:

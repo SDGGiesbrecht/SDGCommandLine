@@ -17,14 +17,14 @@ import SDGCommandLine
 
 enum RejectArgument {
 
-    static let command = Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    static let command = Command(name: UserFacingText({ (localization: Language) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "reject‐argument"
         case .deutsch:
             return "argument‐ablehnen"
         }
-    }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+    }), description: UserFacingText({ (localization: Language) -> StrictString in
         switch localization {
         case .english, .unsupported:
             return "demonstrates rejection of an argument."

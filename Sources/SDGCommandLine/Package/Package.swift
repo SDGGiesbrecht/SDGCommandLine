@@ -67,7 +67,9 @@ public struct _Package {
 
         for executable in try FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
 
-            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), alternatePrint: { print($0, to: &output) })
+            print("", to: &output)
+            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), reportProgress: { print($0, to: &output) })
+            print("", to: &output)
             return
         }
     }

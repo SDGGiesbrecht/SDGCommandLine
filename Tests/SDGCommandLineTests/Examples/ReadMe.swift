@@ -29,12 +29,12 @@ func main() {
 import SDGCornerstone // See https://sdggiesbrecht.github.io/SDGCornerstone/macOS/
 import SDGCommandLine
 
-public let parrot = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "parrot" }),
-                            description: UserFacingText<MyLocalizations, Void>({ _, _ in "behaves like a parrot." }),
+public let parrot = Command(name: UserFacingText<MyLocalizations>({ _ in "parrot" }),
+                            description: UserFacingText<MyLocalizations>({ _ in "behaves like a parrot." }),
                             subcommands: [speak])
 
-let speak = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "speak" }),
-                    description: UserFacingText<MyLocalizations, Void>({ _, _ in "speaks." }),
+let speak = Command(name: UserFacingText<MyLocalizations>({ _ in "speak" }),
+                    description: UserFacingText<MyLocalizations>({ _ in "speaks." }),
                     directArguments: [],
                     options: [phrase],
                     execution: { (_, options: Options, output: inout Command.Output) throws -> Void in
@@ -46,8 +46,8 @@ let speak = Command(name: UserFacingText<MyLocalizations, Void>({ _, _ in "speak
                         }
 })
 
-let phrase = Option<StrictString>(name: UserFacingText<MyLocalizations, Void>({ _, _ in "phrase" }),
-                                  description: UserFacingText<MyLocalizations, Void>({ _, _ in "A custom phrase to speak." }),
+let phrase = Option<StrictString>(name: UserFacingText<MyLocalizations>({ _ in "phrase" }),
+                                  description: UserFacingText<MyLocalizations>({ _ in "A custom phrase to speak." }),
                                   type: ArgumentType.string)
 
 enum MyLocalizations : String, InputLocalization {

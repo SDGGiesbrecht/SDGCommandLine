@@ -19,7 +19,7 @@ public struct Options {
 
     // MARK: - Static Properties
 
-    private static let noColourName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let noColourName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishCanada:
             return "no‐colour"
@@ -36,7 +36,7 @@ public struct Options {
         }
     })
 
-    private static let noColourDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let noColourDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishCanada:
             return "Removes colour from the output."
@@ -55,7 +55,7 @@ public struct Options {
 
     internal static let noColour = Option(name: noColourName, description: noColourDescription, type: ArgumentType.boolean)
 
-    private static let languageName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let languageName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language"
@@ -70,7 +70,7 @@ public struct Options {
         }
     })
 
-    private static let languageDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let languageDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "A language to use instead of the one specified in preferences."
@@ -87,7 +87,7 @@ public struct Options {
 
     internal static let language = Option(name: languageName, description: languageDescription, type: ArgumentType.languagePreference)
 
-    internal static let useVersionName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    internal static let useVersionName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "use‐version"
@@ -102,7 +102,7 @@ public struct Options {
         }
     })
 
-    private static let useVersionDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let useVersionDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "Attempts to download and temporarily use the specified version insead of one which is installed."
