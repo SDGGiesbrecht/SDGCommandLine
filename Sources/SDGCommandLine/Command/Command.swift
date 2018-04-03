@@ -176,7 +176,9 @@ public struct Command {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     public func execute(withArguments arguments: DirectArguments, options: Options, output: inout Command.Output) throws {
-        try execution(arguments, options, &output)
+        try autoreleasepool {
+            try execution(arguments, options, &output)
+        }
     }
 
     // MARK: - Argument Parsing
