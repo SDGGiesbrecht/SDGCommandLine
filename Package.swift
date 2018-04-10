@@ -22,8 +22,7 @@ let package = Package(
         .library(name: "SDGCommandLine", targets: ["SDGCommandLine"])
     ],
     dependencies: [
-        // [_Warning: Use particular version._]
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .branch("swift‐4.1"))
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 8, 0))
     ],
     targets: [
         .target(name: "SDGCommandLine", dependencies: [
