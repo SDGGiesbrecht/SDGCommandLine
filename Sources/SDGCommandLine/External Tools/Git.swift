@@ -25,7 +25,7 @@ public class _Git : _ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 15, 1)
     #else
-         private static let version = Version(2, 16, 1)
+         private static let version = Version(2, 15, 1)
     #endif
 
     /// :nodoc: (Shared to Workspace.)
