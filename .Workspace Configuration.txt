@@ -21,7 +21,7 @@ Support watchOS: False
 Support tvOS: False
 
 Project Website: https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
-Documentation URL: https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
+Documentation URL: https://sdggiesbrecht.github.io/SDGCommandLine
 Repository URL: https://github.com/SDGGiesbrecht/SDGCommandLine
 
 [_Begin Localizations_]

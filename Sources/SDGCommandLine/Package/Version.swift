@@ -122,11 +122,11 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
     // MARK: - Comparable
 
     // [_Inherit Documentation: SDGCornerstone.Comparable.<_]
-    /// Returns `true` if the left value is less than the right.
+    /// Returns `true` if the preceding value is less than the following value.
     ///
     /// - Parameters:
-    ///     - lhs: A value.
-    ///     - rhs: Another value.
+    ///     - precedingValue: A value.
+    ///     - followingValue: Another value.
     public static func < (lhs: Version, rhs: Version) -> Bool {
         return (lhs.major, lhs.minor, lhs.patch) < (rhs.major, rhs.minor, rhs.patch)
     }
@@ -137,8 +137,8 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
     /// Returns `true` if the two values are equal.
     ///
     /// - Parameters:
-    ///     - lhs: A value to compare.
-    ///     - rhs: Another value to compare.
+    ///     - precedingValue: A value to compare.
+    ///     - followingValue: Another value to compare.
     public static func == (lhs: Version, rhs: Version) -> Bool {
         return (lhs.major, lhs.minor, lhs.patch) == (rhs.major, rhs.minor, rhs.patch)
     }
