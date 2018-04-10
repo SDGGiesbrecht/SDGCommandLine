@@ -23,9 +23,9 @@ public class _Swift : _ExternalTool {
     // MARK: - Static Properties
 
     #if os(Linux)
-        private static let version = Version(4, 0, 0)
+        private static let version = Version(4, 1, 0)
     #else
-        private static let version = Version(4, 0, 3)
+        private static let version = Version(4, 1, 0)
     #endif
 
     /// :nodoc: (Shared to Workspace.)
