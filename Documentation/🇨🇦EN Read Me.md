@@ -50,7 +50,7 @@ Simply add `SDGCommandLine` as a dependency in `Package.swift`:
 let package = Package(
     name: "MyPackage",
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", .upToNextMinor(from: Version(0, 1, 4))),
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", .upToNextMinor(from: Version(0, 2, 0))),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
