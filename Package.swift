@@ -26,7 +26,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "SDGCommandLine", dependencies: [
-            .productItem(name: "SDGCornerstone", package: "SDGCornerstone"),
+            .productItem(name: "SDGCornerstone", package: "SDGCornerstone")
             ]),
         .testTarget(name: "SDGCommandLineTests", dependencies: ["SDGCommandLine"])
     ]
