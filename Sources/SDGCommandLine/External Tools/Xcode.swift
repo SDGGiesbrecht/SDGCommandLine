@@ -22,7 +22,7 @@
 
         /// :nodoc: (Shared to Workspace.)
         public init(_version version: Version) {
-            super.init(name: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+            super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
                     return "Xcode"
@@ -31,7 +31,7 @@
                 case .עברית־ישראל:
                     return "אקסקוד"
                 }
-            }), webpage: UserFacingText({ (_: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Test Coverage_]
+            }), webpage: UserFacingText({ (_: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
                 return "applestore.com/mac/apple/xcode" // Automatically redirected to localized page by Apple.
             }), command: "xcodebuild", version: version, versionCheck: ["\u{2D}version"])
         }

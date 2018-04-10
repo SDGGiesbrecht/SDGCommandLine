@@ -71,7 +71,7 @@ extension StringFamily {
     internal mutating func removeCommandLineFormatting() {
         scalars.replaceMatches(for: [
             LiteralPattern([Self.escape]),
-            RepetitionPattern(ConditionalPattern(condition: { _ in true }), consumption: .lazy),
+            RepetitionPattern(ConditionalPattern({ _ in true }), consumption: .lazy),
             LiteralPattern([Self.endOfCode])
             ], with: [])
     }

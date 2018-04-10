@@ -16,7 +16,7 @@ import SDGCornerstone
 
 extension Command {
 
-    private static let setLanguageName = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let setLanguageName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "set‐language"
@@ -31,7 +31,7 @@ extension Command {
         }
     })
 
-    private static let setLanguageDescription = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+    private static let setLanguageDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "sets the language preference. (Omit the argument to revert to the system preferences.)"

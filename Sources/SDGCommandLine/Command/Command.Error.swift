@@ -32,11 +32,11 @@ extension Command {
         ///     - exitCode: An optional specific exit code. (If not specified, the exit code will simply be all ones.)
         ///
         /// - Precondition: `exitCode` ≠ 0
-        public init<L>(description: UserFacingText<L, Void>, exitCode: Int = Int.max) {
+        public init<L>(description: UserFacingText<L>, exitCode: Int = Int.max) {
 
             self.describeClosure = { description.resolved() }
 
-            assert(exitCode ≠ Error.successCode, UserFacingText({ (localization: APILocalization, _: Void) -> StrictString in
+            assert(exitCode ≠ Error.successCode, UserFacingText({ (localization: APILocalization) -> StrictString in
                 switch localization {
                 case .englishCanada: // [_Exempt from Test Coverage_]
                     return StrictString("\(Error.successCode.inDigits()) is invalid as a failing exit code.")

@@ -23,9 +23,9 @@ import SDGCornerstone
 ///     - version: The semantic version of the tool’s package. This will be displayed by the `version` subcommand. It is recommended to set this to `nil` in between stable releases.
 ///     - packageURL: The URL of the tool’s Swift package. This is where the `•use‐version` option will look for other versions. The specified repository must be a valid Swift package that builds successfully with nothing more than `swift build`. If the repository is not publicly available or not a Swift package, this parameter should be `nil`, in which case the `•use‐version` option will be unavailable.
 ///     - applicationPreferencesClass: A subclass of `SDGCornerstone.Preferences` to use for the application preferences instance. Defaults to the `Preferences` class itself.
-public func initialize(applicationIdentifier: String, version: Version?, packageURL: URL?, applicationPreferencesClass: Preferences.Type = Preferences.self) {
+public func initialize(applicationIdentifier: String, version: Version?, packageURL: URL?) {
 
-    SDGCornerstone.initialize(mode: .commandLineTool, applicationIdentifier: applicationIdentifier, applicationPreferencesClass: applicationPreferencesClass)
+    ProcessInfo.applicationIdentifier = applicationIdentifier
 
     Version.currentToolVersion = version
 
@@ -47,7 +47,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
 
             warnedLocalizations.insert(localization)
 
-            let warning = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+            let warning = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()
@@ -61,7 +61,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
                     /*א*/ return "זהירות: העברית של SDGCommandLine לא נבדקה אל יד של דובר שפת אם. אם אתה/את רוצה לעזור לנו, הירשם/הירשמי כאן:"
                 }
             })
-            let issueTitle = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+            let issueTitle = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()
@@ -75,7 +75,7 @@ internal func warnAboutSecondLanguages<T : TextOutputStream>(_ output: inout T) 
                     return "בדיקה של העברית"
                 }
             })
-            let issueBody = UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+            let issueBody = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     unreachable()

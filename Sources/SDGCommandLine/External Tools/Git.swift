@@ -25,7 +25,7 @@ public class _Git : _ExternalTool {
     #if os(Linux)
          private static let version = Version(2, 15, 1)
     #else
-         private static let version = Version(2, 14, 3)
+         private static let version = Version(2, 15, 1)
     #endif
 
     /// :nodoc: (Shared to Workspace.)
@@ -35,7 +35,7 @@ public class _Git : _ExternalTool {
     // MARK: - Initialization
 
     internal init(version: Version) {
-        super.init(name: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in
+        super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
                 return "Git"
@@ -44,7 +44,7 @@ public class _Git : _ExternalTool {
             case .עברית־ישראל:
                 return "גיט"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization, _: Void) -> StrictString in // [_Exempt from Test Coverage_]
+        }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
                 return "git\u{2D}scm.com"

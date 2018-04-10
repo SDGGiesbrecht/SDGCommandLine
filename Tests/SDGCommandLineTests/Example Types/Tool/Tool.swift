@@ -20,14 +20,14 @@ enum Tool {
     static let command = createCommand()
 
     static func createCommand() -> Command {
-        return Command(name: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+        return Command(name: UserFacingText({ (localization: Language) -> StrictString in
             switch localization {
             case .english, .unsupported:
                 return "tool"
             case .deutsch:
                 return "werkzeug"
             }
-        }), description: UserFacingText({ (localization: Language, _: Void) -> StrictString in
+        }), description: UserFacingText({ (localization: Language) -> StrictString in
             switch localization {
             case .english, .unsupported:
                 return "serves as an example tool."
