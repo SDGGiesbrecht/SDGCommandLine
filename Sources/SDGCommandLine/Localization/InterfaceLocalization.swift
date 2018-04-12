@@ -20,30 +20,14 @@ internal enum InterfaceLocalization : String, InputLocalization {
     case englishUnitedStates = "en\u{2D}US"
     case englishCanada = "en\u{2D}CA"
 
-    case deutschDeutschland = "de\u{2D}DE"
-
-    case françaisFrance = "fr\u{2D}FR"
-
-    case ελληνικάΕλλάδα = "el\u{2D}GR"
-
-    case עברית־ישראל = "he\u{2D}IL"
-
     internal static let cases: [InterfaceLocalization] = [
 
         .englishUnitedKingdom,
         .englishUnitedStates,
         .englishCanada,
-
-        .deutschDeutschland,
-
-        .françaisFrance,
-
-        .ελληνικάΕλλάδα,
-
-        .עברית־ישראל
     ]
 
     // MARK: - Localization
 
-    internal static let fallbackLocalization: InterfaceLocalization = .עברית־ישראל
+    internal static let fallbackLocalization: InterfaceLocalization = .englishUnitedKingdom
 }

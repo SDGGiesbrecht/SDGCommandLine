@@ -44,7 +44,7 @@ class APITests : TestCase {
         }
 
         let helpNames: [String: StrictString] = [
-            "en": "help",
+            "en": "help", // [_Warning: Test localization of this with a specification instead._]
             "de": "hilfe",
             "fr": "aide",
             "el": "βοήθεια",
@@ -72,11 +72,7 @@ class APITests : TestCase {
     func testDirectArgument() {
         let invalidArgumentMessages: [String: StrictString] = [
             "en": "invalid",
-            "en\u{2D}US": "invalid",
-            "de": "ungültig",
-            "fr": "invalide",
-            "el": "άκυρο",
-            "he": "לא בתוקף"
+            "en\u{2D}US": "invalid" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, invalidArgument) in invalidArgumentMessages {
             LocalizationSetting(orderOfPrecedence: [language]).do {
@@ -103,11 +99,7 @@ class APITests : TestCase {
         let enumerationLists: [String: StrictString] = [
             "en\u{2D}GB": "or",
             "en\u{2D}US": "or",
-            "en": "or",
-            "de": "oder",
-            "fr": "ou",
-            "el": "ή",
-            "he": "או"
+            "en": "or" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, or) in enumerationLists {
             LocalizationSetting(orderOfPrecedence: [language]).do {
@@ -183,11 +175,7 @@ class APITests : TestCase {
         }
 
         let unexpectedArgumentMessages: [String: StrictString] = [
-            "en": "Unexpected",
-            "de": "Unerwartetes",
-            "fr": "inattendu",
-            "el": "Απροσδόκητο",
-            "he": "לא צפוי"
+            "en": "Unexpected" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, unexpectedArgument) in unexpectedArgumentMessages {
             LocalizationSetting(orderOfPrecedence: [language]).do {
@@ -209,11 +197,7 @@ class APITests : TestCase {
         }
 
         let invalidOptionMessages: [String: StrictString] = [
-            "en": "Invalid",
-            "de": "Ungültige",
-            "fr": "invalide",
-            "el": "Άκυρη",
-            "he": "לא בתוקף"
+            "en": "Invalid" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, invalidOption) in invalidOptionMessages {
             LocalizationSetting(orderOfPrecedence: [language]).do {
@@ -236,11 +220,7 @@ class APITests : TestCase {
 
         let missingArgumentMessages: [String: StrictString] = [
             "en": "missing",
-            "en\u{2D}US": "missing",
-            "de": "fehlt",
-            "fr": "manque",
-            "el": "λείπει",
-            "he": "חסר"
+            "en\u{2D}US": "missing" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, missingArgument) in missingArgumentMessages {
             LocalizationSetting(orderOfPrecedence: [language]).do {
@@ -263,11 +243,7 @@ class APITests : TestCase {
 
         let invalidArgumentMessages: [String: StrictString] = [
             "en": "invalid",
-            "en\u{2D}US": "invalid",
-            "de": "ungültig",
-            "fr": "invalide",
-            "el": "άκυρο",
-            "he": "לא בתוקף"
+            "en\u{2D}US": "invalid" // [_Warning: Test localization of this with a specification instead._]
         ]
         for (language, invalidArgument) in invalidArgumentMessages {
             LocalizationSetting(orderOfPrecedence: [language]).do {

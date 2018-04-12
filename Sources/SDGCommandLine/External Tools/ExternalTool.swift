@@ -67,14 +67,6 @@ public class _ExternalTool {
                     switch localization {
                     case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                         return StrictString("Expected \(name) \(version). Attempting to continue anyway...")
-                    case .deutschDeutschland:
-                        return StrictString("\(name) \(version) erwartet. Versucht trotzdem weiter ...")
-                    case .françaisFrance:
-                        return StrictString("\(name) \(version) attendu. Tente de continuer quand même...")
-                    case .ελληνικάΕλλάδα:
-                        return StrictString("\(name) \(version) αναμενότανε. Προσπαθεί να συνεχίζει ούτος ή άλλως...")
-                    case .עברית־ישראל:
-                        /*א*/ return StrictString("ציפה את \(name) \(version). מנסה להמשיך בכל זאת...")
                     }
                 }).resolved().formattedAsWarning())
             }
@@ -86,14 +78,6 @@ public class _ExternalTool {
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return StrictString("\(name) is required. See \(url).")
-                case .deutschDeutschland:
-                    return StrictString("\(name) wird benötigt. Siehe \(url).")
-                case .françaisFrance:
-                    return StrictString("\(name) est requis. Voir \(url).")
-                case .ελληνικάΕλλάδα:
-                    return StrictString("\(name) απαραιτείται. Βλέπε \(url).")
-                case .עברית־ישראל:
-                     /*א*/ return StrictString("\(name) נחוץ. ראה \(url).")
                 }
             }))
         }

@@ -34,11 +34,11 @@ public struct Option<Type> : AnyOption {
     ///     - name: The name. (Without the leading option marker.)
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - type: An `ArgumentTypeDefinition` representing the type of the argument.
-    public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, type: ArgumentTypeDefinition<Type>) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, type: ArgumentTypeDefinition<Type>) {
 
-        key = name.resolved(for: L.fallbackLocalization)
+        key = name.resolved(for: N.fallbackLocalization)
         names = Command.list(names: name)
-        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
+        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
         localizedDescription = { return description.resolved() }
         self.type = type
     }

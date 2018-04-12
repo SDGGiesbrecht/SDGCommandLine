@@ -37,16 +37,12 @@ public class _Swift : _ExternalTool {
     internal init(version: Version) {
         super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Swift"
-            case .ελληνικάΕλλάδα:
-                return "Σουιφτ"
-            case .עברית־ישראל:
-                return "סוויפט"
             }
         }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada /* No localized site: */: // [_Exempt from Test Coverage_]
                 return "swift.org"
             }
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
@@ -102,14 +98,6 @@ public class _Swift : _ExternalTool {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Test Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
-            case .deutschDeutschland: // [_Exempt from Test Coverage_]
-                return StrictString("Fehlschlag beim Laden der Paketbeschreibung:\n\(json)")
-            case .françaisFrance: // [_Exempt from Test Coverage_]
-                return StrictString("Échec du chargement de la description du paquet:\n\(json)")
-            case .ελληνικάΕλλάδα: // [_Exempt from Test Coverage_]
-                return StrictString("Αποτυχία της φόρτωσης της περιγραφής του δέματος:\n\(json)")
-            case .עברית־ישראל: // [_Exempt from Test Coverage_]
-                return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
     }

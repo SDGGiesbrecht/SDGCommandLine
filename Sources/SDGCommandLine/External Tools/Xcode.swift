@@ -22,12 +22,8 @@
         public init(_version version: Version) {
             super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
-                case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
+                case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Xcode"
-                case .ελληνικάΕλλάδα:
-                    return "Έξκοντ"
-                case .עברית־ישראל:
-                    return "אקסקוד"
                 }
             }), webpage: UserFacingText({ (_: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
                 return "applestore.com/mac/apple/xcode" // Automatically redirected to localized page by Apple.

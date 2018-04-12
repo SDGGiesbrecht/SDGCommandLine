@@ -37,14 +37,6 @@ public struct _PackageRepository {
                 return "Initialised."
             case .englishUnitedStates, .englishCanada:
                 return "Initialized."
-            case .deutschDeutschland:
-                return "Initialisiert."
-            case .françaisFrance:
-                return "Initialisé."
-            case .ελληνικάΕλλάδα:
-                return "Αρχικοποίησα."
-            case .עברית־ישראל:
-                return "אתחלתי."
             }
         }).resolved(), output: output)
     }

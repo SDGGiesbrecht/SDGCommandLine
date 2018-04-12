@@ -49,7 +49,7 @@ public struct Command {
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
     ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
         self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
     }
 
@@ -62,18 +62,18 @@ public struct Command {
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
-    public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, subcommands: [Command], defaultSubcommand: Command? = nil) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, subcommands: [Command], defaultSubcommand: Command? = nil) {
         self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
     }
 
-    internal init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
             actualSubcommands.append(Command.help)
         }
 
-        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
+        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) } // [_Exempt from Test Coverage_] False result in Xcode 9.3.
@@ -204,14 +204,6 @@ public struct Command {
                         switch localization {
                         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                             result = StrictString("Unexpected argument: \(argument)")
-                        case .deutschDeutschland:
-                            result = StrictString("Unerwartetes Argument: \(argument)")
-                        case .françaisFrance:
-                            result = StrictString("Argument inattendu : \(argument)")
-                        case .ελληνικάΕλλάδα:
-                            result = StrictString("Απροσδόκητο όρισμα: \(argument)")
-                        case .עברית־ישראל:
-                            result = StrictString("ארגומנט לא צפוי: \(argument)")
                         }
                         return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                     }))
@@ -237,14 +229,6 @@ public struct Command {
                     result = StrictString("An argument for ‘\(commandName)’ is invalid: \(possibleDirectArgument)")
                 case .englishUnitedStates, .englishCanada:
                     result = StrictString("An argument for “\(commandName)” is invalid: \(possibleDirectArgument)")
-                case .deutschDeutschland:
-                    result = StrictString("Ein Argument für „\(commandName)“ ist ungültig: \(possibleDirectArgument)")
-                case .françaisFrance:
-                    result = StrictString("Un argument pour « \(commandName) » est invalide : \(possibleDirectArgument)")
-                case .ελληνικάΕλλάδα:
-                    result = StrictString("Ένα όρισμα για «\(commandName)» είναι άκυρο: \(possibleDirectArgument)")
-                case .עברית־ישראל:
-                    /*א*/ result = StrictString("ארגומנט ל־”\(commandName)“ לא בתוקף: \(possibleDirectArgument)")
                 }
                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
             }))
@@ -286,14 +270,6 @@ public struct Command {
                         result = StrictString("The argument is missing for ‘\(optionName)’.")
                     case .englishUnitedStates, .englishCanada:
                         result = StrictString("The argument is missing for “\(optionName)”.")
-                    case .deutschDeutschland:
-                        result = StrictString("Das Argument fehlt für „\(optionName)“.")
-                    case .françaisFrance:
-                        result = StrictString("L’argument manque pour « \(optionName) ».")
-                    case .ελληνικάΕλλάδα:
-                        result = StrictString("Το όρισμα λείπει από «\(optionName)»")
-                    case .עברית־ישראל:
-                        result = StrictString("הארגומנט חסר ל־”\(optionName)“")
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 }))
@@ -309,14 +285,6 @@ public struct Command {
                         result = StrictString("The argument for ‘\(optionName)’ is invalid: \(argument)")
                     case .englishUnitedStates, .englishCanada:
                         result = StrictString("The argument for “\(optionName)” is invalid: \(argument)")
-                    case .deutschDeutschland:
-                        result = StrictString("Das Argument für „\(optionName)“ ist ungültig: \(argument)")
-                    case .françaisFrance:
-                        result = StrictString("L’argument pour « \(optionName) » est invalide : \(argument)")
-                    case .ελληνικάΕλλάδα:
-                        result = StrictString("Το όρισμα για «\(optionName)» είναι άκυρο: \(argument)")
-                    case .עברית־ישראל:
-                        /*א*/ result = StrictString("הארגומנט ל־”\(optionName)“ לא בתוקף: \(argument)")
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 }))
@@ -333,14 +301,6 @@ public struct Command {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 result = StrictString("Invalid option: \(optionName)")
-            case .deutschDeutschland:
-                result = StrictString("Ungültige Option: \(optionName)")
-            case .françaisFrance:
-                result = StrictString("Option invalide : \(optionName)")
-            case .ελληνικάΕλλάδα:
-                result = StrictString("Άκυρη επιλογή: \(optionName)")
-            case .עברית־ישראל:
-                result = StrictString("בררה לא בתוקף: \(optionName)")
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
         }))
@@ -378,14 +338,6 @@ public struct Command {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return StrictString("See also: \(command)")
-            case .deutschDeutschland:
-                return StrictString("Siehe auch: \(command)")
-            case .françaisFrance:
-                return StrictString("Voir aussi : \(command)")
-            case .ελληνικάΕλλάδα:
-                return StrictString("Βλέπε επίσης: \(command)")
-            case .עברית־ישראל:
-                return StrictString("ראה גם: \(command)")
             }
         })
     }
@@ -394,7 +346,7 @@ public struct Command {
 
     internal static func normalizeToUnicode<L : Localization>(_ string: StrictString, in localization: L) -> StrictString {
         let hyphen: StrictString
-        if let interfaceLocalization = InterfaceLocalization(reasonableMatchFor: localization.code) {
+        if let interfaceLocalization = SystemLocalization(reasonableMatchFor: localization.code) {
             switch interfaceLocalization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα:
                 hyphen = "‐"

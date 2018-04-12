@@ -16,7 +16,7 @@ import SDGMathematics
 
 extension Command {
 
-    private static let helpName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+    private static let helpName = UserFacingText({ (localization: SystemLocalization) -> StrictString in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "help"
@@ -35,14 +35,6 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays usage information."
-        case .deutschDeutschland:
-            return "zeigt Verwendungsinformationen."
-        case .françaisFrance:
-            return "affiche de l’information sur l’utilization."
-        case .ελληνικάΕλλάδα:
-            return "εκθέτει πληροφορίες του χρήσης."
-        case .עברית־ישראל:
-            return "מציגה את מידה השימוש."
         }
     })
 
@@ -82,14 +74,6 @@ extension Command {
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
-                case .deutschDeutschland:
-                    return "Unterbefehle"
-                case .françaisFrance:
-                    return "Sous‐commandes"
-                case .ελληνικάΕλλάδα:
-                    return "Υπεντολές"
-                case .עברית־ישראל:
-                    return "תת פקודות"
                 }
             }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
@@ -108,14 +92,6 @@ extension Command {
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Options"
-                case .deutschDeutschland:
-                    return "Optionen"
-                case .françaisFrance:
-                    return "Options"
-                case .ελληνικάΕλλάδα:
-                    return "Επιλογές"
-                case .עברית־ישראל:
-                    return "ברירות"
                 }
             }), entries: command.options, getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
 
@@ -130,14 +106,6 @@ extension Command {
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Argument Types"
-                case .deutschDeutschland:
-                    return "Argumentarten"
-                case .françaisFrance:
-                    return "Types d’argument"
-                case .ελληνικάΕλλάδα:
-                    return "Τύποι ορισμάτων"
-                case .עברית־ישראל:
-                    return "טיפוסי ארגומנטים"
                 }
             }), entries: Array(argumentTypes.values), getHeadword: { $0.type }, getFormattedHeadword: { formatType($0.type) }, getDescription: { $0.description })
         }

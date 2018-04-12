@@ -23,14 +23,6 @@ public struct Options {
             return "no‐colour"
         case .englishUnitedStates:
             return "no‐color"
-        case .deutschDeutschland:
-            return "ohne‐farbe"
-        case .françaisFrance:
-            return "sans‐couleur"
-        case .ελληνικάΕλλάδα:
-            return "χορίς‐χρώμα"
-        case .עברית־ישראל:
-            return "ללא־צבע"
         }
     })
 
@@ -40,14 +32,6 @@ public struct Options {
             return "Removes colour from the output."
         case .englishUnitedStates:
             return "Removes color from the output."
-        case .deutschDeutschland:
-            return "Entfernt Farben von der Ausgabe."
-        case .françaisFrance:
-            return "Supprime les couleurs des sorties."
-        case .ελληνικάΕλλάδα:
-            return "Αφαιρεί τα χρώματα από την έξοδο."
-        case .עברית־ישראל:
-            return "מסירה את הצבעים מהפלט."
         }
     })
 
@@ -57,14 +41,6 @@ public struct Options {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language"
-        case .deutschDeutschland:
-            return "sprache"
-        case .françaisFrance:
-            return "langue"
-        case .ελληνικάΕλλάδα:
-            return "γλώσσα"
-        case .עברית־ישראל:
-            return "שפה"
         }
     })
 
@@ -72,14 +48,6 @@ public struct Options {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "A language to use instead of the one specified in preferences."
-        case .deutschDeutschland:
-            return "Eine Sprache zur Verwendung anstatt deren, die allgemein eingestellt ist."
-        case .françaisFrance:
-            return "Une langue à utiliser au lieu de celle dans les préférences."
-        case .ελληνικάΕλλάδα:
-            return "Μία γλώσσα που πρέπει να χρησιμοποιείται αντί αυτής, που ορίζεται στης προτιμήσεις."
-        case .עברית־ישראל:
-            return "שפה להשתמש במקום שלה שבהעדקות."
         }
     })
 
@@ -89,14 +57,6 @@ public struct Options {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "use‐version"
-        case .deutschDeutschland:
-            return "version‐verwenden"
-        case .françaisFrance:
-            return "utiliser‐version"
-        case .ελληνικάΕλλάδα:
-            return "χρήση‐έκδοσης"
-        case .עברית־ישראל:
-            return "השתמש־את־גירסה"
         }
     })
 
@@ -104,14 +64,6 @@ public struct Options {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "Attempts to download and temporarily use the specified version insead of one which is installed."
-        case .deutschDeutschland:
-            return "Versucht die angegebene Version herunterzuladen und anstatt deren zu verwenden, die installiert ist."
-        case .françaisFrance:
-            return "Tente de télécharger et utiliser la version spécifiée au lieu de celle qui est installée."
-        case .ελληνικάΕλλάδα:
-            return "Προσπαθεί να κατεβάζει και να χρησιμεποιεί την καθορισμένη έκδοση αντί αυτής, που εγκαθίστεται."
-        case .עברית־ישראל:
-            return "מנסה להוריד ולהשתמש את הגירסה שזוין במקום שלה שמותקן."
         }
     })
 

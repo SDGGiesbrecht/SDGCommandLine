@@ -18,14 +18,6 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
-        case .deutschDeutschland:
-            return "version"
-        case .françaisFrance:
-            return "version"
-        case .ελληνικάΕλλάδα:
-            return "έκδοση"
-        case .עברית־ישראל:
-            return "גירסה"
         }
     })
 
@@ -33,14 +25,6 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays the version in use."
-        case .deutschDeutschland:
-            return "zeigt die verwendete Version."
-        case .françaisFrance:
-            return "affiche la version utilisée."
-        case .ελληνικάΕλλάδα:
-            return "εκθέτει την έκδοση που χρησιμοποιείται."
-        case .עברית־ישראל:
-            return "מציגה את הגירסה בשימוש."
         }
     })
 
@@ -53,14 +37,6 @@ extension Command {
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Not a stable version."
-                case .deutschDeutschland:
-                    return "Keine beständige Version."
-                case .françaisFrance:
-                    return "Pas une version stable."
-                case .ελληνικάΕλλάδα:
-                    return "Δεν είναι σταθερή έκδοση."
-                case .עברית־ישראל:
-                    return "לא גירסה יציבה."
                 }
             }).resolved())
         }
