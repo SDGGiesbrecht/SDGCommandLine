@@ -45,8 +45,8 @@ class InternalTests : TestCase {
                     SwiftTool.default
                 ]
                 for tool in tools {
-                    var output = Command.Output()
-                    try tool.checkVersion(output: &output)
+                    let output = Command.Output()
+                    try tool.checkVersion(output: output)
                     XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
                 }
             })
@@ -63,18 +63,18 @@ class InternalTests : TestCase {
                     XCTAssertErrorFree({
                         var output = Command.Output()
                         let swift = SwiftTool(version: Version(0, 0, 0))
-                        try swift.checkVersion(output: &output)
+                        try swift.checkVersion(output: output)
                         XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
 
                         output = Command.Output()
                         let git = Git(version: Version(0, 0, 0))
-                        try git.checkVersion(output: &output)
+                        try git.checkVersion(output: output)
                         XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                     })
                     XCTAssertThrowsError(containing: "Nonexistent") {
-                        var output = Command.Output()
+                        let output = Command.Output()
                         let nonexistent = ExternalTool(name: UserFacingText<InterfaceLocalization>({ _ in return "Nonexistent" }), webpage: UserFacingText<InterfaceLocalization>({ _ in return "" }), command: "nonexistent", version: Version(0, 0, 0), versionCheck: ["version"])
-                        try nonexistent.checkVersion(output: &output)
+                        try nonexistent.checkVersion(output: output)
                     }
                 }
         }
@@ -86,23 +86,23 @@ class InternalTests : TestCase {
                 return
             }
 
-            var output = Command.Output()
+            let output = Command.Output()
             let swift = SwiftTool(version: systemVersion)
-            _ = try swift.execute(with: ["\u{2D}\u{2D}version"], output: &output)
+            _ = try swift.execute(with: ["\u{2D}\u{2D}version"], output: output)
         })
     }
 
     func testGit() {
         XCTAssertErrorFree({
             try FileManager.default.do(in: repositoryRoot) {
-                var output = Command.Output()
-                let ignored = try Git.default._ignoredFiles(output: &output)
+                let output = Command.Output()
+                let ignored = try Git.default._ignoredFiles(output: output)
                 XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
             }
         })
         XCTAssertErrorFree({
-            var output = Command.Output()
-            XCTAssert(try Git.default._versions(of: Package(_url: URL(string: "https://github.com/realm/SwiftLint")!), output: &output).contains(Version(0, 1, 0)), "Failed to detect remote versions.")
+            let output = Command.Output()
+            XCTAssert(try Git.default._versions(of: Package(_url: URL(string: "https://github.com/realm/SwiftLint")!), output: output).contains(Version(0, 1, 0)), "Failed to detect remote versions.")
         })
     }
 
@@ -113,7 +113,7 @@ class InternalTests : TestCase {
                     let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
 
                     var output = Command.Output()
-                    _ = try PackageRepository(initializingAt: packageLocation, executable: true, output: &output)
+                    _ = try PackageRepository(initializingAt: packageLocation, executable: true, output: output)
                     defer { FileManager.default.delete(.temporary) }
                 })
             }
@@ -154,7 +154,7 @@ class InternalTests : TestCase {
             try FileManager.default.do(in: repositoryRoot) {
                 var output = Command.Output()
 
-                let packageStructure = try SwiftTool.default._packageStructure(output: &output)
+                let packageStructure = try SwiftTool.default._packageStructure(output: output)
 
                 XCTAssertEqual(packageStructure.name, "SDGCommandLine")
 
@@ -169,27 +169,27 @@ class InternalTests : TestCase {
             let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
             var output = Command.Output()
 
-            let repository = try PackageRepository(initializingAt: location, executable: true, output: &output)
+            let repository = try PackageRepository(initializingAt: location, executable: true, output: output)
             defer { try? FileManager.default.removeItem(at: location) }
 
             try FileManager.default.do(in: location) {
 
                 try "...".save(to: location.appendingPathComponent("File.md"))
-                try Git.default._differences(excluding: ["*.md"], output: &output)
+                try Git.default._differences(excluding: ["*.md"], output: output)
                 do {
-                    try Git.default._differences(excluding: [], output: &output)
+                    try Git.default._differences(excluding: [], output: output)
                     XCTFail("Difference unnoticed.")
                 } catch {
                     // Expected
                 }
 
-                try SwiftTool.default._generateXcodeProject(output: &output)
+                try SwiftTool.default._generateXcodeProject(output: output)
 
                 let manifestLocation = location.appendingPathComponent("Package.swift")
                 var manifest = try String(from: manifestLocation)
                 manifest.replaceMatches(for: "dependencies: [\n", with: "products: [.executable(name: \u{22}ExecutablePackageTest\u{22}, targets: [\u{22}ExecutablePackageTest\u{22}])], dependencies: [\n")
                 try manifest.save(to: manifestLocation)
-                XCTAssert(try SwiftTool.default._packageStructure(output: &output).executableProducts.count == 1)
+                XCTAssert(try SwiftTool.default._packageStructure(output: output).executableProducts.count == 1)
             }
         })
     }
@@ -208,12 +208,12 @@ class InternalTests : TestCase {
         XCTAssertErrorFree {
             var ignored = Command.Output()
             let testToolName = "tool"
-            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), executable: true, output: &ignored)
+            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), executable: true, output: ignored)
             defer { FileManager.default.delete(.temporary) }
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
-            try testPackage.commitChanges(description: "Version 1.0.0", output: &ignored)
-            try testPackage.tag(version: Version(1, 0, 0), output: &ignored)
+            try testPackage.commitChanges(description: "Version 1.0.0", output: ignored)
+            try testPackage.tag(version: Version(1, 0, 0), output: ignored)
 
             Package.current = Package(url: testPackage.location)
 
@@ -242,8 +242,8 @@ class InternalTests : TestCase {
 
             let temporaryCache = FileManager.default.url(in: .temporary, at: UUID().uuidString)
             defer { try? FileManager.default.removeItem(at: temporaryCache) }
-            var outputStream = Command.Output()
-            try Package(url: testPackage.location)._execute(Version(1, 0, 0), of: [StrictString(testToolName)], with: [], cacheDirectory: temporaryCache, output: &outputStream)
+            let outputStream = Command.Output()
+            try Package(url: testPackage.location)._execute(Version(1, 0, 0), of: [StrictString(testToolName)], with: [], cacheDirectory: temporaryCache, output: outputStream)
         }
     }
 
@@ -261,8 +261,8 @@ class InternalTests : TestCase {
             for language in ["en", "el", "he"] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
-                        var output = Command.Output()
-                        _ = try _Xcode(_version: Version(8, 0)).execute(with: ["\u{2D}version"], output: &output)
+                        let output = Command.Output()
+                        _ = try _Xcode(_version: Version(8, 0)).execute(with: ["\u{2D}version"], output: output)
                     })
                 }
             }

@@ -48,8 +48,8 @@ public struct Command {
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
-    ///     - output: The stream for standard output. Use `print(..., to: &output)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void) {
+    ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
+    public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
         self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
     }
 
@@ -66,7 +66,7 @@ public struct Command {
         self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
     }
 
-    internal init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
@@ -90,7 +90,7 @@ public struct Command {
     internal let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
-    private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void
+    private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void
     internal var subcommands: [Command]
     internal let directArguments: [AnyArgumentTypeDefinition]
     internal let options: [AnyOption]
@@ -140,7 +140,7 @@ public struct Command {
             let (version, otherArguments) = try parseVersion(from: arguments),
             version ≠ Build.current {
 
-            try package.execute(version, of: names, with: otherArguments, output: &output)
+            try package.execute(version, of: names, with: otherArguments, output: output)
             return output.output
         }
 
@@ -161,7 +161,7 @@ public struct Command {
 
         let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
         try language.do {
-            try execute(withArguments: directArguments, options: options, output: &output)
+            try execute(withArguments: directArguments, options: options, output: output)
         }
         return output.output
     }
@@ -174,9 +174,9 @@ public struct Command {
     ///     - output: The output stream.
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
-    public func execute(withArguments arguments: DirectArguments, options: Options, output: inout Command.Output) throws {
+    public func execute(withArguments arguments: DirectArguments, options: Options, output: Command.Output) throws {
         try autoreleasepool {
-            try execution(arguments, options, &output)
+            try execution(arguments, options, output)
         }
     }
 

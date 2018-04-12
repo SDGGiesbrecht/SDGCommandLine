@@ -24,12 +24,12 @@ public struct _PackageRepository {
 
     // MARK: - Initialization
 
-    internal init(initializingAt location: URL, executable: Bool, output: inout Command.Output) throws {
+    internal init(initializingAt location: URL, executable: Bool, output: Command.Output) throws {
         self._location = location
 
         try FileManager.default.do(in: location) {
-            try SwiftTool.default.initializePackage(executable: executable, output: &output)
-            try Git.default.initializeRepository(output: &output)
+            try SwiftTool.default.initializePackage(executable: executable, output: output)
+            try Git.default.initializeRepository(output: output)
         }
         try commitChanges(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
             switch localization {
@@ -46,10 +46,10 @@ public struct _PackageRepository {
             case .עברית־ישראל:
                 return "אתחלתי."
             }
-        }).resolved(), output: &output)
+        }).resolved(), output: output)
     }
 
-    internal init(shallowlyCloning package: Package, to location: URL, at version: Build, output: inout Command.Output) throws {
+    internal init(shallowlyCloning package: Package, to location: URL, at version: Build, output: Command.Output) throws {
         self._location = location
 
         var tag: String?
@@ -60,7 +60,7 @@ public struct _PackageRepository {
             tag = stable.string
         }
 
-        try Git.default.shallowlyClone(repository: package.url, to: location, at: tag, output: &output)
+        try Git.default.shallowlyClone(repository: package.url, to: location, at: tag, output: output)
     }
 
     /// :nodoc: (Shared to Workspace.)
@@ -78,24 +78,24 @@ public struct _PackageRepository {
 
     // MARK: - Actions
 
-    internal func buildForRelease(output: inout Command.Output) throws -> URL {
+    internal func buildForRelease(output: Command.Output) throws -> URL {
         try FileManager.default.do(in: location) {
-            try SwiftTool.default.buildForRelease(output: &output)
+            try SwiftTool.default.buildForRelease(output: output)
         }
         return location.appendingPathComponent(PackageRepository.releaseProductsDirectory).resolvingSymlinksInPath()
     }
 
     // MARK: - Modifications
 
-    internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
+    internal func commitChanges(description: StrictString, output: Command.Output) throws {
         try FileManager.default.do(in: location) {
-            try Git.default.commitChanges(description: description, output: &output)
+            try Git.default.commitChanges(description: description, output: output)
         }
     }
 
-    internal func tag(version: Version, output: inout Command.Output) throws {
+    internal func tag(version: Version, output: Command.Output) throws {
         try FileManager.default.do(in: location) {
-            try Git.default.tag(version: version, output: &output)
+            try Git.default.tag(version: version, output: output)
         }
     }
 }

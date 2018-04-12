@@ -45,14 +45,14 @@ public struct _Package {
 
     // MARK: - Usage
 
-    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: inout Command.Output) throws {
-        try execute(version, of: executableNames, with: arguments, cacheDirectory: try cacheDirectory(for: version, output: &output), output: &output)
+    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: Command.Output) throws {
+        try execute(version, of: executableNames, with: arguments, cacheDirectory: try cacheDirectory(for: version, output: output), output: output)
     }
     /// :nodoc: (Shared to Workspace)
-    public func _execute(_ version: Version, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: inout Command.Output) throws {
-        try execute(Build.version(version), of: executableNames, with: arguments, cacheDirectory: cacheDirectory, output: &output)
+    public func _execute(_ version: Version, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: Command.Output) throws {
+        try execute(Build.version(version), of: executableNames, with: arguments, cacheDirectory: cacheDirectory, output: output)
     }
-    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: inout Command.Output) throws {
+    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: Command.Output) throws {
 
         if ¬FileManager.default.fileExists(atPath: cacheDirectory.path) {
 
@@ -64,33 +64,33 @@ public struct _Package {
                 break
             }
 
-            try build(version, to: cacheDirectory, output: &output)
+            try build(version, to: cacheDirectory, output: output)
         }
 
         for executable in try FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
 
-            print("", to: &output)
-            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), reportProgress: { print($0, to: &output) })
-            print("", to: &output)
+            output.print("")
+            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), reportProgress: { output.print($0) })
+            output.print("")
             return
         }
     }
 
-    private func cacheDirectory(for version: Build, output: inout Command.Output) throws -> URL {
+    private func cacheDirectory(for version: Build, output: Command.Output) throws -> URL {
         switch version {
         case .version(let specific):
             return Package.versionsCache.appendingPathComponent(specific.string)
         case .development:
-            return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: &output)))
+            return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: output)))
         }
     }
 
-    private func build(_ version: Build, to destination: URL, output: inout Command.Output) throws {
+    private func build(_ version: Build, to destination: URL, output: Command.Output) throws {
         let temporaryCloneLocation = FileManager.default.url(in: .temporary, at: "Package Clones/" + url.lastPathComponent)
-        let temporaryRepository = try PackageRepository(shallowlyCloning: self, to: temporaryCloneLocation, at: version, output: &output)
+        let temporaryRepository = try PackageRepository(shallowlyCloning: self, to: temporaryCloneLocation, at: version, output: output)
         defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
 
-        let products = try temporaryRepository.buildForRelease(output: &output)
+        let products = try temporaryRepository.buildForRelease(output: output)
 
         let intermediateDirectory = FileManager.default.url(in: .temporary, at: UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: intermediateDirectory) }

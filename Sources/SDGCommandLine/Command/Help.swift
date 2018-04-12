@@ -46,8 +46,8 @@ extension Command {
         }
     })
 
-    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
-        print("", to: &output)
+    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
+        output.print("")
 
         let stack = Command.stack.dropLast() // Ignoring help.
         let command = stack.last!
@@ -60,11 +60,11 @@ extension Command {
         for directArgument in command.directArguments {
             commandName += " " + formatType(directArgument.localizedName())
         }
-        print(commandName + " " + command.localizedDescription(), to: &output)
+        output.print(commandName + " " + command.localizedDescription())
 
         func printSection<T>(header: UserFacingText<InterfaceLocalization>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
 
-            print(header.resolved().formattedAsSectionHeader(), to: &output)
+            output.print(header.resolved().formattedAsSectionHeader())
 
             var entryText: [StrictString: StrictString] = [:]
             for entry in entries {
@@ -72,7 +72,7 @@ extension Command {
             }
 
             for headword in entryText.keys.sorted() {
-                print(entryText[headword]!, to: &output)
+                output.print(entryText[headword]!)
             }
         }
 
@@ -142,6 +142,6 @@ extension Command {
             }), entries: Array(argumentTypes.values), getHeadword: { $0.type }, getFormattedHeadword: { formatType($0.type) }, getDescription: { $0.description })
         }
 
-        print("", to: &output)
+        output.print("")
     }, addHelp: /* prevents circularity */ false)
 }

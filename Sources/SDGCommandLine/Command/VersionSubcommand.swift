@@ -44,12 +44,12 @@ extension Command {
         }
     })
 
-    internal static let version = Command(name: versionName, description: versionDescription, directArguments: [], options: [], execution: { (_, _, output: inout Command.Output) throws -> Void in
+    internal static let version = Command(name: versionName, description: versionDescription, directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
 
         if let stable = Version.currentToolVersion {
-            print(stable.string, to: &output)
+            output.print(stable.string)
         } else {
-            print(UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            output.print(UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Not a stable version."
@@ -62,7 +62,7 @@ extension Command {
                 case .עברית־ישראל:
                     return "לא גירסה יציבה."
                 }
-            }).resolved(), to: &output)
+            }).resolved())
         }
     })
 }
