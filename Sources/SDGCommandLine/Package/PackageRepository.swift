@@ -14,8 +14,6 @@
 
 import Foundation
 
-import SDGCornerstone
-
 internal typealias PackageRepository = _PackageRepository
 /// :nodoc: (Shared to Workspace.)
 public struct _PackageRepository {

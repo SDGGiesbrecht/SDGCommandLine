@@ -12,7 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
+import SDGLogic
+import SDGCollections
 
 /// A semantic version.
 public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hashable {

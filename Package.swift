@@ -26,8 +26,17 @@ let package = Package(
     ],
     targets: [
         .target(name: "SDGCommandLine", dependencies: [
-            .productItem(name: "SDGCornerstone", package: "SDGCornerstone")
+            .productItem(name: "SDGLogic", package: "SDGCornerstone"),
+            .productItem(name: "SDGMathematics", package: "SDGCornerstone"),
+            .productItem(name: "SDGCollections", package: "SDGCornerstone"),
+            .productItem(name: "SDGText", package: "SDGCornerstone"),
+            .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
             ]),
-        .testTarget(name: "SDGCommandLineTests", dependencies: ["SDGCommandLine"])
+        .testTarget(name: "SDGCommandLineTests", dependencies: [
+            "SDGCommandLine",
+            .productItem(name: "SDGLogic", package: "SDGCornerstone"),
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            ])
     ]
 )

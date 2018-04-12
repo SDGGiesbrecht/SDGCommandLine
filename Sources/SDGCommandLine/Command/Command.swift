@@ -14,7 +14,9 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGLogic
+import SDGMathematics
+import SDGCollections
 
 /// A command.
 public struct Command {
@@ -159,9 +161,6 @@ public struct Command {
 
         let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
         try language.do {
-
-            warnAboutSecondLanguages(&output)
-
             try execute(withArguments: directArguments, options: options, output: &output)
         }
         return output.output

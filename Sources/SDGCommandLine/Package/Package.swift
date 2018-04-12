@@ -14,7 +14,9 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGLogic
+import SDGCollections
+import SDGExternalProcess
 
 internal typealias Package = _Package
 /// :nodoc: (Shared to Workspace.)

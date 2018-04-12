@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
+import SDGExternalProcess
 
 internal typealias ExternalTool = _ExternalTool
 /// :nodoc: (Shared to Workspace.)

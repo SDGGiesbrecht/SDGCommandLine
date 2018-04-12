@@ -13,7 +13,6 @@
  */
 
 import XCTest
-import SDGCornerstone
 import SDGCommandLine
 
 class APITests : TestCase {

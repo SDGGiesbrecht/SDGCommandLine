@@ -14,7 +14,7 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGExternalProcess
 
 internal typealias Git = _Git
 /// :nodoc: (Shared to Workspace.)

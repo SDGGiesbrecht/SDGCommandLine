@@ -15,8 +15,6 @@
 #if !os(Linux)
     // MARK: - #if !os(Linux)
 
-    import SDGCornerstone
-
     /// :nodoc: (Shared to Workspace.)
     public class _Xcode : _ExternalTool {
 

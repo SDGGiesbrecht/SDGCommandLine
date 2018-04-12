@@ -15,7 +15,6 @@
 import Foundation
 import XCTest
 
-import SDGCornerstone
 import SDGCommandLine
 
 func main() {
@@ -26,7 +25,6 @@ func main() {
 }
 
 // [_Define Example: ParrotLibrary 🇨🇦EN_]
-import SDGCornerstone // See https://sdggiesbrecht.github.io/SDGCornerstone/macOS/
 import SDGCommandLine
 
 public let parrot = Command(name: UserFacingText<MyLocalizations>({ _ in "parrot" }),

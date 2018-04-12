@@ -13,7 +13,9 @@
  */
 
 import XCTest
-import SDGCornerstone
+
+import SDGLogic
+import SDGExternalProcess
 
 @testable import SDGCommandLine
 

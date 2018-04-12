@@ -14,7 +14,7 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGCollections
 
 internal typealias SwiftTool = _Swift
 /// :nodoc: (Shared to Workspace.)
