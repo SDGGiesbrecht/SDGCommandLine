@@ -61,7 +61,7 @@ public struct Command {
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
     public init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, subcommands: [Command], defaultSubcommand: Command? = nil) {
-        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands)
+        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
     }
 
     internal init<L : InputLocalization>(name: UserFacingText<L>, description: UserFacingText<L>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: inout Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
@@ -74,7 +74,7 @@ public struct Command {
         localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as L) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
-        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
+        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) } // [_Exempt from Test Coverage_] False result in Xcode 9.3.
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
         self.options = options.appending(contentsOf: Command.standardOptions)
