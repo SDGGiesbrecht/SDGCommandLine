@@ -13,3 +13,4 @@
  */
 
 @_exported import SDGCommandLine
+@_exported import SDGTesting

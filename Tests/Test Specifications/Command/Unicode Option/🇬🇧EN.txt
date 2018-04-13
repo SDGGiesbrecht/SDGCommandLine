@@ -1,0 +1,3 @@
+$ tool execute •string Changed using an option. •no‐colour
+Changed using an option.
+0

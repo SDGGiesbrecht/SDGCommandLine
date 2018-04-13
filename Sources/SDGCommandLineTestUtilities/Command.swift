@@ -28,7 +28,8 @@ import SDGPersistenceTestUtilities
 ///     - localizations: The localization set to test.
 ///     - uniqueTestName: A unique name for the test. This is used in the path to the persistent test specifications.
 ///     - overwriteSpecificationInsteadOfFailing: Set to `false` for normal behaviour. Set to `true` temporarily to update the specification.
-@_inlineable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
+@_inlineable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
+    let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
 
     for localization in localizations.cases {
         autoreleasepool {
@@ -45,15 +46,15 @@ import SDGPersistenceTestUtilities
             LocalizationSetting(orderOfPrecedence: [localization.code]).do {
 
                 var report = ""
-                print("$ " + ([command.localizedName()] + arguments).joined(separator: " "), to: &report)
+                print("$ " + ([command.localizedName()] + modifiedArguments).joined(separator: " "), to: &report)
 
                 do {
                     if let location = workingDirectory {
                         try FileManager.default.do(in: location) {
-                            print(try command.execute(with: arguments), to: &report)
+                            print(try command.execute(with: modifiedArguments), to: &report)
                         }
                     }
-                    print(try command.execute(with: arguments), to: &report)
+                    print(try command.execute(with: modifiedArguments), to: &report)
 
                     print(Command.Error.successCode, to: &report)
                 } catch let error as Command.Error {

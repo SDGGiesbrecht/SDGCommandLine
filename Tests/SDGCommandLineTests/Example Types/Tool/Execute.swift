@@ -71,7 +71,7 @@ enum Execute {
         case .english, .unsupported:
             return "colour"
         case .deutsch:
-            return "Farbe"
+            return "farbe"
         }
     }), description: UserFacingText({ (localization: Language) -> StrictString in
         switch localization {

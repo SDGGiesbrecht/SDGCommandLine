@@ -13,7 +13,9 @@
  */
 
 import XCTest
+
 import SDGCommandLineTestUtilities
+import SDGCommandLineLocalizations
 
 class APITests : TestCase {
 
@@ -22,72 +24,18 @@ class APITests : TestCase {
 
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail"], localizations: Language.self, uniqueTestName: "Failure", overwriteSpecificationInsteadOfFailing: false)
 
-        let helpNames: [String: StrictString] = [
-            "en": "help", // [_Warning: Test localization of this with a specification instead._]
-            "de": "hilfe",
-            "fr": "aide",
-            "el": "βοήθεια",
-            "he": "עזרה"
-        ]
-
-        for (language, searchTerm) in helpNames {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertErrorFree({
-                    let output = try Tool.command.execute(with: ["help"])
-                    XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
-                })
-            }
-        }
-        LocalizationSetting(orderOfPrecedence: ["de"]).do {
-            for (_, help) in helpNames {
-                XCTAssertErrorFree({
-                    let output = try Tool.command.execute(with: [help])
-                    XCTAssert(output.contains(StrictString("hilfe")), "Expected output missing from “de”: hilfe")
-                })
-            }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["ausführen"], localizations: Language.self, uniqueTestName: "Foreign Command", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testDirectArgument() {
-        let invalidArgumentMessages: [String: StrictString] = [
-            "en": "invalid",
-            "en\u{2D}US": "invalid" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, invalidArgument) in invalidArgumentMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: invalidArgument) {
-                    try Tool.command.execute(with: ["reject‐argument", "..."])
-                }
-            }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["reject‐argument", "..."], localizations: SystemLocalization.self, uniqueTestName: "Invalid Argument", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "invalid"], localizations: SystemLocalization.self, uniqueTestName: "Unexpected Argument", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testEnumerationOption() {
-        LocalizationSetting(orderOfPrecedence: ["en"]).do {
-            XCTAssertErrorFree({
-                try Tool.command.execute(with: ["execute", "•colour", "red"])
-            })
-            XCTAssertErrorFree({
-                try Tool.command.execute(with: ["execute", "•colour", "rot"])
-            })
-            XCTAssertThrowsError(containing: "colour") {
-                try Tool.command.execute(with: ["execute", "•colour", "none"])
-            }
-        }
-
-        let enumerationLists: [String: StrictString] = [
-            "en\u{2D}GB": "or",
-            "en\u{2D}US": "or",
-            "en": "or" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, or) in enumerationLists {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertErrorFree({
-                    let output = try Tool.command.execute(with: ["execute", "help"])
-                    XCTAssert(output.contains(or), "Expected output missing: \(or)")
-                })
-            }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•colour", "red"], localizations: Language.self, uniqueTestName: "Accept Enumeration", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•colour", "rot"], localizations: Language.self, uniqueTestName: "Accept Foreign Enumeration", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•colour", "none"], localizations: SystemLocalization.self, uniqueTestName: "Invalid Enumeration", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testFormatting() {
@@ -99,30 +47,12 @@ class APITests : TestCase {
     }
 
     func testHelp() {
-        LocalizationSetting(orderOfPrecedence: ["en"]).do {
-            XCTAssertErrorFree({
-                let output = try Tool.command.execute(with: ["execute", "help"])
-                XCTAssert(output.contains(StrictString("tool")), "Root command missing.")
-                XCTAssert(output.contains(StrictString("help")), "Subcommand missing.")
-                XCTAssert(output.contains(StrictString("•string")), "Option missing.")
-                XCTAssert(output.contains(StrictString("[string]")), "Argument type missing.")
-                XCTAssert(¬output.contains(StrictString("[Boolean]")), "Boolean type not handled uniquely.")
-            })
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "help"], localizations: SystemLocalization.self, uniqueTestName: "Help", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testLanguage() {
-        XCTAssertErrorFree({
-            let expected: StrictString = "עזרה"
-            let output = try Tool.command.execute(with: ["help", "•language", "he"])
-            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
-        })
-
-        XCTAssertErrorFree({
-            let expected: StrictString = "βοήθεια"
-            let output = try Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
-            XCTAssert(output.contains(expected), "Expected output missing: \(expected)")
-        })
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["help", "•language", "he"], localizations: Language.self, uniqueTestName: "Language Selection by Code", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["help", "•language", "🇬🇷ΕΛ"], localizations: Language.self, uniqueTestName: "Language Selection by Icon", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testNoColour() {
@@ -133,115 +63,15 @@ class APITests : TestCase {
     }
 
     func testOption() {
-        XCTAssertErrorFree({
-            let text: StrictString = "Changed using an option."
-            let output = try Tool.command.execute(with: ["execute", "•string", text])
-            XCTAssert(output.contains(text), "Expected output missing: \(text)")
-        })
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•string", "Changed using an option."], localizations: Language.self, uniqueTestName: "Unicode Option", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."], localizations: Language.self, uniqueTestName: "ASCII Option", overwriteSpecificationInsteadOfFailing: false)
 
-        XCTAssertErrorFree({
-            let text: StrictString = "Changed using an option."
-            let output = try Tool.command.execute(with: ["execute", "\u{2D}\u{2D}string", text])
-            XCTAssert(output.contains(text), "Expected output missing: \(text)")
-        })
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•informal"], localizations: Language.self, uniqueTestName: "Flag", overwriteSpecificationInsteadOfFailing: false)
 
-        LocalizationSetting(orderOfPrecedence: ["en"]).do {
-            XCTAssertErrorFree({
-                let text: StrictString = "Hi!"
-                let output = try Tool.command.execute(with: ["execute", "•informal"])
-                XCTAssert(output.contains(text), "Expected output missing: \(text)")
-            })
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•invalid"], localizations: SystemLocalization.self, uniqueTestName: "Invalid Option", overwriteSpecificationInsteadOfFailing: false)
 
-        let unexpectedArgumentMessages: [String: StrictString] = [
-            "en": "Unexpected" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, unexpectedArgument) in unexpectedArgumentMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: unexpectedArgument) {
-                    try Tool.command.execute(with: ["execute", "invalid"])
-                }
-
-                let subcommand: StrictString
-                switch language {
-                case "de":
-                    subcommand = "ausführen"
-                default:
-                    subcommand = "execute"
-                }
-                XCTAssertThrowsError(containing: subcommand) {
-                    try Tool.command.execute(with: ["execute", "invalid"])
-                }
-            }
-        }
-
-        let invalidOptionMessages: [String: StrictString] = [
-            "en": "Invalid" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, invalidOption) in invalidOptionMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: invalidOption) {
-                    try Tool.command.execute(with: ["execute", "•invalid"])
-                }
-
-                let subcommand: StrictString
-                switch language {
-                case "de":
-                    subcommand = "ausführen"
-                default:
-                    subcommand = "execute"
-                }
-                XCTAssertThrowsError(containing: subcommand) {
-                    try Tool.command.execute(with: ["execute", "•invalid"])
-                }
-            }
-        }
-
-        let missingArgumentMessages: [String: StrictString] = [
-            "en": "missing",
-            "en\u{2D}US": "missing" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, missingArgument) in missingArgumentMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: missingArgument) {
-                    try Tool.command.execute(with: ["execute", "•string"])
-                }
-
-                let subcommand: StrictString
-                switch language {
-                case "de":
-                    subcommand = "ausführen"
-                default:
-                    subcommand = "execute"
-                }
-                XCTAssertThrowsError(containing: subcommand) {
-                    try Tool.command.execute(with: ["execute", "•string"])
-                }
-            }
-        }
-
-        let invalidArgumentMessages: [String: StrictString] = [
-            "en": "invalid",
-            "en\u{2D}US": "invalid" // [_Warning: Test localization of this with a specification instead._]
-        ]
-        for (language, invalidArgument) in invalidArgumentMessages {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertThrowsError(containing: invalidArgument) {
-                    try Tool.command.execute(with: ["execute", "•unsatisfiable", "..."])
-                }
-
-                let subcommand: StrictString
-                switch language {
-                case "de":
-                    subcommand = "ausführen"
-                default:
-                    subcommand = "execute"
-                }
-                XCTAssertThrowsError(containing: subcommand) {
-                    try Tool.command.execute(with: ["execute", "•unsatisfiable", "..."])
-                }
-            }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•string"], localizations: SystemLocalization.self, uniqueTestName: "Missing Option Argument", allowColour: true, overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•unsatisfiable", "..."], localizations: SystemLocalization.self, uniqueTestName: "Invalid Option Argument", allowColour: true, overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testVersion() {

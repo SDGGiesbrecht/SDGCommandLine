@@ -15,6 +15,8 @@
 import XCTest
 import Foundation
 
+import SDGTesting // [_Workaround: SDGXCTestUtilities is not public. (SDGCornerstone 0.8.0)_]
+
 import SDGCommandLine
 
 class TestCase : XCTestCase {
@@ -26,6 +28,7 @@ class TestCase : XCTestCase {
             TestCase.initialized = true
             SDGCommandLine.initialize(applicationIdentifier: "ca.solideogloria.SDGCommandLine.Tests", version: Version(1, 2, 3), packageURL: nil)
         }
+        testAssertionMethod = XCTAssert // [_Workaround: SDGXCTestUtilities is not public. (SDGCornerstone 0.8.0)_]
         super.setUp()
     }
 }

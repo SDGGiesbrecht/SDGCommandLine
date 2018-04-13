@@ -54,7 +54,7 @@ class InternalTests : TestCase {
         }
 
         for (language, searchTerm) in [
-            "en": "Attempting" // [_Warning: Test localization of this with a specification instead._]
+            "en": "Attempting"
             ] as [String: StrictString] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
@@ -131,7 +131,7 @@ class InternalTests : TestCase {
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
         for (language, searchTerm) in [
-            "en": "set‐language" // [_Warning: Test localization of this with a specification instead._]
+            "en": "set‐language"
             ] as [String: StrictString] {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({

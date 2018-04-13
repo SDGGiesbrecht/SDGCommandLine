@@ -41,6 +41,7 @@ let package = Package(
             "SDGCommandLine",
             "SDGCommandLineLocalizations",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
+            .productItem(name: "SDGTesting", package: "SDGCornerstone"),
             .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
         // Internal

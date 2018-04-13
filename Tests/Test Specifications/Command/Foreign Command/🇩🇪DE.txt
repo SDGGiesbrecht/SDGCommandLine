@@ -1,0 +1,3 @@
+$ werkzeug ausführen •no‐colour
+Guten Tag, Welt!
+0

@@ -1,0 +1,25 @@
+$ tool execute help •no‐colour
+
+tool execute demonstrates successful execution.
+
+Subcommands
+
+help displays usage information.
+
+Options
+
+•colour [colour] A colour for the text.
+•informal uses an informal greeting.
+•language [language preference] A language to use instead of the one specified in preferences.
+•no‐colour Removes colour from the output.
+•string [string] Text to display.
+•unsatisfiable [unsatisfiable] An option that always fails to parse.
+
+Argument Types
+
+[colour] “blue”, “green” or “red”.
+[language preference] A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-CA” or “🇨🇦EN” → Canadian English, “cwd,en;fr” → both Woods Cree and English, otherwise French
+[string] An arbitrary string.
+[unsatisfiable] An argument type that always fails to parse.
+
+0
