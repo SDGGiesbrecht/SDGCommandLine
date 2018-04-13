@@ -16,7 +16,7 @@
 
 macOS • Linux
 
-APIs: [SDGCommandLine](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine)
+APIs: [SDGCommandLine](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine) • [SDGCommandLineTestUtilities](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLineTestUtilities)
 
 # SDGCommandLine
 
@@ -55,6 +55,7 @@ let package = Package(
     targets: [
         .target(name: "MyTarget", dependencies: [
             .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
+            .productItem(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
         ])
     ]
 )
@@ -64,6 +65,7 @@ let package = Package(
 
 ```swift
 import SDGCommandLine
+import SDGCommandLineTestUtilities
 ```
 
 ## Example Usage

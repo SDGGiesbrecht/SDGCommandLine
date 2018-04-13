@@ -21,8 +21,10 @@ extension Command {
 
         // MARK: - Static Properties
 
-        internal static let successCode = 0
-        internal static let generalErrorCode = Int.max
+        /// The exit code indicating success.
+        public static let successCode = 0
+        /// The default exit code for an inspecific failure.
+        public static let generalErrorCode = Int.max
 
         // MARK: - Initialization
 

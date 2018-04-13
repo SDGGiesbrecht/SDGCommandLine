@@ -1,0 +1,3 @@
+$ tool execute
+Hello, world!
+0

@@ -19,7 +19,8 @@ import PackageDescription
 let package = Package(
     name: "SDGCommandLine",
     products: [
-        .library(name: "SDGCommandLine", targets: ["SDGCommandLine"])
+        .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
+        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 8, 0))
@@ -34,8 +35,13 @@ let package = Package(
             .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
             ]),
-        .testTarget(name: "SDGCommandLineTests", dependencies: [
+        .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
+            .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
+            .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
+            ]),
+        .testTarget(name: "SDGCommandLineTests", dependencies: [
+            "SDGCommandLineTestUtilities",
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
             ])

@@ -150,10 +150,10 @@ class InternalTests : TestCase {
 
                 XCTAssertEqual(packageStructure.name, "SDGCommandLine")
 
-                XCTAssertEqual(packageStructure.libraryProductTargets, ["SDGCommandLine"])
+                XCTAssertEqual(packageStructure.libraryProductTargets, ["SDGCommandLine", "SDGCommandLineTestUtilities"])
 
                 XCTAssertEqual(packageStructure.targets[0].name, "SDGCommandLine")
-                XCTAssertEqual(packageStructure.targets[1].name, "SDGCommandLineTests")
+                XCTAssertEqual(packageStructure.targets[2].name, "SDGCommandLineTests")
             }
         })
 

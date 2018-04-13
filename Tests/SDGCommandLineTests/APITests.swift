@@ -13,35 +13,14 @@
  */
 
 import XCTest
-import SDGCommandLine
+import SDGCommandLineTestUtilities
 
 class APITests : TestCase {
 
     func testCommand() {
-        for (language, searchTerm) in [
-            "en": "Hello",
-            "de": "Guten Tag"
-            ] as [String: StrictString] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        let output = try Tool.command.execute(with: ["execute"])
-                        XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
-                    })
-                }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
 
-        XCTAssertThrows(Fail.error, {
-            try Tool.command.execute(with: ["fail"])
-        })
-
-        for (language, searchTerm) in [
-            "en": "I cannot",
-            "de": "kann ich nicht"
-            ] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssert(String(Fail.error.describe()).contains(searchTerm), "Expected error details missing from “\(language)”: \(searchTerm)")
-                }
-        }
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail"], localizations: Language.self, uniqueTestName: "Failure", overwriteSpecificationInsteadOfFailing: false)
 
         let helpNames: [String: StrictString] = [
             "en": "help", // [_Warning: Test localization of this with a specification instead._]

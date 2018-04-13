@@ -88,7 +88,8 @@ public struct Command {
     internal private(set) static var stack: [Command] = []
 
     private let names: Set<StrictString>
-    internal let localizedName: () -> StrictString
+    /// Returns the localized name of the command.
+    public let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
     private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void
