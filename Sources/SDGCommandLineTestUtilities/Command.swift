@@ -58,7 +58,6 @@ import SDGPersistenceTestUtilities
 
                     print(Command.Error.successCode, to: &report)
                 } catch let error as Command.Error {
-                    // [_Warning: This needs fixing._]
                     print(error.describe(), to: &report)
                     print(error.exitCode, to: &report)
                 } catch {
