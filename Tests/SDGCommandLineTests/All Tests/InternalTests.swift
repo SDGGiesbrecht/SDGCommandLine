@@ -93,7 +93,7 @@ class InternalTests : TestCase {
             try FileManager.default.do(in: repositoryRoot) {
                 let output = Command.Output()
                 let ignored = try Git.default._ignoredFiles(output: output)
-                XCTAssert(ignored.contains(where: { $0.lastPathComponent.contains("Validate") }))
+                XCTAssert(ignored.contains(where: { $0.lastPathComponent == ".build" }))
             }
         })
         XCTAssertErrorFree({
