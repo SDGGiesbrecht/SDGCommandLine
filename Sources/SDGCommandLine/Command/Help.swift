@@ -14,6 +14,8 @@
 
 import SDGMathematics
 
+import SDGCommandLineLocalizations
+
 extension Command {
 
     private static let helpName = UserFacingText({ (localization: SystemLocalization) -> StrictString in

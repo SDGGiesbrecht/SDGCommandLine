@@ -12,7 +12,9 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-internal enum SystemLocalization : String, InputLocalization {
+import SDGLocalization
+
+public enum SystemLocalization : String, InputLocalization {
 
     // MARK: - Cases
 
@@ -28,7 +30,7 @@ internal enum SystemLocalization : String, InputLocalization {
 
     case עברית־ישראל = "he\u{2D}IL"
 
-    internal static let cases: [SystemLocalization] = [
+    public static let cases: [SystemLocalization] = [
 
         .englishUnitedKingdom,
         .englishUnitedStates,
@@ -45,5 +47,5 @@ internal enum SystemLocalization : String, InputLocalization {
 
     // MARK: - Localization
 
-    internal static let fallbackLocalization: SystemLocalization = .עברית־ישראל
+    public static let fallbackLocalization: SystemLocalization = .עברית־ישראל
 }

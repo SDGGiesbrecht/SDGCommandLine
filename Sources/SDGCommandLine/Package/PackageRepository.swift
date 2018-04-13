@@ -14,6 +14,8 @@
 
 import Foundation
 
+import SDGCommandLineLocalizations
+
 internal typealias PackageRepository = _PackageRepository
 /// :nodoc: (Shared to Workspace.)
 public struct _PackageRepository {

@@ -16,6 +16,8 @@ import Foundation
 
 import SDGExternalProcess
 
+import SDGCommandLineLocalizations
+
 internal typealias Git = _Git
 /// :nodoc: (Shared to Workspace.)
 public class _Git : _ExternalTool {

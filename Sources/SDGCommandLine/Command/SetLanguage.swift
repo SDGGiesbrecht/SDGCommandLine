@@ -12,6 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGCommandLineLocalizations
+
 extension Command {
 
     private static let setLanguageName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in

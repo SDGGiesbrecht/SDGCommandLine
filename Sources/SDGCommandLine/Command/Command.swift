@@ -19,6 +19,8 @@ import SDGLogic
 import SDGMathematics
 import SDGCollections
 
+import SDGCommandLineLocalizations
+
 /// A command.
 public struct Command {
 

@@ -14,6 +14,8 @@
 
 import SDGExternalProcess
 
+import SDGCommandLineLocalizations
+
 internal typealias ExternalTool = _ExternalTool
 /// :nodoc: (Shared to Workspace.)
 public class _ExternalTool {

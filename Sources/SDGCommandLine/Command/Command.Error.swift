@@ -14,6 +14,8 @@
 
 import SDGLogic
 
+import SDGCommandLineLocalizations
+
 extension Command {
 
     /// A command line failure.

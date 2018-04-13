@@ -17,6 +17,7 @@ import XCTest
 import SDGLogic
 import SDGExternalProcess
 
+import SDGCommandLineLocalizations
 @testable import SDGCommandLine
 
 class InternalTests : TestCase {
@@ -153,7 +154,7 @@ class InternalTests : TestCase {
                 XCTAssertEqual(packageStructure.libraryProductTargets, ["SDGCommandLine", "SDGCommandLineTestUtilities"])
 
                 XCTAssertEqual(packageStructure.targets[0].name, "SDGCommandLine")
-                XCTAssertEqual(packageStructure.targets[2].name, "SDGCommandLineTests")
+                XCTAssertEqual(packageStructure.targets[3].name, "SDGCommandLineTests")
             }
         })
 

@@ -16,6 +16,8 @@ import Foundation
 
 import SDGCollections
 
+import SDGCommandLineLocalizations
+
 internal typealias SwiftTool = _Swift
 /// :nodoc: (Shared to Workspace.)
 public class _Swift : _ExternalTool {

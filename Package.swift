@@ -26,7 +26,9 @@ let package = Package(
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 8, 0))
     ],
     targets: [
+        // Products
         .target(name: "SDGCommandLine", dependencies: [
+            "SDGCommandLineLocalizations",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGMathematics", package: "SDGCornerstone"),
@@ -37,9 +39,15 @@ let package = Package(
             ]),
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
+            "SDGCommandLineLocalizations",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
             .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
+        // Internal
+        .target(name: "SDGCommandLineLocalizations", dependencies: [
+            .productItem(name: "SDGLocalization", package: "SDGCornerstone")
+            ]),
+        // Tests
         .testTarget(name: "SDGCommandLineTests", dependencies: [
             "SDGCommandLineTestUtilities",
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),

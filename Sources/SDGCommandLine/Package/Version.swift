@@ -15,6 +15,8 @@
 import SDGLogic
 import SDGCollections
 
+import SDGCommandLineLocalizations
+
 /// A semantic version.
 public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hashable {
 
