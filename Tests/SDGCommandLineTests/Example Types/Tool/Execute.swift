@@ -12,7 +12,6 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
 import SDGCommandLine
 
 enum Execute {
@@ -72,7 +71,7 @@ enum Execute {
         case .english, .unsupported:
             return "colour"
         case .deutsch:
-            return "Farbe"
+            return "farbe"
         }
     }), description: UserFacingText({ (localization: Language) -> StrictString in
         switch localization {
@@ -132,13 +131,13 @@ enum Execute {
         Execute.unsatisfiableOption,
         Execute.informalOption,
         Execute.colourOption
-        ], execution: { (_, options: Options, output: inout Command.Output) throws -> Void in
+        ], execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
             if let text = options.value(for: Execute.textOption) {
                 if let colour = options.value(for: Execute.colourOption) {
-                    print(text.in(colour), to: &output)
+                    output.print(text.in(colour))
                 } else {
-                    print(text, to: &output)
+                    output.print(text)
                 }
             } else {
                 let greeting: UserFacingText<Language>
@@ -162,9 +161,9 @@ enum Execute {
                     })
                 }
                 if let colour = options.value(for: Execute.colourOption) {
-                    print(greeting.resolved().in(colour), to: &output)
+                    output.print(greeting.resolved().in(colour))
                 } else {
-                    print(greeting.resolved(), to: &output)
+                    output.print(greeting.resolved())
                 }
             }
     })

@@ -15,7 +15,6 @@
 import XCTest
 import Foundation
 
-import SDGCornerstone
 import SDGCommandLine
 
 private func description(of error: Error) -> String {

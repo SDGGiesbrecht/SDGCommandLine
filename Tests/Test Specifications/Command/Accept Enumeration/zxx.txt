@@ -1,0 +1,3 @@
+$ tool execute •colour red •no‐colour
+Hello, world!
+0

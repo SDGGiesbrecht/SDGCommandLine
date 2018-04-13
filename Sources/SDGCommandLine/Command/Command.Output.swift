@@ -12,12 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
-
 extension Command {
 
     /// The output stream for standard output.
-    public struct Output : TextOutputStream {
+    public class Output {
 
         // MARK: - Initialization
 
@@ -29,29 +27,31 @@ extension Command {
 
         internal var filterFormatting = false
 
-        private static let newLine: StrictString = "\n"
+        @_versioned internal static let newline: StrictString = "\n"
         private var internalOutput: StrictString
         internal var output: StrictString {
             var result = internalOutput
-            if result.hasSuffix(Output.newLine) {
+            if result.hasSuffix(Output.newline) {
                 result.scalars.removeLast()
             }
             return result
         }
 
-        // MARK: - TextOutputStream
-
-        // [_Inherit Documentation: SDGCornerstone.TextOutputStream.write(_:)_]
-        /// Appends the given string to the stream.
-        public mutating func write(_ string: String) {
-            var strict = StrictString(string)
+        /// Prints a message to the standard output.
+        public func print(_ message: StrictString, terminator: StrictString = Output.newline) {
+            var mutable = message + terminator
 
             if filterFormatting {
-                strict.removeCommandLineFormatting()
+                mutable.removeCommandLineFormatting()
             }
 
-            internalOutput.append(contentsOf: strict)
-            print(strict, terminator: "")
+            internalOutput.append(contentsOf: mutable)
+            Swift.print(mutable, terminator: "")
+        }
+
+        /// Prints a message to the standard output.
+        public func print(_ message: String, terminator: StrictString = Output.newline) {
+            print(StrictString(message), terminator: terminator)
         }
     }
 }

@@ -12,7 +12,9 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
+import SDGCollections
+
+import SDGCommandLineLocalizations
 
 /// A standard argument type provided by SDGCommandLine.
 public enum ArgumentType {
@@ -36,14 +38,6 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "string"
-        case .deutschDeutschland:
-            return "Zeichenkette"
-        case .françaisFrance:
-            return "chaîne de caractères"
-        case .ελληνικάΕλλάδα:
-            return "συμβολοσειρά"
-        case .עברית־ישראל:
-            return "מחרוזת"
         }
     })
 
@@ -51,14 +45,6 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "An arbitrary string."
-        case .deutschDeutschland:
-            return "Eine beliebige Zeichenkette."
-        case .françaisFrance:
-            return "Une chaîne de caractères quelconque."
-        case .ελληνικάΕλλάδα:
-            return "Μία αυθαίρετη συμβολοσειρά."
-        case .עברית־ישראל:
-            return "מחרוזת רצוני."
         }
     })
 
@@ -80,23 +66,11 @@ public enum ArgumentType {
             case .englishUnitedStates, .englishCanada:
                 openingQuotationMark = "“"
                 closingQuotationMark = "”"
-            case .deutschDeutschland:
-                openingQuotationMark = "„"
-                closingQuotationMark = "“"
-            case .françaisFrance:
-                openingQuotationMark = "« "
-                closingQuotationMark = " »"
-            case .ελληνικάΕλλάδα:
-                openingQuotationMark = "«"
-                closingQuotationMark = "»"
-            case .עברית־ישראל:
-                openingQuotationMark = "”"
-                closingQuotationMark = "“"
             }
 
             let comma: StrictString
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 comma = ", "
             }
 
@@ -104,19 +78,11 @@ public enum ArgumentType {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 or = " or "
-            case .deutschDeutschland:
-                or = " oder "
-            case .françaisFrance:
-                or = " ou "
-            case .ελληνικάΕλλάδα:
-                or = " ή "
-            case .עברית־ישראל:
-                or = " או "
             }
 
             let period: StrictString
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 period = "."
             }
 
@@ -133,7 +99,7 @@ public enum ArgumentType {
     /// Parameters:
     ///     - name: The name of the option.
     ///     - cases: An array of enumeration options. Specify each option as a tuple containing the option’s name (for the command line) and the option’s value (for within Swift).
-    public static func enumeration<T, L : InputLocalization>(name: UserFacingText<L>, cases: [(value: T, label: UserFacingText<L>)]) -> ArgumentTypeDefinition<T> {
+    public static func enumeration<T, N : InputLocalization, L : InputLocalization>(name: UserFacingText<N>, cases: [(value: T, label: UserFacingText<L>)]) -> ArgumentTypeDefinition<T> {
 
         var syntaxLabels: [UserFacingText<L>] = []
         var entries: [StrictString: T] = [:]
@@ -153,14 +119,6 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language preference"
-        case .deutschDeutschland:
-            return "Spracheinstellung"
-        case .françaisFrance:
-            return "préférence de langue"
-        case .ελληνικάΕλλάδα:
-            return "προτίμηση της γλώσσας"
-        case .עברית־ישראל:
-            return "העדפה של שפה"
         }
     })
 
@@ -172,14 +130,6 @@ public enum ArgumentType {
             return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish"
         case .englishCanada:
             return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}CA” or “🇨🇦EN” → Canadian English, “cwd,en;fr” → both Woods Cree and English, otherwise French"
-        case .deutschDeutschland:
-            return "Eine Liste von IETF‐Sprachkennungen oder SDGCornerstone Sprachsymbole. Strichpunkte bezeichnen die Ersatzreihenfolge. Kommas bezeichnen die Verwendung mehreren Sprachen. Beispiele: “de\u{2D}DE” oder “🇩🇪DE” → Deutsch (Deutschland), “hab,de;fr” → sowohl Obersorbisch als auch Deutsch, sonst Französisch"
-        case .françaisFrance:
-            return "Une liste des étiquettes de langue IETF ou des icônes de langue SDGCornerstone. Des point‐virgules indique l’ordre de remplacement. Des virgules indique l’utilisation de plusieurs langues. Examples: « fr\u{2D}FR » or “🇫🇷FR” → français (France), “oc,fr;en” → à la fois occitan et français, sinon anglais"
-        case .ελληνικάΕλλάδα:
-            return "Ένας κατάλογος του IETF κωδικών γλώσσες ή SDGCornerstone icons γλώσσες. Άνω τελείες σημαίνει την σειρά της αντικατάστασης. Κόμματα σημαίνει ότι πολλαπλές γλώσσες πρέπει να χρησιμοποιούται. Παραδείγματα: «el\u{2D}GR» ή «🇬🇷ΕΛ» → ελληνικά (Ελλάδα), “aat,el·en” → αρβανίτικα και ελληνικά, διαφορετικά αγγλικά"
-        case .עברית־ישראל:
-            /*א*/ return "רשימה של IETF קודי שפות או SDGCornerstone צלמיות שקות. נקודות ופסיקים מאותתים fallback order. קסיקים מאותתים שימוש של יותר משפה אחת. דוגמאות: ”he\u{2D}IL“ או ”🇮🇱עב“ ← עברית (ישראל), “ydd,he;en” ← יידיש וגם עברית, ואם לא, אנגלית"
         }
     })
 
@@ -203,14 +153,6 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
-        case .deutschDeutschland:
-            return "Version"
-        case .françaisFrance:
-            return "version"
-        case .ελληνικάΕλλάδα:
-            return "έκδοση"
-        case .עברית־ישראל:
-            return "גירסה"
         }
     })
 
@@ -218,14 +160,6 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "development"
-        case .deutschDeutschland:
-            return "entwicklung"
-        case .françaisFrance:
-            return "développement"
-        case .ελληνικάΕλλάδα:
-            return "ανάπτυξη"
-        case .עברית־ישראל:
-            return "פיתוח"
         }
     })
 
@@ -236,14 +170,6 @@ public enum ArgumentType {
             return StrictString("A version number or ‘\(development)’.")
         case .englishUnitedStates, .englishCanada:
             return StrictString("A version number or “\(development)”.")
-        case .deutschDeutschland:
-            return StrictString("Eine Versionsnummer oder „\(development)“.")
-        case .françaisFrance:
-            return StrictString("Un numéro de version ou « \(development) ».")
-        case .ελληνικάΕλλάδα:
-            return StrictString("Ένα αριθμός έκδοσης ή «\(development)».")
-        case .עברית־ישראל:
-            return StrictString("גירסת מספר או ”\(development)“.")
         }
     })
 

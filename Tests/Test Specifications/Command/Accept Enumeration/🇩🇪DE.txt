@@ -1,0 +1,3 @@
+$ werkzeug execute •colour red •no‐colour
+Guten Tag, Welt!
+0

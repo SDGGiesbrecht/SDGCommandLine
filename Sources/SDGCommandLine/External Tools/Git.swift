@@ -14,7 +14,9 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGExternalProcess
+
+import SDGCommandLineLocalizations
 
 internal typealias Git = _Git
 /// :nodoc: (Shared to Workspace.)
@@ -37,16 +39,12 @@ public class _Git : _ExternalTool {
     internal init(version: Version) {
         super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Git"
-            case .ελληνικάΕλλάδα:
-                return "Γκιτ"
-            case .עברית־ישראל:
-                return "גיט"
             }
         }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada /* No localized site: */: // [_Exempt from Test Coverage_]
                 return "git\u{2D}scm.com"
             }
         }), command: "git", version: version, versionCheck: ["version"])
@@ -54,15 +52,15 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func initializeRepository(output: inout Command.Output) throws {
-        try _initializeRepository(output: &output)
+    internal func initializeRepository(output: Command.Output) throws {
+        try _initializeRepository(output: output)
     }
     /// :nodoc: (Shared to Workspace.)
-    public func _initializeRepository(output: inout Command.Output) throws {
-        _ = try execute(with: ["init"], output: &output)
+    public func _initializeRepository(output: Command.Output) throws {
+        _ = try execute(with: ["init"], output: output)
     }
 
-    internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: inout Command.Output) throws {
+    internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: Command.Output) throws {
         var command = [
             "clone",
             Shell.quote(remote.absoluteString),
@@ -77,53 +75,53 @@ public class _Git : _ExternalTool {
             "\u{2D}\u{2D}depth", "1",
             "\u{2D}\u{2D}config", "advice.detachedHead=false"
         ]
-        _ = try executeInCompatibilityMode(with: command, output: &output)
+        _ = try executeInCompatibilityMode(with: command, output: output)
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _differences(excluding excludePatterns: [String], output: inout Command.Output) throws {
+    public func _differences(excluding excludePatterns: [String], output: Command.Output) throws {
         _ = try execute(with: [
             "add",
             ".",
             "\u{2D}\u{2D}intent\u{2D}to\u{2D}add"
-            ], output: &output, silently: true)
+            ], output: output, silently: true)
 
         _ = try executeInCompatibilityMode(with: [
             "diff",
             "\u{2D}\u{2D}exit\u{2D}code",
             "\u{2D}\u{2D}",
             "."
-            ] + excludePatterns.map({ "\u{27}:(exclude)\($0)\u{27}" }), output: &output, autoquote: false)
+            ] + excludePatterns.map({ "\u{27}:(exclude)\($0)\u{27}" }), output: output, autoquote: false)
     }
 
-    internal func commitChanges(description: StrictString, output: inout Command.Output) throws {
+    internal func commitChanges(description: StrictString, output: Command.Output) throws {
         _ = try execute(with: [
             "add",
             "."
-            ], output: &output)
+            ], output: output)
 
         _ = try execute(with: [
             "commit",
             "\u{2D}\u{2D}m", description
-            ], output: &output)
+            ], output: output)
     }
 
-    internal func tag(version: Version, output: inout Command.Output) throws {
+    internal func tag(version: Version, output: Command.Output) throws {
         _ = try execute(with: [
             "tag",
             StrictString(version.string)
-            ], output: &output)
+            ], output: output)
     }
 
     // MARK: - Usage: Information
 
     /// :nodoc: (Shared to Workspace.)
-    public func _versions(of package: _Package, output: inout Command.Output) throws -> Set<Version> {
+    public func _versions(of package: _Package, output: Command.Output) throws -> Set<Version> {
         let output = try execute(with: [
             "ls\u{2D}remote",
             "\u{2D}\u{2D}tags",
             StrictString(Shell.quote(package.url.absoluteString))
-            ], output: &output, silently: true)
+            ], output: output, silently: true)
 
         var versions: Set<Version> = []
         for line in output.lines.map({ $0.line }) {
@@ -137,21 +135,21 @@ public class _Git : _ExternalTool {
         return versions
     }
 
-    internal func latestCommitIdentifier(in package: Package, output: inout Command.Output) throws -> StrictString {
+    internal func latestCommitIdentifier(in package: Package, output: Command.Output) throws -> StrictString {
         return StrictString(try execute(with: [
             "ls\u{2D}remote",
             StrictString(Shell.quote(package.url.absoluteString)),
             "master"
-            ], output: &output).truncated(before: "\u{9}".scalars))
+            ], output: output).truncated(before: "\u{9}".scalars))
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _ignoredFiles(output: inout Command.Output) throws -> [URL] {
+    public func _ignoredFiles(output: Command.Output) throws -> [URL] {
 
         let ignoredSummary = try executeInCompatibilityMode(with: [
             "status",
             "\u{2D}\u{2D}ignored"
-            ], output: &output, silently: true)
+            ], output: output, silently: true)
 
         let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 

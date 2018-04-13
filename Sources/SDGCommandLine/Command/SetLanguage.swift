@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
+import SDGCommandLineLocalizations
 
 extension Command {
 
@@ -20,14 +20,6 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "set‐language"
-        case .deutschDeutschland:
-            return "sprache‐einstellen"
-        case .françaisFrance:
-            return "définir‐langue"
-        case .ελληνικάΕλλάδα:
-            return "οριζμός‐γλώσσας"
-        case .עברית־ישראל:
-            return "הגדיר־את־שפה"
         }
     })
 
@@ -35,14 +27,6 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "sets the language preference. (Omit the argument to revert to the system preferences.)"
-        case .deutschDeutschland:
-            return "stellt die Spracheinstellung ein. (Das Argument auslassen, um auf den Systemeinstellungen zurückzusetzen.)"
-        case .françaisFrance:
-            return "définit la préférence de langue. (Omettre l’argument pour revenir à les préférences système.)"
-        case .ελληνικάΕλλάδα:
-            return "ορίζει την προτίμηση της γλώσσας. (Η παράλειψη του ορίσματος επαναφέρει στις προτιμήσεις συστήμαρος.)"
-        case .עברית־ישראל:
-            return "מגדירה את ההעדפה של שפה. (ההשמצה של ארגומנט חוזרה להעדפות המערכת.)"
         }
     })
 

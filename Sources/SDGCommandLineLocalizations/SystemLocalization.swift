@@ -1,10 +1,10 @@
 /*
- InterfaceLocalization.swift
+ SystemLocalization.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
- Copyright ©2017–2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -12,9 +12,9 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import SDGCornerstone
+import SDGLocalization
 
-internal enum InterfaceLocalization : String, InputLocalization {
+public enum SystemLocalization : String, InputLocalization {
 
     // MARK: - Cases
 
@@ -30,7 +30,7 @@ internal enum InterfaceLocalization : String, InputLocalization {
 
     case עברית־ישראל = "he\u{2D}IL"
 
-    internal static let cases: [InterfaceLocalization] = [
+    public static let cases: [SystemLocalization] = [
 
         .englishUnitedKingdom,
         .englishUnitedStates,
@@ -47,5 +47,5 @@ internal enum InterfaceLocalization : String, InputLocalization {
 
     // MARK: - Localization
 
-    internal static let fallbackLocalization: InterfaceLocalization = .עברית־ישראל
+    public static let fallbackLocalization: SystemLocalization = .עברית־ישראל
 }

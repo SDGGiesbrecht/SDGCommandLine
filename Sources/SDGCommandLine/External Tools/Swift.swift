@@ -14,7 +14,9 @@
 
 import Foundation
 
-import SDGCornerstone
+import SDGCollections
+
+import SDGCommandLineLocalizations
 
 internal typealias SwiftTool = _Swift
 /// :nodoc: (Shared to Workspace.)
@@ -37,16 +39,12 @@ public class _Swift : _ExternalTool {
     internal init(version: Version) {
         super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Swift"
-            case .ελληνικάΕλλάδα:
-                return "Σουιφτ"
-            case .עברית־ישראל:
-                return "סוויפט"
             }
         }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, /* No localized site: */ .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα, .עברית־ישראל: // [_Exempt from Test Coverage_]
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada /* No localized site: */: // [_Exempt from Test Coverage_]
                 return "swift.org"
             }
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
@@ -54,7 +52,7 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func initializePackage(executable: Bool, output: inout Command.Output) throws {
+    internal func initializePackage(executable: Bool, output: Command.Output) throws {
         var arguments: [StrictString] = [
             "package", "init"
         ]
@@ -63,36 +61,36 @@ public class _Swift : _ExternalTool {
                 "\u{2D}\u{2D}type", "executable"
             ]
         }
-        _ = try execute(with: arguments, output: &output)
+        _ = try execute(with: arguments, output: output)
     }
 
-    private func resolve(output: inout Command.Output) throws {
+    private func resolve(output: Command.Output) throws {
         _ = try execute(with: [
             "package", "resolve"
-            ], output: &output)
+            ], output: output)
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _generateXcodeProject(output: inout Command.Output) throws {
+    public func _generateXcodeProject(output: Command.Output) throws {
         _ = try execute(with: [
             "package", "generate\u{2D}xcodeproj",
             "\u{2D}\u{2D}enable\u{2D}code\u{2D}coverage"
-        ], output: &output)
+        ], output: output)
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _test(output: inout Command.Output) throws { // [_Exempt from Test Coverage_] Incorrectly rerouted within xcodebuild.
+    public func _test(output: Command.Output) throws { // [_Exempt from Test Coverage_] Incorrectly rerouted within xcodebuild.
         _ = try execute(with: [
             "test"
-            ], output: &output)
+            ], output: output)
     }
 
-    internal func buildForRelease(output: inout Command.Output) throws {
+    internal func buildForRelease(output: Command.Output) throws {
         _ = try execute(with: [
             "build",
             "\u{2D}\u{2D}configuration", "release",
             "\u{2D}\u{2D}static\u{2D}swift\u{2D}stdlib"
-            ], output: &output)
+            ], output: output)
     }
 
     // MARK: - Usage: Information
@@ -102,26 +100,18 @@ public class _Swift : _ExternalTool {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Test Coverage_]
                 return StrictString("Error loading package description:\n\(json)")
-            case .deutschDeutschland: // [_Exempt from Test Coverage_]
-                return StrictString("Fehlschlag beim Laden der Paketbeschreibung:\n\(json)")
-            case .françaisFrance: // [_Exempt from Test Coverage_]
-                return StrictString("Échec du chargement de la description du paquet:\n\(json)")
-            case .ελληνικάΕλλάδα: // [_Exempt from Test Coverage_]
-                return StrictString("Αποτυχία της φόρτωσης της περιγραφής του δέματος:\n\(json)")
-            case .עברית־ישראל: // [_Exempt from Test Coverage_]
-                return StrictString("שגיאה בטעינת תיאור החבילה:\n\(json)")
             }
         }))
     }
 
     /// :nodoc: (Shared to Workspace.)
-    public func _packageStructure(output: inout Command.Output) throws -> (name: String, libraryProductTargets: [String], executableProducts: [String], targets: [(name: String, location: URL)]) {
+    public func _packageStructure(output: Command.Output) throws -> (name: String, libraryProductTargets: [String], executableProducts: [String], targets: [(name: String, location: URL)]) {
 
-        try resolve(output: &output) // If resolution interrupts the dump, the output is invalid JSON.
+        try resolve(output: output) // If resolution interrupts the dump, the output is invalid JSON.
 
         let json = try executeInCompatibilityMode(with: [
             "package", "dump\u{2D}package"
-            ], output: &output, silently: true)
+            ], output: output, silently: true)
 
         guard let properties = try JSONSerialization.jsonObject(with: json.file, options: []) as? [String: Any] else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
             throw parseError(packageDescription: json)

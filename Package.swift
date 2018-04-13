@@ -19,15 +19,40 @@ import PackageDescription
 let package = Package(
     name: "SDGCommandLine",
     products: [
-        .library(name: "SDGCommandLine", targets: ["SDGCommandLine"])
+        .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
+        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 8, 0))
     ],
     targets: [
+        // Products
         .target(name: "SDGCommandLine", dependencies: [
-            .productItem(name: "SDGCornerstone", package: "SDGCornerstone")
+            "SDGCommandLineLocalizations",
+            .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
+            .productItem(name: "SDGLogic", package: "SDGCornerstone"),
+            .productItem(name: "SDGMathematics", package: "SDGCornerstone"),
+            .productItem(name: "SDGCollections", package: "SDGCornerstone"),
+            .productItem(name: "SDGText", package: "SDGCornerstone"),
+            .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
             ]),
-        .testTarget(name: "SDGCommandLineTests", dependencies: ["SDGCommandLine"])
+        .target(name: "SDGCommandLineTestUtilities", dependencies: [
+            "SDGCommandLine",
+            "SDGCommandLineLocalizations",
+            .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
+            .productItem(name: "SDGTesting", package: "SDGCornerstone"),
+            .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
+            ]),
+        // Internal
+        .target(name: "SDGCommandLineLocalizations", dependencies: [
+            .productItem(name: "SDGLocalization", package: "SDGCornerstone")
+            ]),
+        // Tests
+        .testTarget(name: "SDGCommandLineTests", dependencies: [
+            "SDGCommandLineTestUtilities",
+            .productItem(name: "SDGLogic", package: "SDGCornerstone"),
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            ])
     ]
 )

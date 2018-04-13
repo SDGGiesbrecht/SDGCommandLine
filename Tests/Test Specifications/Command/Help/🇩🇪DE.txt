@@ -1,0 +1,25 @@
+$ werkzeug execute help •no‐colour
+
+werkzeug ausführen führt eine erfolgreiche Ausführung vor.
+
+Subcommands
+
+hilfe displays usage information.
+
+Options
+
+•farbe [farbe] Eine Farbe für den Text.
+•informell verwendet eine informelle Begrüßung.
+•language [language preference] A language to use instead of the one specified in preferences.
+•no‐colour Removes colour from the output.
+•unsatisfiable [unsatisfiable] An option that always fails to parse.
+•zeichenkette [string] Text zum Zeigen.
+
+Argument Types
+
+[farbe] ‘blau’, ‘grün’ or ‘rot’.
+[language preference] A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French
+[string] An arbitrary string.
+[unsatisfiable] An argument type that always fails to parse.
+
+0

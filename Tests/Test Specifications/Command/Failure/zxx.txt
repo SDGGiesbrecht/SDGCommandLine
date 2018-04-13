@@ -1,0 +1,3 @@
+$ tool fail •no‐colour
+I cannot do that.
+1

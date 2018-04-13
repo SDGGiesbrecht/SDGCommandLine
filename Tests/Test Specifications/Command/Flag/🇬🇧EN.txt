@@ -1,0 +1,3 @@
+$ tool execute •informal •no‐colour
+Hi!
+0
