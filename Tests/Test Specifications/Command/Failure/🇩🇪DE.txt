@@ -1,3 +1,4 @@
 $ werkzeug fail •no‐colour
-Das kann ich nicht machen.
+Versucht...
+Nicht möglich.
 1

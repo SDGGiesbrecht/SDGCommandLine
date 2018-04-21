@@ -58,7 +58,7 @@ import SDGPersistenceTestUtilities
 
                     print(Command.Error.successCode, to: &report)
                 } catch let error as Command.Error {
-                    if let output = error.output {
+                    if let output = error.output, ¬output.isEmpty {
                         print(output, to: &report)
                     }
                     print(error.describe(), to: &report)
