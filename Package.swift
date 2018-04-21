@@ -53,6 +53,9 @@ let package = Package(
             "SDGCommandLineTestUtilities",
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            ]),
+        .target(name: "test‐tool", dependencies: [
+            "SDGCommandLine"
             ])
     ]
 )
