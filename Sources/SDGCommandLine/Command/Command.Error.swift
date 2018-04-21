@@ -47,12 +47,30 @@ extension Command {
                 }
             }))
             self.exitCode = exitCode
+
+            self.underlyingError = nil
+        }
+
+        internal init(wrapping error: Swift.Error) {
+            self.describeClosure = { StrictString(error.localizedDescription) }
+            self.exitCode = Error.generalErrorCode
+            self.underlyingError = error
         }
 
         // MARK: - Properties
 
         /// The exit code.
         public let exitCode: Int
+
+        /// The output up until the error occurred.
+        ///
+        /// This will be automatically added when rethrown by `Command.executable(with:)`. If the error is intercepted sooner, this property will still be `nil`.
+        public internal(set) var output: StrictString?
+
+        /// The underlying error.
+        ///
+        /// This will contain the underlying error if `Command.executable(with:)` caught a different error type and wrapped it in a `Command.Error` instance to provide the output and exit code.
+        public let underlyingError: Swift.Error?
 
         // MARK: - Output
 

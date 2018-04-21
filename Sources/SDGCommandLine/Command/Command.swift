@@ -123,8 +123,7 @@ public struct Command {
             FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
             exitCode = error.exitCode
         } catch { // [_Exempt from Test Coverage_]
-            FileHandle.standardError.write((error.localizedDescription.formattedAsError() + "\n").file)
-            exitCode = Error.generalErrorCode
+            unreachable()
         } // [_Exempt from Test Coverage_]
         exit(Int32(truncatingIfNeeded: exitCode))
     }
@@ -136,7 +135,7 @@ public struct Command {
     ///
     /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
     ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
+    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
         var output = Output()
 
@@ -165,7 +164,16 @@ public struct Command {
 
         let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
         try language.do {
-            try execute(withArguments: directArguments, options: options, output: output)
+            do {
+                try execute(withArguments: directArguments, options: options, output: output)
+            } catch var error as Command.Error {
+                error.output = output.output
+                throw error
+            } catch {
+                var wrapped = Command.Error(wrapping: error)
+                wrapped.output = output.output
+                throw wrapped
+            }
         }
         return output.output
     }
