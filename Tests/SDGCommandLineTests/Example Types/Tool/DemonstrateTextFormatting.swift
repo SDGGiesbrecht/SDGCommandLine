@@ -16,14 +16,14 @@ import SDGCommandLine
 
 enum DemonstrateTextFormatting {
 
-    static let command = Command(name: UserFacingText({ (localization: Language) -> StrictString in
+    static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "demonstrate‐text‐formatting"
         case .deutsch:
             return "textgestaltung‐vorführen"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "demonstrates text formatting."

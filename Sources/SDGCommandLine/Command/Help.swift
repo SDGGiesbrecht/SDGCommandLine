@@ -12,13 +12,14 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGLogic
 import SDGMathematics
 
 import SDGCommandLineLocalizations
 
 extension Command {
 
-    private static let helpName = UserFacingText({ (localization: SystemLocalization) -> StrictString in
+    private static let helpName = UserFacing<StrictString, SystemLocalization>({ localization in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "help"
@@ -33,7 +34,7 @@ extension Command {
         }
     })
 
-    private static let helpDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+    private static let helpDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays usage information."
@@ -56,7 +57,7 @@ extension Command {
         }
         output.print(commandName + " " + command.localizedDescription())
 
-        func printSection<T>(header: UserFacingText<InterfaceLocalization>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
+        func printSection<T>(header: UserFacing<StrictString, InterfaceLocalization>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
 
             output.print(header.resolved().formattedAsSectionHeader())
 
@@ -72,7 +73,7 @@ extension Command {
 
         if ¬command.subcommands.isEmpty {
 
-            printSection(header: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
@@ -90,7 +91,7 @@ extension Command {
                 return result
             }
 
-            printSection(header: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Options"
@@ -104,7 +105,7 @@ extension Command {
                     argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
                 }
             }
-            printSection(header: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Argument Types"

@@ -52,7 +52,7 @@ public struct Command {
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
     ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
         self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
     }
 
@@ -65,11 +65,11 @@ public struct Command {
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
-    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, subcommands: [Command], defaultSubcommand: Command? = nil) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, subcommands: [Command], defaultSubcommand: Command? = nil) {
         self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
     }
 
-    internal init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
@@ -211,7 +211,7 @@ public struct Command {
                     // Not a direct argument.
 
                     let commandStack = Command.stack // Prevent delayed evaluation.
-                    throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+                    throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                         var result: StrictString
                         switch localization {
                         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
@@ -233,7 +233,7 @@ public struct Command {
 
         guard let parsed = definition.parse(argument: possibleDirectArgument) else {
             let commandStack = Command.stack // Prevent delayed evaluation.
-            throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 let commandName = self.localizedName()
                 var result: StrictString
                 switch localization {
@@ -274,7 +274,7 @@ public struct Command {
 
             guard let argument = remainingArguments.popFirst() else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -289,7 +289,7 @@ public struct Command {
 
             guard let parsed = option.type().parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -307,7 +307,7 @@ public struct Command {
         }
 
         let commandStack = Command.stack // Prevent delayed evaluation.
-        throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
             let optionName = ("•" + name)
             var result: StrictString
             switch localization {
@@ -341,12 +341,12 @@ public struct Command {
         return nil
     }
 
-    private static func helpInstructions(for commandStack: [Command]) -> UserFacingText<InterfaceLocalization> {
+    private static func helpInstructions(for commandStack: [Command]) -> UserFacing<StrictString, InterfaceLocalization> {
         var command = StrictString(commandStack.map({ $0.localizedName() }).joined(separator: " ".scalars))
         command.append(contentsOf: " " + Command.help.localizedName())
         command = command.prepending(contentsOf: "$ ".scalars)
 
-        return UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return StrictString("See also: \(command)")
@@ -379,7 +379,7 @@ public struct Command {
         return result
     }
 
-    internal static func list<L : InputLocalization>(names: UserFacingText<L>) -> Set<StrictString> {
+    internal static func list<L : InputLocalization>(names: UserFacing<StrictString, L>) -> Set<StrictString> {
         var result: Set<StrictString> = []
         for localization in L.cases {
             let name = names.resolved(for: localization)

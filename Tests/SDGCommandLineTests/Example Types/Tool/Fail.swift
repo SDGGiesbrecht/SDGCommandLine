@@ -16,14 +16,14 @@ import SDGCommandLine
 
 enum Fail {
 
-    static let command = Command(name: UserFacingText({ (localization: Language) -> StrictString in
+    static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "fail"
         case .deutsch:
             return "fehlschlagen"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "demonstrates a failure."
@@ -31,7 +31,7 @@ enum Fail {
             return "führt einen Fehlschlag vor."
         }
     }), directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
-        output.print(UserFacingText({ (localization: Language) -> StrictString in
+        output.print(UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:
                 return "Trying..."
@@ -42,7 +42,7 @@ enum Fail {
         throw Fail.error
     })
 
-    static let error = Command.Error(description: UserFacingText({ (localization: Language) -> StrictString in
+    static let error = Command.Error(description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "Not possible."

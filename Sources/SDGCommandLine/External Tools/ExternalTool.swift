@@ -24,7 +24,7 @@ public class _ExternalTool {
 
     // MARK: - Initialization
 
-    internal init(name: UserFacingText<InterfaceLocalization>, webpage: UserFacingText<InterfaceLocalization>, command: StrictString, version: Version, versionCheck: [StrictString]) {
+    internal init(name: UserFacing<StrictString, InterfaceLocalization>, webpage: UserFacing<StrictString, InterfaceLocalization>, command: StrictString, version: Version, versionCheck: [StrictString]) {
         self.name = name
         self.webpage = webpage
         self.command = command
@@ -34,8 +34,8 @@ public class _ExternalTool {
 
     // MARK: - Properties
 
-    private let name: UserFacingText<InterfaceLocalization>
-    private let webpage: UserFacingText<InterfaceLocalization>
+    private let name: UserFacing<StrictString, InterfaceLocalization>
+    private let webpage: UserFacing<StrictString, InterfaceLocalization>
     private let command: StrictString
     private let version: Version
     private let versionCheck: [StrictString]
@@ -63,7 +63,7 @@ public class _ExternalTool {
                 installedVersion == version {
                 return
             } else {
-                output.print(UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+                output.print(UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let name = self.name.resolved(for: localization)
                     let version = self.version.string
                     switch localization {
@@ -74,7 +74,7 @@ public class _ExternalTool {
             }
         } catch {
             // version check failed
-            throw Command.Error(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 let name = self.name.resolved(for: localization)
                 let url = self.webpage.resolved(for: localization).in(Underline.underlined)
                 switch localization {

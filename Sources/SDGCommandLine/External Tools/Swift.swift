@@ -37,12 +37,12 @@ public class _Swift : _ExternalTool {
     // MARK: - Initialization
 
     internal init(version: Version) {
-        super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        super.init(name: UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Swift"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
+        }), webpage: UserFacing<StrictString, InterfaceLocalization>({ localization in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada /* No localized site: */: // [_Exempt from Test Coverage_]
                 return "swift.org"
@@ -96,7 +96,7 @@ public class _Swift : _ExternalTool {
     // MARK: - Usage: Information
 
     private func parseError(packageDescription json: String) -> Command.Error { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-        return Command.Error(description: UserFacingText<InterfaceLocalization>({ (localization) in // [_Exempt from Test Coverage_]
+        return Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in // [_Exempt from Test Coverage_]
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada: // [_Exempt from Test Coverage_]
                 return StrictString("Error loading package description:\n\(json)")

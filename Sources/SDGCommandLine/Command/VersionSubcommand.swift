@@ -16,14 +16,14 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-    private static let versionName = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+    private static let versionName = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
         }
     })
 
-    private static let versionDescription = UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+    private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays the version in use."
@@ -35,7 +35,7 @@ extension Command {
         if let stable = Version.currentToolVersion {
             output.print(stable.string)
         } else {
-            output.print(UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+            output.print(UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Not a stable version."

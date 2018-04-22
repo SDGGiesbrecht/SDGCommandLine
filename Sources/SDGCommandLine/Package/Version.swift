@@ -155,7 +155,7 @@ public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hasha
     ///     - stringLiteral: The string literal.
     public init(stringLiteral: String) {
         guard let result = Version(stringLiteral) else {
-            preconditionFailure(UserFacingText({ (localization: APILocalization) -> StrictString in
+            preconditionFailure(UserFacing<StrictString, APILocalization>({ localization in
                 switch localization {
                 case .englishCanada: // [_Exempt from Test Coverage_]
                     return StrictString("“\(stringLiteral)” is not a version number.")
