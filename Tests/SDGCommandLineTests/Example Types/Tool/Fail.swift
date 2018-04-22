@@ -30,16 +30,24 @@ enum Fail {
         case .deutsch:
             return "führt einen Fehlschlag vor."
         }
-    }), directArguments: [], options: [], execution: { _, _, _  throws -> Void in
+    }), directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
+        output.print(UserFacingText({ (localization: Language) -> StrictString in
+            switch localization {
+            case .english, .unsupported:
+                return "Trying..."
+            case .deutsch:
+                return "Versucht..."
+            }
+        }).resolved())
         throw Fail.error
     })
 
     static let error = Command.Error(description: UserFacingText({ (localization: Language) -> StrictString in
         switch localization {
         case .english, .unsupported:
-            return "I cannot do that."
+            return "Not possible."
         case .deutsch:
-            return "Das kann ich nicht machen."
+            return "Nicht möglich."
         }
     }), exitCode: 1)
 }

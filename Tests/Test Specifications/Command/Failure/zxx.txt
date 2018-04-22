@@ -1,3 +1,4 @@
 $ tool fail •no‐colour
-I cannot do that.
+Trying...
+Not possible.
 1

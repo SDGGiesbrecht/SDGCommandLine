@@ -54,5 +54,10 @@ let package = Package(
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
             ])
+
+        // [_Workaround: Until Workspace can exclude these from test coverage validation. (workspace version 0.6.0)_]
+        /*.target(name: "test‐tool", dependencies: [
+            "SDGCommandLine"
+            ])*/
     ]
 )
