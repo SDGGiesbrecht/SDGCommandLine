@@ -27,12 +27,12 @@ func main() {
 // [_Define Example: ParrotLibrary 🇨🇦EN_]
 import SDGCommandLine
 
-public let parrot = Command(name: UserFacingText<MyLocalizations>({ _ in "parrot" }),
-                            description: UserFacingText<MyLocalizations>({ _ in "behaves like a parrot." }),
+public let parrot = Command(name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
+                            description: UserFacing<StrictString, MyLocalizations>({ _ in "behaves like a parrot." }),
                             subcommands: [speak])
 
-let speak = Command(name: UserFacingText<MyLocalizations>({ _ in "speak" }),
-                    description: UserFacingText<MyLocalizations>({ _ in "speaks." }),
+let speak = Command(name: UserFacing<StrictString, MyLocalizations>({ _ in "speak" }),
+                    description: UserFacing<StrictString, MyLocalizations>({ _ in "speaks." }),
                     directArguments: [],
                     options: [phrase],
                     execution: { (_, options: Options, output: Command.Output) throws -> Void in
@@ -44,8 +44,8 @@ let speak = Command(name: UserFacingText<MyLocalizations>({ _ in "speak" }),
                         }
 })
 
-let phrase = Option<StrictString>(name: UserFacingText<MyLocalizations>({ _ in "phrase" }),
-                                  description: UserFacingText<MyLocalizations>({ _ in "A custom phrase to speak." }),
+let phrase = Option<StrictString>(name: UserFacing<StrictString, MyLocalizations>({ _ in "phrase" }),
+                                  description: UserFacing<StrictString, MyLocalizations>({ _ in "A custom phrase to speak." }),
                                   type: ArgumentType.string)
 
 enum MyLocalizations : String, InputLocalization {

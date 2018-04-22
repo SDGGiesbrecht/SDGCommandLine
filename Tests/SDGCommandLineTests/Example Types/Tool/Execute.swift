@@ -16,14 +16,14 @@ import SDGCommandLine
 
 enum Execute {
 
-    private static let textOption = Option(name: UserFacingText({ (localization: Language) -> StrictString in
+    private static let textOption = Option(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "string"
         case .deutsch:
             return "zeichenkette"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "Text to display."
@@ -32,7 +32,7 @@ enum Execute {
         }
     }), type: ArgumentType.string)
 
-    private static let colourArgumentType = ArgumentType.enumeration(name: UserFacingText({ (localization: Language) -> StrictString in
+    private static let colourArgumentType = ArgumentType.enumeration(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "colour"
@@ -40,7 +40,7 @@ enum Execute {
             return "farbe"
         }
     }), cases: [
-        (Colour.red, UserFacingText({ (localization: Language) -> StrictString in
+        (Colour.red, UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:
                 return "red"
@@ -48,7 +48,7 @@ enum Execute {
                 return "rot"
             }
         })),
-        (Colour.green, UserFacingText({ (localization: Language) -> StrictString in
+        (Colour.green, UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:
                 return "green"
@@ -56,7 +56,7 @@ enum Execute {
                 return "grün"
             }
         })),
-        (Colour.blue, UserFacingText({ (localization: Language) -> StrictString in
+        (Colour.blue, UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:
                 return "blue"
@@ -66,14 +66,14 @@ enum Execute {
         }))
         ])
 
-    private static let colourOption = Option(name: UserFacingText({ (localization: Language) -> StrictString in
+    private static let colourOption = Option(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "colour"
         case .deutsch:
             return "farbe"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "A colour for the text."
@@ -82,22 +82,22 @@ enum Execute {
         }
     }), type: Execute.colourArgumentType)
 
-    internal static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacingText({ (_: Language) -> StrictString in
+    internal static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacing<StrictString, Language>({ _ in
         return "unsatisfiable"
-    }), syntaxDescription: UserFacingText({ (_: Language) -> StrictString in
+    }), syntaxDescription: UserFacing<StrictString, Language>({ _ in
         return "An argument type that always fails to parse."
     }), parse: { (_: StrictString) -> StrictString? in
         return nil
     })
 
-    private static let informalOption = Option(name: UserFacingText({ (localization: Language) -> StrictString in
+    private static let informalOption = Option(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "informal"
         case .deutsch:
             return "informell"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "uses an informal greeting."
@@ -106,20 +106,20 @@ enum Execute {
         }
     }), type: ArgumentType.boolean)
 
-    private static let unsatisfiableOption: Option<StrictString> = Option(name: UserFacingText({ (_: Language) -> StrictString in
+    private static let unsatisfiableOption: Option<StrictString> = Option(name: UserFacing<StrictString, Language>({ _ in
         return "unsatisfiable"
-    }), description: UserFacingText({ (_: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ _ in
         return "An option that always fails to parse."
     }), type: unsatisfiableArgument)
 
-    static let command = Command(name: UserFacingText({ (localization: Language) -> StrictString in
+    static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "execute"
         case .deutsch:
             return "ausführen"
         }
-    }), description: UserFacingText({ (localization: Language) -> StrictString in
+    }), description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "demonstrates successful execution."
@@ -140,9 +140,9 @@ enum Execute {
                     output.print(text)
                 }
             } else {
-                let greeting: UserFacingText<Language>
+                let greeting: UserFacing<StrictString, Language>
                 if options.value(for: Execute.informalOption) {
-                    greeting = UserFacingText({ (localization: Language) -> StrictString in
+                    greeting = UserFacing<StrictString, Language>({ localization in
                         switch localization {
                         case .english, .unsupported:
                             return "Hi!"
@@ -151,7 +151,7 @@ enum Execute {
                         }
                     })
                 } else {
-                    greeting = UserFacingText({ (localization: Language) -> StrictString in
+                    greeting = UserFacing<StrictString, Language>({ localization in
                         switch localization {
                         case .english, .unsupported:
                             return "Hello, world!"
