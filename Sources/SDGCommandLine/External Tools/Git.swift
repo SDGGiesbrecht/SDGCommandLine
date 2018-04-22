@@ -37,12 +37,12 @@ public class _Git : _ExternalTool {
     // MARK: - Initialization
 
     internal init(version: Version) {
-        super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        super.init(name: UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Git"
             }
-        }), webpage: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
+        }), webpage: UserFacing<StrictString, InterfaceLocalization>({ localization in // [_Exempt from Test Coverage_]
             switch localization { // [_Exempt from Test Coverage_]
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada /* No localized site: */: // [_Exempt from Test Coverage_]
                 return "git\u{2D}scm.com"

@@ -34,7 +34,7 @@ public struct Option<Type> : AnyOption {
     ///     - name: The name. (Without the leading option marker.)
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - type: An `ArgumentTypeDefinition` representing the type of the argument.
-    public init<N : InputLocalization, D : Localization>(name: UserFacingText<N>, description: UserFacingText<D>, type: ArgumentTypeDefinition<Type>) {
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, type: ArgumentTypeDefinition<Type>) {
 
         key = name.resolved(for: N.fallbackLocalization)
         names = Command.list(names: name)

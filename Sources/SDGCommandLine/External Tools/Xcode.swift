@@ -22,12 +22,12 @@ public class _Xcode : _ExternalTool {
 
     /// :nodoc: (Shared to Workspace.)
     public init(_version version: Version) {
-        super.init(name: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        super.init(name: UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "Xcode"
             }
-        }), webpage: UserFacingText({ (_: InterfaceLocalization) -> StrictString in // [_Exempt from Test Coverage_]
+        }), webpage: UserFacing<StrictString, InterfaceLocalization>({ _ in // [_Exempt from Test Coverage_]
             return "applestore.com/mac/apple/xcode" // Automatically redirected to localized page by Apple.
         }), command: "xcodebuild", version: version, versionCheck: ["\u{2D}version"])
     }

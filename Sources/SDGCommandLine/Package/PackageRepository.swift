@@ -33,7 +33,7 @@ public struct _PackageRepository {
             try SwiftTool.default.initializePackage(executable: executable, output: output)
             try Git.default.initializeRepository(output: output)
         }
-        try commitChanges(description: UserFacingText({ (localization: InterfaceLocalization) -> StrictString in
+        try commitChanges(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom:
                 return "Initialised."
