@@ -14,7 +14,7 @@
 
 import SDGLocalization
 
-public enum APILocalization : String, Localization {
+public enum APILocalization : String, InputLocalization {
 
     // MARK: - Cases
 
