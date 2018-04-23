@@ -27,6 +27,7 @@ class TestCase : SDGXCTestUtilities.TestCase {
         if ¬TestCase.initialized {
             TestCase.initialized = true
             ProcessInfo.version = Version(1, 2, 3)
+            Command.Output.testMode = true
         }
         super.setUp()
     }

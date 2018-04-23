@@ -17,6 +17,13 @@ extension Command {
     /// The output stream for standard output.
     public class Output {
 
+        // MARK: - Static Properties
+
+        /// Whether or not test mode is engaged.
+        ///
+        /// In test mode, command output is withheld from the terminal to make test results easier to read.
+        public static var testMode: Bool = false
+
         // MARK: - Initialization
 
         internal init() {
@@ -46,7 +53,9 @@ extension Command {
             }
 
             internalOutput.append(contentsOf: mutable)
-            Swift.print(mutable, terminator: "")
+            if ¬Output.testMode {
+                Swift.print(mutable, terminator: "")
+            }
         }
 
         /// Prints a message to the standard output.
