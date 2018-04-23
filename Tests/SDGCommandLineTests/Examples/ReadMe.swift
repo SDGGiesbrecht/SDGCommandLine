@@ -19,7 +19,10 @@ import SDGCommandLine
 
 func main() {
     // [_Define Example: main.swift 🇨🇦EN_]
-    SDGCommandLine.initialize(applicationIdentifier: "tld.Developper.Parrot", version: Version(1, 0, 0), packageURL: URL(string: "https://website.tld/Parrot"))
+    ProcessInfo.applicationIdentifier = "tld.Developper.Parrot"
+    ProcessInfo.version = Version(1, 0, 0)
+    ProcessInfo.packageURL = URL(string: "https://website.tld/Parrot")
+
     parrot.executeAsMain()
     // [_End_]
 }

@@ -54,7 +54,8 @@ let package = Package(
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGCollections", package: "SDGCornerstone"),
-            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .productItem(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
             ])
 
         // [_Workaround: Until Workspace can exclude these from test coverage validation. (workspace version 0.6.0)_]

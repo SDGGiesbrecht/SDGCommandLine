@@ -24,8 +24,6 @@ public struct _Package {
 
     // MARK: - Static Properties
 
-    internal static var current: Package?
-
     private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
     private static let developmentCache = versionsCache.appendingPathComponent("Development")
 

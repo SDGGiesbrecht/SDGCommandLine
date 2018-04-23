@@ -31,7 +31,7 @@ public struct Command {
             Options.noColour,
             Options.language
         ]
-        if Package.current ≠ nil {
+        if ProcessInfo.packageURL ≠ nil {
             options.append(Options.useVersion)
         }
         return options
@@ -139,10 +139,11 @@ public struct Command {
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
         var output = Output()
 
-        if let package = Package.current,
+        if let packageURL = ProcessInfo.packageURL,
             let (version, otherArguments) = try parseVersion(from: arguments),
             version ≠ Build.current {
 
+            let package = Package(url: packageURL)
             try package.execute(version, of: names, with: otherArguments, output: output)
             return output.output
         }
