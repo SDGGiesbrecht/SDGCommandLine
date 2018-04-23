@@ -361,7 +361,11 @@ public struct Command {
         let hyphen: StrictString
         if let interfaceLocalization = SystemLocalization(reasonableMatchFor: localization.code) {
             switch interfaceLocalization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .deutschDeutschland, .françaisFrance, .ελληνικάΕλλάδα:
+            case .普通话中国, .國語中國, .日本語日本国, .한국어한국, .ไทยไทย: // Unspaced orthography, no need for joiner anyway.
+                hyphen = "‐"
+            case .العربية_السعودية, .हिन्दी_भारत: // No native joiner. Use generic hyphen.
+                hyphen = "‐"
+            case .españolEspaña, .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .portuguêsPortugal, .русскийРоссия, .deutschDeutschland, .tiếngViệtViệtNam, .françaisFrance, .türkçeTürkiye, .italianoItalia, .polskiPolska, .українськаУкраїна, .nederlandsNederland, .malaysiaMalaysia, .românăRomânia, .ελληνικάΕλλάδα, .češtinaČesko, .magyarMagyarország, .svenskaSverige, .indonesiaIndonesia, .danskDanmark, .suomiSuomi, .slovenčinaSlovensko, .norskNorge, .hrvatskiHrvatska, .catalàEspanya:
                 hyphen = "‐"
             case .עברית־ישראל:
                 hyphen = "־"

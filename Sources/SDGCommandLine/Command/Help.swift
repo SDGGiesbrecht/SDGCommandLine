@@ -21,14 +21,81 @@ extension Command {
 
     private static let helpName = UserFacing<StrictString, SystemLocalization>({ localization in
         switch localization {
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "help"
-        case .deutschDeutschland:
-            return "hilfe"
+        case .普通话中国:
+            return "帮助"
+        case .國語中國:
+            return "輔助說明"
+
+        case .españolEspaña:
+            return "ayuda"
+        case .portuguêsPortugal, .catalàEspanya:
+            return "ajuda"
         case .françaisFrance:
             return "aide"
+        case .italianoItalia:
+            return "aiuto"
+        case .românăRomânia:
+            return "ajutor"
+
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .nederlandsNederland:
+            return "help"
+        case .日本語日本国:
+            return "ヘルプ"
+        case .deutschDeutschland:
+            return "hilfe"
+        case .svenskaSverige:
+            return "hjälp"
+        case .danskDanmark:
+            return "hjælp"
+        case .norskNorge:
+            return "hjelp"
+
+        case .العربية_السعودية:
+            return "مساعدة"
+
+        case .हिन्दी_भारत:
+            return "सहायता"
+
+        case .русскийРоссия:
+            return "справка"
+
+        case .tiếngViệtViệtNam:
+            return "trợ giúp"
+
+        case .한국어한국:
+            return "도움말"
+
+        case .türkçeTürkiye:
+            return "yardım"
+
+        case .polskiPolska:
+            return "pomoc"
+        case .slovenčinaSlovensko:
+            return "pomocník"
+        case .hrvatskiHrvatska:
+            return "pomoć"
+
+        case .українськаУкраїна:
+            return "довідка"
+
+        case .malaysiaMalaysia, .indonesiaIndonesia:
+            return "bantuan"
+
+        case .ไทยไทย:
+            return "วิธีใช้"
+
+        case .češtinaČesko:
+            return "nápověda"
+
+        case .magyarMagyarország:
+            return "súgó"
+
         case .ελληνικάΕλλάδα:
             return "βοήθεια"
+
+        case .suomiSuomi:
+            return "ohje"
+
         case .עברית־ישראל:
             return "עזרה"
         }
