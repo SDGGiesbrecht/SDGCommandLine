@@ -1,0 +1,4 @@
+$ tool execute •invalid •no‐colour
+Invalid option: •invalid
+See also: $ tool execute ohje
+9223372036854775807

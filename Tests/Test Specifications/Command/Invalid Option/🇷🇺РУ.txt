@@ -1,0 +1,4 @@
+$ tool execute •invalid •no‐colour
+Invalid option: •invalid
+See also: $ tool execute справка
+9223372036854775807

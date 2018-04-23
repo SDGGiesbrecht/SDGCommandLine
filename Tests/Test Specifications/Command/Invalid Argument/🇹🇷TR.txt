@@ -1,0 +1,4 @@
+$ tool reject‐argument ... •no‐colour
+An argument for ‘reject‐argument’ is invalid: ...
+See also: $ tool reject‐argument yardım
+9223372036854775807

@@ -1,0 +1,4 @@
+$ tool execute •string
+The argument is missing for ‘•string’.
+See also: $ tool execute trợ giúp
+9223372036854775807
