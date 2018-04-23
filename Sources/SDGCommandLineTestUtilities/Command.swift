@@ -27,8 +27,10 @@ import SDGPersistenceTestUtilities
 ///     - instance: An instance to get a description from.
 ///     - localizations: The localization set to test.
 ///     - uniqueTestName: A unique name for the test. This is used in the path to the persistent test specifications.
+///     - allowColour: Optional. Set to `true` to include colour in the specification. `false` by default.
+///     - postprocess: Optional. A closure to postprocess the output before comparing against the specification. Use this to keep elements which vary out of the specification, such as by cleaning the user’s home directory out of any printed paths.
 ///     - overwriteSpecificationInsteadOfFailing: Set to `false` for normal behaviour. Set to `true` temporarily to update the specification.
-@_inlineable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
+@_inlineable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, postprocess: (inout String) -> Void = { _ in }, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
     let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
 
     for localization in localizations.cases {
@@ -66,6 +68,8 @@ import SDGPersistenceTestUtilities
                 } catch {
                     unreachable()
                 }
+
+                postprocess(&report)
 
                 SDGPersistenceTestUtilities.compare(report, against: specification, overwriteSpecificationInsteadOfFailing: overwriteSpecificationInsteadOfFailing, file: file, line: line)
             }
