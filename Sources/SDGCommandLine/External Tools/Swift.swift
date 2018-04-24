@@ -18,6 +18,7 @@ import SDGCollections
 
 import SDGCommandLineLocalizations
 
+import SDGSwift
 // [_Warning: Temporary_]
 import SDGSwiftPackageManager
 
@@ -56,9 +57,7 @@ public class _Swift : _ExternalTool {
     // MARK: - Usage: Workflow
 
     private func resolve(output: Command.Output) throws {
-        _ = try execute(with: [
-            "package", "resolve"
-            ], output: output)
+        _ = try SDGSwift.PackageRepository(at: URL(fileURLWithPath: FileManager.default.currentDirectoryPath)).resolve(reportProgress: { output.print($0) })
     }
 
     /// :nodoc: (Shared to Workspace.)
