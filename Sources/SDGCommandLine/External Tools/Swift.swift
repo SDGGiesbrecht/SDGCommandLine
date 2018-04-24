@@ -56,15 +56,8 @@ public class _Swift : _ExternalTool {
     // MARK: - Usage: Workflow
 
     internal func initializePackage(executable: Bool, output: Command.Output) throws {
-        var arguments: [StrictString] = [
-            "package", "init"
-        ]
-        if executable {
-            arguments += [
-                "\u{2D}\u{2D}type", "executable"
-            ]
-        }
-        _ = try execute(with: arguments, output: output)
+        let location = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+        _ = try SDGSwift.PackageRepository.init(initializingAt: location, type: executable ? .executable : .library)
     }
 
     private func resolve(output: Command.Output) throws {
