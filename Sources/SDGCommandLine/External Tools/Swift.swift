@@ -56,10 +56,6 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    private func resolve(output: Command.Output) throws {
-        _ = try SDGSwift.PackageRepository(at: URL(fileURLWithPath: FileManager.default.currentDirectoryPath)).resolve(reportProgress: { output.print($0) })
-    }
-
     /// :nodoc: (Shared to Workspace.)
     public func _generateXcodeProject(output: Command.Output) throws {
         _ = try execute(with: [
