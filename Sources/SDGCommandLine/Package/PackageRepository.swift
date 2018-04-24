@@ -16,6 +16,9 @@ import Foundation
 
 import SDGCommandLineLocalizations
 
+// [_Warning: Temporary_]
+import SDGSwiftPackageManager
+
 internal typealias PackageRepository = _PackageRepository
 /// :nodoc: (Shared to Workspace.)
 public struct _PackageRepository {
@@ -29,8 +32,9 @@ public struct _PackageRepository {
     internal init(initializingAt location: URL, executable: Bool, output: Command.Output) throws {
         self._location = location
 
+        _ = try SDGSwift.PackageRepository(initializingAt: location, type: executable ? .executable : .library)
+
         try FileManager.default.do(in: location) {
-            try SwiftTool.default.initializePackage(executable: executable, output: output)
             try Git.default.initializeRepository(output: output)
         }
         try commitChanges(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
