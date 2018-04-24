@@ -18,6 +18,9 @@ import SDGCollections
 
 import SDGCommandLineLocalizations
 
+// [_Warning: Temporary_]
+import SDGSwiftPackageManager
+
 internal typealias SwiftTool = _Swift
 /// :nodoc: (Shared to Workspace.)
 public class _Swift : _ExternalTool {
@@ -25,9 +28,9 @@ public class _Swift : _ExternalTool {
     // MARK: - Static Properties
 
     #if os(Linux)
-        private static let version = Version(4, 1, 0)
+    private static let version = Version(4, 1, 0)
     #else
-        private static let version = Version(4, 1, 0)
+    private static let version = Version(4, 1, 0)
     #endif
 
     /// :nodoc: (Shared to Workspace.)
@@ -75,7 +78,7 @@ public class _Swift : _ExternalTool {
         _ = try execute(with: [
             "package", "generate\u{2D}xcodeproj",
             "\u{2D}\u{2D}enable\u{2D}code\u{2D}coverage"
-        ], output: output)
+            ], output: output)
     }
 
     /// :nodoc: (Shared to Workspace.)
@@ -107,74 +110,40 @@ public class _Swift : _ExternalTool {
     /// :nodoc: (Shared to Workspace.)
     public func _packageStructure(output: Command.Output) throws -> (name: String, libraryProductTargets: [String], executableProducts: [String], targets: [(name: String, location: URL)]) {
 
-        try resolve(output: output) // If resolution interrupts the dump, the output is invalid JSON.
+        let workingDirectory = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+        let currentRepository = SDGSwift.PackageRepository(at: workingDirectory)
+        let manifest = try currentRepository.manifest()
+        let package = try currentRepository.package()
 
-        let json = try executeInCompatibilityMode(with: [
-            "package", "dump\u{2D}package"
-            ], output: output, silently: true)
-
-        guard let properties = try JSONSerialization.jsonObject(with: json.file, options: []) as? [String: Any] else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-            throw parseError(packageDescription: json)
-        }
-
-        guard let name = properties["name"] as? String else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-            throw parseError(packageDescription: json)
-        }
-
-        guard let products = properties["products"] as? [Any] else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-            throw parseError(packageDescription: json)
-        }
-
-        var libraryProductTargets: [String] = [] // Maintain order from Package.swift
-        var executableProducts: [String] = [] // Maintain order from Package.swift
-        var libraryProductTargetsSet: Set<String> = []
-        for productEntry in products {
-            guard let information = productEntry as? [String: Any],
-                let type = information["product_type"] as? String else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-                    throw parseError(packageDescription: json)
-            }
-
-            if type == "library" {
-                guard let subtargets = information["targets"] as? [String] else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-                    throw parseError(packageDescription: json)
+        var libraryProductTargets: [String] = []
+        var executableProducts: [String] = []
+        for product in package.products {
+            switch product.type {
+            case .library(_):
+                for target in product.targets {
+                    libraryProductTargets.append(target.name)
                 }
-
-                for target in subtargets where target ∉ libraryProductTargetsSet {
-                    libraryProductTargetsSet.insert(target)
-                    libraryProductTargets.append(target)
-                }
-            } else if type == "executable" {
-                guard let name = information["name"] as? String else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-                    throw parseError(packageDescription: json)
-                }
-                executableProducts.append(name)
+            case .executable:
+                executableProducts.append(product.name)
+            case .test:
+                continue
             }
         }
-
-        guard let targets = properties["targets"] as? [Any] else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-            throw parseError(packageDescription: json)
-        }
-        let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-        let targetList = try targets.map { (targetValue) -> (name: String, location: URL) in
-            guard let targetInformation = targetValue as? [String: Any],
-                let name = targetInformation["name"] as? String else { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
-                    throw parseError(packageDescription: json)
-            }
-
-            var path: String
-            if let specific = targetInformation["path"] as? String { // [_Exempt from Test Coverage_]
-                path = specific
+        var targets: [(name: String, location: URL)] = []
+        for target in manifest.package.targets {
+            let path: String
+            if let specified = target.path {
+                path = specified
             } else {
-                if targetInformation["isTest"] as? Bool == true {
-                    path = "Tests/" + name
+                if target.isTest {
+                    path = "Tests/" + target.name
                 } else {
-                    path = "Sources/" + name
+                    path = "Sources/" + target.name
                 }
             }
-
-            return (name, repositoryRoot.appendingPathComponent(path))
+            targets.append((name: target.name, location: currentRepository.location.appendingPathComponent(path)))
         }
 
-        return (name: name, libraryProductTargets: libraryProductTargets, executableProducts: executableProducts, targets: targetList)
+        return (name: package.name, libraryProductTargets: libraryProductTargets, executableProducts: executableProducts, targets: targets)
     }
 }
