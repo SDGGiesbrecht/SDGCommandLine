@@ -15,20 +15,20 @@
 import XCTest
 import Foundation
 
-import SDGTesting // [_Workaround: SDGXCTestUtilities is not public. (SDGCornerstone 0.8.0)_]
+import SDGXCTestUtilities
 
 import SDGCommandLine
 
-class TestCase : XCTestCase {
+class TestCase : SDGXCTestUtilities.TestCase {
 
     static var initialized = false
 
     override func setUp() {
         if ¬TestCase.initialized {
             TestCase.initialized = true
-            SDGCommandLine.initialize(applicationIdentifier: "ca.solideogloria.SDGCommandLine.Tests", version: Version(1, 2, 3), packageURL: nil)
+            ProcessInfo.version = Version(1, 2, 3)
+            Command.Output.testMode = true
         }
-        testAssertionMethod = XCTAssert // [_Workaround: SDGXCTestUtilities is not public. (SDGCornerstone 0.8.0)_]
         super.setUp()
     }
 }

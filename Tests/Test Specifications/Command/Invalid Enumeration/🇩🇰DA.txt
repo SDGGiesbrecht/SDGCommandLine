@@ -1,0 +1,4 @@
+$ tool execute •colour none •no‐colour
+The argument for ‘•colour’ is invalid: none
+See also: $ tool execute hjælp
+9223372036854775807

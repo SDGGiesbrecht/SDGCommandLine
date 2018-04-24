@@ -12,12 +12,14 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 internal enum Build : Equatable {
 
     // MARK: - Static Properties
 
     internal static let current: Build? = {
-        guard let versionNumber = Version.currentToolVersion else {
+        guard let versionNumber = ProcessInfo.version else {
             return nil
         }
         return .version(versionNumber)

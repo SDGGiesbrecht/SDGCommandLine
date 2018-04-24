@@ -1,0 +1,4 @@
+$ tool execute invalid •no‐colour
+Unexpected argument: invalid
+See also: $ tool execute bantuan
+9223372036854775807

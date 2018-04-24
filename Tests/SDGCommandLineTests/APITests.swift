@@ -14,6 +14,9 @@
 
 import XCTest
 
+import SDGControlFlow
+import SDGCollections
+
 import SDGCommandLineTestUtilities
 import SDGCommandLineLocalizations
 
@@ -53,6 +56,11 @@ class APITests : TestCase {
     func testLanguage() {
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["help", "•language", "he"], localizations: Language.self, uniqueTestName: "Language Selection by Code", overwriteSpecificationInsteadOfFailing: false)
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["help", "•language", "🇬🇷ΕΛ"], localizations: Language.self, uniqueTestName: "Language Selection by Icon", overwriteSpecificationInsteadOfFailing: false)
+    }
+
+    func testLocalizations() {
+        XCTAssert(_InterfaceLocalization.codeSet() ⊆ InterfaceLocalization.codeSet(), "Not all interface localizations are supported by SDGCornerstone. Start by localizing it.")
+        XCTAssert(_APILocalization.codeSet() ⊆ APILocalization.codeSet(), "Not all API localizations are supported by SDGCornerstone. Start by localizing it.")
     }
 
     func testNoColour() {
@@ -102,6 +110,7 @@ class APITests : TestCase {
             ("testFormatting", testFormatting),
             ("testHelp", testHelp),
             ("testLanguage", testLanguage),
+            ("testLocalizations", testLocalizations),
             ("testNoColour", testNoColour),
             ("testOption", testOption),
             ("testVersion", testVersion)

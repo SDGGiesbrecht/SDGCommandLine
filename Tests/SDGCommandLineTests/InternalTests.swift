@@ -195,8 +195,8 @@ class InternalTests : TestCase {
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
 
-        let currentPackage = Package.current
-        defer { Package.current = currentPackage }
+        let currentPackage = ProcessInfo.packageURL
+        defer { ProcessInfo.packageURL = currentPackage }
 
         XCTAssertErrorFree {
             var ignored = Command.Output()
@@ -208,7 +208,7 @@ class InternalTests : TestCase {
             try testPackage.commitChanges(description: "Version 1.0.0", output: ignored)
             try testPackage.tag(version: Version(1, 0, 0), output: ignored)
 
-            Package.current = Package(url: testPackage.location)
+            ProcessInfo.packageURL = testPackage.location
 
             // When the cache is empty...
             var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])

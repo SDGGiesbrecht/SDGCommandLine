@@ -20,10 +20,6 @@ import SDGCommandLineLocalizations
 /// A semantic version.
 public struct Version : Comparable, Equatable, ExpressibleByStringLiteral, Hashable {
 
-    // MARK: - Static Properties
-
-    internal static var currentToolVersion: Version?
-
     // MARK: - Initialization
 
     /// Creates a version.

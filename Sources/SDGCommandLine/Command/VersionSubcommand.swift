@@ -12,6 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCommandLineLocalizations
 
 extension Command {
@@ -32,7 +34,7 @@ extension Command {
 
     internal static let version = Command(name: versionName, description: versionDescription, directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
 
-        if let stable = Version.currentToolVersion {
+        if let stable = ProcessInfo.version {
             output.print(stable.string)
         } else {
             output.print(UserFacing<StrictString, InterfaceLocalization>({ localization in
