@@ -23,7 +23,9 @@ let package = Package(
         .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 9, 0))
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 9, 0)),
+        // [_Warning: Do not merge pointing at a branch._]
+        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .branch("master"))
     ],
     targets: [
         // Products
@@ -35,7 +37,8 @@ let package = Package(
             .productItem(name: "SDGCollections", package: "SDGCornerstone"),
             .productItem(name: "SDGText", package: "SDGCornerstone"),
             .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
-            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .productItem(name: "SDGSwift", package: "SDGSwift")
             ]),
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
