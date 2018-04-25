@@ -143,20 +143,6 @@ class InternalTests : TestCase {
     }
 
     func testSwift() {
-        XCTAssertErrorFree({
-            try FileManager.default.do(in: repositoryRoot) {
-                var output = Command.Output()
-
-                let packageStructure = try SwiftTool.default._packageStructure(output: output)
-
-                XCTAssertEqual(packageStructure.name, "SDGCommandLine")
-
-                XCTAssertEqual(packageStructure.libraryProductTargets, ["SDGCommandLine", "SDGCommandLineTestUtilities"])
-
-                XCTAssertEqual(packageStructure.targets[0].name, "SDGCommandLine")
-                XCTAssertEqual(packageStructure.targets[3].name, "SDGCommandLineTests")
-            }
-        })
 
         XCTAssertErrorFree({
             let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
@@ -175,12 +161,6 @@ class InternalTests : TestCase {
                 } catch {
                     // Expected
                 }
-
-                let manifestLocation = location.appendingPathComponent("Package.swift")
-                var manifest = try String(from: manifestLocation)
-                manifest.replaceMatches(for: "dependencies: [\n", with: "products: [.executable(name: \u{22}ExecutablePackageTest\u{22}, targets: [\u{22}ExecutablePackageTest\u{22}])], dependencies: [\n")
-                try manifest.save(to: manifestLocation)
-                XCTAssert(try SwiftTool.default._packageStructure(output: output).executableProducts.count == 1)
             }
         })
     }
