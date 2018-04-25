@@ -14,4 +14,4 @@
 
 @_exported import SDGText // StrictString
 
-@_exported import SDGLocalization // UserFacingText, Localization, InputLocalization, etc.
+@_exported import SDGLocalization // UserFacing<T>, Localization, InputLocalization, etc.
