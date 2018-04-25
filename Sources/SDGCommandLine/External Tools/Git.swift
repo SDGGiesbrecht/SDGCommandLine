@@ -55,16 +55,6 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: Command.Output) throws {
-        output.print("")
-        if let version = tagOrBranch {
-            try SDGSwift.Git.clone(SDGSwift.Package(url: remote), to: local, at: Version(version), shallow: true, reportProgress: { output.print($0) })
-        } else {
-            try SDGSwift.Git.clone(SDGSwift.Package(url: remote), to: local, shallow: true, reportProgress: { output.print($0) })
-        }
-        output.print("")
-    }
-
     /// :nodoc: (Shared to Workspace.)
     public func _differences(excluding excludePatterns: [String], output: Command.Output) throws {
         _ = try execute(with: [

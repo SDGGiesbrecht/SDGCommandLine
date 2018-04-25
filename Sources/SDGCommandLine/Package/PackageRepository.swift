@@ -17,6 +17,7 @@ import Foundation
 import SDGCommandLineLocalizations
 
 // [_Warning: Temporary_]
+import SDGSwift
 import SDGSwiftPackageManager
 
 internal typealias PackageRepository = _PackageRepository
@@ -28,20 +29,6 @@ public struct _PackageRepository {
     private static let releaseProductsDirectory = ".build/release"
 
     // MARK: - Initialization
-
-    internal init(shallowlyCloning package: Package, to location: URL, at version: Build, output: Command.Output) throws {
-        self._location = location
-
-        var tag: String?
-        switch version {
-        case .development:
-            break
-        case .version(let stable):
-            tag = stable.string()
-        }
-
-        try Git.default.shallowlyClone(repository: package.url, to: location, at: tag, output: output)
-    }
 
     /// :nodoc: (Shared to Workspace.)
     public init(_alreadyAt location: URL) {

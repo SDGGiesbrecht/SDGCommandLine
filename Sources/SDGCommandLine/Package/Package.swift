@@ -18,6 +18,9 @@ import SDGLogic
 import SDGCollections
 import SDGExternalProcess
 
+// [_Warning: Temporary._]
+import SDGSwift
+
 internal typealias Package = _Package
 /// :nodoc: (Shared to Workspace.)
 public struct _Package {
@@ -85,8 +88,24 @@ public struct _Package {
 
     private func build(_ version: Build, to destination: URL, output: Command.Output) throws {
         let temporaryCloneLocation = FileManager.default.url(in: .temporary, at: "Package Clones/" + url.lastPathComponent)
-        let temporaryRepository = try PackageRepository(shallowlyCloning: self, to: temporaryCloneLocation, at: version, output: output)
+
+        output.print("")
+
+        let checkout: Version?
+        switch version {
+        case .version(let stable):
+            checkout = stable
+        case .development:
+            checkout = nil
+        }
+        let temporaryRepositoryS = try SDGSwift.PackageRepository(cloning: SDGSwift.Package(url: url), to: temporaryCloneLocation, at: checkout, shallow: true, reportProgress: { output.print($0) })
         defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
+
+        output.print("")
+
+        let temporaryRepository = PackageRepository(_alreadyAt: temporaryRepositoryS.location)
+
+
 
         let products = try temporaryRepository.buildForRelease(output: output)
 
