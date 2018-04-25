@@ -77,7 +77,7 @@ public struct _Package {
     private func cacheDirectory(for version: Build, output: Command.Output) throws -> URL {
         switch version {
         case .version(let specific):
-            return Package.versionsCache.appendingPathComponent(specific.string)
+            return Package.versionsCache.appendingPathComponent(specific.string())
         case .development:
             return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: output)))
         }

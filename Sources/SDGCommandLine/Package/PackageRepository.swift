@@ -37,7 +37,7 @@ public struct _PackageRepository {
         case .development:
             break
         case .version(let stable):
-            tag = stable.string
+            tag = stable.string()
         }
 
         try Git.default.shallowlyClone(repository: package.url, to: location, at: tag, output: output)

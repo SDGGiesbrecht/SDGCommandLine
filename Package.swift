@@ -25,7 +25,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: /* Exported! */ Version(0, 9, 0)),
         // [_Warning: Do not merge pointing at a branch._]
-        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .branch("master"))
+        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .branch(/* Exported! */ "master"))
     ],
     targets: [
         // Products

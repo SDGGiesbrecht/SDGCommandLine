@@ -14,4 +14,8 @@
 
 @_exported import SDGText // StrictString
 
+@_exported import SDGPersistence // ProcessInfo.applicationIdentifier
+
 @_exported import SDGLocalization // UserFacing<T>, Localization, InputLocalization, etc.
+
+@_exported import struct SDGSwift.Version

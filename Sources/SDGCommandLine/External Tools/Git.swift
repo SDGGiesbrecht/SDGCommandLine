@@ -101,7 +101,7 @@ public class _Git : _ExternalTool {
     internal func tag(version: Version, output: Command.Output) throws {
         _ = try execute(with: [
             "tag",
-            StrictString(version.string)
+            StrictString(version.string())
             ], output: output)
     }
 
