@@ -211,19 +211,6 @@ class InternalTests : TestCase {
         }
     }
 
-    func testXcode() {
-        #if !os(Linux)
-            for language in ["en", "el", "he"] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        let output = Command.Output()
-                        _ = try _Xcode(_version: Version(8, 0)).execute(with: ["\u{2D}version"], output: output)
-                    })
-                }
-            }
-        #endif
-    }
-
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
             ("testBuild", testBuild),
@@ -234,8 +221,7 @@ class InternalTests : TestCase {
             ("testSwift", testSwift),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
-            ("testVersionSubcommand", testVersionSubcommand),
-            ("testXcode", testXcode)
+            ("testVersionSubcommand", testVersionSubcommand)
         ]
     }
 }
