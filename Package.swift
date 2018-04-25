@@ -40,7 +40,8 @@ let package = Package(
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .productItem(name: "SDGSwift", package: "SDGSwift"),
             // [_Warning: Temporary._]
-            .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift")
+            .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift"),
+            .productItem(name: "SDGXcode", package: "SDGSwift")
             ]),
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",

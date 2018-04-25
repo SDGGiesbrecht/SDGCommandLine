@@ -176,8 +176,6 @@ class InternalTests : TestCase {
                     // Expected
                 }
 
-                try SwiftTool.default._generateXcodeProject(output: output)
-
                 let manifestLocation = location.appendingPathComponent("Package.swift")
                 var manifest = try String(from: manifestLocation)
                 manifest.replaceMatches(for: "dependencies: [\n", with: "products: [.executable(name: \u{22}ExecutablePackageTest\u{22}, targets: [\u{22}ExecutablePackageTest\u{22}])], dependencies: [\n")

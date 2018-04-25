@@ -21,6 +21,7 @@ import SDGCommandLineLocalizations
 import SDGSwift
 // [_Warning: Temporary_]
 import SDGSwiftPackageManager
+import SDGXcode
 
 internal typealias SwiftTool = _Swift
 /// :nodoc: (Shared to Workspace.)
@@ -55,14 +56,6 @@ public class _Swift : _ExternalTool {
     }
 
     // MARK: - Usage: Workflow
-
-    /// :nodoc: (Shared to Workspace.)
-    public func _generateXcodeProject(output: Command.Output) throws {
-        _ = try execute(with: [
-            "package", "generate\u{2D}xcodeproj",
-            "\u{2D}\u{2D}enable\u{2D}code\u{2D}coverage"
-            ], output: output)
-    }
 
     /// :nodoc: (Shared to Workspace.)
     public func _test(output: Command.Output) throws { // [_Exempt from Test Coverage_] Incorrectly rerouted within xcodebuild.
