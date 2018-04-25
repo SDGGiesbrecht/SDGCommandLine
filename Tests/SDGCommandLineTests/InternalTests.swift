@@ -123,8 +123,7 @@ class InternalTests : TestCase {
             let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
             var output = Command.Output()
 
-            let package = try SDGSwift.PackageRepository(initializingAt: location, type: .executable)
-            let repository = SDGCommandLine.PackageRepository(_alreadyAt: package.location)
+            let repository = try PackageRepository(initializingAt: location, type: .executable)
             try Shell.default.run(command: ["git", "init"], in: repository.location)
 
             defer { try? FileManager.default.removeItem(at: location) }
@@ -161,10 +160,8 @@ class InternalTests : TestCase {
             let location = FileManager.default.url(in: .temporary, at: testToolName)
             defer { FileManager.default.delete(.temporary) }
 
-            let repository = try SDGSwift.PackageRepository(initializingAt: location, type: .executable)
-            try Shell.default.run(command: ["git", "init"], in: repository.location)
-
-            let testPackage = PackageRepository(_alreadyAt: location)
+            let testPackage = try PackageRepository(initializingAt: location, type: .executable)
+            try Shell.default.run(command: ["git", "init"], in: testPackage.location)
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0", output: ignored)

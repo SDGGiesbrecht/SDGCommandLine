@@ -20,28 +20,12 @@ import SDGCommandLineLocalizations
 import SDGSwift
 import SDGSwiftPackageManager
 
-internal typealias PackageRepository = _PackageRepository
 /// :nodoc: (Shared to Workspace.)
-public struct _PackageRepository {
+extension PackageRepository {
 
     // MARK: - Static Properties
 
     private static let releaseProductsDirectory = ".build/release"
-
-    // MARK: - Initialization
-
-    /// :nodoc: (Shared to Workspace.)
-    public init(_alreadyAt location: URL) {
-        self._location = location
-    }
-
-    // MARK: - Properties
-
-    /// :nodoc: (Shared to Workspace.)
-    public let _location: URL
-    internal var location: URL {
-        return _location
-    }
 
     // MARK: - Actions
 
