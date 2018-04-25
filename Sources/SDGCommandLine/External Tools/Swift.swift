@@ -55,16 +55,6 @@ public class _Swift : _ExternalTool {
         }), command: "swift", version: version, versionCheck: ["\u{2D}\u{2D}version"])
     }
 
-    // MARK: - Usage: Workflow
-
-    internal func buildForRelease(output: Command.Output) throws {
-        _ = try execute(with: [
-            "build",
-            "\u{2D}\u{2D}configuration", "release",
-            "\u{2D}\u{2D}static\u{2D}swift\u{2D}stdlib"
-            ], output: output)
-    }
-
     // MARK: - Usage: Information
 
     private func parseError(packageDescription json: String) -> Command.Error { // [_Exempt from Test Coverage_] Reachable only with an incompatible version of Swift.
