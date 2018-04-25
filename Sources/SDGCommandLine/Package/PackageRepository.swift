@@ -30,7 +30,7 @@ extension PackageRepository {
     // MARK: - Actions
 
     internal func buildForRelease(output: Command.Output) throws -> URL {
-        try SDGSwift.PackageRepository(at: location).build(releaseConfiguration: true, staticallyLinkStandardLibrary: true, reportProgress: { output.print($0) })
+        try PackageRepository(at: location).build(releaseConfiguration: true, staticallyLinkStandardLibrary: true, reportProgress: { output.print($0) })
         return location.appendingPathComponent(PackageRepository.releaseProductsDirectory).resolvingSymlinksInPath()
     }
 

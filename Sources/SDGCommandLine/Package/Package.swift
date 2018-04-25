@@ -83,14 +83,7 @@ extension Package {
 
         output.print("")
 
-        let checkout: Version?
-        switch version {
-        case .version(let stable):
-            checkout = stable
-        case .development:
-            checkout = nil
-        }
-        let temporaryRepository = try PackageRepository(cloning: SDGSwift.Package(url: url), to: temporaryCloneLocation, at: checkout, shallow: true, reportProgress: { output.print($0) })
+        let temporaryRepository = try PackageRepository(cloning: Package(url: url), to: temporaryCloneLocation, at: version, shallow: true, reportProgress: { output.print($0) })
         defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
 
         output.print("")
