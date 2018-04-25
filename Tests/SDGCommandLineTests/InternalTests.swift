@@ -15,13 +15,15 @@
 import XCTest
 
 import SDGLogic
+import SDGCollections
 import SDGExternalProcess
 
 // [_Warning: Possibly temporary._]
 import SDGSwiftPackageManager
 
-import SDGCommandLineLocalizations
 @testable import SDGCommandLine
+import SDGCommandLineLocalizations
+import SDGCommandLineTestUtilities
 
 class InternalTests : TestCase {
 
@@ -93,12 +95,12 @@ class InternalTests : TestCase {
     func testSetLanguage() {
 
         XCTAssertErrorFree({
-            try InternalTests.rootCommand.execute(with: ["set‐language", "zxx"])
+            testCommand(InternalTests.rootCommand, with: ["set‐language", "zxx"], localizations: APILocalization.self, uniqueTestName: "Set Language", overwriteSpecificationInsteadOfFailing: false)
         })
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
         XCTAssertErrorFree({
-            try InternalTests.rootCommand.execute(with: ["set‐language"])
+            testCommand(InternalTests.rootCommand, with: ["set‐language"], localizations: APILocalization.self, uniqueTestName: "Set Language to System", overwriteSpecificationInsteadOfFailing: false)
         })
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
@@ -169,28 +171,41 @@ class InternalTests : TestCase {
 
             ProcessInfo.packageURL = testPackage.location
 
-            // When the cache is empty...
-            var output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+            func postprocess(_ output: inout String) {
+                let temporaryDirectory = FileManager.default.url(in: .temporary, at: "File").deletingLastPathComponent()
+                output.replaceMatches(for: temporaryDirectory.absoluteString, with: "[Temporary Directory]/")
+                output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
 
-            // When the cache exists...
-            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
+                let cacheDirectory = FileManager.default.url(in: .cache, at: "File").deletingLastPathComponent()
+                output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
 
-            // When the cache is empty...
-            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
-
-            // When the cache exists...
-            output = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"])
-            XCTAssert(output.hasSuffix("some‐invalid‐argument another‐invalid‐argument\n".scalars))
-
-            LocalizationSetting(orderOfPrecedence: [["en"]]).do {
-                // Looking for version when it does not exist...
-                XCTAssertThrowsError(containing: "some‐invalid‐argument") {
-                    _ = try Tool.createCommand().execute(with: ["some‐invalid‐argument", "another‐invalid‐argument"])
-                }
+                output.scalars.replaceMatches(for: CompositePattern([
+                    LiteralPattern("\n".scalars),
+                    RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy),
+                    LiteralPattern("\trefs/heads/master".scalars)
+                    ]), with: "\n[Commit Hash]\trefs/heads/master".scalars)
+                output.scalars.replaceMatches(for: CompositePattern([
+                    LiteralPattern("Development/".scalars),
+                    RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy),
+                    LiteralPattern("/".scalars)
+                    ]), with: "Development/[Commit Hash]/".scalars)
             }
+
+            // When the cache is empty...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Version (Empty Cache)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
+            var output: StrictString = ""
+
+            // When the cache exists...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Version (Cached)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
+
+            // When the cache is empty...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Development (Empty Cache)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
+
+            // When the cache exists...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Development (Cached)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
+
+            // Looking for version when it does not exist...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Without Version", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
 
             let temporaryCache = FileManager.default.url(in: .temporary, at: UUID().uuidString)
             defer { try? FileManager.default.removeItem(at: temporaryCache) }
@@ -202,8 +217,7 @@ class InternalTests : TestCase {
     func testVersionSubcommand() {
         LocalizationSetting(orderOfPrecedence: [["en"]]).do {
             XCTAssertErrorFree({
-                let output = try InternalTests.rootCommand.execute(with: ["version"])
-                XCTAssertEqual(output, "1.2.3")
+                testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version", overwriteSpecificationInsteadOfFailing: false)
             })
         }
     }

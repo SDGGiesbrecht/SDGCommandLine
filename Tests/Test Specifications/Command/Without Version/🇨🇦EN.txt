@@ -1,0 +1,4 @@
+$ tool some‐invalid‐argument another‐invalid‐argument •no‐colour
+Unexpected argument: some‐invalid‐argument
+See also: $ tool help
+9223372036854775807

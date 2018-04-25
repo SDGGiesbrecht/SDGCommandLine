@@ -1,0 +1,2 @@
+$ tool set‐language zxx •no‐colour
+0

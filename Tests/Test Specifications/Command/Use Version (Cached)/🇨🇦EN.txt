@@ -1,0 +1,6 @@
+$ tool some‐invalid‐argument •use‐version 1.0.0 another‐invalid‐argument •no‐colour
+
+$ "[Cache]/Versions/1.0.0/tool" some‐invalid‐argument another‐invalid‐argument •no‐colour
+some‐invalid‐argument another‐invalid‐argument •no‐colour
+
+0

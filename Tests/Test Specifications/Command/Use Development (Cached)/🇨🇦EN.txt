@@ -1,0 +1,10 @@
+$ tool some‐invalid‐argument •use‐version development another‐invalid‐argument •no‐colour
+
+$ git ls-remote "[Temporary Directory]/tool" master
+[Commit Hash]	refs/heads/master
+
+
+$ "[Cache]/Versions/Development/[Commit Hash]/tool" some‐invalid‐argument another‐invalid‐argument •no‐colour
+some‐invalid‐argument another‐invalid‐argument •no‐colour
+
+0
