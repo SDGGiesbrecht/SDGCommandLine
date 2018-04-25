@@ -52,14 +52,6 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func initializeRepository(output: Command.Output) throws {
-        try _initializeRepository(output: output)
-    }
-    /// :nodoc: (Shared to Workspace.)
-    public func _initializeRepository(output: Command.Output) throws {
-        _ = try execute(with: ["init"], output: output)
-    }
-
     internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: Command.Output) throws {
         var command = [
             "clone",

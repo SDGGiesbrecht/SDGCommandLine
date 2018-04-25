@@ -17,6 +17,9 @@ import XCTest
 import SDGLogic
 import SDGExternalProcess
 
+// [_Warning: Possibly temporary._]
+import SDGSwiftPackageManager
+
 import SDGCommandLineLocalizations
 @testable import SDGCommandLine
 
@@ -87,21 +90,6 @@ class InternalTests : TestCase {
         })
     }
 
-    func testPackageRepository() {
-        for language in ["en", "en\u{2D}US", "de", "fr", "el", "he"] {
-            LocalizationSetting(orderOfPrecedence: [language]).do {
-                XCTAssertErrorFree({
-                    let packageLocation = FileManager.default.url(in: .temporary, at: "Package")
-
-                    var output = Command.Output()
-                    _ = try PackageRepository(initializingAt: packageLocation, executable: true, output: output)
-                    defer { FileManager.default.delete(.temporary) }
-                })
-            }
-        }
-        XCTAssertEqual(PackageRepository(_alreadyAt: repositoryRoot).location, repositoryRoot)
-    }
-
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -132,10 +120,14 @@ class InternalTests : TestCase {
             let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
             var output = Command.Output()
 
-            let repository = try PackageRepository(initializingAt: location, executable: true, output: output)
+            let package = try SDGSwift.PackageRepository(initializingAt: location, type: .executable)
+            let repository = SDGCommandLine.PackageRepository(_alreadyAt: package.location)
+            try Shell.default.run(command: ["git", "init"], in: repository.location)
+
             defer { try? FileManager.default.removeItem(at: location) }
 
             try FileManager.default.do(in: location) {
+                try Git.default.commitChanges(description: "Initialized.", output: output)
 
                 try "...".save(to: location.appendingPathComponent("File.md"))
                 try Git.default._differences(excluding: ["*.md"], output: output)
@@ -163,8 +155,13 @@ class InternalTests : TestCase {
         XCTAssertErrorFree {
             var ignored = Command.Output()
             let testToolName = "tool"
-            let testPackage = try PackageRepository(initializingAt: FileManager.default.url(in: .temporary, at: testToolName), executable: true, output: ignored)
+            let location = FileManager.default.url(in: .temporary, at: testToolName)
             defer { FileManager.default.delete(.temporary) }
+
+            let repository = try SDGSwift.PackageRepository(initializingAt: location, type: .executable)
+            try Shell.default.run(command: ["git", "init"], in: repository.location)
+
+            let testPackage = PackageRepository(_alreadyAt: location)
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0", output: ignored)
@@ -216,7 +213,6 @@ class InternalTests : TestCase {
             ("testBuild", testBuild),
             ("testExternalToolVersions", testExternalToolVersions),
             ("testGit", testGit),
-            ("testPackageRepository", testPackageRepository),
             ("testSetLanguage", testSetLanguage),
             ("testSwift", testSwift),
             ("testVersion", testVersion),

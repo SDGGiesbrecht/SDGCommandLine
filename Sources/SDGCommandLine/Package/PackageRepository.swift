@@ -29,24 +29,6 @@ public struct _PackageRepository {
 
     // MARK: - Initialization
 
-    internal init(initializingAt location: URL, executable: Bool, output: Command.Output) throws {
-        self._location = location
-
-        _ = try SDGSwift.PackageRepository(initializingAt: location, type: executable ? .executable : .library)
-
-        try FileManager.default.do(in: location) {
-            try Git.default.initializeRepository(output: output)
-        }
-        try commitChanges(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
-            switch localization {
-            case .englishUnitedKingdom:
-                return "Initialised."
-            case .englishUnitedStates, .englishCanada:
-                return "Initialized."
-            }
-        }).resolved(), output: output)
-    }
-
     internal init(shallowlyCloning package: Package, to location: URL, at version: Build, output: Command.Output) throws {
         self._location = location
 
