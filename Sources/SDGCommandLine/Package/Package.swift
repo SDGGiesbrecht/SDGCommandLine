@@ -21,9 +21,8 @@ import SDGExternalProcess
 // [_Warning: Temporary._]
 import SDGSwift
 
-internal typealias Package = _Package
 /// :nodoc: (Shared to Workspace.)
-public struct _Package {
+extension Package {
 
     // MARK: - Static Properties
 
@@ -32,17 +31,10 @@ public struct _Package {
 
     // MARK: - Initialization
 
-    internal init(url: URL) {
-        self.init(_url: url)
-    }
     /// :nodoc: (Shared to Workspace.)
     public init(_url: URL) {
-        self.url = _url
+        self.init(url: _url)
     }
-
-    // MARK: - Properties
-
-    internal let url: URL
 
     // MARK: - Usage
 

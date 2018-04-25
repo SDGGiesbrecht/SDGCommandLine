@@ -93,7 +93,7 @@ public class _Git : _ExternalTool {
     // MARK: - Usage: Information
 
     /// :nodoc: (Shared to Workspace.)
-    public func _versions(of package: _Package, output: Command.Output) throws -> Set<Version> {
+    public func _versions(of package: Package, output: Command.Output) throws -> Set<Version> {
         let output = try execute(with: [
             "ls\u{2D}remote",
             "\u{2D}\u{2D}tags",

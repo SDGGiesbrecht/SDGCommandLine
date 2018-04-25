@@ -19,6 +19,7 @@ import SDGCollections
 import SDGExternalProcess
 
 // [_Warning: Possibly temporary._]
+import SDGSwift
 import SDGSwiftPackageManager
 
 @testable import SDGCommandLine
@@ -88,7 +89,7 @@ class InternalTests : TestCase {
         })
         XCTAssertErrorFree({
             let output = Command.Output()
-            XCTAssert(try Git.default._versions(of: Package(_url: URL(string: "https://github.com/realm/SwiftLint")!), output: output).contains(Version(0, 1, 0)), "Failed to detect remote versions.")
+            XCTAssert(try Git.default._versions(of: Package(url: URL(string: "https://github.com/realm/SwiftLint")!), output: output).contains(Version(0, 1, 0)), "Failed to detect remote versions.")
         })
     }
 
