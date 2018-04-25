@@ -42,8 +42,7 @@ class InternalTests : TestCase {
         if shouldTest {
             XCTAssertErrorFree({
                 let tools: [ExternalTool] = [
-                    Git.default,
-                    SwiftTool.default
+                    Git.default
                 ]
                 for tool in tools {
                     let output = Command.Output()
@@ -59,9 +58,6 @@ class InternalTests : TestCase {
                 LocalizationSetting(orderOfPrecedence: [language]).do {
                     XCTAssertErrorFree({
                         var output = Command.Output()
-                        let swift = SwiftTool(version: Version(0, 0, 0))
-                        try swift.checkVersion(output: output)
-                        XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
 
                         output = Command.Output()
                         let git = Git(version: Version(0, 0, 0))
@@ -75,18 +71,6 @@ class InternalTests : TestCase {
                     }
                 }
         }
-
-        XCTAssertErrorFree({
-            let versionOutput = try Shell.default.run(command: ["swift", "\u{2D}\u{2D}version"])
-            guard let systemVersion = Version(firstIn: versionOutput) else {
-                XCTFail("Failed to detect system Swift version.")
-                return
-            }
-
-            let output = Command.Output()
-            let swift = SwiftTool(version: systemVersion)
-            _ = try swift.execute(with: ["\u{2D}\u{2D}version"], output: output)
-        })
     }
 
     func testGit() {
