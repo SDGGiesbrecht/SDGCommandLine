@@ -16,6 +16,9 @@ import Foundation
 
 import SDGExternalProcess
 
+// [_Warning: Temporary._]
+import SDGSwift
+
 import SDGCommandLineLocalizations
 
 internal typealias Git = _Git
@@ -53,21 +56,13 @@ public class _Git : _ExternalTool {
     // MARK: - Usage: Workflow
 
     internal func shallowlyClone(repository remote: URL, to local: URL, at tagOrBranch: String?, output: Command.Output) throws {
-        var command = [
-            "clone",
-            Shell.quote(remote.absoluteString),
-            Shell.quote(local.path)
-            ]
-        if let checkout = tagOrBranch {
-            command += [
-                "\u{2D}\u{2D}branch", checkout
-                ]
+        output.print("")
+        if let version = tagOrBranch {
+            try SDGSwift.Git.clone(SDGSwift.Package(url: remote), to: local, at: Version(version), shallow: true, reportProgress: { output.print($0) })
+        } else {
+            try SDGSwift.Git.clone(SDGSwift.Package(url: remote), to: local, shallow: true, reportProgress: { output.print($0) })
         }
-        command += [
-            "\u{2D}\u{2D}depth", "1",
-            "\u{2D}\u{2D}config", "advice.detachedHead=false"
-        ]
-        _ = try executeInCompatibilityMode(with: command, output: output)
+        output.print("")
     }
 
     /// :nodoc: (Shared to Workspace.)

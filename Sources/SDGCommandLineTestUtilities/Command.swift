@@ -71,6 +71,8 @@ import SDGPersistenceTestUtilities
                     error = thrown.describe()
                     exitCode = thrown.exitCode
                 } catch {
+                    // [_Warning: Temporary._]
+                    print("\(error)")
                     unreachable()
                 }
                 if ¬output.isEmpty {
