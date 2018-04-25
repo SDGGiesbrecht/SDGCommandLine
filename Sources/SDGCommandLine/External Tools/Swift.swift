@@ -57,13 +57,6 @@ public class _Swift : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    /// :nodoc: (Shared to Workspace.)
-    public func _test(output: Command.Output) throws { // [_Exempt from Test Coverage_] Incorrectly rerouted within xcodebuild.
-        _ = try execute(with: [
-            "test"
-            ], output: output)
-    }
-
     internal func buildForRelease(output: Command.Output) throws {
         _ = try execute(with: [
             "build",
