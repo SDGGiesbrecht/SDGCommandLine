@@ -14,6 +14,7 @@
 
 import Foundation
 
+import SDGLogic
 import SDGExternalProcess
 
 // [_Warning: Temporary._]
@@ -54,22 +55,6 @@ public class _Git : _ExternalTool {
     }
 
     // MARK: - Usage: Workflow
-
-    /// :nodoc: (Shared to Workspace.)
-    public func _differences(excluding excludePatterns: [String], output: Command.Output) throws {
-        _ = try execute(with: [
-            "add",
-            ".",
-            "\u{2D}\u{2D}intent\u{2D}to\u{2D}add"
-            ], output: output, silently: true)
-
-        _ = try executeInCompatibilityMode(with: [
-            "diff",
-            "\u{2D}\u{2D}exit\u{2D}code",
-            "\u{2D}\u{2D}",
-            "."
-            ] + excludePatterns.map({ "\u{27}:(exclude)\($0)\u{27}" }), output: output, autoquote: false)
-    }
 
     internal func commitChanges(description: StrictString, output: Command.Output) throws {
         _ = try execute(with: [

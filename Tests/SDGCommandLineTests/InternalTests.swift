@@ -113,32 +113,6 @@ class InternalTests : TestCase {
         }
     }
 
-    func testSwift() {
-
-        XCTAssertErrorFree({
-            let location = FileManager.default.url(in: .temporary, at: "ExecutablePackageTest")
-            var output = Command.Output()
-
-            let repository = try PackageRepository(initializingAt: location, type: .executable)
-            try Shell.default.run(command: ["git", "init"], in: repository.location)
-
-            defer { try? FileManager.default.removeItem(at: location) }
-
-            try FileManager.default.do(in: location) {
-                try Git.default.commitChanges(description: "Initialized.", output: output)
-
-                try "...".save(to: location.appendingPathComponent("File.md"))
-                try Git.default._differences(excluding: ["*.md"], output: output)
-                do {
-                    try Git.default._differences(excluding: [], output: output)
-                    XCTFail("Difference unnoticed.")
-                } catch {
-                    // Expected
-                }
-            }
-        })
-    }
-
     func testVersion() {
         XCTAssertNil(Version(firstIn: "Blah blah blah..."))
     }
@@ -222,7 +196,6 @@ class InternalTests : TestCase {
             ("testExternalToolVersions", testExternalToolVersions),
             ("testGit", testGit),
             ("testSetLanguage", testSetLanguage),
-            ("testSwift", testSwift),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
             ("testVersionSubcommand", testVersionSubcommand)
