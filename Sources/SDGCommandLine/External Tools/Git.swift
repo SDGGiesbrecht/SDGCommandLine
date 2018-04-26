@@ -92,10 +92,6 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Information
 
-    internal func latestCommitIdentifier(in package: Package, output: Command.Output) throws -> StrictString {
-        return StrictString(try package.latestCommitIdentifier())
-    }
-
     /// :nodoc: (Shared to Workspace.)
     public func _ignoredFiles(output: Command.Output) throws -> [URL] {
 

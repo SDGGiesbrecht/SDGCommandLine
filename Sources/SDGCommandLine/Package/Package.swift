@@ -74,7 +74,7 @@ extension Package {
         case .version(let specific):
             return Package.versionsCache.appendingPathComponent(specific.string())
         case .development:
-            return Package.developmentCache.appendingPathComponent(String(try Git.default.latestCommitIdentifier(in: self, output: output)))
+            return Package.developmentCache.appendingPathComponent(try latestCommitIdentifier())
         }
     }
 
