@@ -92,26 +92,6 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Information
 
-    /// :nodoc: (Shared to Workspace.)
-    public func _versions(of package: Package, output: Command.Output) throws -> Set<Version> {
-        let output = try execute(with: [
-            "ls\u{2D}remote",
-            "\u{2D}\u{2D}tags",
-            StrictString(Shell.quote(package.url.absoluteString))
-            ], output: output, silently: true)
-
-        var versions: Set<Version> = []
-        for line in output.lines.map({ $0.line }) {
-            if let tagPrefix = line.firstMatch(for: "refs/tags/".scalars) {
-                let tag = StrictString(line[tagPrefix.range.upperBound...])
-                if let version = Version(String(tag)) {
-                    versions.insert(version)
-                }
-            }
-        }
-        return versions
-    }
-
     internal func latestCommitIdentifier(in package: Package, output: Command.Output) throws -> StrictString {
         return StrictString(try execute(with: [
             "ls\u{2D}remote",
