@@ -93,11 +93,7 @@ public class _Git : _ExternalTool {
     // MARK: - Usage: Information
 
     internal func latestCommitIdentifier(in package: Package, output: Command.Output) throws -> StrictString {
-        return StrictString(try execute(with: [
-            "ls\u{2D}remote",
-            StrictString(Shell.quote(package.url.absoluteString)),
-            "master"
-            ], output: output).truncated(before: "\u{9}".scalars))
+        return StrictString(try package.latestCommitIdentifier())
     }
 
     /// :nodoc: (Shared to Workspace.)

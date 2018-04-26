@@ -1,9 +1,5 @@
 $ tool some‐invalid‐argument •use‐version development another‐invalid‐argument •no‐colour
 
-$ git ls-remote "[Temporary Directory]/tool" master
-[Commit Hash]	refs/heads/master
-
-
 $ git clone [Temporary Directory]/tool [Temporary Directory]/Package Clones/tool --depth 1
 Cloning into '[Temporary Directory]/Package Clones/tool'...
 
