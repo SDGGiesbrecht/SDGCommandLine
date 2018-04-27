@@ -48,7 +48,7 @@ extension Package {
                 break
             }
 
-            try build(version, to: cacheDirectory, output: output)
+            try build(version, to: cacheDirectory, reportProgress: { output.print($0) })
         }
 
         for executable in try FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
@@ -67,36 +67,5 @@ extension Package {
         case .development:
             return Package.developmentCache.appendingPathComponent(try latestCommitIdentifier())
         }
-    }
-
-    private func build(_ version: Build, to destination: URL, output: Command.Output) throws {
-        let temporaryCloneLocation = FileManager.default.url(in: .temporary, at: "Package Clones/" + url.lastPathComponent)
-
-        output.print("")
-
-        let temporaryRepository = try PackageRepository(cloning: Package(url: url), to: temporaryCloneLocation, at: version, shallow: true, reportProgress: { output.print($0) })
-        defer { try? FileManager.default.removeItem(at: temporaryCloneLocation) }
-
-        output.print("")
-
-
-
-        try temporaryRepository.build(reportProgress: { output.print($0) })
-        let products = temporaryRepository.releaseProductsDirectory()
-
-        let intermediateDirectory = FileManager.default.url(in: .temporary, at: UUID().uuidString)
-        defer { try? FileManager.default.removeItem(at: intermediateDirectory) }
-        for component in try FileManager.default.contentsOfDirectory(at: products, includingPropertiesForKeys: nil, options: []) {
-            let filename = component.lastPathComponent
-
-            if filename ≠ "ModuleCache",
-                ¬filename.hasSuffix(".build"),
-                ¬filename.hasSuffix(".swiftdoc"),
-                ¬filename.hasSuffix(".swiftmodule") {
-
-                try FileManager.default.move(component, to: intermediateDirectory.appendingPathComponent(filename))
-            }
-        }
-        try FileManager.default.move(intermediateDirectory, to: destination)
     }
 }
