@@ -30,11 +30,6 @@ class InternalTests : TestCase {
 
     static let rootCommand = Tool.command.withRootBehaviour()
 
-    func testBuild() {
-        XCTAssertEqual(Build.development, Build.development)
-        XCTAssertNotEqual(Build.version(Version(1, 0, 0)), Build.development)
-    }
-
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -57,10 +52,6 @@ class InternalTests : TestCase {
                     })
                 }
         }
-    }
-
-    func testVersion() {
-        XCTAssertNil(Version(firstIn: "Blah blah blah..."))
     }
 
     func testVersionSelection() {
