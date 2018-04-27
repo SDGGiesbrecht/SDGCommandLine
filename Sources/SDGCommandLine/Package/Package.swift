@@ -81,7 +81,8 @@ extension Package {
 
 
 
-        let products = try temporaryRepository.buildForRelease(output: output)
+        try temporaryRepository.build(reportProgress: { output.print($0) })
+        let products = temporaryRepository.releaseProductsDirectory()
 
         let intermediateDirectory = FileManager.default.url(in: .temporary, at: UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: intermediateDirectory) }
