@@ -25,7 +25,6 @@ extension Package {
     // MARK: - Static Properties
 
     private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
-    private static let developmentCache = versionsCache.appendingPathComponent("Development")
 
     // MARK: - Usage
 

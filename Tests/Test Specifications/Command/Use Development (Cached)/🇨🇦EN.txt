@@ -1,6 +1,5 @@
 $ tool some‐invalid‐argument •use‐version development another‐invalid‐argument •no‐colour
 
-$ "[Cache]/Versions/Development/[Commit Hash]/tool" some‐invalid‐argument another‐invalid‐argument •no‐colour
+$ tool some‐invalid‐argument another‐invalid‐argument •no‐colour
 some‐invalid‐argument another‐invalid‐argument •no‐colour
-
 0
