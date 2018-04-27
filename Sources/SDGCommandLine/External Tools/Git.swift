@@ -54,15 +54,6 @@ public class _Git : _ExternalTool {
         }), command: "git", version: version, versionCheck: ["version"])
     }
 
-    // MARK: - Usage: Workflow
-
-    internal func tag(version: Version, output: Command.Output) throws {
-        _ = try execute(with: [
-            "tag",
-            StrictString(version.string())
-            ], output: output)
-    }
-
     // MARK: - Usage: Information
 
     /// :nodoc: (Shared to Workspace.)

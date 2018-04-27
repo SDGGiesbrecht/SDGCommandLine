@@ -33,12 +33,4 @@ extension PackageRepository {
         try PackageRepository(at: location).build(releaseConfiguration: true, staticallyLinkStandardLibrary: true, reportProgress: { output.print($0) })
         return location.appendingPathComponent(PackageRepository.releaseProductsDirectory).resolvingSymlinksInPath()
     }
-
-    // MARK: - Modifications
-
-    internal func tag(version: Version, output: Command.Output) throws {
-        try FileManager.default.do(in: location) {
-            try Git.default.tag(version: version, output: output)
-        }
-    }
 }

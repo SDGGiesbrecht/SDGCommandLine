@@ -135,7 +135,7 @@ class InternalTests : TestCase {
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
             try testPackage.commitChanges(description: "Version 1.0.0")
-            try testPackage.tag(version: Version(1, 0, 0), output: ignored)
+            try testPackage.tag(version: Version(1, 0, 0))
 
             ProcessInfo.packageURL = testPackage.location
 
