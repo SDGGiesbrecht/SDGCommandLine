@@ -98,7 +98,6 @@ class InternalTests : TestCase {
 
             // When the cache is empty...
             testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Version (Empty Cache)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
-            var output: StrictString = ""
 
             // When the cache exists...
             testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Version (Cached)", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
@@ -111,11 +110,6 @@ class InternalTests : TestCase {
 
             // Looking for version when it does not exist...
             testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Without Version", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
-
-            let temporaryCache = FileManager.default.url(in: .temporary, at: UUID().uuidString)
-            defer { try? FileManager.default.removeItem(at: temporaryCache) }
-            let outputStream = Command.Output()
-            try Package(url: testPackage.location)._execute(Version(1, 0, 0), of: [StrictString(testToolName)], with: [], cacheDirectory: temporaryCache, output: outputStream)
         }
     }
 

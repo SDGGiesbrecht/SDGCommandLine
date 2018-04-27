@@ -30,42 +30,6 @@ extension Package {
     // MARK: - Usage
 
     internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: Command.Output) throws {
-        try execute(version, of: executableNames, with: arguments, cacheDirectory: try cacheDirectory(for: version, output: output), output: output)
-    }
-    /// :nodoc: (Shared to Workspace)
-    public func _execute(_ version: Version, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: Command.Output) throws {
-        try execute(Build.version(version), of: executableNames, with: arguments, cacheDirectory: cacheDirectory, output: output)
-    }
-    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], cacheDirectory: URL, output: Command.Output) throws {
-
-        if ¬FileManager.default.fileExists(atPath: cacheDirectory.path) {
-
-            switch version {
-            case .development:
-                // Clean up older builds.
-                try? FileManager.default.removeItem(at: Package.developmentCache)
-            case .version:
-                break
-            }
-
-            try build(version, to: cacheDirectory, reportProgress: { output.print($0) })
-        }
-
-        for executable in try FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil, options: []) where StrictString(executable.lastPathComponent) ∈ executableNames {
-
-            output.print("")
-            try Shell.default.run(command: [Shell.quote(executable.path)] + arguments.map({ String($0) }), reportProgress: { output.print($0) })
-            output.print("")
-            return
-        }
-    }
-
-    private func cacheDirectory(for version: Build, output: Command.Output) throws -> URL {
-        switch version {
-        case .version(let specific):
-            return Package.versionsCache.appendingPathComponent(specific.string())
-        case .development:
-            return Package.developmentCache.appendingPathComponent(try latestCommitIdentifier())
-        }
+        try execute(version, of: executableNames, with: arguments.map({ String($0) }), cacheDirectory: Package.versionsCache, reportProgress: { output.print($0) })
     }
 }
