@@ -23,14 +23,10 @@ import SDGSwiftPackageManager
 /// :nodoc: (Shared to Workspace.)
 extension PackageRepository {
 
-    // MARK: - Static Properties
-
-    private static let releaseProductsDirectory = ".build/release"
-
     // MARK: - Actions
 
     internal func buildForRelease(output: Command.Output) throws -> URL {
-        try PackageRepository(at: location).build(releaseConfiguration: true, staticallyLinkStandardLibrary: true, reportProgress: { output.print($0) })
-        return location.appendingPathComponent(PackageRepository.releaseProductsDirectory).resolvingSymlinksInPath()
+        try build(reportProgress: { output.print($0) })
+        return releaseProductsDirectory()
     }
 }

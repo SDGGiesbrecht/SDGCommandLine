@@ -18,23 +18,14 @@ import SDGLogic
 import SDGCollections
 import SDGExternalProcess
 
-// [_Warning: Temporary._]
 import SDGSwift
 
-/// :nodoc: (Shared to Workspace.)
 extension Package {
 
     // MARK: - Static Properties
 
     private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
     private static let developmentCache = versionsCache.appendingPathComponent("Development")
-
-    // MARK: - Initialization
-
-    /// :nodoc: (Shared to Workspace.)
-    public init(_url: URL) {
-        self.init(url: _url)
-    }
 
     // MARK: - Usage
 

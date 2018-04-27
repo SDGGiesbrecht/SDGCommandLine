@@ -129,9 +129,7 @@ class InternalTests : TestCase {
 
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
-            ("testBuild", testBuild),
             ("testSetLanguage", testSetLanguage),
-            ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
             ("testVersionSubcommand", testVersionSubcommand)
         ]
