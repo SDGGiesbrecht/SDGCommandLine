@@ -56,18 +56,6 @@ public class _Git : _ExternalTool {
 
     // MARK: - Usage: Workflow
 
-    internal func commitChanges(description: StrictString, output: Command.Output) throws {
-        _ = try execute(with: [
-            "add",
-            "."
-            ], output: output)
-
-        _ = try execute(with: [
-            "commit",
-            "\u{2D}\u{2D}m", description
-            ], output: output)
-    }
-
     internal func tag(version: Version, output: Command.Output) throws {
         _ = try execute(with: [
             "tag",

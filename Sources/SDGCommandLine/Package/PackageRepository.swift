@@ -36,12 +36,6 @@ extension PackageRepository {
 
     // MARK: - Modifications
 
-    internal func commitChanges(description: StrictString, output: Command.Output) throws {
-        try FileManager.default.do(in: location) {
-            try Git.default.commitChanges(description: description, output: output)
-        }
-    }
-
     internal func tag(version: Version, output: Command.Output) throws {
         try FileManager.default.do(in: location) {
             try Git.default.tag(version: version, output: output)

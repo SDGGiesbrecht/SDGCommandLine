@@ -134,7 +134,7 @@ class InternalTests : TestCase {
             try Shell.default.run(command: ["git", "init"], in: testPackage.location)
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
-            try testPackage.commitChanges(description: "Version 1.0.0", output: ignored)
+            try testPackage.commitChanges(description: "Version 1.0.0")
             try testPackage.tag(version: Version(1, 0, 0), output: ignored)
 
             ProcessInfo.packageURL = testPackage.location
