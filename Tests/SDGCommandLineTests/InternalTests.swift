@@ -35,50 +35,6 @@ class InternalTests : TestCase {
         XCTAssertNotEqual(Build.version(Version(1, 0, 0)), Build.development)
     }
 
-    func testExternalToolVersions() {
-        var shouldTest = ProcessInfo.processInfo.environment["CONTINUOUS_INTEGRATION"] ≠ nil
-            ∨ ProcessInfo.processInfo.environment["CI"] ≠ nil
-            ∨ ProcessInfo.processInfo.environment["TRAVIS"] ≠ nil
-
-        #if os(macOS)
-            // Xcode version differs from Travis version found first by the Swift Package Manager.
-            shouldTest ∧= ProcessInfo.processInfo.environment["__XCODE_BUILT_PRODUCTS_DIR_PATHS"] ≠ nil
-        #endif
-
-        if shouldTest {
-            XCTAssertErrorFree({
-                let tools: [ExternalTool] = [
-                    Git.default
-                ]
-                for tool in tools {
-                    let output = Command.Output()
-                    try tool.checkVersion(output: output)
-                    XCTAssert(¬output.output.contains(StrictString("").formattedAsWarning().prefix(3)), "\(output.output)")
-                }
-            })
-        }
-
-        for (language, searchTerm) in [
-            "en": "Attempting"
-            ] as [String: StrictString] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        var output = Command.Output()
-
-                        output = Command.Output()
-                        let git = Git(version: Version(0, 0, 0))
-                        try git.checkVersion(output: output)
-                        XCTAssert(output.output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
-                    })
-                    XCTAssertThrowsError(containing: "Nonexistent") {
-                        let output = Command.Output()
-                        let nonexistent = ExternalTool(name: UserFacing<StrictString, InterfaceLocalization>({ _ in return "Nonexistent" }), webpage: UserFacing<StrictString, InterfaceLocalization>({ _ in return "" }), command: "nonexistent", version: Version(0, 0, 0), versionCheck: ["version"])
-                        try nonexistent.checkVersion(output: output)
-                    }
-                }
-        }
-    }
-
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -183,7 +139,6 @@ class InternalTests : TestCase {
     static var allTests: [(String, (InternalTests) -> () throws -> Void)] {
         return [
             ("testBuild", testBuild),
-            ("testExternalToolVersions", testExternalToolVersions),
             ("testSetLanguage", testSetLanguage),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),
