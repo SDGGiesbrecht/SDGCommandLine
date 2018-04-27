@@ -38,10 +38,7 @@ let package = Package(
             .productItem(name: "SDGText", package: "SDGCornerstone"),
             .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
-            .productItem(name: "SDGSwift", package: "SDGSwift"),
-            // [_Warning: Temporary._]
-            .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift"),
-            .productItem(name: "SDGXcode", package: "SDGSwift")
+            .productItem(name: "SDGSwift", package: "SDGSwift")
             ]),
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
@@ -62,7 +59,7 @@ let package = Package(
             .productItem(name: "SDGCollections", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .productItem(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
-            // [_Warning: Possibly temporary._]
+            .productItem(name: "SDGSwift", package: "SDGSwift"),
             .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift")
             ])
 

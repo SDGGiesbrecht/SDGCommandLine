@@ -18,7 +18,6 @@ import SDGLogic
 import SDGCollections
 import SDGExternalProcess
 
-// [_Warning: Possibly temporary._]
 import SDGSwift
 import SDGSwiftPackageManager
 
