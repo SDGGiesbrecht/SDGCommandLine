@@ -79,16 +79,6 @@ class InternalTests : TestCase {
         }
     }
 
-    func testGit() {
-        XCTAssertErrorFree({
-            try FileManager.default.do(in: repositoryRoot) {
-                let output = Command.Output()
-                let ignored = try Git.default._ignoredFiles(output: output)
-                XCTAssert(ignored.contains(where: { $0.lastPathComponent == ".build" }))
-            }
-        })
-    }
-
     func testSetLanguage() {
 
         XCTAssertErrorFree({
@@ -194,7 +184,6 @@ class InternalTests : TestCase {
         return [
             ("testBuild", testBuild),
             ("testExternalToolVersions", testExternalToolVersions),
-            ("testGit", testGit),
             ("testSetLanguage", testSetLanguage),
             ("testVersion", testVersion),
             ("testVersionSelection", testVersionSelection),

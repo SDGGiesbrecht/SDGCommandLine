@@ -53,27 +53,4 @@ public class _Git : _ExternalTool {
             }
         }), command: "git", version: version, versionCheck: ["version"])
     }
-
-    // MARK: - Usage: Information
-
-    /// :nodoc: (Shared to Workspace.)
-    public func _ignoredFiles(output: Command.Output) throws -> [URL] {
-
-        let ignoredSummary = try executeInCompatibilityMode(with: [
-            "status",
-            "\u{2D}\u{2D}ignored"
-            ], output: output, silently: true)
-
-        let repositoryRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-
-        var result: [URL] = []
-        if let headerRange = ignoredSummary.scalars.firstMatch(for: "Ignored files:".scalars)?.range {
-            let remainder = String(ignoredSummary[headerRange.upperBound...])
-            for line in remainder.lines.lazy.dropFirst(3).lazy.map({ $0.line }) where ¬line.isEmpty {
-                let relativePath = String(StrictString(line.dropFirst()))
-                result.append(repositoryRoot.appendingPathComponent(relativePath))
-            }
-        }
-        return result
-    }
 }
