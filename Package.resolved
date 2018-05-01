@@ -14,9 +14,9 @@
         "package": "SDGSwift",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
-          "branch": "master",
-          "revision": "40228dab568c6f65a90e459d9ba9829be9d408e4",
-          "version": null
+          "branch": null,
+          "revision": "d139198513773fe4bdb5acfb30ac54419fbb0c6f",
+          "version": "0.1.0"
         }
       },
       {
