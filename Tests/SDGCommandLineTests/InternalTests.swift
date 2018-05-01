@@ -93,6 +93,11 @@ class InternalTests : TestCase {
                     RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy),
                     LiteralPattern("/".scalars)
                     ]), with: "Development/[Commit Hash]/".scalars)
+                output.scalars.replaceMatches(for: CompositePattern([
+                    LiteralPattern(".build/".scalars),
+                    RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy),
+                    LiteralPattern("/release".scalars)
+                    ]), with: ".build/[Operating System]/release".scalars)
             }
 
             // When the cache is empty...

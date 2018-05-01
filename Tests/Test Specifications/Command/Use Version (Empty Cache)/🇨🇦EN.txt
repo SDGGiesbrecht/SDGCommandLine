@@ -5,7 +5,7 @@ Cloning into '[Temporary Directory]/Package Clones/tool'...
 
 $ swift build --configuration release --static-swift-stdlib
 Compile Swift Module 'tool' (1 sources)
-Linking ./.build/x86_64-apple-macosx10.10/release/tool
+Linking ./.build/[Operating System]/release/tool
 
 $ tool some‐invalid‐argument another‐invalid‐argument •no‐colour
 some‐invalid‐argument another‐invalid‐argument •no‐colour
