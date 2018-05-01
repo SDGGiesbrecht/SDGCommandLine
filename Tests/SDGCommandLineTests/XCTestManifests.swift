@@ -52,7 +52,6 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(APITests.__allTests),
         testCase(InternalTests.__allTests),
         testCase(ReadMeExampleTests.__allTests),
-        testCase(TestCase.__allTests),
     ]
 }
 #endif
