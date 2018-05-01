@@ -101,19 +101,4 @@ class APITests : TestCase {
         XCTAssertNil(Version("1.2.C"))
         XCTAssertNil(Version("1.2.3.D"))
     }
-
-    static var allTests: [(String, (APITests) -> () throws -> Void)] {
-        return [
-            ("testCommand", testCommand),
-            ("testDirectArgument", testDirectArgument),
-            ("testEnumerationOption", testEnumerationOption),
-            ("testFormatting", testFormatting),
-            ("testHelp", testHelp),
-            ("testLanguage", testLanguage),
-            ("testLocalizations", testLocalizations),
-            ("testNoColour", testNoColour),
-            ("testOption", testOption),
-            ("testVersion", testVersion)
-        ]
-    }
 }
