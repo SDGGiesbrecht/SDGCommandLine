@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "SDGSwift",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
+        "state": {
+          "branch": "master",
+          "revision": "9715854a84c5775f27386711d311f620bfb27d92",
+          "version": null
+        }
+      },
+      {
         "package": "SwiftPM",
         "repositoryURL": "https://github.com/apple/swift-package-manager",
         "state": {
