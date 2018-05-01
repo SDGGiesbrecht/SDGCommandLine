@@ -26,7 +26,7 @@ extension APITests {
         ("testLocalizations", testLocalizations),
         ("testNoColour", testNoColour),
         ("testOption", testOption),
-        ("testVersion", testVersion),
+        ("testVersion", testVersion)
     ]
 }
 
@@ -35,23 +35,24 @@ extension InternalTests {
         ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
         ("testSetLanguage", testSetLanguage),
         ("testVersionSelection", testVersionSelection),
-        ("testVersionSubcommand", testVersionSubcommand),
+        ("testVersionSubcommand", testVersionSubcommand)
     ]
 }
 
 extension ReadMeExampleTests {
     static let __allTests = [
         ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
-        ("testParrot", testParrot),
+        ("testParrot", testParrot)
     ]
 }
 
 #if !os(macOS)
+// MARK: - #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(APITests.__allTests),
         testCase(InternalTests.__allTests),
-        testCase(ReadMeExampleTests.__allTests),
+        testCase(ReadMeExampleTests.__allTests)
     ]
 }
 #endif
