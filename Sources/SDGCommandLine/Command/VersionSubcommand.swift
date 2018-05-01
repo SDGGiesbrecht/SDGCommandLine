@@ -35,7 +35,7 @@ extension Command {
     internal static let version = Command(name: versionName, description: versionDescription, directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
 
         if let stable = ProcessInfo.version {
-            output.print(stable.string)
+            output.print(stable.string())
         } else {
             output.print(UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {

@@ -14,6 +14,8 @@
 
 import SDGCollections
 
+import SDGSwift
+
 import SDGCommandLineLocalizations
 
 /// A standard argument type provided by SDGCommandLine.

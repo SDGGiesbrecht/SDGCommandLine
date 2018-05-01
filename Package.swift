@@ -23,7 +23,8 @@ let package = Package(
         .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", from: Version(0, 9, 0))
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .upToNextMinor(from: Version(0, 9, 2))),
+        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .upToNextMinor(from: Version(0, 1, 0)))
     ],
     targets: [
         // Products
@@ -35,7 +36,8 @@ let package = Package(
             .productItem(name: "SDGCollections", package: "SDGCornerstone"),
             .productItem(name: "SDGText", package: "SDGCornerstone"),
             .productItem(name: "SDGLocalization", package: "SDGCornerstone"),
-            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone")
+            .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .productItem(name: "SDGSwift", package: "SDGSwift")
             ]),
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
@@ -55,7 +57,9 @@ let package = Package(
             .productItem(name: "SDGLogic", package: "SDGCornerstone"),
             .productItem(name: "SDGCollections", package: "SDGCornerstone"),
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
-            .productItem(name: "SDGXCTestUtilities", package: "SDGCornerstone")
+            .productItem(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
+            .productItem(name: "SDGSwift", package: "SDGSwift"),
+            .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift")
             ])
 
         // [_Workaround: Until Workspace can exclude these from test coverage validation. (workspace version 0.6.0)_]

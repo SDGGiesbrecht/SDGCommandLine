@@ -12,9 +12,9 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+import SDGSwift
 
-internal enum Build : Equatable {
+extension Build {
 
     // MARK: - Static Properties
 
@@ -24,30 +24,4 @@ internal enum Build : Equatable {
         }
         return .version(versionNumber)
     }()
-
-    // MARK: - Cases
-
-    case version(Version)
-    case development
-
-    // MARK: - Equatable
-
-    internal static func == (lhs: Build, rhs: Build) -> Bool {
-        switch lhs {
-        case .development:
-            switch rhs {
-            case .development:
-                return true
-            case .version:
-                return false
-            }
-        case .version(let lhsVersion):
-            switch rhs {
-            case .development:
-                return false
-            case .version(let rhsVersion):
-                return lhsVersion == rhsVersion
-            }
-        }
-    }
 }

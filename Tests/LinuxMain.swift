@@ -4,7 +4,7 @@
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
- Copyright ©2017–2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -13,12 +13,11 @@
  */
 
 import XCTest
-@testable import SDGCommandLineTests
 
-XCTMain([
-    testCase(APITests.allTests),
+import SDGCommandLineTests
+import SDGXCTestUtilities
 
-    testCase(ReadMeExampleTests.allTests),
+var tests = [XCTestCaseEntry]()
+tests += SDGCommandLineTests.__allTests()
 
-    testCase(InternalTests.allTests)
-])
+XCTMain(tests)
