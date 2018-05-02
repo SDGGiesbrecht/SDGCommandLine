@@ -24,7 +24,7 @@ import SDGSwift
 import SDGCommandLineLocalizations
 
 /// A command.
-public struct Command {
+public struct Command : TextualPlaygroundDisplay {
 
     // MARK: - Static Properties
 
@@ -122,7 +122,7 @@ public struct Command {
             try self.withRootBehaviour().execute(with: arguments)
             exitCode = Error.successCode
         } catch let error as Command.Error { // [_Exempt from Test Coverage_]
-            FileHandle.standardError.write((error.describe().formattedAsError() + "\n").file)
+            FileHandle.standardError.write((error.presentableDescription().formattedAsError() + "\n").file)
             exitCode = error.exitCode
         } catch { // [_Exempt from Test Coverage_]
             unreachable()
@@ -394,5 +394,13 @@ public struct Command {
             result.insert(Command.normalizeToAscii(name))
         }
         return result
+    }
+
+    // MARK: - CustomStringConvertible
+
+    // [_Inherit Documentation: SDGCornerstone.CustomStringConvertible.description_]
+    /// A textual representation of the instance.
+    public var description: String {
+        return String(localizedName())
     }
 }

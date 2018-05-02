@@ -12,8 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGControlFlow
+
 /// A type‐erased option.
-public protocol AnyOption {
+public protocol AnyOption : TextualPlaygroundDisplay {
 
     /// :nodoc:
     var _uniqueKey: StrictString { get }
@@ -51,5 +53,13 @@ extension AnyOption {
 
     internal func type() -> AnyArgumentTypeDefinition {
         return _type()
+    }
+
+    // MARK: - CustomStringConvertible
+
+    // [_Inherit Documentation: SDGCornerstone.CustomStringConvertible.description_]
+    /// A textual representation of the instance.
+    public var description: String {
+        return String(localizedName())
     }
 }

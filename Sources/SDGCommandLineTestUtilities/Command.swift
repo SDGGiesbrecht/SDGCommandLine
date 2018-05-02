@@ -68,7 +68,7 @@ import SDGPersistenceTestUtilities
                     if let captured = thrown.output {
                         output = captured
                     }
-                    error = thrown.describe()
+                    error = thrown.presentableDescription()
                     exitCode = thrown.exitCode
                 } catch {
                     unreachable()

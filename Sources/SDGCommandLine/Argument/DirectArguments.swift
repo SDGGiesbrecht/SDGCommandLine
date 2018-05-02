@@ -12,12 +12,13 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGControlFlow
 import SDGCollections
 
 /// Parsed direct (ordered) arguments.
 ///
 /// - SeeAlso: `Options`
-public struct DirectArguments {
+public struct DirectArguments: TransparentWrapper {
 
     // MARK: - Initialization
 
@@ -41,5 +42,13 @@ public struct DirectArguments {
             return nil
         }
         return arguments[index] as? T
+    }
+
+    // MARK: - TransparentWrapper
+
+    // [_Inherit Documentation: SDGCornerstone.TransparentWrapper.wrapped_]
+    /// The wrapped instance.
+    public var wrappedInstance: Any {
+        return arguments
     }
 }
