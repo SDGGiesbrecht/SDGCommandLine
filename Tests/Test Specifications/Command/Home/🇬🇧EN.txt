@@ -1,0 +1,3 @@
+$ tool execute •path ~ •no‐colour
+Hello, world!
+0

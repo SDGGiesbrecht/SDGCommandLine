@@ -1,0 +1,4 @@
+$ tool execute •iterations 2 •no‐colour
+Hello, world!
+Hello, world!
+0

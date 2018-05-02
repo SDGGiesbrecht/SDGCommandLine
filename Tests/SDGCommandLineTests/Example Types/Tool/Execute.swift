@@ -82,6 +82,22 @@ enum Execute {
         }
     }), type: Execute.colourArgumentType)
 
+    private static let iterationsOption = Option(name: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+            return "iterations"
+        case .deutsch:
+            return "wiederholungen"
+        }
+    }), description: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+            return "The number of iterations."
+        case .deutsch:
+            return "Die Anzahl der Wiederholungen."
+        }
+    }), type: ArgumentType.integer(in: 1 ... 5))
+
     internal static let unsatisfiableArgument: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(name: UserFacing<StrictString, Language>({ _ in
         return "unsatisfiable"
     }), syntaxDescription: UserFacing<StrictString, Language>({ _ in
@@ -112,6 +128,12 @@ enum Execute {
         return "An option that always fails to parse."
     }), type: unsatisfiableArgument)
 
+    private static let pathOption: Option<URL> = Option(name: UserFacing<StrictString, Language>({ _ in
+        return "path"
+    }), description: UserFacing<StrictString, Language>({ _ in
+        return "A directory to run in."
+    }), type: ArgumentType.path)
+
     static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
@@ -128,42 +150,50 @@ enum Execute {
         }
     }), directArguments: [], options: [
         Execute.textOption,
+        Execute.iterationsOption,
         Execute.unsatisfiableOption,
         Execute.informalOption,
-        Execute.colourOption
+        Execute.colourOption,
+        Execute.pathOption
         ], execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-            if let text = options.value(for: Execute.textOption) {
-                if let colour = options.value(for: Execute.colourOption) {
-                    output.print(text.in(colour))
-                } else {
-                    output.print(text)
-                }
-            } else {
-                let greeting: UserFacing<StrictString, Language>
-                if options.value(for: Execute.informalOption) {
-                    greeting = UserFacing<StrictString, Language>({ localization in
-                        switch localization {
-                        case .english, .unsupported:
-                            return "Hi!"
-                        case .deutsch:
-                            return "Tag!"
+            try FileManager.default.do(in: options.value(for: Execute.pathOption) ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)) {
+
+                for _ in 1 ... (options.value(for: Execute.iterationsOption) ?? 1) {
+
+                    if let text = options.value(for: Execute.textOption) {
+                        if let colour = options.value(for: Execute.colourOption) {
+                            output.print(text.in(colour))
+                        } else {
+                            output.print(text)
                         }
-                    })
-                } else {
-                    greeting = UserFacing<StrictString, Language>({ localization in
-                        switch localization {
-                        case .english, .unsupported:
-                            return "Hello, world!"
-                        case .deutsch:
-                            return "Guten Tag, Welt!"
+                    } else {
+                        let greeting: UserFacing<StrictString, Language>
+                        if options.value(for: Execute.informalOption) {
+                            greeting = UserFacing<StrictString, Language>({ localization in
+                                switch localization {
+                                case .english, .unsupported:
+                                    return "Hi!"
+                                case .deutsch:
+                                    return "Tag!"
+                                }
+                            })
+                        } else {
+                            greeting = UserFacing<StrictString, Language>({ localization in
+                                switch localization {
+                                case .english, .unsupported:
+                                    return "Hello, world!"
+                                case .deutsch:
+                                    return "Guten Tag, Welt!"
+                                }
+                            })
                         }
-                    })
-                }
-                if let colour = options.value(for: Execute.colourOption) {
-                    output.print(greeting.resolved().in(colour))
-                } else {
-                    output.print(greeting.resolved())
+                        if let colour = options.value(for: Execute.colourOption) {
+                            output.print(greeting.resolved().in(colour))
+                        } else {
+                            output.print(greeting.resolved())
+                        }
+                    }
                 }
             }
     })

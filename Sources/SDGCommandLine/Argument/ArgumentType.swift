@@ -120,7 +120,7 @@ public enum ArgumentType {
         })
     }
 
-    private static func integerName(range: ClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+    private static func integerName(range: CountableClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
@@ -129,7 +129,7 @@ public enum ArgumentType {
         })
     }
 
-    private static func integerDescription(range: ClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+    private static func integerDescription(range: CountableClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
@@ -138,9 +138,9 @@ public enum ArgumentType {
         })
     }
 
-    private static var cache: [ClosedRange<Int>: ArgumentTypeDefinition<Int>] = [:]
+    private static var cache: [CountableClosedRange<Int>: ArgumentTypeDefinition<Int>] = [:]
     /// An argument type representing an integer in a specific range.
-    public static func integer(in range: ClosedRange<Int>) -> ArgumentTypeDefinition<Int> {
+    public static func integer(in range: CountableClosedRange<Int>) -> ArgumentTypeDefinition<Int> {
         return cached(in: &cache[range]) {
             return ArgumentTypeDefinition(name: integerName(range: range), syntaxDescription: integerDescription(range: range), parse: { (argument: StrictString) -> Int? in
 
@@ -175,6 +175,8 @@ public enum ArgumentType {
 
         if argument.hasPrefix("/") {
             return URL(fileURLWithPath: String(argument))
+        } else if argument == "~" {
+            return URL(fileURLWithPath: NSHomeDirectory())
         } else if argument.hasPrefix("~/") {
             return URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(String(StrictString(argument.dropFirst(2))))
         } else {

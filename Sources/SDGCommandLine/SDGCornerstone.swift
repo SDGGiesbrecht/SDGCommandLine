@@ -14,7 +14,7 @@
 
 // [_Workaround: This belongs in SDGCornerstone. (SDGCornerstone 0.9.2)_]
 
-extension ClosedRange : Hashable where Bound : Hashable {
+extension CountableClosedRange : Hashable where Bound : Hashable {
 
     /// :nodoc:
     public var hashValue: Int {
