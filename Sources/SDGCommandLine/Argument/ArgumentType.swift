@@ -14,6 +14,7 @@
 
 import Foundation
 
+import SDGControlFlow
 import SDGCollections
 
 import SDGSwift
@@ -117,6 +118,40 @@ public enum ArgumentType {
         return ArgumentTypeDefinition(name: name, syntaxDescription: enumerationSyntax(labels: syntaxLabels), parse: { (argument: StrictString) -> T? in
             return entries[argument]
         })
+    }
+
+    private static func integerName(range: ClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+        return UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("\(range.lowerBound.inDigits())–\(range.upperBound.inDigits())")
+            }
+        })
+    }
+
+    private static func integerDescription(range: ClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+        return UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("An integer between \(range.lowerBound.inDigits()) and \(range.upperBound.inDigits()) inclusive.")
+            }
+        })
+    }
+
+    private static var cache: [ClosedRange<Int>: ArgumentTypeDefinition<Int>] = [:]
+    /// An argument type representing an integer in a specific range.
+    public static func integer(in range: ClosedRange<Int>) -> ArgumentTypeDefinition<Int> {
+        return cached(in: &cache[range]) {
+            return ArgumentTypeDefinition(name: integerName(range: range), syntaxDescription: integerDescription(range: range), parse: { (argument: StrictString) -> Int? in
+
+                if let integer = try? Int(possibleDecimal: argument),
+                    integer ∈ range {
+                    return integer
+                } else {
+                    return nil
+                }
+            })
+        }
     }
 
     private static let pathName = UserFacing<StrictString, InterfaceLocalization>({ localization in
