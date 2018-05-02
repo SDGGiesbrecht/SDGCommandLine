@@ -107,7 +107,8 @@ public struct Command : TextualPlaygroundDisplay {
         var copy = self
         copy.subcommands.append(contentsOf: [
             Command.version,
-            Command.setLanguage
+            Command.setLanguage,
+            Command.emptyCache
             ])
         return copy
     }
