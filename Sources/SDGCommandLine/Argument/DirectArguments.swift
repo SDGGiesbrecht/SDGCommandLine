@@ -18,7 +18,7 @@ import SDGCollections
 /// Parsed direct (ordered) arguments.
 ///
 /// - SeeAlso: `Options`
-public struct DirectArguments: TransparentWrapper {
+public struct DirectArguments : TransparentWrapper {
 
     // MARK: - Initialization
 
