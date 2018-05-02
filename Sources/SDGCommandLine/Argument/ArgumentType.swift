@@ -12,6 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCollections
 
 import SDGSwift
@@ -116,6 +118,34 @@ public enum ArgumentType {
             return entries[argument]
         })
     }
+
+    private static let pathName = UserFacing<StrictString, InterfaceLocalization>({ localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "path"
+        }
+    })
+
+    private static let pathDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
+        switch localization {
+        case .englishUnitedKingdom:
+            return "A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+        case .englishUnitedStates, .englishCanada:
+            return "A file system path. The form “/...” indicates an absolute path. The form “~/...” indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+        }
+    })
+
+    /// An argument type representing a file system path.
+    public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(name: pathName, syntaxDescription: pathDescription, parse: { (argument: StrictString) -> URL? in
+
+        if argument.hasPrefix("/") {
+            return URL(fileURLWithPath: String(argument))
+        } else if argument.hasPrefix("~/") {
+            return URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(String(StrictString(argument.dropFirst(2))))
+        } else {
+            return URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(String(argument))
+        }
+    })
 
     private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
