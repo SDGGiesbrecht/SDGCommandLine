@@ -178,7 +178,13 @@ public enum ArgumentType {
         } else if argument == "~" {
             return URL(fileURLWithPath: NSHomeDirectory())
         } else if argument.hasPrefix("~/") {
-            return URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(String(StrictString(argument.dropFirst(2))))
+            let home = URL(fileURLWithPath: NSHomeDirectory())
+            let dropped = String(StrictString(argument.dropFirst(2)))
+            if dropped.isEmpty {
+                return home
+            } else {
+                return home.appendingPathComponent(dropped)
+            }
         } else {
             return URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(String(argument))
         }
