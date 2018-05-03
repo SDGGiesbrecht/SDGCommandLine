@@ -30,7 +30,11 @@ class InternalTests : TestCase {
     static let rootCommand = Tool.command.withRootBehaviour()
 
     func testExportInterface() {
-        SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", overwriteSpecificationInsteadOfFailing: false)
+        func postprocess(_ output: inout String) {
+            // macOS & Linux have different JSON line spacing.
+            output.replaceMatches(for: "\n\n", with: "\n")
+        }
+        SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: true)
     }
 
     func testSetLanguage() {

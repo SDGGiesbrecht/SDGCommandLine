@@ -1,7 +1,6 @@
 $ tool export‐interface •no‐colour
 {
   "arguments" : [
-
   ],
   "description" : "serves as an example tool.",
   "identifier" : "tool",
@@ -31,7 +30,6 @@ $ tool export‐interface •no‐colour
   "subcommands" : [
     {
       "arguments" : [
-
       ],
       "description" : "demonstrates successful execution.",
       "identifier" : "execute",
@@ -121,7 +119,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -149,14 +146,12 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
     },
     {
       "arguments" : [
-
       ],
       "description" : "demonstrates a failure.",
       "identifier" : "fail",
@@ -186,7 +181,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -214,14 +208,12 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
     },
     {
       "arguments" : [
-
       ],
       "description" : "demonstrates text formatting.",
       "identifier" : "demonstrate‐text‐formatting",
@@ -251,7 +243,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -279,7 +270,6 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
@@ -320,7 +310,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -348,14 +337,12 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
     },
     {
       "arguments" : [
-
       ],
       "description" : "displays usage information.",
       "identifier" : "עזרה",
@@ -383,12 +370,10 @@ $ tool export‐interface •no‐colour
         }
       ],
       "subcommands" : [
-
       ]
     },
     {
       "arguments" : [
-
       ],
       "description" : "displays the version in use.",
       "identifier" : "version",
@@ -418,7 +403,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -446,7 +430,6 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
@@ -487,7 +470,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -515,14 +497,12 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
     },
     {
       "arguments" : [
-
       ],
       "description" : "removes any cached data.",
       "identifier" : "empty‐cache",
@@ -552,7 +532,6 @@ $ tool export‐interface •no‐colour
       "subcommands" : [
         {
           "arguments" : [
-
           ],
           "description" : "displays usage information.",
           "identifier" : "עזרה",
@@ -580,7 +559,6 @@ $ tool export‐interface •no‐colour
             }
           ],
           "subcommands" : [
-
           ]
         }
       ]
