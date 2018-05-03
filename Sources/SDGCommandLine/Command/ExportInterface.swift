@@ -12,6 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCommandLineLocalizations
 
 extension Command {
@@ -23,6 +25,16 @@ extension Command {
     })
 
     internal static let exportInterface = Command(name: exportInterfaceName, description: exportInterfaceDescription, directArguments: [], options: [], hidden: true, execution: { (_, _, output: Command.Output) throws -> Void in
-        print("Exporting...") // [_Warning: Not yet implemented._]
+
+        let stack = Command.stack.dropLast() // Ignoring export‐interface.
+        let command = stack.last!
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting.insert(.prettyPrinted)
+        if #available(OSX 10.13, *) { // [_Exempt from Test Coverage_]
+            encoder.outputFormatting.insert(.sortedKeys)
+        }
+        let data = try encoder.encode(command)
+        output.print(try String(file: data, origin: nil))
     })
 }

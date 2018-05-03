@@ -138,7 +138,7 @@ extension Command {
             }
         }
 
-        let subcommands = command.subcommands.filter { ¬$0.hidden }
+        let subcommands = command.subcommands.filter { ¬$0.isHidden }
         if ¬subcommands.isEmpty {
 
             printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
@@ -153,7 +153,7 @@ extension Command {
 
             let formatOption = { (option: AnyOption) -> StrictString in
                 var result = ("•" + option.localizedName()).formattedAsOption()
-                if option.type().identifier() ≠ ArgumentType.booleanKey {
+                if option.type().identifier() ≠ ArgumentType.booleanIdentifier {
                     result += " " + formatType(option.type().localizedName())
                 }
                 return result
@@ -169,7 +169,7 @@ extension Command {
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
             for type in command.directArguments + command.options.map({ $0.type() }) {
                 let key = type.identifier()
-                if key ≠ ArgumentType.booleanKey {
+                if key ≠ ArgumentType.booleanIdentifier {
                     argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
                 }
             }

@@ -24,7 +24,7 @@ import SDGSwift
 import SDGCommandLineLocalizations
 
 /// A command.
-public struct Command : TextualPlaygroundDisplay {
+public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Static Properties
 
@@ -83,7 +83,8 @@ public struct Command : TextualPlaygroundDisplay {
         localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
-        self.hidden = hidden
+        self.isHidden = hidden
+        self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
 
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) } // [_Exempt from Test Coverage_] False result in Xcode 9.3.
         self.subcommands = actualSubcommands
@@ -99,7 +100,8 @@ public struct Command : TextualPlaygroundDisplay {
     /// Returns the localized name of the command.
     public let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
-    internal let hidden: Bool
+    internal let isHidden: Bool
+    internal let identifier: StrictString
 
     private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void
     internal var subcommands: [Command]
@@ -278,7 +280,7 @@ public struct Command : TextualPlaygroundDisplay {
 
         for option in options where option.matches(name: name) {
 
-            if option.type().identifier() == ArgumentType.booleanKey {
+            if option.type().identifier() == ArgumentType.booleanIdentifier {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
                 return true
@@ -411,5 +413,31 @@ public struct Command : TextualPlaygroundDisplay {
     /// A textual representation of the instance.
     public var description: String {
         return String(localizedName())
+    }
+
+    // MARK: - Encodable
+
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case name
+        case description
+        case subcommands
+        case arguments
+        case options
+    }
+
+    // [_Inherit Documentation: SDGCornerstone.Encodable.encode(to:)_]
+    /// Encodes this value into the given encoder.
+    ///
+    /// - Parameters:
+    ///     - encoder: The encoder to write data to.
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(localizedName(), forKey: .name)
+        try container.encode(localizedDescription(), forKey: .description)
+        try container.encode(subcommands.filter({ ¬$0.isHidden }), forKey: .subcommands)
+        try container.encode(directArguments.map({ $0.interface() }), forKey: .arguments)
+        try container.encode(options.filter({ ¬$0.isHidden }).map({ $0.interface() }), forKey: .options)
     }
 }

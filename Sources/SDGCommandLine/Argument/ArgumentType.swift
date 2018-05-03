@@ -33,9 +33,9 @@ public enum ArgumentType {
         unreachable()
     })
 
-    internal static let booleanKey: StrictString = "Boolean"
+    internal static let booleanIdentifier: StrictString = "Boolean"
     /// A Boolean flag.
-    public static let boolean: ArgumentTypeDefinition<Bool> = ArgumentTypeDefinition(name: keyOnly(ArgumentType.booleanKey), syntaxDescription: unused, parse: { (_) -> Bool? in
+    public static let boolean: ArgumentTypeDefinition<Bool> = ArgumentTypeDefinition(name: keyOnly(ArgumentType.booleanIdentifier), syntaxDescription: unused, parse: { (_) -> Bool? in
         unreachable()
     })
 
