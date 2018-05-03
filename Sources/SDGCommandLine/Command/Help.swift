@@ -138,14 +138,15 @@ extension Command {
             }
         }
 
-        if ¬command.subcommands.isEmpty {
+        let subcommands = command.subcommands.filter { ¬$0.hidden }
+        if ¬subcommands.isEmpty {
 
             printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
                 }
-            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
+            }), entries: subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
 
         if ¬command.options.isEmpty {
