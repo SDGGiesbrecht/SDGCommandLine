@@ -31,7 +31,7 @@ class InternalTests : TestCase {
 
     func testExportInterface() {
         func postprocess(_ output: inout String) {
-            // macOS & Linux have different JSON line spacing.
+            // macOS & Linux have different JSON whitespace.
             output.scalars.replaceMatches(for: CompositePattern([
                     LiteralPattern("\n".scalars),
                     RepetitionPattern(" ".scalars),
