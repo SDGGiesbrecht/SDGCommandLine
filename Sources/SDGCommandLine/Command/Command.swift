@@ -417,7 +417,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Encodable
 
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys : String, CodingKey {
         case identifier
         case name
         case description

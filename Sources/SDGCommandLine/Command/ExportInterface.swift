@@ -20,7 +20,7 @@ extension Command {
 
     private static let exportInterfaceName = UserFacing<StrictString, InterfaceLocalization>({ _ in return "export‐interface" })
 
-    private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
+    private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({ _ in
         "exports the interface in a machine readable format."
     })
 
