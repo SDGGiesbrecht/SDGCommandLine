@@ -32,9 +32,13 @@ class InternalTests : TestCase {
     func testExportInterface() {
         func postprocess(_ output: inout String) {
             // macOS & Linux have different JSON line spacing.
-            output.replaceMatches(for: "\n\n", with: "\n")
+            output.scalars.replaceMatches(for: CompositePattern([
+                    LiteralPattern("\n".scalars),
+                    RepetitionPattern(" ".scalars),
+                    LiteralPattern("\n".scalars)
+                    ]), with: "\n\n".scalars)
         }
-        SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: true)
+        SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testSetLanguage() {
