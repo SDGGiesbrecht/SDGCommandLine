@@ -29,6 +29,10 @@ class InternalTests : TestCase {
 
     static let rootCommand = Tool.command.withRootBehaviour()
 
+    func testExportInterface() {
+        SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", overwriteSpecificationInsteadOfFailing: false)
+    }
+
     func testSetLanguage() {
 
         XCTAssertErrorFree({

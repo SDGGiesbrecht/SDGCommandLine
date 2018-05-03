@@ -1,0 +1,590 @@
+$ tool export‐interface •no‐colour
+{
+  "arguments" : [
+
+  ],
+  "description" : "serves as an example tool.",
+  "identifier" : "tool",
+  "name" : "tool",
+  "options" : [
+    {
+      "description" : "Removes colour from the output.",
+      "identifier" : "no‐colour",
+      "name" : "no‐colour",
+      "type" : {
+        "description" : "",
+        "identifier" : "Boolean",
+        "name" : "Boolean"
+      }
+    },
+    {
+      "description" : "A language to use instead of the one specified in preferences.",
+      "identifier" : "language",
+      "name" : "language",
+      "type" : {
+        "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+        "identifier" : "language preference",
+        "name" : "language preference"
+      }
+    }
+  ],
+  "subcommands" : [
+    {
+      "arguments" : [
+
+      ],
+      "description" : "demonstrates successful execution.",
+      "identifier" : "execute",
+      "name" : "execute",
+      "options" : [
+        {
+          "description" : "Text to display.",
+          "identifier" : "string",
+          "name" : "string",
+          "type" : {
+            "description" : "An arbitrary string.",
+            "identifier" : "string",
+            "name" : "string"
+          }
+        },
+        {
+          "description" : "The number of iterations.",
+          "identifier" : "iterations",
+          "name" : "iterations",
+          "type" : {
+            "description" : "An integer between 1 and 5 inclusive.",
+            "identifier" : "1–5",
+            "name" : "1–5"
+          }
+        },
+        {
+          "description" : "An option that always fails to parse.",
+          "identifier" : "unsatisfiable",
+          "name" : "unsatisfiable",
+          "type" : {
+            "description" : "An argument type that always fails to parse.",
+            "identifier" : "unsatisfiable",
+            "name" : "unsatisfiable"
+          }
+        },
+        {
+          "description" : "uses an informal greeting.",
+          "identifier" : "informal",
+          "name" : "informal",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A colour for the text.",
+          "identifier" : "colour",
+          "name" : "colour",
+          "type" : {
+            "description" : "‘blue’, ‘green’ or ‘red’.",
+            "identifier" : "colour",
+            "name" : "colour"
+          }
+        },
+        {
+          "description" : "A directory to run in.",
+          "identifier" : "path",
+          "name" : "path",
+          "type" : {
+            "description" : "A file system path. The form ‘\/...’ indicates an absolute path. The form ‘~\/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory.",
+            "identifier" : "path",
+            "name" : "path"
+          }
+        },
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "demonstrates a failure.",
+      "identifier" : "fail",
+      "name" : "fail",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "demonstrates text formatting.",
+      "identifier" : "demonstrate‐text‐formatting",
+      "name" : "demonstrate‐text‐formatting",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "An argument type that always fails to parse.",
+          "identifier" : "unsatisfiable",
+          "name" : "unsatisfiable"
+        }
+      ],
+      "description" : "demonstrates rejection of an argument.",
+      "identifier" : "reject‐argument",
+      "name" : "reject‐argument",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "displays usage information.",
+      "identifier" : "עזרה",
+      "name" : "help",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "displays the version in use.",
+      "identifier" : "version",
+      "name" : "version",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+          "identifier" : "language preference",
+          "name" : "language preference"
+        }
+      ],
+      "description" : "sets the language preference. (Omit the argument to revert to the system preferences.)",
+      "identifier" : "set‐language",
+      "name" : "set‐language",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "removes any cached data.",
+      "identifier" : "empty‐cache",
+      "name" : "empty‐cache",
+      "options" : [
+        {
+          "description" : "Removes colour from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐colour",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "identifier" : "עזרה",
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes colour from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐colour",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    }
+  ]
+}
+0
