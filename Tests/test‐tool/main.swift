@@ -14,7 +14,9 @@
 
 import SDGCommandLine
 
-initialize(applicationIdentifier: "ca.solideogloria.SDGCommandLine.test‐tool", version: nil, packageURL: nil)
+ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool"
+ProcessInfo.version = nil
+ProcessInfo.packageURL = nil
 
 enum Language : String, InputLocalization {
     case englishCanada = "en\u{2D}CA"
@@ -22,18 +24,18 @@ enum Language : String, InputLocalization {
     static let fallbackLocalization: Language = .englishCanada
 }
 
-let execute = Command(name: UserFacingText<Language>({ localization in
+let execute = Command(name: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "execute"
     }
-}), description: UserFacingText({ (localization: Language) -> StrictString in
+}), description: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "demonstrates successful execution."
     }
 }), directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
-    output.print(UserFacingText<Language>({ localization in
+    output.print(UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .englishCanada:
             return "Hello, world!"
@@ -41,19 +43,19 @@ let execute = Command(name: UserFacingText<Language>({ localization in
     }).resolved())
 })
 
-let fail = Command(name: UserFacingText<Language>({ localization in
+let fail = Command(name: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "fail"
     }
-}), description: UserFacingText({ (localization: Language) -> StrictString in
+}), description: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "demonstrates a failure."
     }
 }), directArguments: [], options: [], execution: { (_, _, _) throws -> Void in
     try execute.execute(with: [])
-    throw Command.Error(description: UserFacingText<Language>({ localization in
+    throw Command.Error(description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .englishCanada:
             return "Something failed."
@@ -61,12 +63,12 @@ let fail = Command(name: UserFacingText<Language>({ localization in
     }))
 })
 
-Command(name: UserFacingText<Language>({ localization in
+Command(name: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "test‐tool"
     }
-}), description: UserFacingText({ (localization: Language) -> StrictString in
+}), description: UserFacing<StrictString, Language>({ localization in
     switch localization {
     case .englishCanada:
         return "serves as an example tool."
