@@ -1,0 +1,4 @@
+$ tool execute •iterations −1 •no‐colour
+The argument for ‘•iterations’ is invalid: −1
+See also: $ tool execute help
+9223372036854775807

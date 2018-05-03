@@ -22,6 +22,17 @@ import SDGCommandLineLocalizations
 
 class APITests : TestCase {
 
+    func testArgumentType() {
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•iterations", "2"], localizations: Language.self, uniqueTestName: "Integer", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•iterations", "−1"], localizations: Language.self, uniqueTestName: "Invalid Integer", overwriteSpecificationInsteadOfFailing: false)
+
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•path", "/tmp"], localizations: Language.self, uniqueTestName: "Absolute Path", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•path", "~"], localizations: Language.self, uniqueTestName: "Home", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•path", "~/"], localizations: Language.self, uniqueTestName: "Home 2", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•path", "~/.SDG/Test"], localizations: Language.self, uniqueTestName: "User Path", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•path", "tmp"], localizations: Language.self, uniqueTestName: "Path", overwriteSpecificationInsteadOfFailing: false)
+    }
+
     func testCommand() {
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
 

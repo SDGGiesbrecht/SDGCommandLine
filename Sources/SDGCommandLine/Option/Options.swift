@@ -12,10 +12,12 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGControlFlow
+
 import SDGCommandLineLocalizations
 
 /// Parsed options.
-public struct Options {
+public struct Options : TransparentWrapper {
 
     // MARK: - Static Properties
 
@@ -95,5 +97,13 @@ public struct Options {
     /// Returns `true` if the Boolean flag is active and `false` if it is not.
     public func value(for option: Option<Bool>) -> Bool {
         return (options[option.key] as? Bool) == true
+    }
+
+    // MARK: - TransparentWrapper
+
+    // [_Inherit Documentation: SDGCornerstone.TransparentWrapper.wrapped_]
+    /// The wrapped instance.
+    public var wrappedInstance: Any {
+        return options
     }
 }

@@ -12,8 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGControlFlow
+
 /// A type‐erased argument definition.
-public protocol AnyArgumentTypeDefinition {
+public protocol AnyArgumentTypeDefinition : TextualPlaygroundDisplay {
 
     /// :nodoc:
     func _parse(argument: StrictString) -> Any?
@@ -44,5 +46,13 @@ extension AnyArgumentTypeDefinition {
 
     internal func localizedDescription() -> StrictString {
         return _localizedDescription()
+    }
+
+    // MARK: - CustomStringConvertible
+
+    // [_Inherit Documentation: SDGCornerstone.CustomStringConvertible.description_]
+    /// A textual representation of the instance.
+    public var description: String {
+        return String(localizedName())
     }
 }

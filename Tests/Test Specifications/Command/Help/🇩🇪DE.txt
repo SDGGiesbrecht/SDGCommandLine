@@ -12,13 +12,17 @@ Options
 •informell verwendet eine informelle Begrüßung.
 •language [language preference] A language to use instead of the one specified in preferences.
 •no‐colour Removes colour from the output.
+•path [path] A directory to run in.
 •unsatisfiable [unsatisfiable] An option that always fails to parse.
+•wiederholungen [1–5] Die Anzahl der Wiederholungen.
 •zeichenkette [string] Text zum Zeigen.
 
 Argument Types
 
+[1–5] An integer between 1 and 5 inclusive.
 [farbe] ‘blau’, ‘grün’ or ‘rot’.
 [language preference] A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French
+[path] A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory.
 [string] An arbitrary string.
 [unsatisfiable] An argument type that always fails to parse.
 

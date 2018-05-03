@@ -13,13 +13,14 @@
  */
 
 import SDGLogic
+import SDGLocalization
 
 import SDGCommandLineLocalizations
 
 extension Command {
 
     /// A command line failure.
-    public struct Error : Swift.Error {
+    public struct Error : PresentableError {
 
         // MARK: - Static Properties
 
@@ -75,8 +76,12 @@ extension Command {
         // MARK: - Output
 
         private let describeClosure: () -> StrictString
-        /// Returns a description of the error.
-        public func describe() -> StrictString {
+
+        // MARK: - PresentableError
+
+        // [_Inherit Documentation: SDGCornerstone.PresentableError.presentableDescription()_]
+        /// Returns a localized description of the error.
+        public func presentableDescription() -> StrictString {
             return describeClosure()
         }
     }

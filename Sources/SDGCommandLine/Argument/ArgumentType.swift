@@ -12,6 +12,9 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
+import SDGControlFlow
 import SDGCollections
 
 import SDGSwift
@@ -116,6 +119,76 @@ public enum ArgumentType {
             return entries[argument]
         })
     }
+
+    private static func integerName(range: CountableClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+        return UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("\(range.lowerBound.inDigits())–\(range.upperBound.inDigits())")
+            }
+        })
+    }
+
+    private static func integerDescription(range: CountableClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
+        return UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return StrictString("An integer between \(range.lowerBound.inDigits()) and \(range.upperBound.inDigits()) inclusive.")
+            }
+        })
+    }
+
+    private static var cache: [CountableClosedRange<Int>: ArgumentTypeDefinition<Int>] = [:]
+    /// An argument type representing an integer in a specific range.
+    public static func integer(in range: CountableClosedRange<Int>) -> ArgumentTypeDefinition<Int> {
+        return cached(in: &cache[range]) {
+            return ArgumentTypeDefinition(name: integerName(range: range), syntaxDescription: integerDescription(range: range), parse: { (argument: StrictString) -> Int? in
+
+                if let integer = try? Int(possibleDecimal: argument),
+                    integer ∈ range {
+                    return integer
+                } else {
+                    return nil
+                }
+            })
+        }
+    }
+
+    private static let pathName = UserFacing<StrictString, InterfaceLocalization>({ localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            return "path"
+        }
+    })
+
+    private static let pathDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
+        switch localization {
+        case .englishUnitedKingdom:
+            return "A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+        case .englishUnitedStates, .englishCanada:
+            return "A file system path. The form “/...” indicates an absolute path. The form “~/...” indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+        }
+    })
+
+    /// An argument type representing a file system path.
+    public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(name: pathName, syntaxDescription: pathDescription, parse: { (argument: StrictString) -> URL? in
+
+        if argument.hasPrefix("/") {
+            return URL(fileURLWithPath: String(argument))
+        } else if argument == "~" {
+            return URL(fileURLWithPath: NSHomeDirectory())
+        } else if argument.hasPrefix("~/") {
+            let home = URL(fileURLWithPath: NSHomeDirectory())
+            let dropped = String(StrictString(argument.dropFirst(2)))
+            if dropped.isEmpty {
+                return home
+            } else {
+                return home.appendingPathComponent(dropped)
+            }
+        } else {
+            return URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(String(argument))
+        }
+    })
 
     private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {

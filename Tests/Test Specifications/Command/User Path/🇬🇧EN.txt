@@ -1,0 +1,3 @@
+$ tool execute •path ~/.SDG/Test •no‐colour
+Hello, world!
+0

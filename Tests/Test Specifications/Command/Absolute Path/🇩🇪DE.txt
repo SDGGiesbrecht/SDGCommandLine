@@ -1,0 +1,3 @@
+$ werkzeug execute •path /tmp •no‐colour
+Guten Tag, Welt!
+0

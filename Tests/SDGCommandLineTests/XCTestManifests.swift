@@ -16,6 +16,7 @@ import XCTest
 
 extension APITests {
     static let __allTests = [
+        ("testArgumentType", testArgumentType),
         ("testCommand", testCommand),
         ("testDirectArgument", testDirectArgument),
         ("testEnumerationOption", testEnumerationOption),
