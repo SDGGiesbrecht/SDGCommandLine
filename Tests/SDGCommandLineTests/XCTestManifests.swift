@@ -34,6 +34,7 @@ extension APITests {
 extension InternalTests {
     static let __allTests = [
         ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
+        ("testExportInterface", testExportInterface),
         ("testSetLanguage", testSetLanguage),
         ("testVersionSelection", testVersionSelection),
         ("testVersionSubcommand", testVersionSubcommand)

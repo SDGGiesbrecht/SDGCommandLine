@@ -24,7 +24,7 @@ import SDGSwift
 import SDGCommandLineLocalizations
 
 /// A command.
-public struct Command : TextualPlaygroundDisplay {
+public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Static Properties
 
@@ -53,9 +53,10 @@ public struct Command : TextualPlaygroundDisplay {
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
+    ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
     ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
-        self.init(name: name, description: description, directArguments: directArguments, options: options, execution: execution, subcommands: [])
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
+        self.init(name: name, description: description, directArguments: directArguments, options: options, hidden: hidden, execution: execution, subcommands: [])
     }
 
     /// Creates an umbrella command.
@@ -67,11 +68,12 @@ public struct Command : TextualPlaygroundDisplay {
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, subcommands: [Command], defaultSubcommand: Command? = nil) {
-        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
+    ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, subcommands: [Command], defaultSubcommand: Command? = nil, hidden: Bool = false) {
+        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], hidden: hidden, execution: defaultSubcommand?.execution, subcommands: subcommands) // [_Exempt from Test Coverage_] False result in Xcode 9.3.
     }
 
-    internal init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
         var actualSubcommands = subcommands
 
         if addHelp {
@@ -81,6 +83,9 @@ public struct Command : TextualPlaygroundDisplay {
         localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
+        self.isHidden = hidden
+        self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
+
         self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) } // [_Exempt from Test Coverage_] False result in Xcode 9.3.
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
@@ -95,6 +100,8 @@ public struct Command : TextualPlaygroundDisplay {
     /// Returns the localized name of the command.
     public let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
+    internal let isHidden: Bool
+    internal let identifier: StrictString
 
     private let execution: (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void
     internal var subcommands: [Command]
@@ -110,6 +117,9 @@ public struct Command : TextualPlaygroundDisplay {
             Command.setLanguage,
             Command.emptyCache
             ])
+        if BuildConfiguration.current == .debug {
+            copy.subcommands.append(Command.exportInterface)
+        }
         return copy
     }
 
@@ -270,7 +280,7 @@ public struct Command : TextualPlaygroundDisplay {
 
         for option in options where option.matches(name: name) {
 
-            if option.type().identifier() == ArgumentType.booleanKey {
+            if option.type().identifier() == ArgumentType.booleanIdentifier {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
                 return true
@@ -403,5 +413,31 @@ public struct Command : TextualPlaygroundDisplay {
     /// A textual representation of the instance.
     public var description: String {
         return String(localizedName())
+    }
+
+    // MARK: - Encodable
+
+    private enum CodingKeys : String, CodingKey {
+        case identifier
+        case name
+        case description
+        case subcommands
+        case arguments
+        case options
+    }
+
+    // [_Inherit Documentation: SDGCornerstone.Encodable.encode(to:)_]
+    /// Encodes this value into the given encoder.
+    ///
+    /// - Parameters:
+    ///     - encoder: The encoder to write data to.
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(localizedName(), forKey: .name)
+        try container.encode(localizedDescription(), forKey: .description)
+        try container.encode(subcommands.filter({ ¬$0.isHidden }), forKey: .subcommands)
+        try container.encode(directArguments.map({ $0.interface() }), forKey: .arguments)
+        try container.encode(options.filter({ ¬$0.isHidden }).map({ $0.interface() }), forKey: .options)
     }
 }

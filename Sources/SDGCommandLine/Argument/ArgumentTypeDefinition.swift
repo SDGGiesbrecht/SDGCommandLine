@@ -27,7 +27,7 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
     ///     - parse: A closure that parses an argument and returns its value. The closure should return `nil` if the argument is invalid.
     public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, syntaxDescription: UserFacing<StrictString, D>, parse: @escaping (_ argument: StrictString) -> Type?) {
 
-        key = name.resolved(for: N.fallbackLocalization)
+        identifier = name.resolved(for: N.fallbackLocalization)
         localizedName = { return name.resolved() }
         localizedDescription = { return syntaxDescription.resolved() }
         self.parse = parse
@@ -35,7 +35,7 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
 
     // MARK: - Properties
 
-    internal let key: StrictString
+    internal let identifier: StrictString
     internal let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
 
@@ -50,7 +50,7 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
 
     /// :nodoc:
     public func _identifier() -> StrictString {
-        return key
+        return identifier
     }
 
     /// :nodoc:
@@ -61,5 +61,10 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
     /// :nodoc:
     public func _localizedDescription() -> StrictString {
         return localizedDescription()
+    }
+
+    /// :nodoc:
+    public func _interface() -> _ArgumentInterface {
+        return _ArgumentInterface(identifier: identifier, name: localizedName(), description: identifier == ArgumentType.booleanIdentifier ? "" : localizedDescription())
     }
 }

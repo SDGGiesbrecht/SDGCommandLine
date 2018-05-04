@@ -86,17 +86,17 @@ public struct Options : TransparentWrapper {
     // MARK: - Usage
 
     internal mutating func add(value: Any, for option: AnyOption) {
-        options[option.uniqueKey] = value
+        options[option.identifier] = value
     }
 
     /// Returns the value of the specified option, or `nil` if the option is not defined.
     public func value<T>(for option: Option<T>) -> T? {
-        return options[option.key] as? T
+        return options[option.identifier] as? T
     }
 
     /// Returns `true` if the Boolean flag is active and `false` if it is not.
     public func value(for option: Option<Bool>) -> Bool {
-        return (options[option.key] as? Bool) == true
+        return (options[option.identifier] as? Bool) == true
     }
 
     // MARK: - TransparentWrapper

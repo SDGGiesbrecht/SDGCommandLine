@@ -28,6 +28,9 @@ public protocol AnyArgumentTypeDefinition : TextualPlaygroundDisplay {
 
     /// :nodoc:
     func _localizedDescription() -> StrictString
+
+    /// :nodoc:
+    func _interface() -> _ArgumentInterface
 }
 
 extension AnyArgumentTypeDefinition {
@@ -46,6 +49,10 @@ extension AnyArgumentTypeDefinition {
 
     internal func localizedDescription() -> StrictString {
         return _localizedDescription()
+    }
+
+    internal func interface() -> _ArgumentInterface {
+        return _interface()
     }
 
     // MARK: - CustomStringConvertible

@@ -138,21 +138,22 @@ extension Command {
             }
         }
 
-        if ¬command.subcommands.isEmpty {
+        let subcommands = command.subcommands.filter { ¬$0.isHidden }
+        if ¬subcommands.isEmpty {
 
             printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 switch localization {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Subcommands"
                 }
-            }), entries: command.subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
+            }), entries: subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
         }
 
         if ¬command.options.isEmpty {
 
             let formatOption = { (option: AnyOption) -> StrictString in
                 var result = ("•" + option.localizedName()).formattedAsOption()
-                if option.type().identifier() ≠ ArgumentType.booleanKey {
+                if option.type().identifier() ≠ ArgumentType.booleanIdentifier {
                     result += " " + formatType(option.type().localizedName())
                 }
                 return result
@@ -168,7 +169,7 @@ extension Command {
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
             for type in command.directArguments + command.options.map({ $0.type() }) {
                 let key = type.identifier()
-                if key ≠ ArgumentType.booleanKey {
+                if key ≠ ArgumentType.booleanIdentifier {
                     argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
                 }
             }

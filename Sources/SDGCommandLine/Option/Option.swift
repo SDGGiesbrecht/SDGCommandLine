@@ -34,29 +34,37 @@ public struct Option<Type> : AnyOption {
     ///     - name: The name. (Without the leading option marker.)
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - type: An `ArgumentTypeDefinition` representing the type of the argument.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, type: ArgumentTypeDefinition<Type>) {
+    ///     - hidden: Optional. Set to `true` to hide the option from the “help” lists.
+    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, type: ArgumentTypeDefinition<Type>, hidden: Bool = false) {
 
-        key = name.resolved(for: N.fallbackLocalization)
+        identifier = name.resolved(for: N.fallbackLocalization)
         names = Command.list(names: name)
         localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
         localizedDescription = { return description.resolved() }
         self.type = type
+        self.isHidden = hidden
     }
 
     // MARK: - Properties
 
-    internal let key: StrictString
+    internal let identifier: StrictString
     private let names: Set<StrictString>
     private let localizedName: () -> StrictString
     private let localizedDescription: () -> StrictString
+    private let isHidden: Bool
 
     private let type: ArgumentTypeDefinition<Type>
 
     // MARK: - AnyOption
 
     /// :nodoc:
-    public var _uniqueKey: StrictString {
-        return key
+    public var _identifier: StrictString {
+        return identifier
+    }
+
+    /// :nodoc:
+    public var _isHidden: Bool {
+        return isHidden
     }
 
     /// :nodoc:
@@ -77,5 +85,10 @@ public struct Option<Type> : AnyOption {
     /// :nodoc:
     public func _type() -> AnyArgumentTypeDefinition {
         return type
+    }
+
+    /// :nodoc:
+    public func _interface() -> _OptionInterface {
+        return _OptionInterface(identifier: identifier, name: localizedName(), description: localizedDescription(), type: type()._interface())
     }
 }

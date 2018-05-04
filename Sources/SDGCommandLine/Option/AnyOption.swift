@@ -18,7 +18,10 @@ import SDGControlFlow
 public protocol AnyOption : TextualPlaygroundDisplay {
 
     /// :nodoc:
-    var _uniqueKey: StrictString { get }
+    var _identifier: StrictString { get }
+
+    /// :nodoc:
+    var _isHidden: Bool { get }
 
     /// :nodoc:
     func _matches(name: StrictString) -> Bool
@@ -31,12 +34,19 @@ public protocol AnyOption : TextualPlaygroundDisplay {
 
     /// :nodoc:
     func _type() -> AnyArgumentTypeDefinition
+
+    /// :nodoc:
+    func _interface() -> _OptionInterface
 }
 
 extension AnyOption {
 
-    internal var uniqueKey: StrictString {
-        return _uniqueKey
+    internal var identifier: StrictString {
+        return _identifier
+    }
+
+    internal var isHidden: Bool {
+        return _isHidden
     }
 
     internal func matches(name: StrictString) -> Bool {
@@ -53,6 +63,10 @@ extension AnyOption {
 
     internal func type() -> AnyArgumentTypeDefinition {
         return _type()
+    }
+
+    internal func interface() -> _OptionInterface {
+        return _interface()
     }
 
     // MARK: - CustomStringConvertible

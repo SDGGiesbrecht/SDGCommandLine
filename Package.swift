@@ -65,6 +65,6 @@ let package = Package(
         // [_Workaround: Until Workspace can exclude these from test coverage validation. (workspace version 0.6.0)_]
         /*.target(name: "test‐tool", dependencies: [
             "SDGCommandLine"
-            ])*/
+            ], path: "Tests/test‐tool")*/
     ]
 )
