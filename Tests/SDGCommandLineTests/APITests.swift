@@ -16,6 +16,7 @@ import XCTest
 
 import SDGControlFlow
 import SDGCollections
+import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities
 import SDGCommandLineLocalizations
@@ -23,6 +24,8 @@ import SDGCommandLineLocalizations
 class APITests : TestCase {
 
     func testArgumentType() {
+        testCustomStringConvertibleConformance(of: ArgumentType.string, localizations: InterfaceLocalization.self, uniqueTestName: "String", overwriteSpecificationInsteadOfFailing: false)
+
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•iterations", "2"], localizations: Language.self, uniqueTestName: "Integer", overwriteSpecificationInsteadOfFailing: false)
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•iterations", "−1"], localizations: Language.self, uniqueTestName: "Invalid Integer", overwriteSpecificationInsteadOfFailing: false)
 

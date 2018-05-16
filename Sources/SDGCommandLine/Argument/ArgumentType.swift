@@ -159,7 +159,7 @@ public enum ArgumentType {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "path"
         }
-    })
+    }) // [_Exempt from Test Coverage_] Meaningless region.
 
     private static let pathDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
@@ -188,7 +188,7 @@ public enum ArgumentType {
         } else {
             return URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(String(argument))
         }
-    })
+    }) // [_Exempt from Test Coverage_] Meaningless region.
 
     private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
@@ -220,7 +220,7 @@ public enum ArgumentType {
             } else {
                 return String(iconOrCode)
             }
-        }) })
+        }) }) // [_Exempt from Test Coverage_] Meaningless region.
         return LocalizationSetting(orderOfPrecedence: languages)
     })
 
