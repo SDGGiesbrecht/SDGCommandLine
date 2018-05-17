@@ -18,6 +18,7 @@ extension APITests {
     static let __allTests = [
         ("testArgumentType", testArgumentType),
         ("testCommand", testCommand),
+        ("testCommandError", testCommandError),
         ("testDirectArgument", testDirectArgument),
         ("testEnumerationOption", testEnumerationOption),
         ("testFormatting", testFormatting),
@@ -33,8 +34,11 @@ extension APITests {
 
 extension InternalTests {
     static let __allTests = [
-        ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
+        ("testDirectArguments", testDirectArguments),
+        ("testEmptyCache", testEmptyCache),
         ("testExportInterface", testExportInterface),
+        ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
+        ("testOptions", testOptions),
         ("testSetLanguage", testSetLanguage),
         ("testVersionSelection", testVersionSelection),
         ("testVersionSubcommand", testVersionSubcommand)
@@ -48,13 +52,14 @@ extension ReadMeExampleTests {
     ]
 }
 
-#if !os(macOS)
-// MARK: - #if !os(macOS)
+#if !canImport(ObjectiveC)
+// MARK: - #if !canImport(ObjectiveC)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(APITests.__allTests),
         testCase(InternalTests.__allTests),
-        testCase(ReadMeExampleTests.__allTests)
+        testCase(ReadMeExampleTests.__allTests),
+        testCase(TestCase.__allTests)
     ]
 }
 #endif
