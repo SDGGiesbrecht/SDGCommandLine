@@ -47,7 +47,9 @@ class APITests : TestCase {
     }
 
     func testCommandError() {
+        #if !os(Linux) // System error descriptions differ.
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail", "•system"], localizations: Language.self, uniqueTestName: "System Error", overwriteSpecificationInsteadOfFailing: false)
+        #endif
     }
 
     func testDirectArgument() {
