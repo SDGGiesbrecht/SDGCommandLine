@@ -16,7 +16,7 @@ import SDGCommandLine
 
 enum Execute {
 
-    private static let textOption = Option(name: UserFacing<StrictString, Language>({ localization in
+    static let textOption = Option(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "string"

@@ -37,11 +37,17 @@ class APITests : TestCase {
     }
 
     func testCommand() {
-        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
+        testCustomStringConvertibleConformance(of: Tool.command, localizations: InterfaceLocalization.self, uniqueTestName: "Tool", overwriteSpecificationInsteadOfFailing: false)
+
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], in: FileManager.default.url(in: .temporary, at: "Somewhere"), localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
 
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail"], localizations: Language.self, uniqueTestName: "Failure", overwriteSpecificationInsteadOfFailing: false)
 
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["ausführen"], localizations: Language.self, uniqueTestName: "Foreign Command", overwriteSpecificationInsteadOfFailing: false)
+    }
+
+    func testCommandError() {
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail", "•system"], localizations: Language.self, uniqueTestName: "System Error", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testDirectArgument() {
@@ -65,6 +71,7 @@ class APITests : TestCase {
 
     func testHelp() {
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "help"], localizations: SystemLocalization.self, uniqueTestName: "Help", overwriteSpecificationInsteadOfFailing: false)
+        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["reject‐argument", "help"], localizations: SystemLocalization.self, uniqueTestName: "Help (with Direct Arguments)", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testLanguage() {
@@ -85,6 +92,7 @@ class APITests : TestCase {
     }
 
     func testOption() {
+        testCustomStringConvertibleConformance(of: Execute.textOption, localizations: InterfaceLocalization.self, uniqueTestName: "Text", overwriteSpecificationInsteadOfFailing: false)
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•string", "Changed using an option."], localizations: Language.self, uniqueTestName: "Unicode Option", overwriteSpecificationInsteadOfFailing: false)
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."], localizations: Language.self, uniqueTestName: "ASCII Option", overwriteSpecificationInsteadOfFailing: false)
 

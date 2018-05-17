@@ -1,0 +1,4 @@
+$ tool some‐invalid‐argument •use‐version not‐a‐version another‐invalid‐argument •no‐colour
+The argument for “•use‐version” is invalid: not‐a‐version
+See also: $  help
+9223372036854775807

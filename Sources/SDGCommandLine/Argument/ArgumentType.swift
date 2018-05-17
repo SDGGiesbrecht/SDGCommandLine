@@ -150,7 +150,7 @@ public enum ArgumentType {
                 } else {
                     return nil
                 }
-            })
+            }) // [_Exempt from Test Coverage_]
         }
     }
 
@@ -260,5 +260,5 @@ public enum ArgumentType {
             }
             return nil
         }
-    })
+    }) // [_Exempt from Test Coverage_]
 }

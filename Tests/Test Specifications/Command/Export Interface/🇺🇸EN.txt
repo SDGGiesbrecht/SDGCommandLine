@@ -193,6 +193,16 @@ $ tool export‐interface •no‐colour
       "name" : "fail",
       "options" : [
         {
+          "description" : "triggers a system error.",
+          "identifier" : "system",
+          "name" : "system",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
           "description" : "Removes color from the output.",
           "identifier" : "no‐colour",
           "name" : "no‐color",

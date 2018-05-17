@@ -17,6 +17,7 @@ import XCTest
 import SDGLogic
 import SDGCollections
 import SDGExternalProcess
+import SDGLocalizationTestUtilities
 
 import SDGSwift
 import SDGSwiftPackageManager
@@ -28,6 +29,14 @@ import SDGCommandLineTestUtilities
 class InternalTests : TestCase {
 
     static let rootCommand = Tool.command.withRootBehaviour()
+
+    func testDirectArguments() {
+        testCustomStringConvertibleConformance(of: DirectArguments(), localizations: InterfaceLocalization.self, uniqueTestName: "None", overwriteSpecificationInsteadOfFailing: false)
+    }
+
+    func testEmptyCache() {
+        testCommand(InternalTests.rootCommand, with: ["empty‐cache"], localizations: InterfaceLocalization.self, uniqueTestName: "Empty Cache", overwriteSpecificationInsteadOfFailing: false)
+    }
 
     func testExportInterface() {
         func postprocess(_ output: inout String) {
@@ -63,6 +72,10 @@ class InternalTests : TestCase {
                     })
                 }
         }
+    }
+
+    func testOptions() {
+        testCustomStringConvertibleConformance(of: Options(), localizations: InterfaceLocalization.self, uniqueTestName: "None", overwriteSpecificationInsteadOfFailing: false)
     }
 
     func testVersionSelection() {
@@ -126,14 +139,18 @@ class InternalTests : TestCase {
 
             // Looking for version when it does not exist...
             testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Without Version", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
+
+            // Asking for something which is not a version...
+            testCommand(Tool.createCommand(), with: ["some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"], localizations: APILocalization.self, uniqueTestName: "Use Invalid Version", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
         }
     }
 
     func testVersionSubcommand() {
         LocalizationSetting(orderOfPrecedence: [["en"]]).do {
-            XCTAssertErrorFree({
-                testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version", overwriteSpecificationInsteadOfFailing: false)
-            })
+            ProcessInfo.version = Version(1, 2, 3)
+            testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version", overwriteSpecificationInsteadOfFailing: false)
+            ProcessInfo.version = nil
+            testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version (None)", overwriteSpecificationInsteadOfFailing: false)
         }
     }
 }

@@ -12,9 +12,27 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import Foundation
+
 import SDGCommandLine
 
 enum Fail {
+
+    private static let systemOption = Option(name: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+            return "system"
+        case .deutsch:
+            return "system"
+        }
+    }), description: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+            return "triggers a system error."
+        case .deutsch:
+            return "verursacht einen Systemfehler."
+        }
+    }), type: ArgumentType.boolean)
 
     static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
@@ -30,7 +48,7 @@ enum Fail {
         case .deutsch:
             return "führt einen Fehlschlag vor."
         }
-    }), directArguments: [], options: [], execution: { (_, _, output: Command.Output) throws -> Void in
+    }), directArguments: [], options: [systemOption], execution: { (_, options: Options, output: Command.Output) throws -> Void in
         output.print(UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:
@@ -39,6 +57,9 @@ enum Fail {
                 return "Versucht..."
             }
         }).resolved())
+        if options.value(for: systemOption) {
+            _ = try FileManager.default.contentsOfDirectory(atPath: "/No/Such/Directory")
+        }
         throw Fail.error
     })
 

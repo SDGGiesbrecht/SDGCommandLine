@@ -1,0 +1,2 @@
+$ tool empty‐cache •no‐colour
+0
