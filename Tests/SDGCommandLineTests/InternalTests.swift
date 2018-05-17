@@ -66,7 +66,6 @@ class InternalTests : TestCase {
     }
 
     func testVersionSelection() {
-
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
 
@@ -87,7 +86,6 @@ class InternalTests : TestCase {
             try testPackage.tag(version: Version(1, 0, 0))
 
             ProcessInfo.packageURL = testPackage.location
-            SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["help"], localizations: SystemLocalization.self, uniqueTestName: "Help (•use‐version)", overwriteSpecificationInsteadOfFailing: false)
 
             func postprocess(_ output: inout String) {
                 let temporaryDirectory = FileManager.default.url(in: .temporary, at: "File").deletingLastPathComponent()

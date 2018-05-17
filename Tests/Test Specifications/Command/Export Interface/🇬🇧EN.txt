@@ -26,6 +26,16 @@ $ tool export‐interface •no‐colour
         "identifier" : "language preference",
         "name" : "language preference"
       }
+    },
+    {
+      "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+      "identifier" : "use‐version",
+      "name" : "use‐version",
+      "type" : {
+        "description" : "A version number or ‘development’.",
+        "identifier" : "version",
+        "name" : "version"
+      }
     }
   ],
   "subcommands" : [
@@ -116,6 +126,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -145,6 +165,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -181,6 +211,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -210,6 +250,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -246,6 +296,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -275,6 +335,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -315,6 +385,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -344,6 +424,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -380,6 +470,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -413,6 +513,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -442,6 +552,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -482,6 +602,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -511,6 +641,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -547,6 +687,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or ‘development’.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -576,6 +726,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or ‘development’.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],

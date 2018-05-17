@@ -27,6 +27,7 @@ class TestCase : SDGXCTestUtilities.TestCase {
         if ¬TestCase.initialized {
             TestCase.initialized = true
             ProcessInfo.version = Version(1, 2, 3)
+            ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
             Command.Output.testMode = true
         }
         super.setUp()
