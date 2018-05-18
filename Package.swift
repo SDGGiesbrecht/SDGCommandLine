@@ -61,11 +61,9 @@ let package = Package(
             .productItem(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
             .productItem(name: "SDGSwift", package: "SDGSwift"),
             .productItem(name: "SDGSwiftPackageManager", package: "SDGSwift")
-            ])
-
-        // [_Workaround: Until Workspace can exclude these from test coverage validation. (workspace version 0.6.0)_]
-        /*.target(name: "test‐tool", dependencies: [
+            ]),
+        .target(name: "test‐tool", dependencies: [
             "SDGCommandLine"
-            ], path: "Tests/test‐tool")*/
+            ], path: "Tests/test‐tool")
     ]
 )
