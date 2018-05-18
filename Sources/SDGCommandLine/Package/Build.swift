@@ -20,7 +20,7 @@ extension Build {
 
     internal static let current: Build? = {
         guard let versionNumber = ProcessInfo.version else {
-            return nil
+            return nil // [_Exempt from Test Coverage_]
         }
         return .version(versionNumber)
     }()

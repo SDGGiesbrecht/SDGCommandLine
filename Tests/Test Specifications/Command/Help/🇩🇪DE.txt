@@ -14,6 +14,7 @@ Options
 •no‐colour Removes colour from the output.
 •path [path] A directory to run in.
 •unsatisfiable [unsatisfiable] An option that always fails to parse.
+•use‐version [version] Attempts to download and temporarily use the specified version insead of one which is installed.
 •wiederholungen [1–5] Die Anzahl der Wiederholungen.
 •zeichenkette [string] Text zum Zeigen.
 
@@ -25,5 +26,6 @@ Argument Types
 [path] A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory.
 [string] An arbitrary string.
 [unsatisfiable] An argument type that always fails to parse.
+[version] A version number or ‘development’.
 
 0

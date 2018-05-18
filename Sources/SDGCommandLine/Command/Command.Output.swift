@@ -54,7 +54,7 @@ extension Command {
 
             internalOutput.append(contentsOf: mutable)
             if ¬Output.testMode {
-                Swift.print(mutable, terminator: "")
+                Swift.print(mutable, terminator: "") // [_Exempt from Test Coverage_]
             }
         }
 

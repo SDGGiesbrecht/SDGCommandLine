@@ -26,6 +26,16 @@ $ tool export‐interface •no‐colour
         "identifier" : "language preference",
         "name" : "language preference"
       }
+    },
+    {
+      "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+      "identifier" : "use‐version",
+      "name" : "use‐version",
+      "type" : {
+        "description" : "A version number or “development”.",
+        "identifier" : "version",
+        "name" : "version"
+      }
     }
   ],
   "subcommands" : [
@@ -116,6 +126,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -146,6 +166,16 @@ $ tool export‐interface •no‐colour
                 "identifier" : "language preference",
                 "name" : "language preference"
               }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
+              }
             }
           ],
           "subcommands" : [
@@ -162,6 +192,16 @@ $ tool export‐interface •no‐colour
       "identifier" : "fail",
       "name" : "fail",
       "options" : [
+        {
+          "description" : "triggers a system error.",
+          "identifier" : "system",
+          "name" : "system",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
         {
           "description" : "Removes color from the output.",
           "identifier" : "no‐colour",
@@ -181,6 +221,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -210,6 +260,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -246,6 +306,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -275,6 +345,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -315,6 +395,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -344,6 +434,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -380,6 +480,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -413,6 +523,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -442,6 +562,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -482,6 +612,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -511,6 +651,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
@@ -547,6 +697,16 @@ $ tool export‐interface •no‐colour
             "identifier" : "language preference",
             "name" : "language preference"
           }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
         }
       ],
       "subcommands" : [
@@ -576,6 +736,16 @@ $ tool export‐interface •no‐colour
                 "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
                 "identifier" : "language preference",
                 "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
               }
             }
           ],
