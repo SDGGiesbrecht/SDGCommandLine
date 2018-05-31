@@ -3,7 +3,7 @@ $ tool some‐invalid‐argument •use‐version development another‐invalid�
 $ git clone [Temporary Directory]/tool [Temporary Directory]/Package Clones/tool --depth 1
 Cloning into '[Temporary Directory]/Package Clones/tool'...
 
-$ swift build --configuration release --static-swift-stdlib
+$ swift build --configuration release
 Compile Swift Module 'tool' (1 sources)
 Linking ./.build/[Operating System]/release/tool
 
