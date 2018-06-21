@@ -1,10 +1,10 @@
 /*
  Workspace.swift
 
- This source file is part of the SDGSwift open source project.
- https://sdggiesbrecht.github.io/SDGSwift/SDGSwift
+ This source file is part of the SDGCommandLine open source project.
+ https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
 
- Copyright ©2018 Jeremy David Giesbrecht and the SDGSwift project contributors.
+ Copyright ©2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
