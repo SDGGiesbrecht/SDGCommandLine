@@ -42,9 +42,9 @@ SDGCommandLine provides tools for implementing a command line interface.
 
 ## Importing
 
-`SDGCommandLine` is intended for use with the [Swift Package Manager](https://swift.org/package-manager/).
+SDGCommandLine provides libraries for use with the [Swift Package Manager](https://swift.org/package-manager/).
 
-Simply add `SDGCommandLine` as a dependency in `Package.swift`:
+Simply add SDGCommandLine as a dependency in `Package.swift` and specify which of the libraries to use:
 
 ```swift
 let package = Package(
@@ -61,7 +61,7 @@ let package = Package(
 )
 ```
 
-`SDGCommandLine` can then be imported in source files:
+The libraries’ modules can then be imported in source files:
 
 ```swift
 import SDGCommandLine
@@ -71,15 +71,17 @@ import SDGCommandLineTestUtilities
 ## Example Usage
 
 This example creates a tool with the following interface:
-```shell
- $ parrot speak
- Squawk!
 
- $ parrot speak •phrase "Hello, world!"
- Hello, world!
+```shell
+$ parrot speak
+Squawk!
+
+$ parrot speak •phrase "Hello, world!"
+Hello, world!
 ```
 
 `main.swift` must consist of the following lines:
+
 ```swift
 ProcessInfo.applicationIdentifier = "tld.Developper.Parrot"
 ProcessInfo.version = Version(1, 0, 0)
@@ -88,8 +90,8 @@ ProcessInfo.packageURL = URL(string: "https://website.tld/Parrot")
 parrot.executeAsMain()
 ```
 
-The rest can be anywhere in the project
-(but putting it in a separate, testable library module is recommended):
+The rest can be anywhere in the project (but putting it in a separate, testable library module is recommended):
+
 ```swift
 import SDGCommandLine
 
@@ -122,6 +124,7 @@ enum MyLocalizations : String, InputLocalization {
 ```
 
 Tests are easy to set up:
+
 ```swift
 func testParrot() {
     do {
