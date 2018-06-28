@@ -150,46 +150,47 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
-        var output = Output()
+        do {
+            var output = Output()
 
-        if let packageURL = ProcessInfo.packageURL,
-            let (version, otherArguments) = try parseVersion(from: arguments),
-            version ≠ Build.current {
+            if let packageURL = ProcessInfo.packageURL,
+                let (version, otherArguments) = try parseVersion(from: arguments),
+                version ≠ Build.current {
 
-            let package = Package(url: packageURL)
-            try package.execute(version, of: names, with: otherArguments, output: output)
-            return output.output
-        }
-
-        Command.stack.append(self)
-        defer { Command.stack.removeLast() }
-
-        if let first = arguments.first {
-            for subcommand in subcommands where first ∈ subcommand.names {
-                return try subcommand.execute(with: Array(arguments.dropFirst()))
+                let package = Package(url: packageURL)
+                try package.execute(version, of: names, with: otherArguments, output: output)
+                return output.output
             }
-        }
 
-        let (directArguments, options) = try parse(arguments: arguments)
+            Command.stack.append(self)
+            defer { Command.stack.removeLast() }
 
-        if options.value(for: Options.noColour) {
-            output.filterFormatting = true
-        }
+            if let first = arguments.first {
+                for subcommand in subcommands where first ∈ subcommand.names {
+                    return try subcommand.execute(with: Array(arguments.dropFirst()))
+                }
+            }
 
-        let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
-        try language.do {
-            do {
+            let (directArguments, options) = try parse(arguments: arguments)
+
+            if options.value(for: Options.noColour) {
+                output.filterFormatting = true
+            }
+
+            let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
+            try language.do {
                 try execute(withArguments: directArguments, options: options, output: output)
-            } catch var error as Command.Error {
-                error.output = output.output
-                throw error
-            } catch {
-                var wrapped = Command.Error(wrapping: error)
-                wrapped.output = output.output
-                throw wrapped
             }
+            return output.output
+
+        } catch var error as Command.Error {
+            error.output = output.output
+            throw error
+        } catch {
+            var wrapped = Command.Error(wrapping: error)
+            wrapped.output = output.output
+            throw wrapped
         }
-        return output.output
     }
 
     /// Executes the command without exiting.
