@@ -150,8 +150,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
     @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
+        var output = Output()
         do {
-            var output = Output()
 
             if let packageURL = ProcessInfo.packageURL,
                 let (version, otherArguments) = try parseVersion(from: arguments),
