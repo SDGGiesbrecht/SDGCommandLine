@@ -145,12 +145,13 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///
     /// - Parameters:
     ///     - arguments: The command line arguments, including subcommands and options, to use. (The command itself should be left out.)
+    ///     - output: Optional. An output instance to inherit from an encompassing command.
     ///
     /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
     ///
     /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
-    @discardableResult public func execute(with arguments: [StrictString]) throws -> StrictString {
-        var output = Output()
+    @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) throws -> StrictString {
+        var outputCollector = output ?? Output()
         do {
 
             if let packageURL = ProcessInfo.packageURL,
@@ -158,8 +159,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 version ≠ Build.current {
 
                 let package = Package(url: packageURL)
-                try package.execute(version, of: names, with: otherArguments, output: output)
-                return output.output
+                try package.execute(version, of: names, with: otherArguments, output: outputCollector)
+                return outputCollector.output
             }
 
             Command.stack.append(self)
@@ -167,28 +168,28 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
             if let first = arguments.first {
                 for subcommand in subcommands where first ∈ subcommand.names {
-                    return try subcommand.execute(with: Array(arguments.dropFirst()))
+                    return try subcommand.execute(with: Array(arguments.dropFirst()), output: outputCollector)
                 }
             }
 
             let (directArguments, options) = try parse(arguments: arguments)
 
             if options.value(for: Options.noColour) {
-                output.filterFormatting = true
+                outputCollector.filterFormatting = true
             }
 
             let language = options.value(for: Options.language) ?? LocalizationSetting.current.value
             try language.do {
-                try execute(withArguments: directArguments, options: options, output: output)
+                try execute(withArguments: directArguments, options: options, output: outputCollector)
             }
-            return output.output
+            return outputCollector.output
 
         } catch var error as Command.Error {
-            error.output = output.output
+            error.output = outputCollector.output
             throw error
         } catch {
             var wrapped = Command.Error(wrapping: error)
-            wrapped.output = output.output
+            wrapped.output = outputCollector.output
             throw wrapped
         }
     }
