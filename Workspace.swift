@@ -17,7 +17,7 @@ import WorkspaceConfiguration
 let configuration = WorkspaceConfiguration()
 configuration.applySDGDefaults()
 
-configuration.documentation.currentVersion = Version(0, 3, 2)
+configuration.documentation.currentVersion = Version(0, 3, 3)
 
 configuration.documentation.projectWebsite = URL(string: "https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine")!
 configuration.documentation.documentationURL = URL(string: "https://sdggiesbrecht.github.io/SDGCommandLine")!
