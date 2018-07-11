@@ -20,7 +20,7 @@ extension Command {
 
     private static let exportInterfaceName = UserFacing<StrictString, InterfaceLocalization>({ _ in return "export‐interface" })
 
-    private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({ _ in // [_Exempt from Test Coverage_] Hidden and unreachable right now.
+    private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({ _ in // @exempt(from: tests) Hidden and unreachable right now.
         "exports the interface in a machine readable format."
     })
 
@@ -31,7 +31,7 @@ extension Command {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting.insert(.prettyPrinted)
-        if #available(OSX 10.13, *) { // [_Exempt from Test Coverage_]
+        if #available(OSX 10.13, *) { // @exempt(from: tests)
             encoder.outputFormatting.insert(.sortedKeys)
         }
         let data = try encoder.encode(command)

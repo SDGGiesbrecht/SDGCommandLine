@@ -42,7 +42,7 @@ extension Command {
             self.describeClosure = { description.resolved() }
 
             assert(exitCode ≠ Error.successCode, UserFacing<StrictString, APILocalization>({ localization in
-                switch localization { // [_Exempt from Test Coverage_]
+                switch localization { // @exempt(from: tests)
                 case .englishCanada:
                     return StrictString("\(Error.successCode.inDigits()) is invalid as a failing exit code.")
                 }
