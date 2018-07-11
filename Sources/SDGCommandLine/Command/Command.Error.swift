@@ -79,7 +79,7 @@ extension Command {
 
         // MARK: - PresentableError
 
-        // [_Inherit Documentation: SDGCornerstone.PresentableError.presentableDescription()_]
+        // #documentation(SDGCornerstone.PresentableError.presentableDescription())
         /// Returns a localized description of the error.
         public func presentableDescription() -> StrictString {
             return describeClosure()

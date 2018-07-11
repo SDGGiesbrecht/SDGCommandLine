@@ -411,7 +411,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - CustomStringConvertible
 
-    // [_Inherit Documentation: SDGCornerstone.CustomStringConvertible.description_]
+    // #documentation(SDGCornerstone.CustomStringConvertible.description)
     /// A textual representation of the instance.
     public var description: String {
         return String(localizedName())
@@ -428,7 +428,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         case options
     }
 
-    // [_Inherit Documentation: SDGCornerstone.Encodable.encode(to:)_]
+    // #documentation(SDGCornerstone.Encodable.encode(to:))
     /// Encodes this value into the given encoder.
     ///
     /// - Parameters:
