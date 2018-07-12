@@ -42,7 +42,7 @@ extension Command {
             self.describeClosure = { description.resolved() }
 
             assert(exitCode ≠ Error.successCode, UserFacing<StrictString, APILocalization>({ localization in
-                switch localization { // [_Exempt from Test Coverage_]
+                switch localization { // @exempt(from: tests)
                 case .englishCanada:
                     return StrictString("\(Error.successCode.inDigits()) is invalid as a failing exit code.")
                 }
@@ -79,7 +79,8 @@ extension Command {
 
         // MARK: - PresentableError
 
-        // [_Inherit Documentation: SDGCornerstone.PresentableError.presentableDescription()_]
+        // #workaround(SDGCornerstone 0.10.1, Detatched until available again.)
+        // @documentation(SDGCornerstone.PresentableError.presentableDescription())
         /// Returns a localized description of the error.
         public func presentableDescription() -> StrictString {
             return describeClosure()

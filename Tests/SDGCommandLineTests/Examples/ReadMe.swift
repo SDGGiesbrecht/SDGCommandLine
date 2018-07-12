@@ -18,16 +18,16 @@ import XCTest
 import SDGCommandLine
 
 func main() {
-    // [_Define Example: main.swift 🇨🇦EN_]
+    // @example(main.swift🇨🇦EN)
     ProcessInfo.applicationIdentifier = "tld.Developper.Parrot"
     ProcessInfo.version = Version(1, 0, 0)
     ProcessInfo.packageURL = URL(string: "https://website.tld/Parrot")
 
     parrot.executeAsMain()
-    // [_End_]
+    // @endExample
 }
 
-// [_Define Example: ParrotLibrary 🇨🇦EN_]
+// @example(parrotLibrary🇨🇦EN)
 import SDGCommandLine
 
 public let parrot = Command(name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
@@ -56,11 +56,11 @@ enum MyLocalizations : String, InputLocalization {
     internal static let cases: [MyLocalizations] = [.english]
     internal static let fallbackLocalization: MyLocalizations = .english
 }
-// [_End_]
+// @endExample
 
 class ReadMeExampleTests : TestCase {
 
-    // [_Define Example: ParrotTests 🇨🇦EN_]
+    // @example(parrotTests🇨🇦EN)
     func testParrot() {
         do {
             let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
@@ -69,5 +69,5 @@ class ReadMeExampleTests : TestCase {
             XCTFail("The parrot is not co‐operating.")
         }
     }
-    // [_End_]
+    // @endExample
 }

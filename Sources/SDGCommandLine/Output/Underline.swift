@@ -26,7 +26,7 @@ public enum Underline : Int, TextFormat {
         return rawValue
     }
 
-    // [_Inherit Documentation: SDGCommandLine.TextFormat.resetCode_]
+    // #documentation(SDGCommandLine.TextFormat.resetCode)
     /// The ANSI reset code.
     public static let resetCode = 24
 }

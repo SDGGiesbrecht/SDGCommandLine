@@ -12,4 +12,4 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-func aFunctionToTriggerTestCoverage() {} // [_Exempt from Test Coverage_]
+func aFunctionToTriggerTestCoverage() {} // @exempt(from: tests)
