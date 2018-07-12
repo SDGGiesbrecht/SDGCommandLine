@@ -428,7 +428,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         case options
     }
 
-    // #documentation(SDGCornerstone.Encodable.encode(to:))
+    // #workaround(SDGCornerstone 0.10.1, Detatched until available again.)
+    // @documentation(SDGCornerstone.Encodable.encode(to:))
     /// Encodes this value into the given encoder.
     ///
     /// - Parameters:
