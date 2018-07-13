@@ -79,3 +79,6 @@ configuration.documentation.api.encryptedTravisCIDeploymentKey = "rHheTc8sUxKAdE
 
 configuration.applySDGOverrides()
 configuration.validateSDGStandards()
+
+// #workaround(workspace version 0.10.1, Jazzy times out Travis CI.)
+configuration.documentation.api.generate = false
