@@ -164,7 +164,7 @@ extension Command {
                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                     return "Options"
                 }
-            }), entries: command.options, getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
+            }), entries: command.options.filter({ ¬$0.isHidden }), getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
 
             var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
             for type in command.directArguments + command.options.map({ $0.type() }) {
