@@ -134,6 +134,8 @@ enum Execute {
         return "A directory to run in."
     }), type: ArgumentType.path)
 
+    private static let hiddenOption = Option(name: UserFacing<StrictString, Language>({ _ in "hidden" }), description: UserFacing<StrictString, Language>({ _ in "" }), type: ArgumentType.boolean, hidden: true)
+
     static let command = Command(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
@@ -154,7 +156,8 @@ enum Execute {
         Execute.unsatisfiableOption,
         Execute.informalOption,
         Execute.colourOption,
-        Execute.pathOption
+        Execute.pathOption,
+        Execute.hiddenOption
         ], execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
             try FileManager.default.do(in: options.value(for: Execute.pathOption) ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)) {
