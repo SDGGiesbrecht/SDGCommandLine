@@ -12,11 +12,11 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-[🇨🇦EN](Documentation/🇨🇦EN%20Read%20Me.md) <!--Skip in Jazzy-->
+[🇨🇦EN](Documentation/🇨🇦EN%20Read%20Me.md)
 
 macOS • Linux
 
-APIs: [SDGCommandLine](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine) • [SDGCommandLineTestUtilities](https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLineTestUtilities)
+[Documentation](https://sdggiesbrecht.github.io/SDGCommandLine/%F0%9F%87%A8%F0%9F%87%A6EN)
 
 # SDGCommandLine
 
@@ -38,7 +38,7 @@ SDGCommandLine provides tools for implementing a command line interface.
   - Automatic `version` subcommand
   - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
-(For a list of related projects, see [here](Documentation/🇨🇦EN%20Related%20Projects.md).) <!--Skip in Jazzy-->
+(For a list of related projects, see [here](Documentation/🇨🇦EN%20Related%20Projects.md).)
 
 ## Importing
 
