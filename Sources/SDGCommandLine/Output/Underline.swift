@@ -28,5 +28,5 @@ public enum Underline : Int, TextFormat {
 
     // #documentation(SDGCommandLine.TextFormat.resetCode)
     /// The ANSI reset code.
-    public static let resetCode = 24
+    public static let resetCode: Int = 24
 }

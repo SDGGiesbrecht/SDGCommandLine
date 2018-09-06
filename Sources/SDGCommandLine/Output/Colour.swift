@@ -73,5 +73,5 @@ public enum Colour : Int, TextFormat {
 
     // #documentation(SDGCommandLine.TextFormat.resetCode)
     /// The ANSI reset code.
-    public static let resetCode = 39
+    public static let resetCode: Int = 39
 }

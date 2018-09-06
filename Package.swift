@@ -16,10 +16,35 @@
 
 import PackageDescription
 
+/// SDGCommandLine provides tools for implementing a command line interface.
+///
+/// > [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+/// >
+/// > [May they praise the name of the Lord, for He commanded and they came into being!](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+/// >
+/// > ―a psalmist
+///
+/// ### Features
+///
+/// - Automatic parsing of options and subcommands
+/// - Automatic `help` subcommand
+/// - Testable output
+/// - Colour formatting tools
+///     - Automatic `•no‐colour` option
+/// - Interface localization
+///     - Automatic `set‐language` subcommand to set language preferences.
+///     - Automatic `•language` option to run in a specific language only once.
+/// - Versioning tools
+///     - Automatic `version` subcommand
+///     - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 let package = Package(
     name: "SDGCommandLine",
     products: [
+        // @documentation(SDGCommandLine)
+        /// Tools for implementing a command line interface.
         .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
+        // @documentation(SDGCommandLineTestUtilities)
+        /// Utilities for testing modules which link against `SDGCommandLine`.
         .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
@@ -27,7 +52,11 @@ let package = Package(
         .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .upToNextMinor(from: Version(0, 2, 0)))
     ],
     targets: [
+
         // Products
+
+        // #documentation(SDGCommandLine)
+        /// Tools for implementing a command line interface.
         .target(name: "SDGCommandLine", dependencies: [
             "SDGCommandLineLocalizations",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
@@ -39,6 +68,9 @@ let package = Package(
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .productItem(name: "SDGSwift", package: "SDGSwift")
             ]),
+
+        // #documentation(SDGCommandLineTestUtilities)
+        /// Utilities for testing modules which link against `SDGCommandLine`.
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
             "SDGCommandLineLocalizations",
@@ -46,11 +78,15 @@ let package = Package(
             .productItem(name: "SDGTesting", package: "SDGCornerstone"),
             .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
+
         // Internal
+
         .target(name: "SDGCommandLineLocalizations", dependencies: [
             .productItem(name: "SDGLocalization", package: "SDGCornerstone")
             ]),
+
         // Tests
+
         .testTarget(name: "SDGCommandLineTests", dependencies: [
             "SDGCommandLineTestUtilities",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
