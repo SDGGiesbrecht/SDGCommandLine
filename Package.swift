@@ -16,6 +16,27 @@
 
 import PackageDescription
 
+/// SDGCommandLine provides tools for implementing a command line interface.
+///
+/// > [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+/// >
+/// > [May they praise the name of the Lord, for He commanded and they came into being!](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+/// >
+/// > ―a psalmist
+///
+/// ### Features
+///
+/// - Automatic parsing of options and subcommands
+/// - Automatic `help` subcommand
+/// - Testable output
+/// - Colour formatting tools
+/// - Automatic `•no‐colour` option
+/// - Interface localization
+/// - Automatic `set‐language` subcommand to set language preferences.
+/// - Automatic `•language` option to run in a specific language only once.
+/// - Versioning tools
+/// - Automatic `version` subcommand
+/// - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 let package = Package(
     name: "SDGCommandLine",
     products: [
