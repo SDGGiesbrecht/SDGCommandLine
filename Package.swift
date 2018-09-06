@@ -40,7 +40,11 @@ import PackageDescription
 let package = Package(
     name: "SDGCommandLine",
     products: [
+        // @documentation(SDGCommandLine)
+        /// Tools for implementing a command line interface.
         .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
+        // @documentation(SDGCommandLineTestUtilities)
+        /// Utilities for testing modules which link against `SDGCommandLine`.
         .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
@@ -48,7 +52,11 @@ let package = Package(
         .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .upToNextMinor(from: Version(0, 2, 0)))
     ],
     targets: [
+
         // Products
+
+        // #documentation(SDGCommandLine)
+        /// Tools for implementing a command line interface.
         .target(name: "SDGCommandLine", dependencies: [
             "SDGCommandLineLocalizations",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
@@ -60,6 +68,9 @@ let package = Package(
             .productItem(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .productItem(name: "SDGSwift", package: "SDGSwift")
             ]),
+
+        // #documentation(SDGCommandLineTestUtilities)
+        /// Utilities for testing modules which link against `SDGCommandLine`.
         .target(name: "SDGCommandLineTestUtilities", dependencies: [
             "SDGCommandLine",
             "SDGCommandLineLocalizations",
@@ -67,11 +78,15 @@ let package = Package(
             .productItem(name: "SDGTesting", package: "SDGCornerstone"),
             .productItem(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
+
         // Internal
+
         .target(name: "SDGCommandLineLocalizations", dependencies: [
             .productItem(name: "SDGLocalization", package: "SDGCornerstone")
             ]),
+
         // Tests
+
         .testTarget(name: "SDGCommandLineTests", dependencies: [
             "SDGCommandLineTestUtilities",
             .productItem(name: "SDGControlFlow", package: "SDGCornerstone"),
