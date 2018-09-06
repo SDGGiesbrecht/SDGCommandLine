@@ -30,13 +30,13 @@ import PackageDescription
 /// - Automatic `help` subcommand
 /// - Testable output
 /// - Colour formatting tools
-/// - Automatic `•no‐colour` option
+///     - Automatic `•no‐colour` option
 /// - Interface localization
-/// - Automatic `set‐language` subcommand to set language preferences.
-/// - Automatic `•language` option to run in a specific language only once.
+///     - Automatic `set‐language` subcommand to set language preferences.
+///     - Automatic `•language` option to run in a specific language only once.
 /// - Versioning tools
-/// - Automatic `version` subcommand
-/// - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
+///     - Automatic `version` subcommand
+///     - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 let package = Package(
     name: "SDGCommandLine",
     products: [
