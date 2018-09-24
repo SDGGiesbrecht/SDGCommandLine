@@ -34,18 +34,18 @@ extension Command {
 
         internal var filterFormatting = false
 
-        @_versioned internal static let newline: StrictString = "\n"
+        public static let _newline: StrictString = "\n"
         private var internalOutput: StrictString
         internal var output: StrictString {
             var result = internalOutput
-            if result.hasSuffix(Output.newline) {
+            if result.hasSuffix(Output._newline) {
                 result.scalars.removeLast()
             }
             return result
         }
 
         /// Prints a message to the standard output.
-        public func print(_ message: StrictString, terminator: StrictString = Output.newline) {
+        public func print(_ message: StrictString, terminator: StrictString = Output._newline) {
             var mutable = message + terminator
 
             if filterFormatting {
@@ -59,7 +59,7 @@ extension Command {
         }
 
         /// Prints a message to the standard output.
-        public func print(_ message: String, terminator: StrictString = Output.newline) {
+        public func print(_ message: String, terminator: StrictString = Output._newline) {
             print(StrictString(message), terminator: terminator)
         }
     }
