@@ -12,8 +12,6 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.13.1, Workspace fails to hide types.)
-/// [Do not use.]
 public struct _ArgumentInterface : Encodable {
     internal var identifier: StrictString
     internal var name: StrictString
