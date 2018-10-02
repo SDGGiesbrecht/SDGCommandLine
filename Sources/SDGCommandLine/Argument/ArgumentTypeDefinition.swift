@@ -43,27 +43,22 @@ public struct ArgumentTypeDefinition<Type> : AnyArgumentTypeDefinition {
 
     // MARK: - AnyArgumentTypeDefinition
 
-    /// :nodoc:
     public func _parse(argument: StrictString) -> Any? {
         return parse(argument)
     }
 
-    /// :nodoc:
     public func _identifier() -> StrictString {
         return identifier
     }
 
-    /// :nodoc:
     public func _localizedName() -> StrictString {
         return localizedName()
     }
 
-    /// :nodoc:
     public func _localizedDescription() -> StrictString {
         return localizedDescription()
     }
 
-    /// :nodoc:
     public func _interface() -> _ArgumentInterface {
         return _ArgumentInterface(identifier: identifier, name: localizedName(), description: identifier == ArgumentType.booleanIdentifier ? "" : localizedDescription())
     }
