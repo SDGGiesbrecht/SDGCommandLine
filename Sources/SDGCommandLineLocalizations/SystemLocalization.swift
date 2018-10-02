@@ -14,7 +14,7 @@
 
 import SDGLocalization
 
-public enum SystemLocalization : String, InputLocalization {
+public enum SystemLocalization : String, CaseIterable, InputLocalization {
 
     // MARK: - Cases
 
@@ -85,75 +85,8 @@ public enum SystemLocalization : String, InputLocalization {
 
     case catalàEspanya = "ca\u{2D}ES"
 
-    public static let cases: [SystemLocalization] = [
-
-        .普通话中国,
-        .國語中國,
-
-        .españolEspaña,
-
-        .englishUnitedKingdom,
-        .englishUnitedStates,
-        .englishCanada,
-
-        .العربية_السعودية,
-
-        .हिन्दी_भारत,
-
-        .portuguêsPortugal,
-
-        .русскийРоссия,
-
-        .日本語日本国,
-
-        .deutschDeutschland,
-
-        .tiếngViệtViệtNam,
-
-        .한국어한국,
-
-        .françaisFrance,
-
-        .türkçeTürkiye,
-
-        .italianoItalia,
-
-        .polskiPolska,
-
-        .українськаУкраїна,
-
-        .nederlandsNederland,
-
-        .malaysiaMalaysia,
-
-        .românăRomânia,
-
-        .ไทยไทย,
-
-        .ελληνικάΕλλάδα,
-
-        .češtinaČesko,
-
-        .magyarMagyarország,
-
-        .svenskaSverige,
-
-        .indonesiaIndonesia,
-
-        .danskDanmark,
-
-        .suomiSuomi,
-
-        .slovenčinaSlovensko,
-
-        .עברית־ישראל,
-
-        .norskNorge,
-
-        .hrvatskiHrvatska,
-
-        .catalàEspanya
-    ]
+    // #workaround(SDGCornerstone 0.11.1, This may not be necessary once InputLocalization is refactored around CaseIterable.)
+    public static let cases: [SystemLocalization] = allCases
 
     // MARK: - Localization
 

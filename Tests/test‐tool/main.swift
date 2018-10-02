@@ -18,9 +18,10 @@ ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool
 ProcessInfo.version = nil
 ProcessInfo.packageURL = nil
 
-enum Language : String, InputLocalization {
+enum Language : String, CaseIterable, InputLocalization {
     case englishCanada = "en\u{2D}CA"
-    static let cases: [Language] = [.englishCanada]
+    // #workaround(SDGCornerstone 0.11.1, This may not be necessary once InputLocalization is refactored around CaseIterable.)
+    static let cases: [Language] = allCases
     static let fallbackLocalization: Language = .englishCanada
 }
 
