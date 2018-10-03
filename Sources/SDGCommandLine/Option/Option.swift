@@ -57,37 +57,30 @@ public struct Option<Type> : AnyOption {
 
     // MARK: - AnyOption
 
-    /// :nodoc:
     public var _identifier: StrictString {
         return identifier
     }
 
-    /// :nodoc:
     public var _isHidden: Bool {
         return isHidden
     }
 
-    /// :nodoc:
     public func _matches(name: StrictString) -> Bool {
         return name ∈ names
     }
 
-    /// :nodoc:
     public func _localizedName() -> StrictString {
         return localizedName()
     }
 
-    /// :nodoc:
     public func _localizedDescription() -> StrictString {
         return localizedDescription()
     }
 
-    /// :nodoc:
     public func _type() -> AnyArgumentTypeDefinition {
         return type
     }
 
-    /// :nodoc:
     public func _interface() -> _OptionInterface {
         return _OptionInterface(identifier: identifier, name: localizedName(), description: localizedDescription(), type: type()._interface())
     }

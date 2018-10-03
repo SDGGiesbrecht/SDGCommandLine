@@ -17,25 +17,13 @@ import SDGControlFlow
 /// A type‐erased option.
 public protocol AnyOption : TextualPlaygroundDisplay {
 
-    /// :nodoc:
     var _identifier: StrictString { get }
-
-    /// :nodoc:
     var _isHidden: Bool { get }
 
-    /// :nodoc:
     func _matches(name: StrictString) -> Bool
-
-    /// :nodoc:
     func _localizedName() -> StrictString
-
-    /// :nodoc:
     func _localizedDescription() -> StrictString
-
-    /// :nodoc:
     func _type() -> AnyArgumentTypeDefinition
-
-    /// :nodoc:
     func _interface() -> _OptionInterface
 }
 

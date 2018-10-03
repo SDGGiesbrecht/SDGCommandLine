@@ -16,20 +16,10 @@ import SDGControlFlow
 
 /// A type‐erased argument definition.
 public protocol AnyArgumentTypeDefinition : TextualPlaygroundDisplay {
-
-    /// :nodoc:
     func _parse(argument: StrictString) -> Any?
-
-    /// :nodoc:
     func _identifier() -> StrictString
-
-    /// :nodoc:
     func _localizedName() -> StrictString
-
-    /// :nodoc:
     func _localizedDescription() -> StrictString
-
-    /// :nodoc:
     func _interface() -> _ArgumentInterface
 }
 
