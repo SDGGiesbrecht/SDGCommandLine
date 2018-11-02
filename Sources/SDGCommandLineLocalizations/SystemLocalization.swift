@@ -85,9 +85,6 @@ public enum SystemLocalization : String, CaseIterable, InputLocalization {
 
     case catalàEspanya = "ca\u{2D}ES"
 
-    // #workaround(SDGCornerstone 0.11.1, This may not be necessary once InputLocalization is refactored around CaseIterable.)
-    public static let cases: [SystemLocalization] = allCases
-
     // MARK: - Localization
 
     public static let fallbackLocalization: SystemLocalization = .עברית־ישראל

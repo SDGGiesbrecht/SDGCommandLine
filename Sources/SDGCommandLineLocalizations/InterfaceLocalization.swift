@@ -22,9 +22,6 @@ public enum InterfaceLocalization : String, CaseIterable, InputLocalization {
     case englishUnitedStates = "en\u{2D}US"
     case englishCanada = "en\u{2D}CA"
 
-    // #workaround(SDGCornerstone 0.11.1, This may not be necessary once InputLocalization is refactored around CaseIterable.)
-    public static let cases: [InterfaceLocalization] = allCases
-
     // MARK: - Localization
 
     public static let fallbackLocalization: InterfaceLocalization = .englishUnitedKingdom
