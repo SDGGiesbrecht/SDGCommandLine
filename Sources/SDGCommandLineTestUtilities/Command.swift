@@ -36,7 +36,7 @@ import SDGPersistenceTestUtilities
 
     let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
 
-    for localization in localizations.cases {
+    for localization in localizations.allCases {
         autoreleasepool {
 
             let filename: String

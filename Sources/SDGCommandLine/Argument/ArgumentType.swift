@@ -253,7 +253,7 @@ public enum ArgumentType {
         if let version = Version(String(argument)) {
             return Build.version(version)
         } else {
-            for localization in InterfaceLocalization.cases {
+            for localization in InterfaceLocalization.allCases {
                 if argument == ArgumentType.developmentCase.resolved(for: localization) {
                     return Build.development
                 }

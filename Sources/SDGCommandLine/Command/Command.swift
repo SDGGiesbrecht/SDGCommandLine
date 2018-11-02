@@ -401,7 +401,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     internal static func list<L : InputLocalization>(names: UserFacing<StrictString, L>) -> Set<StrictString> {
         var result: Set<StrictString> = []
-        for localization in L.cases {
+        for localization in L.allCases {
             let name = names.resolved(for: localization)
             result.insert(Command.normalizeToUnicode(name, in: localization))
             result.insert(Command.normalizeToAscii(name))
