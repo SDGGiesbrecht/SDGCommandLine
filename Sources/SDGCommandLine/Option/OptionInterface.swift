@@ -2,7 +2,7 @@
  OptionInterface.swift
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
+ https://sdggiesbrecht.github.io/SDGCommandLine
 
  Copyright ©2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 

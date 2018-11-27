@@ -2,7 +2,7 @@
  Workspace.swift
 
  This source file is part of the SDGCommandLine open source project.
- https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine
+ https://sdggiesbrecht.github.io/SDGCommandLine
 
  Copyright ©2018 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
@@ -19,7 +19,7 @@ configuration._applySDGDefaults()
 
 configuration.documentation.currentVersion = Version(0, 4, 2)
 
-configuration.documentation.projectWebsite = URL(string: "https://sdggiesbrecht.github.io/SDGCommandLine/SDGCommandLine")!
+configuration.documentation.projectWebsite = URL(string: "https://sdggiesbrecht.github.io/SDGCommandLine")!
 configuration.documentation.documentationURL = URL(string: "https://sdggiesbrecht.github.io/SDGCommandLine")!
 configuration.documentation.api.yearFirstPublished = 2017
 configuration.documentation.repositoryURL = URL(string: "https://github.com/SDGGiesbrecht/SDGCommandLine")!
