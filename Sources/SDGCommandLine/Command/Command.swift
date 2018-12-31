@@ -70,7 +70,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
     ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
     public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, subcommands: [Command], defaultSubcommand: Command? = nil, hidden: Bool = false) {
-        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], hidden: hidden, execution: defaultSubcommand?.execution, subcommands: subcommands) // @exempt(from: tests) False result in Xcode 9.3.
+        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], hidden: hidden, execution: defaultSubcommand?.execution, subcommands: subcommands)
     }
 
     internal init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
@@ -86,7 +86,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         self.isHidden = hidden
         self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
 
-        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) } // @exempt(from: tests) False result in Xcode 9.3.
+        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
         self.options = options.appending(contentsOf: Command.standardOptions)
