@@ -1,7 +1,7 @@
 $ tool some‐invalid‐argument •use‐version development another‐invalid‐argument •no‐colour
 
-$ git clone [Temporary Directory]/tool [Temporary Directory]/Package_Clones/tool --depth 1
-Cloning into '[Temporary Directory]/Package_Clones/tool'...
+$ git clone [Temporary Directory]/tool [Temporary Directory]/Package Clones/tool --depth 1
+Cloning into '[Temporary Directory]/Package Clones/tool'...
 
 $ swift build --configuration release
 Compile Swift Module 'tool' (1 sources)
