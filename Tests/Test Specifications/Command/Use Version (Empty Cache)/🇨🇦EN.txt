@@ -1,7 +1,7 @@
 $ tool some‐invalid‐argument •use‐version 1.0.0 another‐invalid‐argument •no‐colour
 
-$ git clone [Temporary Directory]/tool [Temporary Directory]/Package_Clones/tool --branch 1.0.0 --config advice.detachedHead=false --depth 1
-Cloning into '[Temporary Directory]/Package_Clones/tool'...
+$ git clone [Temporary Directory]/tool [Temporary Directory]/Package Clones/tool --branch 1.0.0 --config advice.detachedHead=false --depth 1
+Cloning into '[Temporary Directory]/Package Clones/tool'...
 
 $ swift build --configuration release
 Compile Swift Module 'tool' (1 sources)
