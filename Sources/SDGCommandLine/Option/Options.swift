@@ -75,9 +75,7 @@ public struct Options : TransparentWrapper {
 
     // MARK: - Initialization
 
-    internal init() {
-
-    }
+    internal init() {}
 
     // MARK: - Properties
 

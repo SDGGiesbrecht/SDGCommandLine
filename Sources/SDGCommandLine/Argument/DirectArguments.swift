@@ -22,9 +22,7 @@ public struct DirectArguments : TransparentWrapper {
 
     // MARK: - Initialization
 
-    internal init() {
-
-    }
+    internal init() {}
 
     // MARK: - Properties
 
