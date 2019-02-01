@@ -33,10 +33,11 @@ extension Command {
 
         /// Creates a command line failure.
         ///
-        /// - Parameters:
-        ///     - exitCode: An optional specific exit code. (If not specified, the exit code will simply be all ones.)
-        ///
         /// - Precondition: `exitCode` ≠ 0
+        ///
+        /// - Parameters:
+        ///     - description: A description of the error.
+        ///     - exitCode: An optional specific exit code. (If not specified, the exit code will simply be all ones.)
         public init<L>(description: UserFacing<StrictString, L>, exitCode: Int = Int.max) {
 
             self.describeClosure = { description.resolved() }

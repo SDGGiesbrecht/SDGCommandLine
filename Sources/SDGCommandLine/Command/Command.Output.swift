@@ -45,6 +45,10 @@ extension Command {
         }
 
         /// Prints a message to the standard output.
+        ///
+        /// - Parameters:
+        ///     - message: The message.
+        ///     - terminator: Optional. A particular terminator.
         public func print(_ message: StrictString, terminator: StrictString = Output._newline) {
             var mutable = message + terminator
 

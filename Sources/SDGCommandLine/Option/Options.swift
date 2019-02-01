@@ -88,11 +88,17 @@ public struct Options : TransparentWrapper {
     }
 
     /// Returns the value of the specified option, or `nil` if the option is not defined.
+    ///
+    /// - Parameters:
+    ///     - option: The option to check.
     public func value<T>(for option: Option<T>) -> T? {
         return options[option.identifier] as? T
     }
 
     /// Returns `true` if the Boolean flag is active and `false` if it is not.
+    ///
+    /// - Parameters:
+    ///     - option: The option to check.
     public func value(for option: Option<Bool>) -> Bool {
         return (options[option.identifier] as? Bool) == true
     }

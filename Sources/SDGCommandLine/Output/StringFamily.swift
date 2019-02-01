@@ -48,6 +48,9 @@ extension StringFamily {
     }
 
     /// Returns a string formed by applying the specified format to the entire string.
+    ///
+    /// - Parameters:
+    ///     - format: The format to apply.
     public func `in`(_ format: TextFormat) -> Self {
 
         func apply(code: Int) -> String {

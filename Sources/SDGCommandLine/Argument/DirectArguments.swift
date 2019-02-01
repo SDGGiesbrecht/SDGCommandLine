@@ -35,6 +35,10 @@ public struct DirectArguments : TransparentWrapper {
     }
 
     /// Returns the value of the specified argument, or `nil` if the argument is not defined.
+    ///
+    /// - Parameters:
+    ///     - index: The index to check.
+    ///     - type: The type to attempt to cast to.
     public func argument<T>(at index: Int, as type: ArgumentTypeDefinition<T>) -> T? {
         guard index ∈ arguments.bounds else {
             return nil

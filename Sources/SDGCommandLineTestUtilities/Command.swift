@@ -17,14 +17,16 @@ import Foundation
 import SDGControlFlow
 import SDGPersistenceTestUtilities
 
-/// Tests a type’s conformance to CustomStringConvertible.
+/// Tests a command.
 ///
-/// This function will write the description to the test specification directory in the project repository and will compare against it on future calls. It is recommeded to check those specifications into source control to monitor changes in the description.
+/// This function will write the output to the test specification directory in the project repository and will compare against it on future calls. It is recommeded to check those specifications into source control to monitor changes in the description.
 ///
 /// To update the specification instead of testing against it, change `overwriteSpecificationInsteadOfFailing` to `true` and re‐run the test suite. The specification will be rewritten to match the descriptions. *Do not forget to change it back afterward, or the test will cease to validate anything.*
 ///
 /// - Parameters:
-///     - instance: An instance to get a description from.
+///     - command: A command to test.
+///     - arguments: The arguments to supply to the command.
+///     - workingDirectory: The directory to run the command in.
 ///     - localizations: The localization set to test.
 ///     - uniqueTestName: A unique name for the test. This is used in the path to the persistent test specifications.
 ///     - allowColour: Optional. Set to `true` to include colour in the specification. `false` by default.
