@@ -31,7 +31,7 @@ extension Command {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting.insert(.prettyPrinted)
-        if #available(OSX 10.13, *) { // @exempt(from: tests)
+        if #available(OSX 10.13, *) { // @exempt(from: tests) @exempt(from: unicode)
             encoder.outputFormatting.insert(.sortedKeys)
         }
         let data = try encoder.encode(command)

@@ -50,10 +50,10 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - description: A brief description. (Printed by the `help` subcommand.)
     ///     - directArguments: A list of direct command line arguments to accept.
     ///     - options: A list of command line options to accept.
+    ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
     ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
-    ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
     ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
     public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
         self.init(name: name, description: description, directArguments: directArguments, options: options, hidden: hidden, execution: execution, subcommands: [])

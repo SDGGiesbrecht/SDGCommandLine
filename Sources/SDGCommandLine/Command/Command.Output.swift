@@ -44,7 +44,12 @@ extension Command {
             return result
         }
 
+        // @documentation(SDGCommandLine.Command.Output.print(_:terminator:))
         /// Prints a message to the standard output.
+        ///
+        /// - Parameters:
+        ///     - message: The message.
+        ///     - terminator: Optional. A particular terminator.
         public func print(_ message: StrictString, terminator: StrictString = Output._newline) {
             var mutable = message + terminator
 
@@ -58,7 +63,12 @@ extension Command {
             }
         }
 
+        // #documentation(SDGCommandLine.Command.Output.print(_:terminator:))
         /// Prints a message to the standard output.
+        ///
+        /// - Parameters:
+        ///     - message: The message.
+        ///     - terminator: Optional. A particular terminator.
         public func print(_ message: String, terminator: StrictString = Output._newline) {
             print(StrictString(message), terminator: terminator)
         }
