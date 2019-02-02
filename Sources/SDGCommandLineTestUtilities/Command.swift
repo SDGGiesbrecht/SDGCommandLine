@@ -32,6 +32,8 @@ import SDGPersistenceTestUtilities
 ///     - allowColour: Optional. Set to `true` to include colour in the specification. `false` by default.
 ///     - postprocess: Optional. A closure to postprocess the output before comparing against the specification. Use this to keep elements which vary out of the specification, such as by cleaning the user’s home directory out of any printed paths.
 ///     - overwriteSpecificationInsteadOfFailing: Set to `false` for normal behaviour. Set to `true` temporarily to update the specification.
+///     - file: Optional. A different file to report as the failure location.
+///     - line: Optional. A different line to report as the failure location.
 @inlinable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, postprocess: (inout String) -> Void = { _ in }, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
 
     Command.Output.testMode = true
