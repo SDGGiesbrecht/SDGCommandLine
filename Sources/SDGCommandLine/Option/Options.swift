@@ -105,8 +105,6 @@ public struct Options : TransparentWrapper {
 
     // MARK: - TransparentWrapper
 
-    // #documentation(SDGCornerstone.TransparentWrapper.wrapped)
-    /// The wrapped instance.
     public var wrappedInstance: Any {
         return options
     }

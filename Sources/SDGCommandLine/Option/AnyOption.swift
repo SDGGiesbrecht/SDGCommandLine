@@ -59,8 +59,6 @@ extension AnyOption {
 
     // MARK: - CustomStringConvertible
 
-    // #documentation(SDGCornerstone.CustomStringConvertible.description)
-    /// A textual representation of the instance.
     public var description: String {
         return String(localizedName())
     }

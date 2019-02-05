@@ -411,8 +411,6 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - CustomStringConvertible
 
-    // #documentation(SDGCornerstone.CustomStringConvertible.description)
-    /// A textual representation of the instance.
     public var description: String {
         return String(localizedName())
     }
@@ -428,11 +426,6 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         case options
     }
 
-    // #documentation(SDGCornerstone.Encodable.encode(to:))
-    /// Encodes this value into the given encoder.
-    ///
-    /// - Parameters:
-    ///     - encoder: The encoder to write data to.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)

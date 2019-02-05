@@ -65,13 +65,9 @@ public enum Colour : Int, TextFormat {
 
     // MARK: - TextFormat
 
-    // [_Inhert Documentation: SDGCommandLine.TextFormat.startCode_]
-    /// The ANSI start code.
     public var startCode: Int {
         return rawValue
     }
 
-    // #documentation(SDGCommandLine.TextFormat.resetCode)
-    /// The ANSI reset code.
     public static let resetCode: Int = 39
 }
