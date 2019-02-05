@@ -15,11 +15,9 @@
 /// A element of text formatting.
 public protocol TextFormat {
 
-    // @documentation(SDGCommandLine.TextFormat.startCode)
     /// The ANSI start code.
     var startCode: Int { get }
 
-    // @documentation(SDGCommandLine.TextFormat.resetCode)
     /// The ANSI reset code.
     static var resetCode: Int { get }
 }
