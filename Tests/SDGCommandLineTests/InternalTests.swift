@@ -132,6 +132,11 @@ class InternalTests : TestCase {
                         RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy),
                         LiteralPattern("/tool \u{2D}\u{2D}branch".scalars)
                         ]), with: "tool [...]/tool \u{2D}\u{2D}branch".scalars)
+                    output.scalars.replaceMatches(for: CompositePattern([
+                        LiteralPattern("tool ".scalars),
+                        RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy),
+                        LiteralPattern("/tool \u{2D}\u{2D}depth".scalars)
+                        ]), with: "tool [...]/tool \u{2D}\u{2D}depth".scalars)
                 }
 
                 // When the cache is empty...
