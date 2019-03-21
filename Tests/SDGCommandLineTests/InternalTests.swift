@@ -101,7 +101,7 @@ class InternalTests : TestCase {
                 ProcessInfo.packageURL = testPackage.location
 
                 func postprocess(_ output: inout String) {
-                    output.replaceMatches(for: temporaryDirectory.absoluteString, with: "[Temporary Directory]/")
+                    output.replaceMatches(for: temporaryDirectory.absoluteString, with: "[Temporary Directory]")
                     output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
 
                     let cacheDirectory = FileManager.default.url(in: .cache, at: "File").deletingLastPathComponent()
@@ -122,6 +122,16 @@ class InternalTests : TestCase {
                         RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy),
                         LiteralPattern("/release".scalars)
                         ]), with: ".build/[Operating System]/release".scalars)
+                    output.scalars.replaceMatches(for: CompositePattern([
+                        LiteralPattern("Cloning into \u{27}".scalars),
+                        RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy),
+                        LiteralPattern("\u{27}".scalars)
+                        ]), with: "Cloning into \u{27}...\u{27}".scalars)
+                    output.scalars.replaceMatches(for: CompositePattern([
+                        LiteralPattern("tool ".scalars),
+                        RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy),
+                        LiteralPattern("/tool \u{2D}\u{2D}branch".scalars)
+                        ]), with: "tool [...]/tool \u{2D}\u{2D}branch".scalars)
                 }
 
                 // When the cache is empty...
