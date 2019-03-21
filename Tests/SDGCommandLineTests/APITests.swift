@@ -39,7 +39,9 @@ class APITests : TestCase {
     func testCommand() {
         testCustomStringConvertibleConformance(of: Tool.command, localizations: InterfaceLocalization.self, uniqueTestName: "Tool", overwriteSpecificationInsteadOfFailing: false)
 
-        SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], in: FileManager.default.url(in: .temporary, at: "Somewhere"), localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
+        FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+            SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute"], in: temporary, localizations: Language.self, uniqueTestName: "Execution", overwriteSpecificationInsteadOfFailing: false)
+        }
 
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail"], localizations: Language.self, uniqueTestName: "Failure", overwriteSpecificationInsteadOfFailing: false)
 
