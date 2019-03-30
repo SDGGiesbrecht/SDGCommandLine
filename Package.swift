@@ -39,6 +39,9 @@ import PackageDescription
 ///     - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 let package = Package(
     name: "SDGCommandLine",
+    platforms: [
+        .macOS(.v10_13)
+    ],
     products: [
         // @documentation(SDGCommandLine)
         /// Tools for implementing a command line interface.
