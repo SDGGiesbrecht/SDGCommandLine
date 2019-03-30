@@ -91,7 +91,7 @@ class InternalTests : TestCase {
             try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
                 let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-                let testPackage = try PackageRepository(initializingAt: location, type: .executable)
+                let testPackage = try PackageRepository(initializingAt: location, named: StrictString(location.lastPathComponent), type: .executable)
                 try Shell.default.run(command: ["git", "init"], in: testPackage.location)
 
                 try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift"))
