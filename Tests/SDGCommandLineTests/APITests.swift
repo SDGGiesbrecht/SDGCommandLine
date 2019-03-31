@@ -121,10 +121,10 @@ class APITests : TestCase {
         XCTAssertEqual("1.2", Version(1, 2, 0))
         XCTAssertEqual("1", Version(1, 0, 0))
 
-        XCTAssertNil(Version(""))
-        XCTAssertNil(Version("A"))
-        XCTAssertNil(Version("1.B"))
-        XCTAssertNil(Version("1.2.C"))
-        XCTAssertNil(Version("1.2.3.D"))
+        XCTAssertNil(Version(String("")))
+        XCTAssertNil(Version(String("A")))
+        XCTAssertNil(Version(String("1.B")))
+        XCTAssertNil(Version(String("1.2.C")))
+        XCTAssertNil(Version(String("1.2.3.D")))
     }
 }

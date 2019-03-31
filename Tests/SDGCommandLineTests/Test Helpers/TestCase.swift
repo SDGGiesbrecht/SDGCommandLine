@@ -21,11 +21,11 @@ import SDGCommandLine
 
 class TestCase : SDGXCTestUtilities.TestCase {
 
-    static var initialized = false
+    static var alreadyInitialized = false
 
     override func setUp() {
-        if ¬TestCase.initialized {
-            TestCase.initialized = true
+        if ¬TestCase.alreadyInitialized {
+            TestCase.alreadyInitialized = true
             ProcessInfo.version = Version(1, 2, 3)
             ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
             Command.Output.testMode = true

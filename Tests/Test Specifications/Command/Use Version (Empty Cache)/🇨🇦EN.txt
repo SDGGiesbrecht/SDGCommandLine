@@ -4,8 +4,8 @@ $ git clone [Temporary Directory]/tool [...]/tool --branch 1.0.0 --config advice
 Cloning into '...'...
 
 $ swift build --configuration release
-Compile Swift Module 'tool' (1 sources)
-Linking ./.build/[Operating System]/release/tool
+[1/2] Compiling Swift Module 'tool' (1 sources)
+[2/2] Linking ./.build/[Operating System]/release/tool
 
 $ tool some‐invalid‐argument another‐invalid‐argument •no‐colour
 some‐invalid‐argument another‐invalid‐argument •no‐colour
