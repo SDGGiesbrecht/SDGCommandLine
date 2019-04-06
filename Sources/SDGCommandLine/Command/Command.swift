@@ -117,9 +117,9 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             Command.setLanguage,
             Command.emptyCache
             ])
-        if BuildConfiguration.current == .debug {
-            copy.subcommands.append(Command.exportInterface)
-        }
+        #if INTERFACE_EXPORT
+        copy.subcommands.append(Command.exportInterface)
+        #endif
         return copy
     }
 
