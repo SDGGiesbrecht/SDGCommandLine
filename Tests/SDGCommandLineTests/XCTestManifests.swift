@@ -24,7 +24,6 @@ extension APITests {
         ("testFormatting", testFormatting),
         ("testHelp", testHelp),
         ("testLanguage", testLanguage),
-        ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
         ("testLocalizations", testLocalizations),
         ("testNoColour", testNoColour),
         ("testOption", testOption),
@@ -37,7 +36,6 @@ extension InternalTests {
         ("testDirectArguments", testDirectArguments),
         ("testEmptyCache", testEmptyCache),
         ("testExportInterface", testExportInterface),
-        ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
         ("testOptions", testOptions),
         ("testSetLanguage", testSetLanguage),
         ("testVersionSelection", testVersionSelection),
@@ -47,7 +45,6 @@ extension InternalTests {
 
 extension ReadMeExampleTests {
     static let __allTests = [
-        ("testLinuxMainGenerationCompatibility", testLinuxMainGenerationCompatibility),
         ("testParrot", testParrot)
     ]
 }
