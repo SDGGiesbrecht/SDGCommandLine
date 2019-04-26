@@ -68,8 +68,8 @@ class APITests : TestCase {
     func testFormatting() {
         XCTAssertErrorFree({
             let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"])
-            XCTAssert(output.contains(StrictString("\u{1B}[1m")), "Bold formatting missing.")
-            XCTAssert(output.contains(StrictString("\u{1B}[22m")), "Bold formatting never reset.")
+            XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
+            XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
         })
     }
 
