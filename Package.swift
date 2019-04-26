@@ -51,8 +51,8 @@ let package = Package(
         .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .upToNextMinor(from: Version(0, 16, 0))),
-        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .upToNextMinor(from: Version(0, 7, 1)))
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .upToNextMinor(from: Version(0, 17, 0))),
+        .package(url: "https://github.com/SDGGiesbrecht/SDGSwift", .upToNextMinor(from: Version(0, 8, 0)))
     ],
     targets: [
 
