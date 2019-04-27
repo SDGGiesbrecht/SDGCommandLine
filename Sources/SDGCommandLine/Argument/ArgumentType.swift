@@ -126,7 +126,7 @@ public enum ArgumentType {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return StrictString("\(range.lowerBound.inDigits())–\(range.upperBound.inDigits())")
+                return "\(range.lowerBound.inDigits())–\(range.upperBound.inDigits())"
             }
         })
     }
@@ -135,7 +135,7 @@ public enum ArgumentType {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return StrictString("An integer between \(range.lowerBound.inDigits()) and \(range.upperBound.inDigits()) inclusive.")
+                return "An integer between \(range.lowerBound.inDigits()) and \(range.upperBound.inDigits()) inclusive."
             }
         })
     }
@@ -247,9 +247,9 @@ public enum ArgumentType {
         let development = ArgumentType.developmentCase.resolved(for: localization)
         switch localization {
         case .englishUnitedKingdom:
-            return StrictString("A version number or ‘\(development)’.")
+            return "A version number or ‘\(development)’."
         case .englishUnitedStates, .englishCanada:
-            return StrictString("A version number or “\(development)”.")
+            return "A version number or “\(development)”."
         }
     })
 

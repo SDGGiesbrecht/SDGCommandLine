@@ -231,7 +231,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         var result: StrictString
                         switch localization {
                         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                            result = StrictString("Unexpected argument: \(argument)")
+                            result = "Unexpected argument: \(argument)"
                         }
                         return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                     }))
@@ -254,9 +254,9 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 var result: StrictString
                 switch localization {
                 case .englishUnitedKingdom:
-                    result = StrictString("An argument for ‘\(commandName)’ is invalid: \(possibleDirectArgument)")
+                    result = "An argument for ‘\(commandName)’ is invalid: \(possibleDirectArgument)"
                 case .englishUnitedStates, .englishCanada:
-                    result = StrictString("An argument for “\(commandName)” is invalid: \(possibleDirectArgument)")
+                    result = "An argument for “\(commandName)” is invalid: \(possibleDirectArgument)"
                 }
                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
             }))
@@ -295,9 +295,9 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
-                        result = StrictString("The argument is missing for ‘\(optionName)’.")
+                        result = "The argument is missing for ‘\(optionName)’."
                     case .englishUnitedStates, .englishCanada:
-                        result = StrictString("The argument is missing for “\(optionName)”.")
+                        result = "The argument is missing for “\(optionName)”."
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 }))
@@ -310,9 +310,9 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     var result: StrictString
                     switch localization {
                     case .englishUnitedKingdom:
-                        result = StrictString("The argument for ‘\(optionName)’ is invalid: \(argument)")
+                        result = "The argument for ‘\(optionName)’ is invalid: \(argument)"
                     case .englishUnitedStates, .englishCanada:
-                        result = StrictString("The argument for “\(optionName)” is invalid: \(argument)")
+                        result = "The argument for “\(optionName)” is invalid: \(argument)"
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 }))
@@ -328,7 +328,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             var result: StrictString
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                result = StrictString("Invalid option: \(optionName)")
+                result = "Invalid option: \(optionName)"
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
         }))
@@ -365,7 +365,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                return StrictString("See also: \(command)")
+                return "See also: \(command)"
             }
         })
     }
@@ -388,14 +388,14 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         } else {
             hyphen = "‐"
         }
-        return string.replacingMatches(for: StrictString("\u{2D}"), with: hyphen)
+        return string.replacingMatches(for: "\u{2D}", with: hyphen)
     }
 
     internal static func normalizeToAscii(_ string: StrictString) -> StrictString {
         let asciiHyphen: StrictString = "\u{2D}"
         var result = string
-        result.replaceMatches(for: StrictString("‐"), with: asciiHyphen)
-        result.replaceMatches(for: StrictString("־"), with: asciiHyphen)
+        result.replaceMatches(for: "‐", with: asciiHyphen)
+        result.replaceMatches(for: "־", with: asciiHyphen)
         return result
     }
 
