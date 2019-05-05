@@ -58,26 +58,28 @@ import SDGPersistenceTestUtilities
                 var report = ""
                 print("$ " + ([command.localizedName()] + modifiedArguments).joined(separator: " "), to: &report)
 
+                var result: Result<StrictString, Command.Error> = .success("")
+                if let location = workingDirectory {
+                    try! FileManager.default.do(in: location) {
+                        result = command.execute(with: modifiedArguments)
+                    }
+                } else {
+                    result = command.execute(with: modifiedArguments)
+                }
                 var output: StrictString = ""
                 var error: StrictString = ""
                 var exitCode: Int = Command.Error.successCode
-                do {
-                    if let location = workingDirectory {
-                        try FileManager.default.do(in: location) {
-                            output = try command.execute(with: modifiedArguments)
-                        }
-                    } else {
-                        output = try command.execute(with: modifiedArguments)
-                    }
-                } catch let thrown as Command.Error {
+                switch result {
+                case .success(let outputReceived):
+                    output = outputReceived
+                case .failure(let thrown):
                     if let captured = thrown.output {
                         output = captured
                     }
                     error = thrown.presentableDescription()
                     exitCode = thrown.exitCode
-                } catch {
-                    unreachable()
                 }
+
                 if ¬output.isEmpty {
                     print(output, to: &report)
                 }
