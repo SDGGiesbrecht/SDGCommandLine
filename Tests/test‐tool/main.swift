@@ -53,7 +53,7 @@ let fail = Command(name: UserFacing<StrictString, Language>({ localization in
         return "demonstrates a failure."
     }
 }), directArguments: [], options: [], execution: { (_, _, _) throws -> Void in
-    try execute.execute(with: [])
+    execute.execute(with: [])
     throw Command.Error(description: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .englishCanada:
