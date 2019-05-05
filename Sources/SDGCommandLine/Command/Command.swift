@@ -181,7 +181,16 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 }
             }
 
-            let (directArguments, options) = try parse(arguments: arguments)
+            let argumentsAttempt = parse(arguments: arguments)
+            let directArguments: DirectArguments
+            let options: Options
+            switch argumentsAttempt {
+            case .failure(let error):
+                return .failure(error)
+            case .success(let (parsedArguments, parsedOptions)):
+                directArguments = parsedArguments
+                options = parsedOptions
+            }
 
             if options.value(for: Options.noColour) {
                 outputCollector.filterFormatting = true
