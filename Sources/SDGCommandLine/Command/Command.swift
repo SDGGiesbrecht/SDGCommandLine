@@ -208,7 +208,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Argument Parsing
 
-    private func parse(arguments: [StrictString]) throws -> (DirectArguments, Options) {
+    private func parse(arguments: [StrictString]) -> Result<(DirectArguments, Options), Command.Error> {
         var directArguments = DirectArguments()
         var options = Options()
 
@@ -225,29 +225,29 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     // Not a direct argument.
 
                     let commandStack = Command.stack // Prevent delayed evaluation.
-                    throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                    return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                         var result: StrictString
                         switch localization {
                         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                             result = "Unexpected argument: \(argument)"
                         }
                         return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                    }))
+                    })))
                 }
             }
         }
-        return (directArguments, options)
+        return .success((directArguments, options))
     }
 
-    private func parse(possibleDirectArgument: StrictString, parsedDirectArguments: inout DirectArguments, expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>) throws -> Bool {
+    private func parse(possibleDirectArgument: StrictString, parsedDirectArguments: inout DirectArguments, expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>) -> Result<Bool, Command.Error> {
 
         guard let definition = expectedDirectArguments.popFirst() else {
-            return false // Not a direct argument.
+            return .success(false) // Not a direct argument.
         }
 
         guard let parsed = definition.parse(argument: possibleDirectArgument) else {
             let commandStack = Command.stack // Prevent delayed evaluation.
-            throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+            return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 let commandName = self.localizedName()
                 var result: StrictString
                 switch localization {
@@ -257,11 +257,11 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     result = "An argument for “\(commandName)” is invalid: \(possibleDirectArgument)"
                 }
                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-            }))
+            })))
         }
 
         parsedDirectArguments.add(value: parsed)
-        return true
+        return .success(true)
     }
 
     private func removeOptionMarker(from possibleOption: StrictString) -> StrictString? {
@@ -271,11 +271,11 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         return nil
     }
 
-    private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
+    private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) -> Result<Bool, Command.Error> {
 
         guard let name = removeOptionMarker(from: possibleOption) else {
             // Not an option.
-            return false
+            return .success(false)
         }
 
         for option in options where option.matches(name: name) {
@@ -283,12 +283,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             if option.type().identifier() == ArgumentType.booleanIdentifier {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
-                return true
+                return .success(true)
             }
 
             guard let argument = remainingArguments.popFirst() else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -298,12 +298,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument is missing for “\(optionName)”."
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                }))
+                })))
             }
 
             guard let parsed = option.type().parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -313,15 +313,15 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument for “\(optionName)” is invalid: \(argument)"
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                }))
+                })))
             }
 
             parsedOptions.add(value: parsed, for: option)
-            return true
+            return .success(true)
         }
 
         let commandStack = Command.stack // Prevent delayed evaluation.
-        throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+        return.failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
             let optionName = ("•" + name)
             var result: StrictString
             switch localization {
@@ -329,10 +329,10 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 result = "Invalid option: \(optionName)"
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-        }))
+        })))
     }
 
-    private func parseVersion(from arguments: [StrictString]) throws -> (version: Build, otherArguments: [StrictString])? {
+    private func parseVersion(from arguments: [StrictString]) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
 
         var remaining = arguments[arguments.bounds]
 
@@ -352,7 +352,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             }
         }
 
-        return nil
+        return .success(nil)
     }
 
     private static func helpInstructions(for commandStack: [Command]) -> UserFacing<StrictString, InterfaceLocalization> {
