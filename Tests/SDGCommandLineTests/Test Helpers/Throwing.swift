@@ -18,6 +18,7 @@ import Foundation
 import SDGCommandLine
 
 internal func XCTAssertErrorFree(file: StaticString = #file, line: UInt = #line, _ expression: () throws -> Void) {
+    #warning("This is not necessary.")
     do {
         try expression()
     } catch let error {

@@ -50,26 +50,20 @@ class InternalTests : TestCase {
         SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
     }
 
-    func testSetLanguage() {
+    func testSetLanguage() throws {
 
-        XCTAssertErrorFree({
-            testCommand(InternalTests.rootCommand, with: ["set‐language", "zxx"], localizations: APILocalization.self, uniqueTestName: "Set Language", overwriteSpecificationInsteadOfFailing: false)
-        })
+        testCommand(InternalTests.rootCommand, with: ["set‐language", "zxx"], localizations: APILocalization.self, uniqueTestName: "Set Language", overwriteSpecificationInsteadOfFailing: false)
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
-        XCTAssertErrorFree({
-            testCommand(InternalTests.rootCommand, with: ["set‐language"], localizations: APILocalization.self, uniqueTestName: "Set Language to System", overwriteSpecificationInsteadOfFailing: false)
-        })
+        testCommand(InternalTests.rootCommand, with: ["set‐language"], localizations: APILocalization.self, uniqueTestName: "Set Language to System", overwriteSpecificationInsteadOfFailing: false)
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
         for (language, searchTerm) in [
             "en": "set‐language"
             ] as [String: StrictString] {
-                LocalizationSetting(orderOfPrecedence: [language]).do {
-                    XCTAssertErrorFree({
-                        let output = try InternalTests.rootCommand.execute(with: ["help"])
-                        XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
-                    })
+                try LocalizationSetting(orderOfPrecedence: [language]).do {
+                    let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
+                    XCTAssert(output.contains(searchTerm), "Expected output missing from “\(language)”: \(searchTerm)")
                 }
         }
     }
