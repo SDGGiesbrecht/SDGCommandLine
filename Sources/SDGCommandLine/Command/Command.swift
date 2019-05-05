@@ -147,10 +147,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - arguments: The command line arguments, including subcommands and options, to use. (The command itself should be left out.)
     ///     - output: Optional. An output instance to inherit from an encompassing command.
     ///
-    /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
+    /// - Returns: A result with one of the following values:
+    ///     - `success`: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
+    ///     - `failure`: A command error
     ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
-    @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) throws -> StrictString {
+    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. Other types of errors will be wrapped in a `Command.Error` if necessary.
+    @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) -> Result<StrictString, Command.Error> {
         var outputCollector = output ?? Output()
         do {
 
@@ -160,7 +162,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
                 let package = Package(url: packageURL)
                 try package.execute(version, of: names, with: otherArguments, output: outputCollector)
-                return outputCollector.output
+                return .success(outputCollector.output)
             }
 
             Command.stack.append(self)
@@ -168,7 +170,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
             if let first = arguments.first {
                 for subcommand in subcommands where first ∈ subcommand.names {
-                    return try subcommand.execute(with: Array(arguments.dropFirst()), output: outputCollector)
+                    return subcommand.execute(with: Array(arguments.dropFirst()), output: outputCollector)
                 }
             }
 
@@ -182,15 +184,15 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             try language.do {
                 try execute(withArguments: directArguments, options: options, output: outputCollector)
             }
-            return outputCollector.output
+            return .success(outputCollector.output)
 
         } catch var error as Command.Error {
             error.output = outputCollector.output
-            throw error
+            return .failure(error)
         } catch {
             var wrapped = Command.Error(wrapping: error)
             wrapped.output = outputCollector.output
-            throw wrapped
+            return .failure(wrapped)
         }
     }
 
