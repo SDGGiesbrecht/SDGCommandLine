@@ -126,18 +126,16 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// Executes the command and exits.
     public func executeAsMain() -> Never { // @exempt(from: tests) Not testable.
 
-        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) } // @exempt(from: tests)
+        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) }
 
         let exitCode: Int
-        do { // @exempt(from: tests)
-            try self.withRootBehaviour().execute(with: arguments)
+        switch self.withRootBehaviour().execute(with: arguments) {
+        case .success:
             exitCode = Error.successCode
-        } catch let error as Command.Error { // @exempt(from: tests)
+        case .failure(let error):
             FileHandle.standardError.write((error.presentableDescription().formattedAsError() + "\n").file)
             exitCode = error.exitCode
-        } catch { // @exempt(from: tests)
-            unreachable()
-        } // @exempt(from: tests)
+        }
         exit(Int32(truncatingIfNeeded: exitCode))
     }
 
