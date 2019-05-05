@@ -218,8 +218,6 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - arguments: Parsed arguments.
     ///     - options: Parsed options.
     ///     - output: The output stream.
-    ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     public func execute(withArguments arguments: DirectArguments, options: Options, output: Command.Output) throws {
         try autoreleasepool {
             try execution(arguments, options, output)
