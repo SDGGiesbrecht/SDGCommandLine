@@ -216,23 +216,30 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         var expected: ArraySlice<AnyArgumentTypeDefinition> = self.directArguments[self.directArguments.bounds]
         while let argument = remaining.popFirst() {
 
-            if ¬(try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)) {
+            let optionAttempt = parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)
+            switch optionAttempt {
+            case .failure(let error):
+                return .failure(error)
+            case .success(let isOption):
+                if ¬isOption {
+                    let directArgumentAttempt = parse(possibleDirectArgument: argument, parsedDirectArguments: &directArguments, expectedDirectArguments: &expected)
+                    switch directArgumentAttempt {
+                    case .failure(let error):
+                        return .failure(error)
+                    case .success(let isDirectArgument):
+                        if ¬isDirectArgument {
 
-                // Not an option.
-
-                if ¬(try parse(possibleDirectArgument: argument, parsedDirectArguments: &directArguments, expectedDirectArguments: &expected)) {
-
-                    // Not a direct argument.
-
-                    let commandStack = Command.stack // Prevent delayed evaluation.
-                    return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
-                        var result: StrictString
-                        switch localization {
-                        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                            result = "Unexpected argument: \(argument)"
+                            let commandStack = Command.stack // Prevent delayed evaluation.
+                            return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                                var result: StrictString
+                                switch localization {
+                                case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                                    result = "Unexpected argument: \(argument)"
+                                }
+                                return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                            })))
                         }
-                        return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                    })))
+                    }
                 }
             }
         }
