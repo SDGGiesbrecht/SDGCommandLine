@@ -86,7 +86,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         self.isHidden = hidden
         self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
 
-        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
+        self.execution = execution ?? Command.helpExecution
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
         self.options = options.appending(contentsOf: Command.standardOptions)
