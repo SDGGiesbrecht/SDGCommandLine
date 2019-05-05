@@ -342,12 +342,18 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 Options.useVersion.matches(name: name) {
 
                 var options = Options()
-                if try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options),
-                    let version = options.value(for: Options.useVersion) {
+                let optionAttempt = parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)
+                switch optionAttempt {
+                case .failure(let error):
+                    return .failure(error)
+                case .success(let isOption):
+                    if isOption,
+                        let version = options.value(for: Options.useVersion) {
 
-                    let index = arguments.endIndex − remaining.count − 2
-                    let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
-                    return (version: version, otherArguments: otherArguments)
+                        let index = arguments.endIndex − remaining.count − 2
+                        let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
+                        return .success((version: version, otherArguments: otherArguments))
+                    }
                 }
             }
         }
