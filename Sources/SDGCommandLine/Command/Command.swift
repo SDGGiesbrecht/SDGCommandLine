@@ -150,8 +150,6 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// - Returns: A result with one of the following values:
     ///     - `success`: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
     ///     - `failure`: A command error
-    ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. Other types of errors will be wrapped in a `Command.Error` if necessary.
     @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) -> Result<StrictString, Command.Error> {
         var outputCollector = output ?? Output()
         do {
