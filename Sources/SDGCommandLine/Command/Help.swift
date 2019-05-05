@@ -108,7 +108,7 @@ extension Command {
         }
     })
 
-    internal static let helpExecution: (DirectArguments, Options, Command.Output) -> Void = { _, _, output in
+    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { _, _, output in
         output.print("")
 
         let stack = Command.stack.dropLast() // Ignoring help.
@@ -182,6 +182,5 @@ extension Command {
         }
 
         output.print("")
-    }
-    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: helpExecution, addHelp: /* prevents circularity */ false)
+    }, addHelp: /* prevents circularity */ false)
 }
