@@ -152,13 +152,24 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         var outputCollector = output ?? Output()
         do {
 
-            if let packageURL = ProcessInfo.packageURL,
-                let (version, otherArguments) = try parseVersion(from: arguments),
-                version ≠ Build.current {
+            if let packageURL = ProcessInfo.packageURL {
+                let versionAttempt = parseVersion(from: arguments)
+                switch versionAttempt {
+                case .failure(let error):
+                    return .failure(error)
+                case .success(let parsedVersion):
+                    if let (version, otherArguments) = parsedVersion,
+                        version ≠ Build.current {
 
-                let package = Package(url: packageURL)
-                try package.execute(version, of: names, with: otherArguments, output: outputCollector)
-                return .success(outputCollector.output)
+                        let package = Package(url: packageURL)
+                        try package.execute(
+                            version,
+                            of: names,
+                            with: otherArguments,
+                            output: outputCollector)
+                        return .success(outputCollector.output)
+                    }
+                }
             }
 
             Command.stack.append(self)
