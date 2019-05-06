@@ -50,6 +50,8 @@ class APITests : TestCase {
 
     func testCommandError() {
         #if !os(Linux) // System error descriptions differ.
+        Tool.command.execute(with: ["fail", "•system"])
+        #else
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail", "•system"], localizations: Language.self, uniqueTestName: "System Error", overwriteSpecificationInsteadOfFailing: false)
         #endif
     }
