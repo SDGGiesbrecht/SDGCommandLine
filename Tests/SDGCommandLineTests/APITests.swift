@@ -49,7 +49,7 @@ class APITests : TestCase {
     }
 
     func testCommandError() {
-        #if !os(Linux) // System error descriptions differ.
+        #if os(Linux) // System error descriptions differ.
         let result = Tool.command.execute(with: ["fail", "•system"])
         _ = result.mapError { (error: Command.Error) -> Command.Error in
             _ = error.localizedDescription
