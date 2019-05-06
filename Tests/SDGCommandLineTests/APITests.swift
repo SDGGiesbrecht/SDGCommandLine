@@ -49,7 +49,13 @@ class APITests : TestCase {
     }
 
     func testCommandError() {
-        #if !os(Linux) // System error descriptions differ.
+        #if os(Linux) // System error descriptions differ.
+        let result = Tool.command.execute(with: ["fail", "•system"])
+        _ = result.mapError { (error: Command.Error) -> Command.Error in
+            _ = error.localizedDescription
+            return error
+        }
+        #else
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["fail", "•system"], localizations: Language.self, uniqueTestName: "System Error", overwriteSpecificationInsteadOfFailing: false)
         #endif
     }
@@ -65,12 +71,10 @@ class APITests : TestCase {
         SDGCommandLineTestUtilities.testCommand(Tool.command, with: ["execute", "•colour", "none"], localizations: SystemLocalization.self, uniqueTestName: "Invalid Enumeration", overwriteSpecificationInsteadOfFailing: false)
     }
 
-    func testFormatting() {
-        XCTAssertErrorFree({
-            let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"])
-            XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
-            XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
-        })
+    func testFormatting() throws {
+        let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
+        XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
+        XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
     }
 
     func testHelp() {
@@ -88,11 +92,9 @@ class APITests : TestCase {
         XCTAssert(_APILocalization.codeSet() ⊆ APILocalization.codeSet(), "Not all API localizations are supported by SDGCornerstone. Start by localizing it.")
     }
 
-    func testNoColour() {
-        XCTAssertErrorFree({
-            let output = try Tool.command.execute(with: ["help", "•no‐colour"])
-            XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
-        })
+    func testNoColour() throws {
+        let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
+        XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
     }
 
     func testOption() {

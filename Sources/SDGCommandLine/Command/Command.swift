@@ -86,7 +86,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         self.isHidden = hidden
         self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
 
-        self.execution = execution ?? { (_, _, _) in try Command.help.execute(with: []) }
+        self.execution = execution ?? { _, _, _ in _ = try Command.help.execute(with: []).get() }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
         self.options = options.appending(contentsOf: Command.standardOptions)
@@ -126,18 +126,16 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// Executes the command and exits.
     public func executeAsMain() -> Never { // @exempt(from: tests) Not testable.
 
-        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) } // @exempt(from: tests)
+        let arguments = CommandLine.arguments.dropFirst().map { StrictString($0) }
 
         let exitCode: Int
-        do { // @exempt(from: tests)
-            try self.withRootBehaviour().execute(with: arguments)
+        switch self.withRootBehaviour().execute(with: arguments) {
+        case .success:
             exitCode = Error.successCode
-        } catch let error as Command.Error { // @exempt(from: tests)
+        case .failure(let error):
             FileHandle.standardError.write((error.presentableDescription().formattedAsError() + "\n").file)
             exitCode = error.exitCode
-        } catch { // @exempt(from: tests)
-            unreachable()
-        } // @exempt(from: tests)
+        }
         exit(Int32(truncatingIfNeeded: exitCode))
     }
 
@@ -147,20 +145,31 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - arguments: The command line arguments, including subcommands and options, to use. (The command itself should be left out.)
     ///     - output: Optional. An output instance to inherit from an encompassing command.
     ///
-    /// - Returns: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
-    ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized. It will be wrapped in a `Command.Error` if necessary.
-    @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) throws -> StrictString {
+    /// - Returns: A result with one of the following values:
+    ///     - `success`: The output. (For output to be captured properly, it must printed to the provided stream. See `init(name:execution:)`.)
+    ///     - `failure`: A command error
+    @discardableResult public func execute(with arguments: [StrictString], output: Command.Output? = nil) -> Result<StrictString, Command.Error> {
         var outputCollector = output ?? Output()
         do {
 
-            if let packageURL = ProcessInfo.packageURL,
-                let (version, otherArguments) = try parseVersion(from: arguments),
-                version ≠ Build.current {
+            if let packageURL = ProcessInfo.packageURL {
+                let versionAttempt = parseVersion(from: arguments)
+                switch versionAttempt {
+                case .failure(let error):
+                    return .failure(error)
+                case .success(let parsedVersion):
+                    if let (version, otherArguments) = parsedVersion,
+                        version ≠ Build.current {
 
-                let package = Package(url: packageURL)
-                try package.execute(version, of: names, with: otherArguments, output: outputCollector)
-                return outputCollector.output
+                        let package = Package(url: packageURL)
+                        try package.execute(
+                            version,
+                            of: names,
+                            with: otherArguments,
+                            output: outputCollector)
+                        return .success(outputCollector.output)
+                    }
+                }
             }
 
             Command.stack.append(self)
@@ -168,11 +177,20 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
             if let first = arguments.first {
                 for subcommand in subcommands where first ∈ subcommand.names {
-                    return try subcommand.execute(with: Array(arguments.dropFirst()), output: outputCollector)
+                    return subcommand.execute(with: Array(arguments.dropFirst()), output: outputCollector)
                 }
             }
 
-            let (directArguments, options) = try parse(arguments: arguments)
+            let argumentsAttempt = parse(arguments: arguments)
+            let directArguments: DirectArguments
+            let options: Options
+            switch argumentsAttempt {
+            case .failure(let error):
+                return .failure(error)
+            case .success(let (parsedArguments, parsedOptions)):
+                directArguments = parsedArguments
+                options = parsedOptions
+            }
 
             if options.value(for: Options.noColour) {
                 outputCollector.filterFormatting = true
@@ -182,15 +200,15 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             try language.do {
                 try execute(withArguments: directArguments, options: options, output: outputCollector)
             }
-            return outputCollector.output
+            return .success(outputCollector.output)
 
         } catch var error as Command.Error {
             error.output = outputCollector.output
-            throw error
+            return .failure(error)
         } catch {
             var wrapped = Command.Error(wrapping: error)
             wrapped.output = outputCollector.output
-            throw wrapped
+            return .failure(wrapped)
         }
     }
 
@@ -200,8 +218,6 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - arguments: Parsed arguments.
     ///     - options: Parsed options.
     ///     - output: The output stream.
-    ///
-    /// - Throws: Whatever error is thrown by the `execution` closure provided when the command was initialized.
     public func execute(withArguments arguments: DirectArguments, options: Options, output: Command.Output) throws {
         try autoreleasepool {
             try execution(arguments, options, output)
@@ -210,7 +226,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Argument Parsing
 
-    private func parse(arguments: [StrictString]) throws -> (DirectArguments, Options) {
+    private func parse(arguments: [StrictString]) -> Result<(DirectArguments, Options), Command.Error> {
         var directArguments = DirectArguments()
         var options = Options()
 
@@ -218,38 +234,45 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         var expected: ArraySlice<AnyArgumentTypeDefinition> = self.directArguments[self.directArguments.bounds]
         while let argument = remaining.popFirst() {
 
-            if ¬(try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)) {
+            let optionAttempt = parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)
+            switch optionAttempt {
+            case .failure(let error):
+                return .failure(error)
+            case .success(let isOption):
+                if ¬isOption {
+                    let directArgumentAttempt = parse(possibleDirectArgument: argument, parsedDirectArguments: &directArguments, expectedDirectArguments: &expected)
+                    switch directArgumentAttempt {
+                    case .failure(let error):
+                        return .failure(error)
+                    case .success(let isDirectArgument):
+                        if ¬isDirectArgument {
 
-                // Not an option.
-
-                if ¬(try parse(possibleDirectArgument: argument, parsedDirectArguments: &directArguments, expectedDirectArguments: &expected)) {
-
-                    // Not a direct argument.
-
-                    let commandStack = Command.stack // Prevent delayed evaluation.
-                    throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
-                        var result: StrictString
-                        switch localization {
-                        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                            result = "Unexpected argument: \(argument)"
+                            let commandStack = Command.stack // Prevent delayed evaluation.
+                            return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                                var result: StrictString
+                                switch localization {
+                                case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                                    result = "Unexpected argument: \(argument)"
+                                }
+                                return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
+                            })))
                         }
-                        return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                    }))
+                    }
                 }
             }
         }
-        return (directArguments, options)
+        return .success((directArguments, options))
     }
 
-    private func parse(possibleDirectArgument: StrictString, parsedDirectArguments: inout DirectArguments, expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>) throws -> Bool {
+    private func parse(possibleDirectArgument: StrictString, parsedDirectArguments: inout DirectArguments, expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>) -> Result<Bool, Command.Error> {
 
         guard let definition = expectedDirectArguments.popFirst() else {
-            return false // Not a direct argument.
+            return .success(false) // Not a direct argument.
         }
 
         guard let parsed = definition.parse(argument: possibleDirectArgument) else {
             let commandStack = Command.stack // Prevent delayed evaluation.
-            throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+            return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                 let commandName = self.localizedName()
                 var result: StrictString
                 switch localization {
@@ -259,11 +282,11 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     result = "An argument for “\(commandName)” is invalid: \(possibleDirectArgument)"
                 }
                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-            }))
+            })))
         }
 
         parsedDirectArguments.add(value: parsed)
-        return true
+        return .success(true)
     }
 
     private func removeOptionMarker(from possibleOption: StrictString) -> StrictString? {
@@ -273,11 +296,11 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         return nil
     }
 
-    private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) throws -> Bool {
+    private func parse(possibleOption: StrictString, remainingArguments: inout ArraySlice<StrictString>, parsedOptions: inout Options) -> Result<Bool, Command.Error> {
 
         guard let name = removeOptionMarker(from: possibleOption) else {
             // Not an option.
-            return false
+            return .success(false)
         }
 
         for option in options where option.matches(name: name) {
@@ -285,12 +308,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             if option.type().identifier() == ArgumentType.booleanIdentifier {
                 // Boolean flags take no arguments.
                 parsedOptions.add(value: true, for: option)
-                return true
+                return .success(true)
             }
 
             guard let argument = remainingArguments.popFirst() else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -300,12 +323,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument is missing for “\(optionName)”."
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                }))
+                })))
             }
 
             guard let parsed = option.type().parse(argument: argument) else {
                 let commandStack = Command.stack // Prevent delayed evaluation.
-                throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+                return .failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
                     let optionName = ("•" + option.localizedName())
                     var result: StrictString
                     switch localization {
@@ -315,15 +338,15 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument for “\(optionName)” is invalid: \(argument)"
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-                }))
+                })))
             }
 
             parsedOptions.add(value: parsed, for: option)
-            return true
+            return .success(true)
         }
 
         let commandStack = Command.stack // Prevent delayed evaluation.
-        throw Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
+        return.failure(Command.Error(description: UserFacing<StrictString, InterfaceLocalization>({ localization in
             let optionName = ("•" + name)
             var result: StrictString
             switch localization {
@@ -331,10 +354,10 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 result = "Invalid option: \(optionName)"
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
-        }))
+        })))
     }
 
-    private func parseVersion(from arguments: [StrictString]) throws -> (version: Build, otherArguments: [StrictString])? {
+    private func parseVersion(from arguments: [StrictString]) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
 
         var remaining = arguments[arguments.bounds]
 
@@ -344,17 +367,23 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                 Options.useVersion.matches(name: name) {
 
                 var options = Options()
-                if try parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options),
-                    let version = options.value(for: Options.useVersion) {
+                let optionAttempt = parse(possibleOption: argument, remainingArguments: &remaining, parsedOptions: &options)
+                switch optionAttempt {
+                case .failure(let error):
+                    return .failure(error)
+                case .success(let isOption):
+                    if isOption,
+                        let version = options.value(for: Options.useVersion) {
 
-                    let index = arguments.endIndex − remaining.count − 2
-                    let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
-                    return (version: version, otherArguments: otherArguments)
+                        let index = arguments.endIndex − remaining.count − 2
+                        let otherArguments = Array(arguments[0 ..< index]) + Array(remaining)
+                        return .success((version: version, otherArguments: otherArguments))
+                    }
                 }
             }
         }
 
-        return nil
+        return .success(nil)
     }
 
     private static func helpInstructions(for commandStack: [Command]) -> UserFacing<StrictString, InterfaceLocalization> {

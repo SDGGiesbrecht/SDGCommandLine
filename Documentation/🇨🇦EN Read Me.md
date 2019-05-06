@@ -127,10 +127,10 @@ Tests are easy to set up:
 
 ```swift
 func testParrot() {
-    do {
-        let output = try parrot.execute(with: ["speak", "•phrase", "Hello, world!"])
+    switch parrot.execute(with: ["speak", "•phrase", "Hello, world!"]) {
+    case .success(let output):
         XCTAssertEqual(output, "Hello, world!")
-    } catch {
+    case .failure:
         XCTFail("The parrot is not co‐operating.")
     }
 }
