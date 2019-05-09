@@ -1,4 +1,4 @@
 $ tool fail •system •no‐colour
 Trying...
-The folder “Directory” doesn’t exist.
+[...]
 9223372036854775807

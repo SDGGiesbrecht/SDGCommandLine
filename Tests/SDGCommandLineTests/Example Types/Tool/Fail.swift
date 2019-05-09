@@ -14,6 +14,8 @@
 
 import Foundation
 
+import SDGLocalization
+
 import SDGCommandLine
 
 enum Fail {
@@ -58,7 +60,12 @@ enum Fail {
             }
         }).resolved())
         if options.value(for: systemOption) {
-            _ = try FileManager.default.contentsOfDirectory(atPath: "/No/Such/Directory")
+            struct StandInError : PresentableError {
+                func presentableDescription() -> StrictString {
+                    return "[...]"
+                }
+            }
+            throw StandInError()
         }
         throw Fail.error
     })
