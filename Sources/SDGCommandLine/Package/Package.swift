@@ -29,6 +29,6 @@ extension Package {
     // MARK: - Usage
 
     internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: Command.Output) throws {
-        try execute(version, of: executableNames, with: arguments.map({ String($0) }), cacheDirectory: Package.versionsCache, reportProgress: { output.print($0) })
+        _ = try execute(version, of: executableNames, with: arguments.map({ String($0) }), cacheDirectory: Package.versionsCache, reportProgress: { output.print($0) }).get()
     }
 }
