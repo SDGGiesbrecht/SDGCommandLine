@@ -149,7 +149,7 @@ public enum ArgumentType {
         return cached(in: &cache[range]) {
             return ArgumentTypeDefinition(name: integerName(range: range), syntaxDescription: integerDescription(range: range), parse: { (argument: StrictString) -> Int? in
 
-                if let integer = try? Int(possibleDecimal: argument),
+                if let integer = try? Int.parse(possibleDecimal: argument).get(),
                     integer ∈ range {
                     return integer
                 } else {
