@@ -49,7 +49,7 @@ class APITests : TestCase {
             XCTFail("Loaded unexported interface.")
         }
 
-        _ = try CommandInterface.loadInterface(
-            of: productsDirectory.appendingPathComponent("test‐tool"), in: "").get()
+        print(try CommandInterface.loadInterface(
+            of: productsDirectory.appendingPathComponent("test‐tool"), in: "").get())
     }
 }
