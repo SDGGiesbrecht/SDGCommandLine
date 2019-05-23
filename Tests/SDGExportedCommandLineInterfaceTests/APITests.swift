@@ -33,7 +33,7 @@ class APITests : TestCase {
         #endif
     }()
 
-    func testCommandInterface() {
+    func testCommandInterface() throws {
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file)) {
         case .failure:
             break // Expected.
@@ -46,9 +46,10 @@ class APITests : TestCase {
         case .failure:
             break // Expected.
         case .success:
-            XCTFail("Loaded invalid interface.")
+            XCTFail("Loaded unexported interface.")
         }
 
-        let testTool = productsDirectory.appendingPathComponent("test‐tool")
+        _ = try CommandInterface.loadInterface(
+            of: productsDirectory.appendingPathComponent("test‐tool")).get()
     }
 }
