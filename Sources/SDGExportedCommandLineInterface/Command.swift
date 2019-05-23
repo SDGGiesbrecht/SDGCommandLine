@@ -20,15 +20,21 @@ import SDGExternalProcess
 /// A command.
 public struct CommandInterface : Decodable {
 
+    // MARK: - Static Methods
+
     /// Attempt to load the interface of the tool at the specified URL.
     ///
     /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
     ///
     /// - Parameters:
     ///     - tool: The URL of tool executable.
-    public static func loadInterface(of tool: URL) -> Result<CommandInterface, ExternalProcess.Error> {
+    ///     - language: A language for the exported descriptions. This argument uses the same codes as the `•language` command line option.
+    public static func loadInterface(of tool: URL, in language: String) -> Result<CommandInterface, ExternalProcess.Error> {
         let process = ExternalProcess(at: tool)
-        switch process.run(["export‐interface"]) {
+        switch process.run([
+            "export‐interface",
+            "•language",
+            ""]) {
         case .failure(let error):
             return .failure(error)
         case .success(let exported):
@@ -40,7 +46,11 @@ public struct CommandInterface : Decodable {
         }
     }
 
+    // MARK: - Initialization
+
     private init(export: String) throws {
         self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
     }
+
+    // MARK: - Properties
 }

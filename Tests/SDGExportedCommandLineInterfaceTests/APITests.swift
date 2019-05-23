@@ -34,7 +34,7 @@ class APITests : TestCase {
     }()
 
     func testCommandInterface() throws {
-        switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file)) {
+        switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file), in: "en") {
         case .failure:
             break // Expected.
         case .success:
@@ -42,7 +42,7 @@ class APITests : TestCase {
         }
 
         switch CommandInterface.loadInterface(
-            of: productsDirectory.appendingPathComponent("empty‐tool")) {
+            of: productsDirectory.appendingPathComponent("empty‐tool"), in: "en") {
         case .failure:
             break // Expected.
         case .success:
@@ -50,6 +50,6 @@ class APITests : TestCase {
         }
 
         _ = try CommandInterface.loadInterface(
-            of: productsDirectory.appendingPathComponent("test‐tool")).get()
+            of: productsDirectory.appendingPathComponent("test‐tool"), in: "").get()
     }
 }
