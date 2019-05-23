@@ -14,6 +14,8 @@
 
 import XCTest
 
+import SDGXCTestUtilities
+
 import SDGExportedCommandLineInterface
 import SDGCommandLineTestUtilities
 
