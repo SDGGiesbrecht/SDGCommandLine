@@ -110,7 +110,12 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
 
     // MARK: - Execution
 
-    internal func withRootBehaviour() -> Command {
+    /// Returns the command modified to behave as though it is the root command of an executable.
+    ///
+    /// This method is available so that tests can get access to provided subcommands such as `empty‐cache`.
+    ///
+    /// - Warning: Calling this method before `executeAsMain()` is redundant. The result is undefined.
+    public func withRootBehaviour() -> Command {
         var copy = self
         copy.subcommands.append(contentsOf: [
             Command.version,
