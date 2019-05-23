@@ -80,6 +80,8 @@ configuration.documentation.api.encryptedTravisCIDeploymentKey = "rHheTc8sUxKAdE
 configuration._applySDGOverrides()
 configuration._validateSDGStandards()
 
+configuration.testing.exemptPaths.insert("Tests")
+
 configuration.documentation.api.ignoredDependencies = [
 
     // llbuild
