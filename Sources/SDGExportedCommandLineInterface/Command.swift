@@ -15,11 +15,16 @@
 import Foundation
 
 import SDGPersistence
+import SDGExternalProcess
 
 /// A command.
 public struct Command : Decodable {
 
-    public init(export: String) throws {
+    public init(tool: URL) throws {
+
+    }
+
+    private init(export: String) throws {
         self = try JSONDecoder().decode(Command.self, from: export.file)
     }
 }

@@ -21,4 +21,7 @@ import SDGCommandLineTestUtilities
 
 class APITests : TestCase {
 
+    func testCommand() {
+
+    }
 }

@@ -90,7 +90,9 @@ let package = Package(
         // #documentation(SDGExportedCommandLineInterface)
         /// Loading a tool’s exported interface for documentation purposes.
         .target(name: "SDGExportedCommandLineInterface", dependencies: [
-            "SDGCommandLine"
+            "SDGCommandLine",
+            .product(name: "SDGPersistence", package: "SDGCornerstone"),
+            .product(name: "SDGExternalProcess", package: "SDGCornerstone")
             ]),
 
         // Internal
@@ -116,7 +118,6 @@ let package = Package(
         .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
             "SDGExportedCommandLineInterface",
             "SDGCommandLineTestUtilities",
-            .product(name: "SDGPersistence", package: "SDGCornerstone"),
             .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
             ]),
         .target(name: "test‐tool", dependencies: [
