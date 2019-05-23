@@ -20,6 +20,12 @@ import SDGExternalProcess
 /// A command.
 public struct CommandInterface : Decodable {
 
+    /// Attempt to load the interface of the tool at the specified URL.
+    ///
+    /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
+    ///
+    /// - Parameters:
+    ///     - tool: The URL of tool executable.
     public static func loadInterface(of tool: URL) -> Result<CommandInterface, ExternalProcess.Error> {
         let process = ExternalProcess(at: tool)
         switch process.run(["export‐interface"]) {
