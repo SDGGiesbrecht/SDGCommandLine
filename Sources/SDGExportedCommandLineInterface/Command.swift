@@ -11,3 +11,15 @@
  Licensed under the Apache Licence, Version 2.0.
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
+
+import Foundation
+
+import SDGPersistence
+
+/// A command.
+public struct Command : Decodable {
+
+    public init(export: String) throws {
+        self = try JSONDecoder().decode(Command.self, from: export.file)
+    }
+}

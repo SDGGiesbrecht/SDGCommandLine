@@ -115,7 +115,8 @@ let package = Package(
             ]),
         .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
             "SDGExportedCommandLineInterface",
-            "SDGCommandLineTestUtilities"
+            "SDGCommandLineTestUtilities",
+            .product(name: "SDGLocalization", package: "SDGCornerstone"),
             ]),
         .target(name: "test‐tool", dependencies: [
             "SDGCommandLine"
