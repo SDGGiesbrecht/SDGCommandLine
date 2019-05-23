@@ -18,13 +18,23 @@ import SDGPersistence
 import SDGExternalProcess
 
 /// A command.
-public struct Command : Decodable {
+public struct CommandInterface : Decodable {
 
-    public init(tool: URL) throws {
-
+    public static func loadInterface(of tool: URL) -> Result<CommandInterface, ExternalProcess.Error> {
+        let process = ExternalProcess(at: tool)
+        switch process.run(["export‐interface"]) {
+        case .failure(let error):
+            return .failure(error)
+        case .success(let exported):
+            do {
+                return .success(try CommandInterface(export: exported))
+            } catch {
+                return .failure(.foundationError(error))
+            }
+        }
     }
 
     private init(export: String) throws {
-        self = try JSONDecoder().decode(Command.self, from: export.file)
+        self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
     }
 }

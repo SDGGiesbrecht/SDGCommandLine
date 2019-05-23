@@ -21,7 +21,12 @@ import SDGCommandLineTestUtilities
 
 class APITests : TestCase {
 
-    func testCommand() {
-
+    func testCommandInterface() {
+        switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file)) {
+        case .failure:
+            break // Expected.
+        case .success:
+            XCTFail("Loaded invalid interface.")
+        }
     }
 }
