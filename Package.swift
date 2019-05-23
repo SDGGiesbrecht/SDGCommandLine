@@ -105,6 +105,7 @@ let package = Package(
 
         .testTarget(name: "SDGCommandLineTests", dependencies: [
             "SDGCommandLineTestUtilities",
+            "TestTool",
             .product(name: "SDGControlFlow", package: "SDGCornerstone"),
             .product(name: "SDGLogic", package: "SDGCornerstone"),
             .product(name: "SDGCollections", package: "SDGCornerstone"),
@@ -115,6 +116,7 @@ let package = Package(
             .product(name: "SDGSwift", package: "SDGSwift"),
             .product(name: "SDGSwiftPackageManager", package: "SDGSwift")
             ]),
+
         .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
             "SDGExportedCommandLineInterface",
             "SDGCommandLineTestUtilities",
@@ -123,9 +125,17 @@ let package = Package(
             .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
             ]),
+
+        .target(name: "TestTool", dependencies: [
+            "SDGCommandLine",
+            .product(name: "SDGLocalization", package: "SDGCornerstone")
+            ], path: "Tests/TestTool"),
+
         .target(name: "test‐tool", dependencies: [
-            "SDGCommandLine"
+            "SDGCommandLine",
+            "TestTool"
             ], path: "Tests/test‐tool"),
+
         .target(name: "empty‐tool", path: "Tests/empty‐tool")
     ]
 )
