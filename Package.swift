@@ -48,7 +48,10 @@ let package = Package(
         .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
         // @documentation(SDGCommandLineTestUtilities)
         /// Utilities for testing modules which link against `SDGCommandLine`.
-        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
+        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"]),
+        // @documentation(SDGExportedCommandLineInterface)
+        /// Loading a tool’s exported interface for documentation purposes.
+        .library(name: "SDGExportedCommandLineInterface", targets: ["SDGExportedCommandLineInterface"])
     ],
     dependencies: [
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .upToNextMinor(from: Version(0, 18, 0))),
@@ -84,6 +87,12 @@ let package = Package(
             .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
 
+        // #documentation(SDGExportedCommandLineInterface)
+        /// Loading a tool’s exported interface for documentation purposes.
+        .target(name: "SDGExportedCommandLineInterface", dependencies: [
+            "SDGCommandLine"
+            ]),
+
         // Internal
 
         .target(name: "SDGCommandLineLocalizations", dependencies: [
@@ -103,6 +112,10 @@ let package = Package(
             .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
             .product(name: "SDGSwift", package: "SDGSwift"),
             .product(name: "SDGSwiftPackageManager", package: "SDGSwift")
+            ]),
+        .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
+            "SDGExportedCommandLineInterface",
+            "SDGCommandLineTestUtilities"
             ]),
         .target(name: "test‐tool", dependencies: [
             "SDGCommandLine"
