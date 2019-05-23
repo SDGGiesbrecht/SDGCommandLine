@@ -14,9 +14,9 @@
 
 import SDGCommandLine
 
-enum Execute {
+public enum Execute {
 
-    static let textOption = Option(name: UserFacing<StrictString, Language>({ localization in
+    public static let textOption = Option(name: UserFacing<StrictString, Language>({ localization in
         switch localization {
         case .english, .unsupported:
             return "string"

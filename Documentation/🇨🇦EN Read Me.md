@@ -56,6 +56,7 @@ let package = Package(
         .target(name: "MyTarget", dependencies: [
             .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
             .productItem(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
+            .productItem(name: "SDGExportedCommandLineInterface", package: "SDGCommandLine"),
         ])
     ]
 )
@@ -66,6 +67,7 @@ The libraries’ modules can then be imported in source files:
 ```swift
 import SDGCommandLine
 import SDGCommandLineTestUtilities
+import SDGExportedCommandLineInterface
 ```
 
 ## Example Usage

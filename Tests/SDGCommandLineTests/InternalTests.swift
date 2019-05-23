@@ -25,6 +25,7 @@ import SDGSwiftPackageManager
 @testable import SDGCommandLine
 import SDGCommandLineLocalizations
 import SDGCommandLineTestUtilities
+import TestTool
 
 class InternalTests : TestCase {
 

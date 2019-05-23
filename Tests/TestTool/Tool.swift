@@ -14,11 +14,11 @@
 
 import SDGCommandLine
 
-enum Tool {
+public enum Tool {
 
-    static let command = createCommand()
+    public static let command = createCommand()
 
-    static func createCommand() -> Command {
+    public static func createCommand() -> Command {
         return Command(name: UserFacing<StrictString, Language>({ localization in
             switch localization {
             case .english, .unsupported:

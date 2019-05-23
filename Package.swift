@@ -48,7 +48,10 @@ let package = Package(
         .library(name: "SDGCommandLine", targets: ["SDGCommandLine"]),
         // @documentation(SDGCommandLineTestUtilities)
         /// Utilities for testing modules which link against `SDGCommandLine`.
-        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"])
+        .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"]),
+        // @documentation(SDGExportedCommandLineInterface)
+        /// Loading a tool’s exported interface for documentation purposes.
+        .library(name: "SDGExportedCommandLineInterface", targets: ["SDGExportedCommandLineInterface"])
     ],
     dependencies: [
         .package(url: "https://github.com/SDGGiesbrecht/SDGCornerstone", .upToNextMinor(from: Version(0, 18, 0))),
@@ -84,6 +87,15 @@ let package = Package(
             .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
             ]),
 
+        // #documentation(SDGExportedCommandLineInterface)
+        /// Loading a tool’s exported interface for documentation purposes.
+        .target(name: "SDGExportedCommandLineInterface", dependencies: [
+            "SDGCommandLine",
+            .product(name: "SDGText", package: "SDGCornerstone"),
+            .product(name: "SDGPersistence", package: "SDGCornerstone"),
+            .product(name: "SDGExternalProcess", package: "SDGCornerstone")
+            ]),
+
         // Internal
 
         .target(name: "SDGCommandLineLocalizations", dependencies: [
@@ -94,6 +106,7 @@ let package = Package(
 
         .testTarget(name: "SDGCommandLineTests", dependencies: [
             "SDGCommandLineTestUtilities",
+            "TestTool",
             .product(name: "SDGControlFlow", package: "SDGCornerstone"),
             .product(name: "SDGLogic", package: "SDGCornerstone"),
             .product(name: "SDGCollections", package: "SDGCornerstone"),
@@ -104,8 +117,26 @@ let package = Package(
             .product(name: "SDGSwift", package: "SDGSwift"),
             .product(name: "SDGSwiftPackageManager", package: "SDGSwift")
             ]),
+
+        .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
+            "SDGExportedCommandLineInterface",
+            "SDGCommandLineTestUtilities",
+            "test‐tool",
+            "empty‐tool",
+            .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
+            ]),
+
+        .target(name: "TestTool", dependencies: [
+            "SDGCommandLine",
+            .product(name: "SDGLocalization", package: "SDGCornerstone")
+            ], path: "Tests/TestTool"),
+
         .target(name: "test‐tool", dependencies: [
-            "SDGCommandLine"
-            ], path: "Tests/test‐tool")
+            "SDGCommandLine",
+            "TestTool"
+            ], path: "Tests/test‐tool"),
+
+        .target(name: "empty‐tool", path: "Tests/empty‐tool")
     ]
 )
