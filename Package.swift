@@ -118,10 +118,14 @@ let package = Package(
         .testTarget(name: "SDGExportedCommandLineInterfaceTests", dependencies: [
             "SDGExportedCommandLineInterface",
             "SDGCommandLineTestUtilities",
+            "test‐tool",
+            "empty‐tool",
+            .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
             .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
             ]),
         .target(name: "test‐tool", dependencies: [
             "SDGCommandLine"
-            ], path: "Tests/test‐tool")
+            ], path: "Tests/test‐tool"),
+        .target(name: "empty‐tool", path: "Tests/empty‐tool")
     ]
 )

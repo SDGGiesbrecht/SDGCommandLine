@@ -14,12 +14,24 @@
 
 import XCTest
 
+import SDGExternalProcess
 import SDGXCTestUtilities
 
 import SDGExportedCommandLineInterface
 import SDGCommandLineTestUtilities
 
 class APITests : TestCase {
+
+    let productsDirectory: URL = {
+        #if os(macOS)
+        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
+            return bundle.bundleURL.deletingLastPathComponent()
+        }
+        fatalError("Failed to find the products directory.")
+        #else
+        return Bundle.main.bundleURL
+        #endif
+    }()
 
     func testCommandInterface() {
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file)) {
@@ -28,5 +40,15 @@ class APITests : TestCase {
         case .success:
             XCTFail("Loaded invalid interface.")
         }
+
+        switch CommandInterface.loadInterface(
+            of: ) {
+        case .failure:
+            break // Expected.
+        case .success:
+            XCTFail("Loaded invalid interface.")
+        }
+
+        let testTool = productsDirectory.appendingPathComponent("test‐tool")
     }
 }
