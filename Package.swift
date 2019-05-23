@@ -137,10 +137,6 @@ let package = Package(
             "TestTool"
             ], path: "Tests/test‐tool"),
 
-        .target(name: "read‐me‐example", dependencies: [
-            "SDGCommandLine"
-            ], path: "Tests/read‐me‐example"),
-
         .target(name: "empty‐tool", path: "Tests/empty‐tool")
     ]
 )
