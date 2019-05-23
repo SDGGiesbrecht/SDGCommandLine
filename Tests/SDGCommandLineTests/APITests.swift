@@ -20,6 +20,7 @@ import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities
 import SDGCommandLineLocalizations
+import TestTool
 
 class APITests : TestCase {
 

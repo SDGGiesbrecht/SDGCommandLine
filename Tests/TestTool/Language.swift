@@ -14,16 +14,16 @@
 
 import SDGCommandLine
 
-enum Language : String, InputLocalization {
+public enum Language : String, InputLocalization {
 
     // MARK: - Cases
 
     case english = "en"
     case deutsch = "de"
     case unsupported = "zxx"
-    internal static let cases: [Language] = [.english, .deutsch, .unsupported]
+    public static let cases: [Language] = [.english, .deutsch, .unsupported]
 
     // MARK: - Localization
 
-    internal static let fallbackLocalization: Language = .english
+    public static let fallbackLocalization: Language = .english
 }
