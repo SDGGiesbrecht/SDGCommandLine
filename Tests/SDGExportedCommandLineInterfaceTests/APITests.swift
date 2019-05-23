@@ -42,7 +42,7 @@ class APITests : TestCase {
         }
 
         switch CommandInterface.loadInterface(
-            of: ) {
+            of: productsDirectory.appendingPathComponent("empty‐tool")) {
         case .failure:
             break // Expected.
         case .success:
