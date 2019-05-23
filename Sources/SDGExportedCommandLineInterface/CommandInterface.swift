@@ -1,5 +1,5 @@
 /*
- Command.swift
+ CommandInterface.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
@@ -14,6 +14,7 @@
 
 import Foundation
 
+import SDGText
 import SDGPersistence
 import SDGExternalProcess
 
@@ -28,7 +29,7 @@ public struct CommandInterface : Decodable {
     ///
     /// - Parameters:
     ///     - tool: The URL of tool executable.
-    ///     - language: A language for the exported descriptions. This argument uses the same codes as the `•language` command line option.
+    ///     - language: A language for the exported descriptions. This parameter accepts the same codes as the `•language` command line option.
     public static func loadInterface(of tool: URL, in language: String) -> Result<CommandInterface, ExternalProcess.Error> {
         let process = ExternalProcess(at: tool)
         switch process.run([
@@ -53,4 +54,22 @@ public struct CommandInterface : Decodable {
     }
 
     // MARK: - Properties
+
+    /// An unique identifier that can be compared across localizations to find corresponding commands.
+    public var identifier: StrictString
+
+    /// The name.
+    public var name: StrictString
+
+    /// The description.
+    public var description: StrictString
+
+    /// Subcommands.
+    public var subcommands: [CommandInterface]
+
+    /// Arguments.
+    public var arguments: [ArgumentInterface]
+
+    /// Options.
+    public var options: [OptionInterface]
 }

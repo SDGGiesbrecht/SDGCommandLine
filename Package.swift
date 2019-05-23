@@ -91,6 +91,7 @@ let package = Package(
         /// Loading a tool’s exported interface for documentation purposes.
         .target(name: "SDGExportedCommandLineInterface", dependencies: [
             "SDGCommandLine",
+            .product(name: "SDGText", package: "SDGCornerstone"),
             .product(name: "SDGPersistence", package: "SDGCornerstone"),
             .product(name: "SDGExternalProcess", package: "SDGCornerstone")
             ]),
