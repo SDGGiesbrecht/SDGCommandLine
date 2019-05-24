@@ -18,14 +18,14 @@ import SDGText
 public struct OptionInterface : Decodable {
 
     /// A unique identifier that can be compared across localizations to find corresponding options.
-    internal var identifier: StrictString
+    public var identifier: StrictString
 
     /// The name.
-    internal var name: StrictString
+    public var name: StrictString
 
     /// The description.
-    internal var description: StrictString
+    public var description: StrictString
 
     /// The type.
-    internal var type: ArgumentInterface
+    public var type: ArgumentInterface
 }
