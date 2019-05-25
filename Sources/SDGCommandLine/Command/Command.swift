@@ -510,6 +510,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         case identifier
         case name
         case description
+        case discussion
         case subcommands
         case arguments
         case options
@@ -520,6 +521,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         try container.encode(identifier, forKey: .identifier)
         try container.encode(localizedName(), forKey: .name)
         try container.encode(localizedDescription(), forKey: .description)
+        try container.encode(localizedDiscussion(), forKey: .discussion)
         try container.encode(subcommands.filter({ ¬$0.isHidden }), forKey: .subcommands)
         try container.encode(directArguments.map({ $0.interface() }), forKey: .arguments)
         try container.encode(options.filter({ ¬$0.isHidden }).map({ $0.interface() }), forKey: .options)
