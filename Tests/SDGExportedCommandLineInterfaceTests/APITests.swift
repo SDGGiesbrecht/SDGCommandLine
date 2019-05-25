@@ -49,7 +49,8 @@ class APITests : TestCase {
             XCTFail("Loaded unexported interface.")
         }
 
-        print(try CommandInterface.loadInterface(
-            of: productsDirectory.appendingPathComponent("test‐tool"), in: "").get())
+        let interface = try CommandInterface.loadInterface(
+            of: productsDirectory.appendingPathComponent("test‐tool"), in: "").get()
+        XCTAssert(interface.options.first?.isFlag == true)
     }
 }

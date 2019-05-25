@@ -14,6 +14,8 @@
 
 import SDGText
 
+import SDGCommandLine
+
 /// An option.
 public struct OptionInterface : Decodable {
 
@@ -28,4 +30,9 @@ public struct OptionInterface : Decodable {
 
     /// The type.
     public var type: ArgumentInterface
+
+    /// Whether or not the option is a Boolean flag.
+    public var isFlag: Bool {
+        return type.identifier == ArgumentType.boolean._identifier()
+    }
 }
