@@ -108,7 +108,13 @@ extension Command {
         }
     })
 
-    internal static let help = Command(name: helpName, description: helpDescription, directArguments: [], options: [], execution: { _, _, output in
+    internal static let help = Command(
+        name: helpName,
+        description: helpDescription,
+        discussion: nil,
+        directArguments: [],
+        options: [],
+        execution: { _, _, output in
         output.print("")
 
         let stack = Command.stack.dropLast() // Ignoring help.
