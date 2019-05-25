@@ -45,7 +45,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "demonstrates successful execution.",
-      "discussion" : null,
+      "discussion" : "There are several options.",
       "identifier" : "execute",
       "name" : "execute",
       "options" : [
