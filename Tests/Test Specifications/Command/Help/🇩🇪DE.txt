@@ -2,6 +2,8 @@ $ werkzeug execute help •no‐colour
 
 werkzeug ausführen führt eine erfolgreiche Ausführung vor.
 
+Es gibt ein paar Optionen.
+
 Subcommands
 
 hilfe displays usage information.

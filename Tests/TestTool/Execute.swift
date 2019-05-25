@@ -150,6 +150,13 @@ public enum Execute {
         case .deutsch:
             return "führt eine erfolgreiche Ausführung vor."
         }
+    }), discussion: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+            return "There are several options."
+        case .deutsch:
+            return "Es gibt ein paar Optionen."
+        }
     }), directArguments: [], options: [
         Execute.textOption,
         Execute.iterationsOption,
