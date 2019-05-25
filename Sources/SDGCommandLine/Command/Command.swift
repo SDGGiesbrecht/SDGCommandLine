@@ -48,6 +48,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// - Parameters:
     ///     - name: The name.
     ///     - description: A brief description. (Printed by the `help` subcommand.)
+    ///     - discussion: Optional. Additional in‐depth information. (Printed by the `help` subcommand.)
     ///     - directArguments: A list of direct command line arguments to accept.
     ///     - options: A list of command line options to accept.
     ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
@@ -55,8 +56,27 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     ///     - parsedDirectArguments: The parsed direct arguments.
     ///     - parsedOptions: The parsed options.
     ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: @escaping (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void) {
-        self.init(name: name, description: description, directArguments: directArguments, options: options, hidden: hidden, execution: execution, subcommands: [])
+    public init<N : InputLocalization, D : Localization>(
+        name: UserFacing<StrictString, N>,
+        description: UserFacing<StrictString, D>,
+        discussion: UserFacing<StrictString, D>? = nil,
+        directArguments: [AnyArgumentTypeDefinition],
+        options: [AnyOption],
+        hidden: Bool = false,
+        execution: @escaping (
+        _ parsedDirectArguments: DirectArguments,
+        _ parsedOptions: Options,
+        _ output: Command.Output) throws -> Void) {
+
+        self.init(
+            name: name,
+            description: description,
+            discussion: discussion,
+            directArguments: directArguments,
+            options: options,
+            hidden: hidden,
+            execution: execution,
+            subcommands: [])
     }
 
     /// Creates an umbrella command.
@@ -66,25 +86,59 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// - Parameters:
     ///     - name: The name.
     ///     - description: A brief description. (Printed by the `help` subcommand.)
+    ///     - discussion: Optional. Additional in‐depth information. (Printed by the `help` subcommand.)
     ///     - subcommands: The subcommands.
     ///     - defaultSubcommand: The subcommand to execute if no subcommand is specified. (This should be an entry from `subcommands`.) Pass `nil` or leave this argument out to default to the help subcommand.
     ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, subcommands: [Command], defaultSubcommand: Command? = nil, hidden: Bool = false) {
-        self.init(name: name, description: description, directArguments: defaultSubcommand?.directArguments ?? [], options: defaultSubcommand?.options ?? [], hidden: hidden, execution: defaultSubcommand?.execution, subcommands: subcommands)
+    public init<N : InputLocalization, D : Localization>(
+        name: UserFacing<StrictString, N>,
+        description: UserFacing<StrictString, D>,
+        discussion: UserFacing<StrictString, D>? = nil,
+        subcommands: [Command],
+        defaultSubcommand: Command? = nil,
+        hidden: Bool = false) {
+
+        self.init(
+            name: name,
+            description: description,
+            discussion: discussion,
+            directArguments: defaultSubcommand?.directArguments ?? [],
+            options: defaultSubcommand?.options ?? [],
+            hidden: hidden,
+            execution: defaultSubcommand?.execution,
+            subcommands: subcommands)
     }
 
-    internal init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, directArguments: [AnyArgumentTypeDefinition], options: [AnyOption], hidden: Bool = false, execution: ((_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output) throws -> Void)?, subcommands: [Command] = [], addHelp: Bool = true) {
+    internal init<N : InputLocalization, D : Localization>(
+        name: UserFacing<StrictString, N>,
+        description: UserFacing<StrictString, D>,
+        discussion: UserFacing<StrictString, D>?,
+        directArguments: [AnyArgumentTypeDefinition],
+        options: [AnyOption],
+        hidden: Bool = false,
+        execution: ((
+        _ parsedDirectArguments: DirectArguments,
+        _ parsedOptions: Options,
+        _ output: Command.Output) throws -> Void)?,
+        subcommands: [Command] = [],
+        addHelp: Bool = true) {
+
         var actualSubcommands = subcommands
 
         if addHelp {
             actualSubcommands.append(Command.help)
         }
 
-        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
+        localizedName = { return Command.normalizeToUnicode(
+            name.resolved(),
+            in: LocalizationSetting.current.value.resolved() as N) }
         names = Command.list(names: name)
         localizedDescription = { return description.resolved() }
+        localizedDiscussion = { return discussion?.resolved() }
         self.isHidden = hidden
-        self.identifier = Command.normalizeToUnicode(name.resolved(for: N.fallbackLocalization), in: N.fallbackLocalization)
+        self.identifier = Command.normalizeToUnicode(
+            name.resolved(for: N.fallbackLocalization),
+            in: N.fallbackLocalization)
 
         self.execution = execution ?? { _, _, _ in _ = try Command.help.execute(with: []).get() }
         self.subcommands = actualSubcommands
@@ -100,6 +154,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
     /// Returns the localized name of the command.
     public let localizedName: () -> StrictString
     internal let localizedDescription: () -> StrictString
+    internal let localizedDiscussion: () -> StrictString?
     internal let isHidden: Bool
     internal let identifier: StrictString
 
@@ -455,6 +510,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         case identifier
         case name
         case description
+        case discussion
         case subcommands
         case arguments
         case options
@@ -465,6 +521,7 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         try container.encode(identifier, forKey: .identifier)
         try container.encode(localizedName(), forKey: .name)
         try container.encode(localizedDescription(), forKey: .description)
+        try container.encode(localizedDiscussion(), forKey: .discussion)
         try container.encode(subcommands.filter({ ¬$0.isHidden }), forKey: .subcommands)
         try container.encode(directArguments.map({ $0.interface() }), forKey: .arguments)
         try container.encode(options.filter({ ¬$0.isHidden }).map({ $0.interface() }), forKey: .options)

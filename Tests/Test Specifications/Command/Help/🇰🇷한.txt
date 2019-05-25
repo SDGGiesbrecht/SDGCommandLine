@@ -2,6 +2,8 @@ $ tool execute help •no‐colour
 
 tool execute demonstrates successful execution.
 
+There are several options.
+
 Subcommands
 
 도움말 displays usage information.

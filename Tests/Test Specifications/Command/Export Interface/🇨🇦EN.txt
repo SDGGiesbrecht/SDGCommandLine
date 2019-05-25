@@ -4,6 +4,7 @@ $ tool export‐interface •no‐colour
 
   ],
   "description" : "serves as an example tool.",
+  "discussion" : null,
   "identifier" : "tool",
   "name" : "tool",
   "options" : [
@@ -44,6 +45,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "demonstrates successful execution.",
+      "discussion" : "There are several options.",
       "identifier" : "execute",
       "name" : "execute",
       "options" : [
@@ -144,6 +146,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -189,6 +192,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "demonstrates a failure.",
+      "discussion" : null,
       "identifier" : "fail",
       "name" : "fail",
       "options" : [
@@ -239,6 +243,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -284,6 +289,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "demonstrates text formatting.",
+      "discussion" : null,
       "identifier" : "demonstrate‐text‐formatting",
       "name" : "demonstrate‐text‐formatting",
       "options" : [
@@ -324,6 +330,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -373,6 +380,7 @@ $ tool export‐interface •no‐colour
         }
       ],
       "description" : "demonstrates rejection of an argument.",
+      "discussion" : null,
       "identifier" : "reject‐argument",
       "name" : "reject‐argument",
       "options" : [
@@ -413,6 +421,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -458,6 +467,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "displays usage information.",
+      "discussion" : null,
       "identifier" : "עזרה",
       "name" : "help",
       "options" : [
@@ -501,6 +511,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "displays the version in use.",
+      "discussion" : null,
       "identifier" : "version",
       "name" : "version",
       "options" : [
@@ -541,6 +552,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -590,6 +602,7 @@ $ tool export‐interface •no‐colour
         }
       ],
       "description" : "sets the language preference. (Omit the argument to revert to the system preferences.)",
+      "discussion" : null,
       "identifier" : "set‐language",
       "name" : "set‐language",
       "options" : [
@@ -630,6 +643,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
@@ -675,6 +689,7 @@ $ tool export‐interface •no‐colour
 
       ],
       "description" : "removes any cached data.",
+      "discussion" : null,
       "identifier" : "empty‐cache",
       "name" : "empty‐cache",
       "options" : [
@@ -715,6 +730,7 @@ $ tool export‐interface •no‐colour
 
           ],
           "description" : "displays usage information.",
+          "discussion" : null,
           "identifier" : "עזרה",
           "name" : "help",
           "options" : [
