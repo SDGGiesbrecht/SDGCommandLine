@@ -65,7 +65,7 @@ public struct CommandInterface : Decodable {
     public var description: StrictString
 
     /// Additional in‐depth information.
-    public var discussion: StrictString
+    public var discussion: StrictString?
 
     /// Subcommands.
     public var subcommands: [CommandInterface]
