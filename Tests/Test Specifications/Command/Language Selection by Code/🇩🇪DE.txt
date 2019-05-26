@@ -14,7 +14,7 @@ Options
 
 •language [language preference] A language to use instead of the one specified in preferences.
 •no‐colour Removes colour from the output.
-•use‐version [version] Attempts to download and temporarily use the specified version insead of one which is installed.
+•use‐version [version] Attempts to download and temporarily use the specified version insead of the one which is installed.
 
 Argument Types
 
