@@ -143,7 +143,11 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
         self.execution = execution ?? { _, _, _ in _ = try Command.help.execute(with: []).get() }
         self.subcommands = actualSubcommands
         self.directArguments = directArguments
-        self.options = options.appending(contentsOf: Command.standardOptions)
+        self.options = options.appending(contentsOf: Command.standardOptions.filter({ standard in
+            return ¬options.contains(where: { option in
+                return option.identifier == standard.identifier
+            })
+        }))
     }
 
     // MARK: - Properties
