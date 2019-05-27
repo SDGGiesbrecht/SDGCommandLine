@@ -67,7 +67,7 @@ public struct Options : TransparentWrapper {
     private static let useVersionDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "Attempts to download and temporarily use the specified version insead of one which is installed."
+            return "Attempts to download and temporarily use the specified version insead of the one which is installed."
         }
     })
 

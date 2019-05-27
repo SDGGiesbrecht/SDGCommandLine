@@ -16,7 +16,7 @@ Options
 •no‐colour Removes colour from the output.
 •path [path] A directory to run in.
 •unsatisfiable [unsatisfiable] An option that always fails to parse.
-•use‐version [version] Attempts to download and temporarily use the specified version insead of one which is installed.
+•use‐version [version] Attempts to download and temporarily use the specified version insead of the one which is installed.
 •wiederholungen [1–5] Die Anzahl der Wiederholungen.
 •zeichenkette [string] Text zum Zeigen.
 

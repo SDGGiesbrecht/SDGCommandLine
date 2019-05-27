@@ -29,7 +29,7 @@ $ tool export‐interface •no‐colour
       }
     },
     {
-      "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+      "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
       "identifier" : "use‐version",
       "name" : "use‐version",
       "type" : {
@@ -130,7 +130,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -171,7 +171,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -227,7 +227,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -268,7 +268,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -314,7 +314,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -355,7 +355,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -405,7 +405,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -446,7 +446,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -492,7 +492,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -536,7 +536,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -577,7 +577,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -627,7 +627,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -668,7 +668,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
@@ -714,7 +714,7 @@ $ tool export‐interface •no‐colour
           }
         },
         {
-          "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
           "identifier" : "use‐version",
           "name" : "use‐version",
           "type" : {
@@ -755,7 +755,7 @@ $ tool export‐interface •no‐colour
               }
             },
             {
-              "description" : "Attempts to download and temporarily use the specified version insead of one which is installed.",
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
               "identifier" : "use‐version",
               "name" : "use‐version",
               "type" : {
