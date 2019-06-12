@@ -12,12 +12,15 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import XCTest
 import Foundation
 
-import SDGXCTestUtilities
+import SDGLogic
 
 import SDGCommandLine
+
+import XCTest
+
+import SDGXCTestUtilities
 
 class TestCase : SDGXCTestUtilities.TestCase {
 
