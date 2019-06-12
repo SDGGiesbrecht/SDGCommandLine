@@ -15,6 +15,9 @@
 import Foundation
 
 import SDGControlFlow
+import SDGLogic
+import SDGText
+
 import SDGPersistenceTestUtilities
 
 /// Tests a command.
@@ -56,7 +59,7 @@ import SDGPersistenceTestUtilities
             LocalizationSetting(orderOfPrecedence: [localization.code]).do {
 
                 var report = ""
-                print("$ " + ([command.localizedName()] + modifiedArguments).joined(separator: " "), to: &report)
+                print("$ \(([command.localizedName()] + modifiedArguments).joined(separator: " "))", to: &report)
 
                 var result: Result<StrictString, Command.Error> = .success("")
                 if let location = workingDirectory {
