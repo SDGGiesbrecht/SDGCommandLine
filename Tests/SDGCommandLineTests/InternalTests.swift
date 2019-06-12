@@ -12,10 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import XCTest
-
 import SDGLogic
 import SDGCollections
+import SDGText
+import SDGLocalization
 import SDGExternalProcess
 import SDGLocalizationTestUtilities
 
@@ -23,7 +23,11 @@ import SDGSwift
 import SDGSwiftPackageManager
 
 @testable import SDGCommandLine
+
 import SDGCommandLineLocalizations
+
+import XCTest
+
 import SDGCommandLineTestUtilities
 import TestTool
 

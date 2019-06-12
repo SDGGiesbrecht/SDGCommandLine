@@ -15,13 +15,20 @@
 import SDGControlFlow
 import SDGLogic
 import SDGCollections
+import SDGText
+import SDGLocalization
+
+import SDGSwift
+
+import SDGCommandLine
+
+import SDGCommandLineLocalizations
 
 import XCTest
 
 import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities
-import SDGCommandLineLocalizations
 import TestTool
 
 class APITests : TestCase {

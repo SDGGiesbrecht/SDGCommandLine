@@ -13,6 +13,7 @@
  */
 
 import SDGLogic
+import SDGText
 
 extension Command {
 

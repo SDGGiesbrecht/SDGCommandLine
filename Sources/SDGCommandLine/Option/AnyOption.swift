@@ -14,6 +14,8 @@
 
 import SDGControlFlow
 
+import SDGText
+
 /// A type‐erased option.
 public protocol AnyOption : TextualPlaygroundDisplay {
 

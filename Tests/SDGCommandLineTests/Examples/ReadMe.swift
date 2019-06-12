@@ -13,9 +13,14 @@
  */
 
 import Foundation
-import XCTest
+
+import SDGText
+import SDGLocalization
+import SDGSwift
 
 import SDGCommandLine
+
+import XCTest
 
 func main() {
     // @example(main.swift🇨🇦EN)

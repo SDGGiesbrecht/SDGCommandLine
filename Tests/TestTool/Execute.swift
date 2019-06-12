@@ -14,6 +14,9 @@
 
 import Foundation
 
+import SDGText
+import SDGLocalization
+
 import SDGCommandLine
 
 public enum Execute {

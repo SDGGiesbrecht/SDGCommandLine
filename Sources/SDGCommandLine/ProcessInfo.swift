@@ -14,6 +14,8 @@
 
 import Foundation
 
+import SDGSwift
+
 extension ProcessInfo {
 
     /// The semantic version of the tool’s package. Set it before calling `Command.executeAsMain()`.

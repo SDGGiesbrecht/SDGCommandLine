@@ -14,6 +14,9 @@
 
 import Foundation
 
+import SDGText
+import SDGLocalization
+
 import SDGCommandLineLocalizations
 
 extension Command {

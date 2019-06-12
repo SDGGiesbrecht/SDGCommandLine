@@ -17,6 +17,9 @@ import Foundation
 import SDGControlFlow
 import SDGLogic
 import SDGText
+import SDGLocalization
+
+import SDGCommandLine
 
 import SDGPersistenceTestUtilities
 
@@ -38,7 +41,7 @@ import SDGPersistenceTestUtilities
 ///     - overwriteSpecificationInsteadOfFailing: Set to `false` for normal behaviour. Set to `true` temporarily to update the specification.
 ///     - file: Optional. A different file to report as the failure location.
 ///     - line: Optional. A different line to report as the failure location.
-@inlinable public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, postprocess: (_ output: inout String) -> Void = { _ in }, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
+public func testCommand<L>(_ command: Command, with arguments: [StrictString], in workingDirectory: URL? = nil, localizations: L.Type, uniqueTestName: StrictString, allowColour: Bool = false, postprocess: (_ output: inout String) -> Void = { _ in }, overwriteSpecificationInsteadOfFailing: Bool, file: StaticString = #file, line: UInt = #line) where L : InputLocalization {
 
     Command.Output.testMode = true
 

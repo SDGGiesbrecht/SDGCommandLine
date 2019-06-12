@@ -16,6 +16,8 @@ import Foundation
 
 import SDGLogic
 
+import SDGSwift
+
 import SDGCommandLine
 
 import XCTest

@@ -15,6 +15,8 @@
 import Foundation
 
 import SDGLogic
+import SDGText
+import SDGLocalization
 
 import SDGCommandLineLocalizations
 
