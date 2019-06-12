@@ -12,14 +12,23 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import SDGControlFlow
+import SDGLogic
+import SDGCollections
+import SDGText
+import SDGLocalization
+
+import SDGSwift
+
+import SDGCommandLine
+
+import SDGCommandLineLocalizations
+
 import XCTest
 
-import SDGControlFlow
-import SDGCollections
 import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities
-import SDGCommandLineLocalizations
 import TestTool
 
 class APITests : TestCase {

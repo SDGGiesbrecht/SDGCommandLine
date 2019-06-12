@@ -14,6 +14,8 @@
 
 import SDGLogic
 import SDGMathematics
+import SDGText
+import SDGLocalization
 
 import SDGCommandLineLocalizations
 

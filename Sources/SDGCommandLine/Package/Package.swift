@@ -16,6 +16,7 @@ import Foundation
 
 import SDGLogic
 import SDGCollections
+import SDGText
 import SDGExternalProcess
 
 import SDGSwift

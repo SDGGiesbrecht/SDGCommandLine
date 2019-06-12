@@ -16,6 +16,8 @@ import Foundation
 
 import SDGControlFlow
 import SDGCollections
+import SDGText
+import SDGLocalization
 
 import SDGSwift
 

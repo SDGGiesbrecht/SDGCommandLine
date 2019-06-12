@@ -18,6 +18,8 @@ import SDGControlFlow
 import SDGLogic
 import SDGMathematics
 import SDGCollections
+import SDGText
+import SDGLocalization
 
 import SDGSwift
 

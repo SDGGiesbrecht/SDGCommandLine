@@ -13,6 +13,8 @@
  */
 
 import SDGCollections
+import SDGText
+import SDGLocalization
 
 /// A command line option.
 public struct Option<Type> : AnyOption {
