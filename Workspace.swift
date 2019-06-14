@@ -30,27 +30,6 @@ configuration.supportedOperatingSystems.remove(.tvOS)
 
 configuration.documentation.localizations = ["🇨🇦EN"]
 
-configuration.documentation.readMe.shortProjectDescription["🇨🇦EN"] = "SDGCommandLine provides tools for implementing a command line interface."
-
-configuration.documentation.readMe.quotation = Quotation(original: "יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃")
-configuration.documentation.readMe.quotation?.translation["🇨🇦EN"] = "May they praise the name of the Lord, for He commanded and they came into being!"
-configuration.documentation.readMe.quotation?.link["🇨🇦EN"] = URL(string: "https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV")!
-configuration.documentation.readMe.quotation?.citation["🇨🇦EN"] = "a psalmist"
-
-configuration.documentation.readMe.featureList["🇨🇦EN"] = [
-    "\u{2D} Automatic parsing of options and subcommands",
-    "\u{2D} Automatic `help` subcommand",
-    "\u{2D} Testable output",
-    "\u{2D} Colour formatting tools",
-    "  \u{2D} Automatic `•no‐colour` option",
-    "\u{2D} Interface localization",
-    "  \u{2D} Automatic `set‐language` subcommand to set language preferences.",
-    "  \u{2D} Automatic `•language` option to run in a specific language only once.",
-    "\u{2D} Versioning tools",
-    "  \u{2D} Automatic `version` subcommand",
-    "  \u{2D} Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages)."
-].joinedAsLines()
-
 configuration.documentation.readMe.exampleUsage["🇨🇦EN"] = [
     "This example creates a tool with the following interface:",
     "",

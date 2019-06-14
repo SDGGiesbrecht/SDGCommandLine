@@ -16,6 +16,7 @@
 
 import PackageDescription
 
+// #example(2, main.swift🇨🇦EN) #example(3, parrotLibrary🇨🇦EN) #example(4, parrotTests🇨🇦EN)
 /// SDGCommandLine provides tools for implementing a command line interface.
 ///
 /// > [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
@@ -37,6 +38,33 @@ import PackageDescription
 /// - Versioning tools
 ///     - Automatic `version` subcommand
 ///     - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
+///
+/// ### Example Usage
+///
+/// This example creates a tool with the following interface:
+///
+/// ```shell
+/// $ parrot speak
+/// Squawk!
+///
+/// $ parrot speak •phrase "Hello, world!"
+/// Hello, world!
+/// ```
+///
+/// `main.swift` must consist of the following lines:
+///
+/// ```swift
+/// ```
+///
+/// The rest can be anywhere in the project (but putting it in a separate, testable library module is recommended):
+///
+/// ```swift
+/// ```
+///
+/// Tests are easy to set up:
+///
+/// ```swift
+/// ```
 let package = Package(
     name: "SDGCommandLine",
     platforms: [
