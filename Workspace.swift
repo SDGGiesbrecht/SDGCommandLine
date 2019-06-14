@@ -24,35 +24,11 @@ configuration.documentation.documentationURL = URL(string: "https://sdggiesbrech
 configuration.documentation.api.yearFirstPublished = 2017
 configuration.documentation.repositoryURL = URL(string: "https://github.com/SDGGiesbrecht/SDGCommandLine")!
 
-configuration.supportedOperatingSystems.remove(.iOS)
-configuration.supportedOperatingSystems.remove(.watchOS)
-configuration.supportedOperatingSystems.remove(.tvOS)
+configuration.supportedPlatforms.remove(.iOS)
+configuration.supportedPlatforms.remove(.watchOS)
+configuration.supportedPlatforms.remove(.tvOS)
 
 configuration.documentation.localizations = ["🇨🇦EN"]
-
-configuration.documentation.readMe.exampleUsage["🇨🇦EN"] = [
-    "This example creates a tool with the following interface:",
-    "",
-    "```shell",
-    "$ parrot speak",
-    "Squawk!",
-    "",
-    "$ parrot speak •phrase \u{22}Hello, world!\u{22}",
-    "Hello, world!",
-    "```",
-    "",
-    "`main.swift` must consist of the following lines:",
-    "",
-    "\u{23}example(main.swift🇨🇦EN)",
-    "",
-    "The rest can be anywhere in the project (but putting it in a separate, testable library module is recommended):",
-    "",
-    "\u{23}example(parrotLibrary🇨🇦EN)",
-    "",
-    "Tests are easy to set up:",
-    "",
-    "\u{23}example(parrotTests🇨🇦EN)"
-    ].joinedAsLines()
 
 configuration.documentation.api.encryptedTravisCIDeploymentKey = "rHheTc8sUxKAdE0Wfx6FveDJC+dwlHt3ZIJc5csxoPQge4LtqufFte3OBYVNNL+8RbyxfP25xD5nNKNVl8BAwa6uvMgmpRCSRxHRjk/nI+gioeiFocQWBXNb9EcuDjnshMc64XzeGj0gIWCD2H81daDyY9ysrLY7Y/ZREdczsMMDRAwyBuV15iC/d7tiJYy/07Pwg/3Rja8wZJFw/7fYu6x6Wk7aeFnxrb6KUyPiUexgn2PupX+E/0U1C0VAJsUS4r6p7N4spZeloeqlH8bdlrqotpvSS/h8Ui4NWL9Ke5yWyfY4E7l3cDl+I7YlLa7AGiOuOGEFVVMgaRQo/MrtrBYraGcUC+lBt6jmP6nDQb4n1Q0SvFvpFlzVtqOs7Y44oHMfGgINBNjMuGf3SKFG57jFpRJoLGOEb4kS+HkW35pefQlGTlIKKPZvjliBN71yagsRyJQI+dKX5jfSeUtstaNyVBFch8zz70bnC3YZEgAYnGDC283O3r1TmIyyMlpAbejv8dLd/JnpLzAzkVay73lBbtt1Fqqusn2C6k/U2X+/avwj08rW/Ui+2LFWt4D93pqpi00mX9+oxgaBikuncq6G6AxV5H6AZwMiCDTQwQeSASgJCYN5WAqq4F9hbHvHlTJkoulv+nSihsmmdnfHoxTuUwfwrGJki6TJrg1hQqE="
 
