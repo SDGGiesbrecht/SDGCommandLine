@@ -12,8 +12,6 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-[🇨🇦EN](Documentation/🇨🇦EN%20Read%20Me.md)
-
 macOS • Linux
 
 [Documentation](https://sdggiesbrecht.github.io/SDGCommandLine/%F0%9F%87%A8%F0%9F%87%A6EN)
@@ -22,55 +20,27 @@ macOS • Linux
 
 SDGCommandLine provides tools for implementing a command line interface.
 
-> [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃<br>May they praise the name of the Lord, for He commanded and they came into being!](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;―a psalmist
+> [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+>
+> [May they praise the name of the Lord, for He commanded and they came into being!](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
+>
+> ―a psalmist
 
-## Features
+### Features
 
 - Automatic parsing of options and subcommands
 - Automatic `help` subcommand
 - Testable output
 - Colour formatting tools
-  - Automatic `•no‐colour` option
+    - Automatic `•no‐colour` option
 - Interface localization
-  - Automatic `set‐language` subcommand to set language preferences.
-  - Automatic `•language` option to run in a specific language only once.
+    - Automatic `set‐language` subcommand to set language preferences.
+    - Automatic `•language` option to run in a specific language only once.
 - Versioning tools
-  - Automatic `version` subcommand
-  - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
+    - Automatic `version` subcommand
+    - Automatic `•use‐version` option to attempt to download and temporarily use a specific version instead of the one which is installed (only for public Swift packages).
 
-(For a list of related projects, see [here](Documentation/🇨🇦EN%20Related%20Projects.md).)
-
-## Importing
-
-SDGCommandLine provides libraries for use with the [Swift Package Manager](https://swift.org/package-manager/).
-
-Simply add SDGCommandLine as a dependency in `Package.swift` and specify which of the libraries to use:
-
-```swift
-let package = Package(
-    name: "MyPackage",
-    dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 0, 0)),
-    ],
-    targets: [
-        .target(name: "MyTarget", dependencies: [
-            .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
-            .productItem(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
-            .productItem(name: "SDGExportedCommandLineInterface", package: "SDGCommandLine"),
-        ])
-    ]
-)
-```
-
-The libraries’ modules can then be imported in source files:
-
-```swift
-import SDGCommandLine
-import SDGCommandLineTestUtilities
-import SDGExportedCommandLineInterface
-```
-
-## Example Usage
+### Example Usage
 
 This example creates a tool with the following interface:
 
@@ -138,6 +108,36 @@ func testParrot() {
 }
 ```
 
+## Importing
+
+SDGCommandLine provides libraries for use with the [Swift Package Manager](https://swift.org/package-manager/).
+
+Simply add SDGCommandLine as a dependency in `Package.swift` and specify which of the libraries to use:
+
+```swift
+let package = Package(
+    name: "MyPackage",
+    dependencies: [
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 0, 0)),
+    ],
+    targets: [
+        .target(name: "MyTarget", dependencies: [
+            .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
+            .productItem(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
+            .productItem(name: "SDGExportedCommandLineInterface", package: "SDGCommandLine"),
+        ])
+    ]
+)
+```
+
+The libraries’ modules can then be imported in source files:
+
+```swift
+import SDGCommandLine
+import SDGCommandLineTestUtilities
+import SDGExportedCommandLineInterface
+```
+
 ## About
 
 The SDGCommandLine project is maintained by Jeremy David Giesbrecht.
@@ -146,4 +146,8 @@ If SDGCommandLine saves you money, consider giving some of it as a [donation](ht
 
 If SDGCommandLine saves you time, consider devoting some of it to [contributing](https://github.com/SDGGiesbrecht/SDGCommandLine) back to the project.
 
-> [Ἄξιος γὰρ ὁ ἐργάτης τοῦ μισθοῦ αὐτοῦ ἐστι.<br>For the worker is worthy of his wages.](https://www.biblegateway.com/passage/?search=Luke+10&version=SBLGNT;NIV)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;―‎ישוע/Yeshuʼa
+> [Ἄξιος γὰρ ὁ ἐργάτης τοῦ μισθοῦ αὐτοῦ ἐστι.](https://www.biblegateway.com/passage/?search=Luke+10&version=SBLGNT;NIV)
+>
+> [For the worker is worthy of his wages.](https://www.biblegateway.com/passage/?search=Luke+10&version=SBLGNT;NIV)
+>
+> ―‎ישוע/Yeshuʼa
