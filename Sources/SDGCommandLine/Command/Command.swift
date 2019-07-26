@@ -319,6 +319,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                                 switch localization {
                                 case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                                     result = "Unexpected argument: \(argument)"
+                                case .deutschDeutschland:
+                                    result = "Unerwartetes Argument: \(argument)"
                                 }
                                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                             })))
@@ -346,6 +348,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                     result = "An argument for ‘\(commandName)’ is invalid: \(possibleDirectArgument)"
                 case .englishUnitedStates, .englishCanada:
                     result = "An argument for “\(commandName)” is invalid: \(possibleDirectArgument)"
+                case .deutschDeutschland:
+                    result = "Ein Argument zu „\(commandName)“ ist ungültig: \(possibleDirectArgument)"
                 }
                 return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
             })))
@@ -387,6 +391,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument is missing for ‘\(optionName)’."
                     case .englishUnitedStates, .englishCanada:
                         result = "The argument is missing for “\(optionName)”."
+                    case .deutschDeutschland:
+                        result = "Das Argument zu „\(optionName)“ fehlt."
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 })))
@@ -402,6 +408,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
                         result = "The argument for ‘\(optionName)’ is invalid: \(argument)"
                     case .englishUnitedStates, .englishCanada:
                         result = "The argument for “\(optionName)” is invalid: \(argument)"
+                    case .deutschDeutschland:
+                        result = "Das Argument zu „\(optionName)“ ist ungültig: \(argument)"
                     }
                     return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
                 })))
@@ -418,6 +426,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 result = "Invalid option: \(optionName)"
+            case .deutschDeutschland:
+                result = "Ungültige Option: \(optionName)"
             }
             return result + "\n" + Command.helpInstructions(for: commandStack).resolved(for: localization)
         })))
@@ -461,6 +471,8 @@ public struct Command : Encodable, TextualPlaygroundDisplay {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "See also: \(command)"
+            case .deutschDeutschland:
+                return "Siehe auch: \(command)"
             }
         })
     }

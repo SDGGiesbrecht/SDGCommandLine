@@ -160,6 +160,8 @@ extension Command {
                     switch localization {
                     case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                         return "Subcommands"
+                    case .deutschDeutschland:
+                        return "Unterbefehle"
                     }
                 }), entries: subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
             }
@@ -178,6 +180,8 @@ extension Command {
                     switch localization {
                     case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                         return "Options"
+                    case .deutschDeutschland:
+                        return "Optionen"
                     }
                 }), entries: command.options.filter({ ¬$0.isHidden }), getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
 
@@ -192,6 +196,8 @@ extension Command {
                     switch localization {
                     case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                         return "Argument Types"
+                    case .deutschDeutschland:
+                        return "Argumentarte"
                     }
                 }), entries: Array(argumentTypes.values), getHeadword: { $0.type }, getFormattedHeadword: { formatType($0.type) }, getDescription: { $0.description })
             }
