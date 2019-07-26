@@ -107,6 +107,8 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "displays usage information."
+        case .deutschDeutschland:
+            return "zeigt Gebrauchsinformationen an."
         }
     })
 
