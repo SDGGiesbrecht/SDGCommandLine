@@ -10,7 +10,7 @@ hilfe zeigt Gebrauchsinformationen an.
 
 Optionen
 
-•farbe [farbe] Eine Farbe für den Text.
+•farbe [Farbe] Eine Farbe für den Text.
 •informell verwendet eine informelle Begrüßung.
 •ohne‐farben Blendet Farben aus der Ausgabe aus.
 •path [Pfad] A directory to run in.
@@ -23,11 +23,11 @@ Optionen
 Argumentarte
 
 [1–5] Eine ganze Zahl zwischen 1 und 5 einschließlich.
+[Farbe] „blau“, „grün“ oder „rot“.
 [Pfad] Ein Pfadname. Die Form „/...“ gibt einen vollständigen Pfad an. Die Form „~/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis.
 [Spracheinstellung] Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch
 [Version] Eine Versionsnummer oder „entwicklung“.
 [Zeichenkette] Eine beliebige Zeichenkette.
-[farbe]  oder 
 [unsatisfiable] An argument type that always fails to parse.
 
 0

@@ -94,7 +94,7 @@ public enum ArgumentType {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 or = " or "
             case .deutschDeutschland:
-                return " oder "
+                or = " oder "
             }
 
             let period: StrictString
