@@ -26,6 +26,8 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "empty‐cache"
+        case .deutschDeutschland:
+            return "zwischenspeicher‐leeren"
         }
     })
 
@@ -33,6 +35,8 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "removes any cached data."
+        case .deutschDeutschland:
+            return "entfernt zwischengespeicherte Daten."
         }
     })
 

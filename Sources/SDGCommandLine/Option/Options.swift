@@ -29,6 +29,8 @@ public struct Options : TransparentWrapper {
             return "no‐colour"
         case .englishUnitedStates:
             return "no‐color"
+        case .deutschDeutschland:
+            return "ohne‐farben"
         }
     })
 
@@ -38,6 +40,8 @@ public struct Options : TransparentWrapper {
             return "Removes colour from the output."
         case .englishUnitedStates:
             return "Removes color from the output."
+        case .deutschDeutschland:
+            return "Blendet Farben aus der Ausgabe aus."
         }
     })
 
@@ -47,6 +51,8 @@ public struct Options : TransparentWrapper {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language"
+        case .deutschDeutschland:
+            return "sprache"
         }
     })
 
@@ -54,6 +60,8 @@ public struct Options : TransparentWrapper {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "A language to use instead of the one specified in preferences."
+        case .deutschDeutschland:
+            return "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist."
         }
     })
 
@@ -63,6 +71,8 @@ public struct Options : TransparentWrapper {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "use‐version"
+        case .deutschDeutschland:
+            return "version‐verwenden"
         }
     })
 
@@ -70,6 +80,8 @@ public struct Options : TransparentWrapper {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "Attempts to download and temporarily use the specified version insead of the one which is installed."
+        case .deutschDeutschland:
+            return "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist."
         }
     })
 

@@ -7,3 +7,6 @@ tool
 🇨🇦EN
 tool
 
+🇩🇪DE
+werkzeug
+

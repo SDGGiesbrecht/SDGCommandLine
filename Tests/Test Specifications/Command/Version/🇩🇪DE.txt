@@ -1,0 +1,3 @@
+$ werkzeug version •no‐colour
+1.2.3
+0

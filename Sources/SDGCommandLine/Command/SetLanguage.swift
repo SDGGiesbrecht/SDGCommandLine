@@ -23,6 +23,8 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "set‐language"
+        case .deutschDeutschland:
+            return "sprache‐einstellen"
         }
     })
 
@@ -30,6 +32,8 @@ extension Command {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "sets the language preference. (Omit the argument to revert to the system preferences.)"
+        case .deutschDeutschland:
+            return "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)"
         }
     })
 

@@ -45,6 +45,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "string"
+        case .deutschDeutschland:
+            return "Zeichenkette"
         }
     })
 
@@ -52,6 +54,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "An arbitrary string."
+        case .deutschDeutschland:
+            return "Eine beliebige Zeichenkette."
         }
     })
 
@@ -73,11 +77,15 @@ public enum ArgumentType {
             case .englishUnitedStates, .englishCanada:
                 openingQuotationMark = "“"
                 closingQuotationMark = "”"
+            case .deutschDeutschland:
+                openingQuotationMark = "„"
+                closingQuotationMark = "“"
             }
 
             let comma: StrictString
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+                 .deutschDeutschland:
                 comma = ", "
             }
 
@@ -85,11 +93,14 @@ public enum ArgumentType {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 or = " or "
+            case .deutschDeutschland:
+                or = " oder "
             }
 
             let period: StrictString
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+                 .deutschDeutschland:
                 period = "."
             }
 
@@ -127,7 +138,8 @@ public enum ArgumentType {
     private static func integerName(range: CountableClosedRange<Int>) -> UserFacing<StrictString, InterfaceLocalization> {
         return UserFacing<StrictString, InterfaceLocalization>({ localization in
             switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+                 .deutschDeutschland:
                 return "\(range.lowerBound.inDigits())–\(range.upperBound.inDigits())"
             }
         })
@@ -138,6 +150,8 @@ public enum ArgumentType {
             switch localization {
             case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
                 return "An integer between \(range.lowerBound.inDigits()) and \(range.upperBound.inDigits()) inclusive."
+            case .deutschDeutschland:
+                return "Eine ganze Zahl zwischen \(range.lowerBound.inDigits()) und \(range.upperBound.inDigits()) einschließlich."
             }
         })
     }
@@ -165,6 +179,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "path"
+        case .deutschDeutschland:
+            return "Pfad"
         }
     }) // @exempt(from: tests) Meaningless region.
 
@@ -174,6 +190,8 @@ public enum ArgumentType {
             return "A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
         case .englishUnitedStates, .englishCanada:
             return "A file system path. The form “/...” indicates an absolute path. The form “~/...” indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+        case .deutschDeutschland:
+            return "Ein Pfadname. Die Form „/...“ gibt einen vollständigen Pfad an. Die Form „~/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis."
         }
     })
 
@@ -201,6 +219,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "language preference"
+        case .deutschDeutschland:
+            return "Spracheinstellung"
         }
     })
 
@@ -212,6 +232,8 @@ public enum ArgumentType {
             return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish"
         case .englishCanada:
             return "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en\u{2D}CA” or “🇨🇦EN” → Canadian English, “cwd,en;fr” → both Woods Cree and English, otherwise French"
+        case .deutschDeutschland:
+            return "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de\u{2D}DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch"
         }
     })
 
@@ -235,6 +257,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "version"
+        case .deutschDeutschland:
+            return "Version"
         }
     })
 
@@ -242,6 +266,8 @@ public enum ArgumentType {
         switch localization {
         case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
             return "development"
+        case .deutschDeutschland:
+            return "entwicklung"
         }
     })
 
@@ -252,6 +278,8 @@ public enum ArgumentType {
             return "A version number or ‘\(development)’."
         case .englishUnitedStates, .englishCanada:
             return "A version number or “\(development)”."
+        case .deutschDeutschland:
+            return "Eine Versionsnummer oder „\(development)“."
         }
     })
 

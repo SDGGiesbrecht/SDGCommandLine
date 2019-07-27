@@ -1,4 +1,4 @@
 $ werkzeug execute •iterations −1 •no‐colour
-The argument for ‘•wiederholungen’ is invalid: −1
-See also: $ werkzeug ausführen hilfe
+Das Argument zu „•wiederholungen“ ist ungültig: −1
+Siehe auch: $ werkzeug ausführen hilfe
 9223372036854775807

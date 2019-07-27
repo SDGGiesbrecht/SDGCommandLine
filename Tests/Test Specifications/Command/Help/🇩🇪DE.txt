@@ -4,30 +4,30 @@ werkzeug ausführen führt eine erfolgreiche Ausführung vor.
 
 Es gibt ein paar Optionen.
 
-Subcommands
+Unterbefehle
 
-hilfe displays usage information.
+hilfe zeigt Gebrauchsinformationen an.
 
-Options
+Optionen
 
-•farbe [farbe] Eine Farbe für den Text.
+•farbe [Farbe] Eine Farbe für den Text.
 •informell verwendet eine informelle Begrüßung.
-•language [language preference] A language to use instead of the one specified in preferences.
-•no‐colour Removes colour from the output.
-•path [path] A directory to run in.
+•ohne‐farben Blendet Farben aus der Ausgabe aus.
+•path [Pfad] A directory to run in.
+•sprache [Spracheinstellung] Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.
 •unsatisfiable [unsatisfiable] An option that always fails to parse.
-•use‐version [version] Attempts to download and temporarily use the specified version insead of the one which is installed.
+•version‐verwenden [Version] Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist.
 •wiederholungen [1–5] Die Anzahl der Wiederholungen.
-•zeichenkette [string] Text zum Zeigen.
+•zeichenkette [Zeichenkette] Text zum Zeigen.
 
-Argument Types
+Argumentarte
 
-[1–5] An integer between 1 and 5 inclusive.
-[farbe] ‘blau’, ‘grün’ or ‘rot’.
-[language preference] A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French
-[path] A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory.
-[string] An arbitrary string.
+[1–5] Eine ganze Zahl zwischen 1 und 5 einschließlich.
+[Farbe] „blau“, „grün“ oder „rot“.
+[Pfad] Ein Pfadname. Die Form „/...“ gibt einen vollständigen Pfad an. Die Form „~/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis.
+[Spracheinstellung] Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch
+[Version] Eine Versionsnummer oder „entwicklung“.
+[Zeichenkette] Eine beliebige Zeichenkette.
 [unsatisfiable] An argument type that always fails to parse.
-[version] A version number or ‘development’.
 
 0

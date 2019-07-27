@@ -42,7 +42,7 @@ public enum Execute {
         case .english, .unsupported:
             return "colour"
         case .deutsch:
-            return "farbe"
+            return "Farbe"
         }
     }), cases: [
         (Colour.red, UserFacing<StrictString, Language>({ localization in
