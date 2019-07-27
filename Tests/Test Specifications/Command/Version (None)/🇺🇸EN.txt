@@ -1,0 +1,3 @@
+$ tool version •no‐colour
+Not a stable version.
+0

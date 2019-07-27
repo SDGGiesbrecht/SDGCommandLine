@@ -158,11 +158,9 @@ class InternalTests : TestCase {
     }
 
     func testVersionSubcommand() {
-        LocalizationSetting(orderOfPrecedence: [["en"]]).do {
-            ProcessInfo.version = Version(1, 2, 3)
-            testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version", overwriteSpecificationInsteadOfFailing: false)
-            ProcessInfo.version = nil
-            testCommand(InternalTests.rootCommand, with: ["version"], localizations: APILocalization.self, uniqueTestName: "Version (None)", overwriteSpecificationInsteadOfFailing: false)
-        }
+        ProcessInfo.version = Version(1, 2, 3)
+        testCommand(InternalTests.rootCommand, with: ["version"], localizations: InterfaceLocalization.self, uniqueTestName: "Version", overwriteSpecificationInsteadOfFailing: false)
+        ProcessInfo.version = nil
+        testCommand(InternalTests.rootCommand, with: ["version"], localizations: InterfaceLocalization.self, uniqueTestName: "Version (None)", overwriteSpecificationInsteadOfFailing: false)
     }
 }
