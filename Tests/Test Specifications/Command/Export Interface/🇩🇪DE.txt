@@ -33,7 +33,7 @@ $ werkzeug export‐interface •no‐colour
       "identifier" : "use‐version",
       "name" : "version‐verwenden",
       "type" : {
-        "description" : "Eine Versionsnummer oder „entwicklung“",
+        "description" : "Eine Versionsnummer oder „entwicklung“.",
         "identifier" : "version",
         "name" : "Version"
       }
@@ -94,9 +94,9 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "colour",
           "name" : "farbe",
           "type" : {
-            "description" : " oder ",
+            "description" : "„blau“, „grün“ oder „rot“.",
             "identifier" : "colour",
-            "name" : "farbe"
+            "name" : "Farbe"
           }
         },
         {
@@ -134,7 +134,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -175,7 +175,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -231,7 +231,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -272,7 +272,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -318,7 +318,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -359,7 +359,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -409,7 +409,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -450,7 +450,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -496,7 +496,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -540,7 +540,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -581,7 +581,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -631,7 +631,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -672,7 +672,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
@@ -718,7 +718,7 @@ $ werkzeug export‐interface •no‐colour
           "identifier" : "use‐version",
           "name" : "version‐verwenden",
           "type" : {
-            "description" : "Eine Versionsnummer oder „entwicklung“",
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
             "identifier" : "version",
             "name" : "Version"
           }
@@ -759,7 +759,7 @@ $ werkzeug export‐interface •no‐colour
               "identifier" : "use‐version",
               "name" : "version‐verwenden",
               "type" : {
-                "description" : "Eine Versionsnummer oder „entwicklung“",
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
                 "identifier" : "version",
                 "name" : "Version"
               }
