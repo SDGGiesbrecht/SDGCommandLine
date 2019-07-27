@@ -279,7 +279,7 @@ public enum ArgumentType {
         case .englishUnitedStates, .englishCanada:
             return "A version number or “\(development)”."
         case .deutschDeutschland:
-            return "Eine Versionsnummer oder „\(development)“"
+            return "Eine Versionsnummer oder „\(development)“."
         }
     })
 

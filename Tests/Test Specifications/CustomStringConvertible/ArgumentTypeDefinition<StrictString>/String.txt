@@ -7,3 +7,6 @@ string
 🇨🇦EN
 string
 
+🇩🇪DE
+Zeichenkette
+

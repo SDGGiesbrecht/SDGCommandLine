@@ -2,20 +2,20 @@ $ werkzeug reject‐argument help •no‐colour
 
 werkzeug argument‐ablehnen [unsatisfiable] führt die Ablehnung eines Arguments vor.
 
-Subcommands
+Unterbefehle
 
-hilfe displays usage information.
+hilfe zeigt Gebrauchsinformationen an.
 
-Options
+Optionen
 
-•language [language preference] A language to use instead of the one specified in preferences.
-•no‐colour Removes colour from the output.
-•use‐version [version] Attempts to download and temporarily use the specified version insead of the one which is installed.
+•ohne‐farben Blendet Farben aus der Ausgabe aus.
+•sprache [Spracheinstellung] Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.
+•version‐verwenden [Version] Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist.
 
-Argument Types
+Argumentarte
 
-[language preference] A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French
+[Spracheinstellung] Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch
+[Version] Eine Versionsnummer oder „entwicklung“.
 [unsatisfiable] An argument type that always fails to parse.
-[version] A version number or ‘development’.
 
 0

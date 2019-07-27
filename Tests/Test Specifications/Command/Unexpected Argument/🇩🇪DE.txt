@@ -1,4 +1,4 @@
 $ werkzeug execute invalid •no‐colour
-Unexpected argument: invalid
-See also: $ werkzeug ausführen hilfe
+Unerwartetes Argument: invalid
+Siehe auch: $ werkzeug ausführen hilfe
 9223372036854775807
