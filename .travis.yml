@@ -15,46 +15,13 @@ matrix:
   include:
     - name: "macOS"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11
       script:
-        - "git config --global protocol.version 1"
-        - "bash \"./Refresh (macOS).command\""
-        - "bash \"./Validate (macOS).command\" •job macos"
+        - "swift test"
     - name: "Linux"
       os: linux
       dist: xenial
       script:
-        - "export SWIFT_VERSION=5.0"
+        - "export SWIFT_VERSION=5.1"
         - "eval \"$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)\""
-        - "bash \"./Refresh (macOS).command\""
-        - "bash \"./Validate (macOS).command\" •job linux"
-    - name: "Miscellaneous"
-      os: linux
-      dist: xenial
-      script:
-        - "export SWIFT_VERSION=5.0"
-        - "eval \"$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)\""
-        - "bash \"./Refresh (macOS).command\""
-        - "bash \"./Validate (macOS).command\" •job miscellaneous"
-    - name: "Deployment"
-      os: linux
-      env:
-        - secure: "rHheTc8sUxKAdE0Wfx6FveDJC+dwlHt3ZIJc5csxoPQge4LtqufFte3OBYVNNL+8RbyxfP25xD5nNKNVl8BAwa6uvMgmpRCSRxHRjk/nI+gioeiFocQWBXNb9EcuDjnshMc64XzeGj0gIWCD2H81daDyY9ysrLY7Y/ZREdczsMMDRAwyBuV15iC/d7tiJYy/07Pwg/3Rja8wZJFw/7fYu6x6Wk7aeFnxrb6KUyPiUexgn2PupX+E/0U1C0VAJsUS4r6p7N4spZeloeqlH8bdlrqotpvSS/h8Ui4NWL9Ke5yWyfY4E7l3cDl+I7YlLa7AGiOuOGEFVVMgaRQo/MrtrBYraGcUC+lBt6jmP6nDQb4n1Q0SvFvpFlzVtqOs7Y44oHMfGgINBNjMuGf3SKFG57jFpRJoLGOEb4kS+HkW35pefQlGTlIKKPZvjliBN71yagsRyJQI+dKX5jfSeUtstaNyVBFch8zz70bnC3YZEgAYnGDC283O3r1TmIyyMlpAbejv8dLd/JnpLzAzkVay73lBbtt1Fqqusn2C6k/U2X+/avwj08rW/Ui+2LFWt4D93pqpi00mX9+oxgaBikuncq6G6AxV5H6AZwMiCDTQwQeSASgJCYN5WAqq4F9hbHvHlTJkoulv+nSihsmmdnfHoxTuUwfwrGJki6TJrg1hQqE="
-      if: branch = master and (not type = pull_request)
-
-      deploy:
-        provider: pages
-        local_dir: docs
-        github_token: $GITHUB_TOKEN
-        skip_cleanup: true
-      dist: xenial
-      script:
-        - "export SWIFT_VERSION=5.0"
-        - "eval \"$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)\""
-        - "bash \"./Refresh (macOS).command\""
-        - "bash \"./Validate (macOS).command\" •job deployment"
-
-cache:
-  directories:
-  - $HOME/Library/Caches/ca.solideogloria.Workspace
-  - $HOME/.cache/ca.solideogloria.Workspace
+        - "swift test"
