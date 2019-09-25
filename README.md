@@ -118,7 +118,7 @@ Simply add SDGCommandLine as a dependency in `Package.swift` and specify which o
 let package = Package(
     name: "MyPackage",
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 1, 0)),
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 1, 1)),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -130,7 +130,7 @@ let package = Package(
 )
 ```
 
-The libraries’ modules can then be imported in source files:
+The modules can then be imported in source files:
 
 ```swift
 import SDGCommandLine
