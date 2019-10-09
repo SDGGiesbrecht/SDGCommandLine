@@ -108,9 +108,6 @@ import PackageDescription
 /// ```
 let package = Package(
     name: "SDGCommandLine",
-    platforms: [
-        .macOS(.v10_13)
-    ],
     products: [
         // @documentation(SDGCommandLine)
         /// Tools for implementing a command line interface.
