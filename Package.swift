@@ -108,9 +108,6 @@ import PackageDescription
 /// ```
 let package = Package(
     name: "SDGCommandLine",
-    platforms: [
-        .macOS(.v10_13)
-    ],
     products: [
         // @documentation(SDGCommandLine)
         /// Tools for implementing a command line interface.
@@ -125,10 +122,10 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-            from: Version(2, 0, 0)),
+            from: Version(2, 6, 0)),
         .package(
             url: "https://github.com/SDGGiesbrecht/SDGSwift",
-            .upToNextMinor(from: Version(0, 13, 0)))
+            .upToNextMinor(from: Version(0, 14, 0)))
     ],
     targets: [
 
