@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
           "branch": null,
-          "revision": "8e48226aa090039bd9bdd37e3624009bf5f7a7f0",
-          "version": "2.0.0"
+          "revision": "bc529b1ceb10d67004f67ea0dbe12de2c6738784",
+          "version": "2.6.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
           "branch": null,
-          "revision": "32cfa23556368c2a4fc73dc971c52a8d2c2c8b6d",
-          "version": "0.13.0"
+          "revision": "4af144d848d64fa75ae556ff571f206bf8073dc7",
+          "version": "0.14.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGWeb",
         "state": {
           "branch": null,
-          "revision": "f8f1ee85bdb8883235a867ea7a8f0e4ffe90ae94",
-          "version": "3.0.0"
+          "revision": "71283c623166a7a151ea30d66dda6962aaaa1123",
+          "version": "3.1.0"
         }
       },
       {
@@ -33,26 +33,26 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/swift-cmark",
         "state": {
           "branch": null,
-          "revision": "861f0db6f553305ad7c40c5df5ab7f9af9e88dd4",
-          "version": "0.0.50000"
+          "revision": "e672f7226962eb17803c7cce153d9dc0f935a88e",
+          "version": "0.0.50100"
         }
       },
       {
         "package": "llbuild",
-        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-llbuild",
+        "repositoryURL": "https://github.com/apple/swift-llbuild.git",
         "state": {
           "branch": null,
           "revision": "f73b84bc1525998e5e267f9d830c1411487ac65e",
-          "version": "0.50100.0"
+          "version": "0.2.0"
         }
       },
       {
         "package": "SwiftPM",
-        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-package-manager",
+        "repositoryURL": "https://github.com/apple/swift-package-manager",
         "state": {
           "branch": null,
-          "revision": "52ad37e6cad1f7561c80a687473f70ccf435118d",
-          "version": "0.50100.0"
+          "revision": "9abcc2260438177cecd7cf5185b144d13e74122b",
+          "version": "0.5.0"
         }
       },
       {
