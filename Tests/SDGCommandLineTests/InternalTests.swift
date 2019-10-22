@@ -46,11 +46,11 @@ class InternalTests : TestCase {
     func testExportInterface() {
         func postprocess(_ output: inout String) {
             // macOS & Linux have different JSON whitespace.
-            output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("\n".scalars),
-                    RepetitionPattern(" ".scalars),
-                    LiteralPattern("\n".scalars)
-                    ]), with: "\n\n".scalars)
+            output.scalars.replaceMatches(
+                for: "\n".scalars
+                    + RepetitionPattern(" ".scalars)
+                    + "\n".scalars,
+                with: "\n\n".scalars)
         }
         SDGCommandLineTestUtilities.testCommand(InternalTests.rootCommand, with: ["export‐interface"], localizations: InterfaceLocalization.self, uniqueTestName: "Export Interface", postprocess: postprocess, overwriteSpecificationInsteadOfFailing: false)
     }
@@ -105,36 +105,36 @@ class InternalTests : TestCase {
                 let cacheDirectory = FileManager.default.url(in: .cache, at: "File").deletingLastPathComponent()
                 output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
 
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("\n".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy),
-                    LiteralPattern("\trefs/heads/master".scalars)
-                    ]), with: "\n[Commit Hash]\trefs/heads/master".scalars)
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("Development/".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy),
-                    LiteralPattern("/".scalars)
-                    ]), with: "Development/[Commit Hash]/".scalars)
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern(".build/".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy),
-                    LiteralPattern("/release".scalars)
-                    ]), with: ".build/[Operating System]/release".scalars)
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("Cloning into \u{27}".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy),
-                    LiteralPattern("\u{27}".scalars)
-                    ]), with: "Cloning into \u{27}...\u{27}".scalars)
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("tool ".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy),
-                    LiteralPattern("/tool \u{2D}\u{2D}branch".scalars)
-                    ]), with: "tool [...]/tool \u{2D}\u{2D}branch".scalars)
-                output.scalars.replaceMatches(for: CompositePattern([
-                    LiteralPattern("tool ".scalars),
-                    RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy),
-                    LiteralPattern("/tool \u{2D}\u{2D}depth".scalars)
-                    ]), with: "tool [...]/tool \u{2D}\u{2D}depth".scalars)
+                output.scalars.replaceMatches(
+                    for: "\n".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy)
+                        + "\trefs/heads/master".scalars,
+                    with: "\n[Commit Hash]\trefs/heads/master".scalars)
+                output.scalars.replaceMatches(
+                    for: "Development/".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }), consumption: .lazy)
+                        + "/".scalars,
+                    with: "Development/[Commit Hash]/".scalars)
+                output.scalars.replaceMatches(
+                    for: ".build/".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy)
+                        + "/release".scalars,
+                    with: ".build/[Operating System]/release".scalars)
+                output.scalars.replaceMatches(
+                    for: "Cloning into \u{27}".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy)
+                        + "\u{27}".scalars,
+                    with: "Cloning into \u{27}...\u{27}".scalars)
+                output.scalars.replaceMatches(
+                    for: "tool ".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+                        + "/tool \u{2D}\u{2D}branch".scalars,
+                    with: "tool [...]/tool \u{2D}\u{2D}branch".scalars)
+                output.scalars.replaceMatches(
+                    for: "tool ".scalars
+                        + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+                        + "/tool \u{2D}\u{2D}depth".scalars,
+                    with: "tool [...]/tool \u{2D}\u{2D}depth".scalars)
             }
 
             // When the cache is empty...
