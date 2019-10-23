@@ -73,11 +73,12 @@ extension StringFamily {
     }
 
     internal mutating func removeCommandLineFormatting() {
-        scalars.replaceMatches(for: [
-            LiteralPattern([Self.escape]),
-            RepetitionPattern(ConditionalPattern({ _ in true }), consumption: .lazy),
-            LiteralPattern([Self.endOfCode])
-            ], with: [])
+        let any = RepetitionPattern(ConditionalPattern<Unicode.Scalar>({ _ in true }), consumption: .lazy)
+        scalars.replaceMatches(
+            for: [Self.escape]
+                + any
+                + [Self.endOfCode],
+            with: [])
     }
 
     // MARK: - Help
