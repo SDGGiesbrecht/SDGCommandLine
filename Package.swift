@@ -125,7 +125,7 @@ let package = Package(
             from: Version(3, 0, 0)),
         .package(
             url: "https://github.com/SDGGiesbrecht/SDGSwift",
-            .upToNextMinor(from: Version(0, 15, 0)))
+            .upToNextMinor(from: Version(0, 16, 0)))
     ],
     targets: [
 
@@ -142,6 +142,7 @@ let package = Package(
             .product(name: "SDGText", package: "SDGCornerstone"),
             .product(name: "SDGLocalization", package: "SDGCornerstone"),
             .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .product(name: "SDGVersioning", package: "SDGCornerstone"),
             .product(name: "SDGSwift", package: "SDGSwift")
             ], swiftSettings: [
                 .define("INTERFACE_EXPORT", .when(configuration: .debug))
@@ -186,6 +187,7 @@ let package = Package(
             .product(name: "SDGText", package: "SDGCornerstone"),
             .product(name: "SDGLocalization", package: "SDGCornerstone"),
             .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
+            .product(name: "SDGVersioning", package: "SDGCornerstone"),
             .product(name: "SDGLocalizationTestUtilities", package: "SDGCornerstone"),
             .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
             .product(name: "SDGSwift", package: "SDGSwift"),

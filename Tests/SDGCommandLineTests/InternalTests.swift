@@ -17,7 +17,7 @@ import SDGCollections
 import SDGText
 import SDGLocalization
 import SDGExternalProcess
-import SDGLocalizationTestUtilities
+import SDGVersioning
 
 import SDGSwift
 import SDGSwiftPackageManager
@@ -27,6 +27,8 @@ import SDGSwiftPackageManager
 import SDGCommandLineLocalizations
 
 import XCTest
+
+import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities
 import TestTool
