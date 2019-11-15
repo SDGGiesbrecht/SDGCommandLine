@@ -118,7 +118,7 @@ Simply add SDGCommandLine as a dependency in `Package.swift` and specify which o
 let package = Package(
     name: "MyPackage",
     dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 2, 2)),
+        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 2, 3)),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
