@@ -25,10 +25,10 @@ extension Command {
     return "export‐interface"
   })
 
-  private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({
-    _ in  // @exempt(from: tests) Hidden and unreachable right now.
-    "exports the interface in a machine readable format."
-  })
+  private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { _ in  // @exempt(from: tests) Hidden and unreachable right now.
+      "exports the interface in a machine readable format."
+    })
 
   internal static let exportInterface = Command(
     name: exportInterfaceName,

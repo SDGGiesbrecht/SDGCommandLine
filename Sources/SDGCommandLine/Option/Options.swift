@@ -23,29 +23,29 @@ public struct Options: TransparentWrapper {
 
   // MARK: - Static Properties
 
-  private static let noColourName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishCanada:
-      return "no‐colour"
-    case .englishUnitedStates:
-      return "no‐color"
-    case .deutschDeutschland:
-      return "ohne‐farben"
-    }
-  })
+  private static let noColourName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishCanada:
+        return "no‐colour"
+      case .englishUnitedStates:
+        return "no‐color"
+      case .deutschDeutschland:
+        return "ohne‐farben"
+      }
+    })
 
-  private static let noColourDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishCanada:
-      return "Removes colour from the output."
-    case .englishUnitedStates:
-      return "Removes color from the output."
-    case .deutschDeutschland:
-      return "Blendet Farben aus der Ausgabe aus."
-    }
-  })
+  private static let noColourDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishCanada:
+        return "Removes colour from the output."
+      case .englishUnitedStates:
+        return "Removes color from the output."
+      case .deutschDeutschland:
+        return "Blendet Farben aus der Ausgabe aus."
+      }
+    })
 
   internal static let noColour = Option(
     name: noColourName,
@@ -53,25 +53,25 @@ public struct Options: TransparentWrapper {
     type: ArgumentType.boolean
   )
 
-  private static let languageName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "language"
-    case .deutschDeutschland:
-      return "sprache"
-    }
-  })
+  private static let languageName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "language"
+      case .deutschDeutschland:
+        return "sprache"
+      }
+    })
 
-  private static let languageDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "A language to use instead of the one specified in preferences."
-    case .deutschDeutschland:
-      return "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist."
-    }
-  })
+  private static let languageDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "A language to use instead of the one specified in preferences."
+      case .deutschDeutschland:
+        return "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist."
+      }
+    })
 
   internal static let language = Option(
     name: languageName,
@@ -79,27 +79,27 @@ public struct Options: TransparentWrapper {
     type: ArgumentType.languagePreference
   )
 
-  internal static let useVersionName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "use‐version"
-    case .deutschDeutschland:
-      return "version‐verwenden"
-    }
-  })
+  internal static let useVersionName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "use‐version"
+      case .deutschDeutschland:
+        return "version‐verwenden"
+      }
+    })
 
-  private static let useVersionDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return
-        "Attempts to download and temporarily use the specified version insead of the one which is installed."
-    case .deutschDeutschland:
-      return
-        "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist."
-    }
-  })
+  private static let useVersionDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return
+          "Attempts to download and temporarily use the specified version insead of the one which is installed."
+      case .deutschDeutschland:
+        return
+          "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist."
+      }
+    })
 
   internal static let useVersion = Option(
     name: useVersionName,

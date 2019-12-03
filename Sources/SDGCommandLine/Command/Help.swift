@@ -103,15 +103,15 @@ extension Command {
     }
   })
 
-  private static let helpDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "displays usage information."
-    case .deutschDeutschland:
-      return "zeigt Gebrauchsinformationen an."
-    }
-  })
+  private static let helpDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "displays usage information."
+      case .deutschDeutschland:
+        return "zeigt Gebrauchsinformationen an."
+      }
+    })
 
   internal static let help = Command(
     name: helpName,

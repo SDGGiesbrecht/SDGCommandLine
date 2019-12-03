@@ -22,25 +22,25 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-  private static let emptyCacheName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "empty‐cache"
-    case .deutschDeutschland:
-      return "zwischenspeicher‐leeren"
-    }
-  })
+  private static let emptyCacheName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "empty‐cache"
+      case .deutschDeutschland:
+        return "zwischenspeicher‐leeren"
+      }
+    })
 
-  private static let emptyCacheDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "removes any cached data."
-    case .deutschDeutschland:
-      return "entfernt zwischengespeicherte Daten."
-    }
-  })
+  private static let emptyCacheDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "removes any cached data."
+      case .deutschDeutschland:
+        return "entfernt zwischengespeicherte Daten."
+      }
+    })
 
   internal static let emptyCache = Command(
     name: emptyCacheName,

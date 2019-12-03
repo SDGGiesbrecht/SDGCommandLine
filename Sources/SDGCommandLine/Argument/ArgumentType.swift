@@ -57,15 +57,15 @@ public enum ArgumentType {
     }
   })
 
-  private static let stringDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "An arbitrary string."
-    case .deutschDeutschland:
-      return "Eine beliebige Zeichenkette."
-    }
-  })
+  private static let stringDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "An arbitrary string."
+      case .deutschDeutschland:
+        return "Eine beliebige Zeichenkette."
+      }
+    })
 
   /// An argument type that accepts arbitrary strings.
   public static let string: ArgumentTypeDefinition<StrictString> = ArgumentTypeDefinition(
@@ -217,20 +217,20 @@ public enum ArgumentType {
     }
   })  // @exempt(from: tests) Meaningless region.
 
-  private static let pathDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom:
-      return
-        "A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
-    case .englishUnitedStates, .englishCanada:
-      return
-        "A file system path. The form “/...” indicates an absolute path. The form “~/...” indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
-    case .deutschDeutschland:
-      return
-        "Ein Pfadname. Die Form „/...“ gibt einen vollständigen Pfad an. Die Form „~/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis."
-    }
-  })
+  private static let pathDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom:
+        return
+          "A file system path. The form ‘/...’ indicates an absolute path. The form ‘~/...’ indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+      case .englishUnitedStates, .englishCanada:
+        return
+          "A file system path. The form “/...” indicates an absolute path. The form “~/...” indicates a path relative to the home directory. Anything else is interpreted relative to the current working directory."
+      case .deutschDeutschland:
+        return
+          "Ein Pfadname. Die Form „/...“ gibt einen vollständigen Pfad an. Die Form „~/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis."
+      }
+    })
 
   /// An argument type representing a file system path.
   public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
@@ -257,15 +257,15 @@ public enum ArgumentType {
     }
   )  // @exempt(from: tests) Meaningless region.
 
-  private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "language preference"
-    case .deutschDeutschland:
-      return "Spracheinstellung"
-    }
-  })
+  private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "language preference"
+      case .deutschDeutschland:
+        return "Spracheinstellung"
+      }
+    })
 
   private static let languagePreferenceDescription = UserFacing<
     StrictString, InterfaceLocalization
@@ -297,16 +297,16 @@ public enum ArgumentType {
           separatedBy: ConditionalPattern({ $0 ∈ Set<UnicodeScalar>([";", "·"]) })
         ).map({ StrictString($0.contents) })
         let languages = groups.map({
-          $0.components(separatedBy: [","]).map({
-            (component: PatternMatch<StrictString>) -> String in
+          $0.components(separatedBy: [","])
+            .map({ (component: PatternMatch<StrictString>) -> String in
 
-            let iconOrCode = StrictString(component.contents)
-            if let code = InterfaceLocalization.code(for: iconOrCode) {
-              return code
-            } else {
-              return String(iconOrCode)
-            }
-          })
+              let iconOrCode = StrictString(component.contents)
+              if let code = InterfaceLocalization.code(for: iconOrCode) {
+                return code
+              } else {
+                return String(iconOrCode)
+              }
+            })
         })  // @exempt(from: tests) Meaningless region.
         return LocalizationSetting(orderOfPrecedence: languages)
       }
@@ -321,28 +321,28 @@ public enum ArgumentType {
     }
   })
 
-  private static let developmentCase = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "development"
-    case .deutschDeutschland:
-      return "entwicklung"
-    }
-  })
+  private static let developmentCase = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "development"
+      case .deutschDeutschland:
+        return "entwicklung"
+      }
+    })
 
-  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    let development = ArgumentType.developmentCase.resolved(for: localization)
-    switch localization {
-    case .englishUnitedKingdom:
-      return "A version number or ‘\(development)’."
-    case .englishUnitedStates, .englishCanada:
-      return "A version number or “\(development)”."
-    case .deutschDeutschland:
-      return "Eine Versionsnummer oder „\(development)“."
-    }
-  })
+  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      let development = ArgumentType.developmentCase.resolved(for: localization)
+      switch localization {
+      case .englishUnitedKingdom:
+        return "A version number or ‘\(development)’."
+      case .englishUnitedStates, .englishCanada:
+        return "A version number or “\(development)”."
+      case .deutschDeutschland:
+        return "Eine Versionsnummer oder „\(development)“."
+      }
+    })
 
   internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
     name: versionName,

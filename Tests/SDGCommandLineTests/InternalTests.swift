@@ -250,7 +250,8 @@ class InternalTests: TestCase {
       // Asking for something which is not a version...
       testCommand(
         Tool.createCommand(),
-        with: ["some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
+        with: [
+          "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
         ],
         localizations: APILocalization.self,
         uniqueTestName: "Use Invalid Version",

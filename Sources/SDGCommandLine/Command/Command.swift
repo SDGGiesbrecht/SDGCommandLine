@@ -569,7 +569,8 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let hyphen: StrictString
     if let interfaceLocalization = SystemLocalization(reasonableMatchFor: localization.code) {
       switch interfaceLocalization {
-      case .普通话中国, .國語中國, .日本語日本国, .한국어한국, .ไทยไทย:  // Unspaced orthography, no need for joiner anyway.
+      case .普通话中国, .國語中國, .日本語日本国, .한국어한국, .ไทยไทย:
+        // Unspaced orthography, no need for joiner anyway.
         hyphen = "‐"
       case .العربية_السعودية, .हिन्दी_भारत:  // No native joiner. Use generic hyphen.
         hyphen = "‐"
