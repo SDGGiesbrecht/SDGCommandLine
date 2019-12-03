@@ -17,73 +17,88 @@ import SDGText
 import SDGLocalization
 
 /// A command line option.
-public struct Option<Type> : AnyOption {
+public struct Option<Type>: AnyOption {
 
-    // MARK: - Static Properties
+  // MARK: - Static Properties
 
-    internal static var optionMarkers: [StrictString] {
-        return [
-            "•",
-            "\u{2D}\u{2D}"
-        ]
+  internal static var optionMarkers: [StrictString] {
+    return [
+      "•",
+      "\u{2D}\u{2D}"
+    ]
+  }
+
+  // MARK: - Initialization
+
+  /// Creates a command line option.
+  ///
+  /// - Parameters:
+  ///     - name: The name. (Without the leading option marker.)
+  ///     - description: A brief description. (Printed by the `help` subcommand.)
+  ///     - type: An `ArgumentTypeDefinition` representing the type of the argument.
+  ///     - hidden: Optional. Set to `true` to hide the option from the “help” lists.
+  public init<N: InputLocalization, D: Localization>(
+    name: UserFacing<StrictString, N>,
+    description: UserFacing<StrictString, D>,
+    type: ArgumentTypeDefinition<Type>,
+    hidden: Bool = false
+  ) {
+
+    identifier = name.resolved(for: N.fallbackLocalization)
+    names = Command.list(names: name)
+    localizedName = {
+      return Command.normalizeToUnicode(
+        name.resolved(),
+        in: LocalizationSetting.current.value.resolved() as N
+      )
     }
+    localizedDescription = { return description.resolved() }
+    self.type = type
+    self.isHidden = hidden
+  }
 
-    // MARK: - Initialization
+  // MARK: - Properties
 
-    /// Creates a command line option.
-    ///
-    /// - Parameters:
-    ///     - name: The name. (Without the leading option marker.)
-    ///     - description: A brief description. (Printed by the `help` subcommand.)
-    ///     - type: An `ArgumentTypeDefinition` representing the type of the argument.
-    ///     - hidden: Optional. Set to `true` to hide the option from the “help” lists.
-    public init<N : InputLocalization, D : Localization>(name: UserFacing<StrictString, N>, description: UserFacing<StrictString, D>, type: ArgumentTypeDefinition<Type>, hidden: Bool = false) {
+  internal let identifier: StrictString
+  private let names: Set<StrictString>
+  private let localizedName: () -> StrictString
+  private let localizedDescription: () -> StrictString
+  private let isHidden: Bool
 
-        identifier = name.resolved(for: N.fallbackLocalization)
-        names = Command.list(names: name)
-        localizedName = { return Command.normalizeToUnicode(name.resolved(), in: LocalizationSetting.current.value.resolved() as N) }
-        localizedDescription = { return description.resolved() }
-        self.type = type
-        self.isHidden = hidden
-    }
+  private let type: ArgumentTypeDefinition<Type>
 
-    // MARK: - Properties
+  // MARK: - AnyOption
 
-    internal let identifier: StrictString
-    private let names: Set<StrictString>
-    private let localizedName: () -> StrictString
-    private let localizedDescription: () -> StrictString
-    private let isHidden: Bool
+  public var _identifier: StrictString {
+    return identifier
+  }
 
-    private let type: ArgumentTypeDefinition<Type>
+  public var _isHidden: Bool {
+    return isHidden
+  }
 
-    // MARK: - AnyOption
+  public func _matches(name: StrictString) -> Bool {
+    return name ∈ names
+  }
 
-    public var _identifier: StrictString {
-        return identifier
-    }
+  public func _localizedName() -> StrictString {
+    return localizedName()
+  }
 
-    public var _isHidden: Bool {
-        return isHidden
-    }
+  public func _localizedDescription() -> StrictString {
+    return localizedDescription()
+  }
 
-    public func _matches(name: StrictString) -> Bool {
-        return name ∈ names
-    }
+  public func _type() -> AnyArgumentTypeDefinition {
+    return type
+  }
 
-    public func _localizedName() -> StrictString {
-        return localizedName()
-    }
-
-    public func _localizedDescription() -> StrictString {
-        return localizedDescription()
-    }
-
-    public func _type() -> AnyArgumentTypeDefinition {
-        return type
-    }
-
-    public func _interface() -> _OptionInterface {
-        return _OptionInterface(identifier: identifier, name: localizedName(), description: localizedDescription(), type: type()._interface())
-    }
+  public func _interface() -> _OptionInterface {
+    return _OptionInterface(
+      identifier: identifier,
+      name: localizedName(),
+      description: localizedDescription(),
+      type: type()._interface()
+    )
+  }
 }

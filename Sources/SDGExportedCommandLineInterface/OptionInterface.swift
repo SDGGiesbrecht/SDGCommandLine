@@ -17,22 +17,22 @@ import SDGText
 import SDGCommandLine
 
 /// An option.
-public struct OptionInterface : Decodable {
+public struct OptionInterface: Decodable {
 
-    /// A unique identifier that can be compared across localizations to find corresponding options.
-    public var identifier: StrictString
+  /// A unique identifier that can be compared across localizations to find corresponding options.
+  public var identifier: StrictString
 
-    /// The name.
-    public var name: StrictString
+  /// The name.
+  public var name: StrictString
 
-    /// The description.
-    public var description: StrictString
+  /// The description.
+  public var description: StrictString
 
-    /// The type.
-    public var type: ArgumentInterface
+  /// The type.
+  public var type: ArgumentInterface
 
-    /// Whether or not the option is a Boolean flag.
-    public var isFlag: Bool {
-        return type.identifier == ArgumentType.boolean._identifier()
-    }
+  /// Whether or not the option is a Boolean flag.
+  public var isFlag: Bool {
+    return type.identifier == ArgumentType.boolean._identifier()
+  }
 }

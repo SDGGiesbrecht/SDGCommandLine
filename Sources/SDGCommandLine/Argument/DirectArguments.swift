@@ -18,37 +18,37 @@ import SDGCollections
 /// Parsed direct (ordered) arguments.
 ///
 /// - SeeAlso: `Options`
-public struct DirectArguments : TransparentWrapper {
+public struct DirectArguments: TransparentWrapper {
 
-    // MARK: - Initialization
+  // MARK: - Initialization
 
-    internal init() {}
+  internal init() {}
 
-    // MARK: - Properties
+  // MARK: - Properties
 
-    private var arguments: [Any] = []
+  private var arguments: [Any] = []
 
-    // MARK: - Usage
+  // MARK: - Usage
 
-    internal mutating func add(value: Any) {
-        arguments.append(value)
+  internal mutating func add(value: Any) {
+    arguments.append(value)
+  }
+
+  /// Returns the value of the specified argument, or `nil` if the argument is not defined.
+  ///
+  /// - Parameters:
+  ///     - index: The index to check.
+  ///     - type: The type to attempt to cast to.
+  public func argument<T>(at index: Int, as type: ArgumentTypeDefinition<T>) -> T? {
+    guard index ∈ arguments.bounds else {
+      return nil
     }
+    return arguments[index] as? T
+  }
 
-    /// Returns the value of the specified argument, or `nil` if the argument is not defined.
-    ///
-    /// - Parameters:
-    ///     - index: The index to check.
-    ///     - type: The type to attempt to cast to.
-    public func argument<T>(at index: Int, as type: ArgumentTypeDefinition<T>) -> T? {
-        guard index ∈ arguments.bounds else {
-            return nil
-        }
-        return arguments[index] as? T
-    }
+  // MARK: - TransparentWrapper
 
-    // MARK: - TransparentWrapper
-
-    public var wrappedInstance: Any {
-        return arguments
-    }
+  public var wrappedInstance: Any {
+    return arguments
+  }
 }

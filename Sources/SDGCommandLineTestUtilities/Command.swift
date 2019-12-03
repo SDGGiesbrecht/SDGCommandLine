@@ -42,72 +42,83 @@ import SDGPersistenceTestUtilities
 ///     - file: Optional. A different file to report as the failure location.
 ///     - line: Optional. A different line to report as the failure location.
 public func testCommand<L>(
-    _ command: Command,
-    with arguments: [StrictString],
-    in workingDirectory: URL? = nil,
-    localizations: L.Type,
-    uniqueTestName: StrictString,
-    allowColour: Bool = false,
-    postprocess: (_ output: inout String) -> Void = { _ in },
-    overwriteSpecificationInsteadOfFailing: Bool,
-    file: StaticString = #file,
-    line: UInt = #line) where L : InputLocalization {
+  _ command: Command,
+  with arguments: [StrictString],
+  in workingDirectory: URL? = nil,
+  localizations: L.Type,
+  uniqueTestName: StrictString,
+  allowColour: Bool = false,
+  postprocess: (_ output: inout String) -> Void = { _ in },
+  overwriteSpecificationInsteadOfFailing: Bool,
+  file: StaticString = #file,
+  line: UInt = #line
+) where L: InputLocalization {
 
-    Command.Output.testMode = true
+  Command.Output.testMode = true
 
-    let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
+  let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
 
-    for localization in localizations.allCases {
-        autoreleasepool {
+  for localization in localizations.allCases {
+    autoreleasepool {
 
-            let filename: String
-            if let icon = localization.icon {
-                filename = String(icon)
-            } else {
-                filename = localization.code
-            }
+      let filename: String
+      if let icon = localization.icon {
+        filename = String(icon)
+      } else {
+        filename = localization.code
+      }
 
-            let specification = testSpecificationDirectory(file).appendingPathComponent("Command").appendingPathComponent(String(uniqueTestName)).appendingPathComponent(filename + ".txt")
+      let specification = testSpecificationDirectory(file).appendingPathComponent("Command")
+        .appendingPathComponent(String(uniqueTestName)).appendingPathComponent(filename + ".txt")
 
-            LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+      LocalizationSetting(orderOfPrecedence: [localization.code]).do {
 
-                var report = ""
-                print("$ \(([command.localizedName()] + modifiedArguments).joined(separator: " "))", to: &report)
+        var report = ""
+        print(
+          "$ \(([command.localizedName()] + modifiedArguments).joined(separator: " "))",
+          to: &report
+        )
 
-                var result: Result<StrictString, Command.Error> = .success("")
-                if let location = workingDirectory {
-                    try! FileManager.default.do(in: location) {
-                        result = command.execute(with: modifiedArguments)
-                    }
-                } else {
-                    result = command.execute(with: modifiedArguments)
-                }
-                var output: StrictString = ""
-                var error: StrictString = ""
-                var exitCode: Int = Command.Error.successCode
-                switch result {
-                case .success(let outputReceived):
-                    output = outputReceived
-                case .failure(let thrown):
-                    if let captured = thrown.output {
-                        output = captured
-                    }
-                    error = thrown.presentableDescription()
-                    exitCode = thrown.exitCode
-                }
-
-                if ¬output.isEmpty {
-                    print(output, to: &report)
-                }
-                if ¬error.isEmpty {
-                    print(error, to: &report)
-                }
-                print(exitCode, to: &report)
-
-                postprocess(&report)
-
-                SDGPersistenceTestUtilities.compare(report, against: specification, overwriteSpecificationInsteadOfFailing: overwriteSpecificationInsteadOfFailing, file: file, line: line)
-            }
+        var result: Result<StrictString, Command.Error> = .success("")
+        if let location = workingDirectory {
+          try! FileManager.default.do(in: location) {
+            result = command.execute(with: modifiedArguments)
+          }
+        } else {
+          result = command.execute(with: modifiedArguments)
         }
+        var output: StrictString = ""
+        var error: StrictString = ""
+        var exitCode: Int = Command.Error.successCode
+        switch result {
+        case .success(let outputReceived):
+          output = outputReceived
+        case .failure(let thrown):
+          if let captured = thrown.output {
+            output = captured
+          }
+          error = thrown.presentableDescription()
+          exitCode = thrown.exitCode
+        }
+
+        if ¬output.isEmpty {
+          print(output, to: &report)
+        }
+        if ¬error.isEmpty {
+          print(error, to: &report)
+        }
+        print(exitCode, to: &report)
+
+        postprocess(&report)
+
+        SDGPersistenceTestUtilities.compare(
+          report,
+          against: specification,
+          overwriteSpecificationInsteadOfFailing: overwriteSpecificationInsteadOfFailing,
+          file: file,
+          line: line
+        )
+      }
     }
+  }
 }

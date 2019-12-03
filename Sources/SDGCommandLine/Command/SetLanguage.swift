@@ -19,26 +19,38 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-    private static let setLanguageName = UserFacing<StrictString, InterfaceLocalization>({ localization in
-        switch localization {
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "set‐language"
-        case .deutschDeutschland:
-            return "sprache‐einstellen"
-        }
-    })
+  private static let setLanguageName = UserFacing<StrictString, InterfaceLocalization>({
+    localization in
+    switch localization {
+    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+      return "set‐language"
+    case .deutschDeutschland:
+      return "sprache‐einstellen"
+    }
+  })
 
-    private static let setLanguageDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
-        switch localization {
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "sets the language preference. (Omit the argument to revert to the system preferences.)"
-        case .deutschDeutschland:
-            return "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)"
-        }
-    })
+  private static let setLanguageDescription = UserFacing<StrictString, InterfaceLocalization>({
+    localization in
+    switch localization {
+    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+      return
+        "sets the language preference. (Omit the argument to revert to the system preferences.)"
+    case .deutschDeutschland:
+      return
+        "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)"
+    }
+  })
 
-    internal static let setLanguage = Command(name: setLanguageName, description: setLanguageDescription, directArguments: [ArgumentType.languagePreference], options: [], execution: { (directArguments: DirectArguments, _, _) throws -> Void in
+  internal static let setLanguage = Command(
+    name: setLanguageName,
+    description: setLanguageDescription,
+    directArguments: [ArgumentType.languagePreference],
+    options: [],
+    execution: { (directArguments: DirectArguments, _, _) throws -> Void in
 
-        LocalizationSetting.setApplicationPreferences(to: directArguments.argument(at: 0, as: ArgumentType.languagePreference))
-    })
+      LocalizationSetting.setApplicationPreferences(
+        to: directArguments.argument(at: 0, as: ArgumentType.languagePreference)
+      )
+    }
+  )
 }

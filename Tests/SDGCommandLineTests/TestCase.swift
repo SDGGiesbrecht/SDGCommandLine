@@ -25,17 +25,17 @@ import XCTest
 
 import SDGXCTestUtilities
 
-class TestCase : SDGXCTestUtilities.TestCase {
+class TestCase: SDGXCTestUtilities.TestCase {
 
-    static var alreadyInitialized = false
+  static var alreadyInitialized = false
 
-    override func setUp() {
-        if ¬TestCase.alreadyInitialized {
-            TestCase.alreadyInitialized = true
-            ProcessInfo.version = Version(1, 2, 3)
-            ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
-            Command.Output.testMode = true
-        }
-        super.setUp()
+  override func setUp() {
+    if ¬TestCase.alreadyInitialized {
+      TestCase.alreadyInitialized = true
+      ProcessInfo.version = Version(1, 2, 3)
+      ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
+      Command.Output.testMode = true
     }
+    super.setUp()
+  }
 }

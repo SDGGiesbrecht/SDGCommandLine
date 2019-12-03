@@ -17,63 +17,63 @@ import SDGText
 
 extension Command {
 
-    /// The output stream for standard output.
-    public class Output {
+  /// The output stream for standard output.
+  public class Output {
 
-        // MARK: - Static Properties
+    // MARK: - Static Properties
 
-        /// Whether or not test mode is engaged.
-        ///
-        /// In test mode, command output is withheld from the terminal to make test results easier to read.
-        public static var testMode: Bool = false
+    /// Whether or not test mode is engaged.
+    ///
+    /// In test mode, command output is withheld from the terminal to make test results easier to read.
+    public static var testMode: Bool = false
 
-        // MARK: - Initialization
+    // MARK: - Initialization
 
-        internal init() {
-            internalOutput = ""
-        }
-
-        // MARK: - Properties
-
-        internal var filterFormatting = false
-
-        public static let _newline: StrictString = "\n"
-        private var internalOutput: StrictString
-        internal var output: StrictString {
-            var result = internalOutput
-            if result.hasSuffix(Output._newline) {
-                result.scalars.removeLast()
-            }
-            return result
-        }
-
-        // @documentation(SDGCommandLine.Command.Output.print(_:terminator:))
-        /// Prints a message to the standard output.
-        ///
-        /// - Parameters:
-        ///     - message: The message.
-        ///     - terminator: Optional. A particular terminator.
-        public func print(_ message: StrictString, terminator: StrictString = Output._newline) {
-            var mutable = message + terminator
-
-            if filterFormatting {
-                mutable.removeCommandLineFormatting()
-            }
-
-            internalOutput.append(contentsOf: mutable)
-            if ¬Output.testMode {
-                Swift.print(mutable, terminator: "") // @exempt(from: tests)
-            }
-        }
-
-        // #documentation(SDGCommandLine.Command.Output.print(_:terminator:))
-        /// Prints a message to the standard output.
-        ///
-        /// - Parameters:
-        ///     - message: The message.
-        ///     - terminator: Optional. A particular terminator.
-        public func print(_ message: String, terminator: StrictString = Output._newline) {
-            print(StrictString(message), terminator: terminator)
-        }
+    internal init() {
+      internalOutput = ""
     }
+
+    // MARK: - Properties
+
+    internal var filterFormatting = false
+
+    public static let _newline: StrictString = "\n"
+    private var internalOutput: StrictString
+    internal var output: StrictString {
+      var result = internalOutput
+      if result.hasSuffix(Output._newline) {
+        result.scalars.removeLast()
+      }
+      return result
+    }
+
+    // @documentation(SDGCommandLine.Command.Output.print(_:terminator:))
+    /// Prints a message to the standard output.
+    ///
+    /// - Parameters:
+    ///     - message: The message.
+    ///     - terminator: Optional. A particular terminator.
+    public func print(_ message: StrictString, terminator: StrictString = Output._newline) {
+      var mutable = message + terminator
+
+      if filterFormatting {
+        mutable.removeCommandLineFormatting()
+      }
+
+      internalOutput.append(contentsOf: mutable)
+      if ¬Output.testMode {
+        Swift.print(mutable, terminator: "")  // @exempt(from: tests)
+      }
+    }
+
+    // #documentation(SDGCommandLine.Command.Output.print(_:terminator:))
+    /// Prints a message to the standard output.
+    ///
+    /// - Parameters:
+    ///     - message: The message.
+    ///     - terminator: Optional. A particular terminator.
+    public func print(_ message: String, terminator: StrictString = Output._newline) {
+      print(StrictString(message), terminator: terminator)
+    }
+  }
 }

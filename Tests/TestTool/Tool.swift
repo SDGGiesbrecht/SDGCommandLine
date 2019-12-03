@@ -19,23 +19,29 @@ import SDGCommandLine
 
 public enum Tool {
 
-    public static let command = createCommand()
+  public static let command = createCommand()
 
-    public static func createCommand() -> Command {
-        return Command(name: UserFacing<StrictString, Language>({ localization in
-            switch localization {
-            case .english, .unsupported:
-                return "tool"
-            case .deutsch:
-                return "werkzeug"
-            }
-        }), description: UserFacing<StrictString, Language>({ localization in
-            switch localization {
-            case .english, .unsupported:
-                return "serves as an example tool."
-            case .deutsch:
-                return "dient als Beilspielswerkzeug."
-            }
-        }), subcommands: [Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command])
-    }
+  public static func createCommand() -> Command {
+    return Command(
+      name: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+          return "tool"
+        case .deutsch:
+          return "werkzeug"
+        }
+      }),
+      description: UserFacing<StrictString, Language>({ localization in
+        switch localization {
+        case .english, .unsupported:
+          return "serves as an example tool."
+        case .deutsch:
+          return "dient als Beilspielswerkzeug."
+        }
+      }),
+      subcommands: [
+        Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command
+      ]
+    )
+  }
 }

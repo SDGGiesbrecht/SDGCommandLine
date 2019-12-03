@@ -16,39 +16,39 @@ import SDGControlFlow
 import SDGText
 
 /// A type‐erased argument definition.
-public protocol AnyArgumentTypeDefinition : TextualPlaygroundDisplay {
-    func _parse(argument: StrictString) -> Any?
-    func _identifier() -> StrictString
-    func _localizedName() -> StrictString
-    func _localizedDescription() -> StrictString
-    func _interface() -> _ArgumentInterface
+public protocol AnyArgumentTypeDefinition: TextualPlaygroundDisplay {
+  func _parse(argument: StrictString) -> Any?
+  func _identifier() -> StrictString
+  func _localizedName() -> StrictString
+  func _localizedDescription() -> StrictString
+  func _interface() -> _ArgumentInterface
 }
 
 extension AnyArgumentTypeDefinition {
 
-    internal func parse(argument: StrictString) -> Any? {
-        return _parse(argument: argument)
-    }
+  internal func parse(argument: StrictString) -> Any? {
+    return _parse(argument: argument)
+  }
 
-    internal func identifier() -> StrictString {
-        return _identifier()
-    }
+  internal func identifier() -> StrictString {
+    return _identifier()
+  }
 
-    internal func localizedName() -> StrictString {
-        return _localizedName()
-    }
+  internal func localizedName() -> StrictString {
+    return _localizedName()
+  }
 
-    internal func localizedDescription() -> StrictString {
-        return _localizedDescription()
-    }
+  internal func localizedDescription() -> StrictString {
+    return _localizedDescription()
+  }
 
-    internal func interface() -> _ArgumentInterface {
-        return _interface()
-    }
+  internal func interface() -> _ArgumentInterface {
+    return _interface()
+  }
 
-    // MARK: - CustomStringConvertible
+  // MARK: - CustomStringConvertible
 
-    public var description: String {
-        return String(localizedName())
-    }
+  public var description: String {
+    return String(localizedName())
+  }
 }

@@ -13,61 +13,61 @@
  */
 
 /// A font colour.
-public enum Colour : Int, TextFormat {
+public enum Colour: Int, TextFormat {
 
-    /// Black.
-    case black = 30
+  /// Black.
+  case black = 30
 
-    /// Grey.
-    case grey = 90
+  /// Grey.
+  case grey = 90
 
-    /// Light grey.
-    case lightGrey = 37
+  /// Light grey.
+  case lightGrey = 37
 
-    /// White.
-    case white = 97
+  /// White.
+  case white = 97
 
-    /// Red.
-    case red = 31
+  /// Red.
+  case red = 31
 
-    /// Bright red.
-    case brightRed = 91
+  /// Bright red.
+  case brightRed = 91
 
-    /// Yellow.
-    case yellow = 33
+  /// Yellow.
+  case yellow = 33
 
-    /// Bright yellow.
-    case brightYellow = 93
+  /// Bright yellow.
+  case brightYellow = 93
 
-    /// Green.
-    case green = 32
+  /// Green.
+  case green = 32
 
-    /// Bright green.
-    case brightGreen = 92
+  /// Bright green.
+  case brightGreen = 92
 
-    /// Cyan.
-    case cyan = 36
+  /// Cyan.
+  case cyan = 36
 
-    /// Bright cyan.
-    case brightCyan = 96
+  /// Bright cyan.
+  case brightCyan = 96
 
-    /// Blue.
-    case blue = 34
+  /// Blue.
+  case blue = 34
 
-    /// Bright blue.
-    case brightBlue = 94
+  /// Bright blue.
+  case brightBlue = 94
 
-    /// Magenta.
-    case magenta = 35
+  /// Magenta.
+  case magenta = 35
 
-    /// Bright magenta.
-    case brightMagenta = 95
+  /// Bright magenta.
+  case brightMagenta = 95
 
-    // MARK: - TextFormat
+  // MARK: - TextFormat
 
-    public var startCode: Int {
-        return rawValue
-    }
+  public var startCode: Int {
+    return rawValue
+  }
 
-    public static let resetCode: Int = 39
+  public static let resetCode: Int = 39
 }

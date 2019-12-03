@@ -18,12 +18,12 @@ import SDGSwift
 
 extension Build {
 
-    // MARK: - Static Properties
+  // MARK: - Static Properties
 
-    internal static let current: Build? = {
-        guard let versionNumber = ProcessInfo.version else {
-            return nil // @exempt(from: tests)
-        }
-        return .version(versionNumber)
-    }()
+  internal static let current: Build? = {
+    guard let versionNumber = ProcessInfo.version else {
+      return nil  // @exempt(from: tests)
+    }
+    return .version(versionNumber)
+  }()
 }

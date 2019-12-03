@@ -17,51 +17,51 @@ import SDGControlFlow
 import SDGText
 
 /// A type‐erased option.
-public protocol AnyOption : TextualPlaygroundDisplay {
+public protocol AnyOption: TextualPlaygroundDisplay {
 
-    var _identifier: StrictString { get }
-    var _isHidden: Bool { get }
+  var _identifier: StrictString { get }
+  var _isHidden: Bool { get }
 
-    func _matches(name: StrictString) -> Bool
-    func _localizedName() -> StrictString
-    func _localizedDescription() -> StrictString
-    func _type() -> AnyArgumentTypeDefinition
-    func _interface() -> _OptionInterface
+  func _matches(name: StrictString) -> Bool
+  func _localizedName() -> StrictString
+  func _localizedDescription() -> StrictString
+  func _type() -> AnyArgumentTypeDefinition
+  func _interface() -> _OptionInterface
 }
 
 extension AnyOption {
 
-    internal var identifier: StrictString {
-        return _identifier
-    }
+  internal var identifier: StrictString {
+    return _identifier
+  }
 
-    internal var isHidden: Bool {
-        return _isHidden
-    }
+  internal var isHidden: Bool {
+    return _isHidden
+  }
 
-    internal func matches(name: StrictString) -> Bool {
-        return _matches(name: name)
-    }
+  internal func matches(name: StrictString) -> Bool {
+    return _matches(name: name)
+  }
 
-    internal func localizedName() -> StrictString {
-        return _localizedName()
-    }
+  internal func localizedName() -> StrictString {
+    return _localizedName()
+  }
 
-    internal func localizedDescription() -> StrictString {
-        return _localizedDescription()
-    }
+  internal func localizedDescription() -> StrictString {
+    return _localizedDescription()
+  }
 
-    internal func type() -> AnyArgumentTypeDefinition {
-        return _type()
-    }
+  internal func type() -> AnyArgumentTypeDefinition {
+    return _type()
+  }
 
-    internal func interface() -> _OptionInterface {
-        return _interface()
-    }
+  internal func interface() -> _OptionInterface {
+    return _interface()
+  }
 
-    // MARK: - CustomStringConvertible
+  // MARK: - CustomStringConvertible
 
-    public var description: String {
-        return String(localizedName())
-    }
+  public var description: String {
+    return String(localizedName())
+  }
 }

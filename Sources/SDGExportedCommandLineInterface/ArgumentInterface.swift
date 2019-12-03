@@ -15,14 +15,14 @@
 import SDGText
 
 /// An argument.
-public struct ArgumentInterface : Decodable {
+public struct ArgumentInterface: Decodable {
 
-    /// A unique identifier that can be compared across localizations to find corresponding arguments.
-    public var identifier: StrictString
+  /// A unique identifier that can be compared across localizations to find corresponding arguments.
+  public var identifier: StrictString
 
-    /// The name.
-    public var name: StrictString
+  /// The name.
+  public var name: StrictString
 
-    /// The description.
-    public var description: StrictString
+  /// The description.
+  public var description: StrictString
 }

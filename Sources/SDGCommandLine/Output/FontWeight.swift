@@ -13,19 +13,19 @@
  */
 
 /// A font weight.
-public enum FontWeight : Int, TextFormat {
+public enum FontWeight: Int, TextFormat {
 
-    /// Bold.
-    case bold = 1
+  /// Bold.
+  case bold = 1
 
-    /// Light.
-    case light = 2
+  /// Light.
+  case light = 2
 
-    // MARK: - TextFormat
+  // MARK: - TextFormat
 
-    public var startCode: Int {
-        return rawValue
-    }
+  public var startCode: Int {
+    return rawValue
+  }
 
-    public static let resetCode: Int = 22
+  public static let resetCode: Int = 22
 }
