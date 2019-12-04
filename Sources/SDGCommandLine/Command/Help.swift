@@ -21,187 +21,220 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-    private static let helpName = UserFacing<StrictString, SystemLocalization>({ localization in
-        switch localization {
-        case .普通话中国:
-            return "帮助"
-        case .國語中國:
-            return "輔助說明"
+  private static let helpName = UserFacing<StrictString, SystemLocalization>({ localization in
+    switch localization {
+    case .普通话中国:
+      return "帮助"
+    case .國語中國:
+      return "輔助說明"
 
-        case .españolEspaña:
-            return "ayuda"
-        case .portuguêsPortugal, .catalàEspanya:
-            return "ajuda"
-        case .françaisFrance:
-            return "aide"
-        case .italianoItalia:
-            return "aiuto"
-        case .românăRomânia:
-            return "ajutor"
+    case .españolEspaña:
+      return "ayuda"
+    case .portuguêsPortugal, .catalàEspanya:
+      return "ajuda"
+    case .françaisFrance:
+      return "aide"
+    case .italianoItalia:
+      return "aiuto"
+    case .românăRomânia:
+      return "ajutor"
 
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .nederlandsNederland:
-            return "help"
-        case .日本語日本国:
-            return "ヘルプ"
-        case .deutschDeutschland:
-            return "hilfe"
-        case .svenskaSverige:
-            return "hjälp"
-        case .danskDanmark:
-            return "hjælp"
-        case .norskNorge:
-            return "hjelp"
+    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada, .nederlandsNederland:
+      return "help"
+    case .日本語日本国:
+      return "ヘルプ"
+    case .deutschDeutschland:
+      return "hilfe"
+    case .svenskaSverige:
+      return "hjälp"
+    case .danskDanmark:
+      return "hjælp"
+    case .norskNorge:
+      return "hjelp"
 
-        case .العربية_السعودية:
-            return "مساعدة"
+    case .العربية_السعودية:
+      return "مساعدة"
 
-        case .हिन्दी_भारत:
-            return "सहायता"
+    case .हिन्दी_भारत:
+      return "सहायता"
 
-        case .русскийРоссия:
-            return "справка"
+    case .русскийРоссия:
+      return "справка"
 
-        case .tiếngViệtViệtNam:
-            return "trợ giúp"
+    case .tiếngViệtViệtNam:
+      return "trợ giúp"
 
-        case .한국어한국:
-            return "도움말"
+    case .한국어한국:
+      return "도움말"
 
-        case .türkçeTürkiye:
-            return "yardım"
+    case .türkçeTürkiye:
+      return "yardım"
 
-        case .polskiPolska:
-            return "pomoc"
-        case .slovenčinaSlovensko:
-            return "pomocník"
-        case .hrvatskiHrvatska:
-            return "pomoć"
+    case .polskiPolska:
+      return "pomoc"
+    case .slovenčinaSlovensko:
+      return "pomocník"
+    case .hrvatskiHrvatska:
+      return "pomoć"
 
-        case .українськаУкраїна:
-            return "довідка"
+    case .українськаУкраїна:
+      return "довідка"
 
-        case .malaysiaMalaysia, .indonesiaIndonesia:
-            return "bantuan"
+    case .malaysiaMalaysia, .indonesiaIndonesia:
+      return "bantuan"
 
-        case .ไทยไทย:
-            return "วิธีใช้"
+    case .ไทยไทย:
+      return "วิธีใช้"
 
-        case .češtinaČesko:
-            return "nápověda"
+    case .češtinaČesko:
+      return "nápověda"
 
-        case .magyarMagyarország:
-            return "súgó"
+    case .magyarMagyarország:
+      return "súgó"
 
-        case .ελληνικάΕλλάδα:
-            return "βοήθεια"
+    case .ελληνικάΕλλάδα:
+      return "βοήθεια"
 
-        case .suomiSuomi:
-            return "ohje"
+    case .suomiSuomi:
+      return "ohje"
 
-        case .עברית־ישראל:
-            return "עזרה"
-        }
+    case .עברית־ישראל:
+      return "עזרה"
+    }
+  })
+
+  private static let helpDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "displays usage information."
+      case .deutschDeutschland:
+        return "zeigt Gebrauchsinformationen an."
+      }
     })
 
-    private static let helpDescription = UserFacing<StrictString, InterfaceLocalization>({ localization in
-        switch localization {
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-            return "displays usage information."
-        case .deutschDeutschland:
-            return "zeigt Gebrauchsinformationen an."
+  internal static let help = Command(
+    name: helpName,
+    description: helpDescription,
+    discussion: nil,
+    directArguments: [],
+    options: [],
+    execution: { _, _, output in
+      output.print("")
+
+      let stack = Command.stack.dropLast()  // Ignoring help.
+      let command = stack.last!
+
+      let formatType = { (type: StrictString) -> StrictString in
+        return ("[" + type + "]").formattedAsType()
+      }
+
+      var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: " "))
+        .formattedAsSubcommand()
+      for directArgument in command.directArguments {
+        commandName += " " + formatType(directArgument.localizedName())
+      }
+      output.print(commandName + " " + command.localizedDescription())
+
+      if let discussion = command.localizedDiscussion() {
+        output.print("")
+        output.print(discussion)
+      }
+
+      func printSection<T>(
+        header: UserFacing<StrictString, InterfaceLocalization>,
+        entries: [T],
+        getHeadword: (T) -> StrictString,
+        getFormattedHeadword: (T) -> StrictString,
+        getDescription: (T) -> StrictString
+      ) {
+
+        output.print(header.resolved().formattedAsSectionHeader())
+
+        var entryText: [StrictString: StrictString] = [:]
+        for entry in entries {
+          entryText[getHeadword(entry)] = getFormattedHeadword(entry) + " " + getDescription(entry)
         }
-    })
 
-    internal static let help = Command(
-        name: helpName,
-        description: helpDescription,
-        discussion: nil,
-        directArguments: [],
-        options: [],
-        execution: { _, _, output in
-            output.print("")
+        for headword in entryText.keys.sorted() {
+          output.print(entryText[headword]!)
+        }
+      }
 
-            let stack = Command.stack.dropLast() // Ignoring help.
-            let command = stack.last!
+      let subcommands = command.subcommands.filter { ¬$0.isHidden }
+      if ¬subcommands.isEmpty {
 
-            let formatType = { (type: StrictString) -> StrictString in
-                return ("[" + type + "]").formattedAsType()
+        printSection(
+          header: UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+              return "Subcommands"
+            case .deutschDeutschland:
+              return "Unterbefehle"
             }
+          }),
+          entries: subcommands,
+          getHeadword: { $0.localizedName() },
+          getFormattedHeadword: {
+            $0.localizedName().formattedAsSubcommand()
+              + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined()
+          },
+          getDescription: { $0.localizedDescription() }
+        )
+      }
 
-            var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: " ")).formattedAsSubcommand()
-            for directArgument in command.directArguments {
-                commandName += " " + formatType(directArgument.localizedName())
+      if ¬command.options.isEmpty {
+
+        let formatOption = { (option: AnyOption) -> StrictString in
+          var result = ("•" + option.localizedName()).formattedAsOption()
+          if option.type().identifier() ≠ ArgumentType.booleanIdentifier {
+            result += " " + formatType(option.type().localizedName())
+          }
+          return result
+        }
+
+        printSection(
+          header: UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+              return "Options"
+            case .deutschDeutschland:
+              return "Optionen"
             }
-            output.print(commandName + " " + command.localizedDescription())
+          }),
+          entries: command.options.filter({ ¬$0.isHidden }),
+          getHeadword: { $0.localizedName() },
+          getFormattedHeadword: formatOption,
+          getDescription: { $0.localizedDescription() }
+        )
 
-            if let discussion = command.localizedDiscussion() {
-                output.print("")
-                output.print(discussion)
+        var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
+        for type in command.directArguments + command.options.map({ $0.type() }) {
+          let key = type.identifier()
+          if key ≠ ArgumentType.booleanIdentifier {
+            argumentTypes[key] = (
+              type: type.localizedName(), description: type.localizedDescription()
+            )
+          }
+        }
+        printSection(
+          header: UserFacing<StrictString, InterfaceLocalization>({ localization in
+            switch localization {
+            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+              return "Argument Types"
+            case .deutschDeutschland:
+              return "Argumentarte"
             }
+          }),
+          entries: Array(argumentTypes.values),
+          getHeadword: { $0.type },
+          getFormattedHeadword: { formatType($0.type) },
+          getDescription: { $0.description }
+        )
+      }
 
-            func printSection<T>(header: UserFacing<StrictString, InterfaceLocalization>, entries: [T], getHeadword: (T) -> StrictString, getFormattedHeadword: (T) -> StrictString, getDescription: (T) -> StrictString) {
-
-                output.print(header.resolved().formattedAsSectionHeader())
-
-                var entryText: [StrictString: StrictString] = [:]
-                for entry in entries {
-                    entryText[getHeadword(entry)] = getFormattedHeadword(entry) + " " + getDescription(entry)
-                }
-
-                for headword in entryText.keys.sorted() {
-                    output.print(entryText[headword]!)
-                }
-            }
-
-            let subcommands = command.subcommands.filter { ¬$0.isHidden }
-            if ¬subcommands.isEmpty {
-
-                printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        return "Subcommands"
-                    case .deutschDeutschland:
-                        return "Unterbefehle"
-                    }
-                }), entries: subcommands, getHeadword: { $0.localizedName() }, getFormattedHeadword: { $0.localizedName().formattedAsSubcommand() + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined() }, getDescription: { $0.localizedDescription() })
-            }
-
-            if ¬command.options.isEmpty {
-
-                let formatOption = { (option: AnyOption) -> StrictString in
-                    var result = ("•" + option.localizedName()).formattedAsOption()
-                    if option.type().identifier() ≠ ArgumentType.booleanIdentifier {
-                        result += " " + formatType(option.type().localizedName())
-                    }
-                    return result
-                }
-
-                printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        return "Options"
-                    case .deutschDeutschland:
-                        return "Optionen"
-                    }
-                }), entries: command.options.filter({ ¬$0.isHidden }), getHeadword: { $0.localizedName() }, getFormattedHeadword: formatOption, getDescription: { $0.localizedDescription() })
-
-                var argumentTypes: [StrictString: (type: StrictString, description: StrictString)] = [:]
-                for type in command.directArguments + command.options.map({ $0.type() }) {
-                    let key = type.identifier()
-                    if key ≠ ArgumentType.booleanIdentifier {
-                        argumentTypes[key] = (type: type.localizedName(), description: type.localizedDescription())
-                    }
-                }
-                printSection(header: UserFacing<StrictString, InterfaceLocalization>({ localization in
-                    switch localization {
-                    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-                        return "Argument Types"
-                    case .deutschDeutschland:
-                        return "Argumentarte"
-                    }
-                }), entries: Array(argumentTypes.values), getHeadword: { $0.type }, getFormattedHeadword: { formatType($0.type) }, getDescription: { $0.description })
-            }
-
-            output.print("")
-    }, addHelp: /* prevents circularity */ false)
+      output.print("")
+    },
+    addHelp: /* prevents circularity */ false
+  )
 }

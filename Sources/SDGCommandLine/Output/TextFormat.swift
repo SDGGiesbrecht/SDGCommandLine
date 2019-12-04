@@ -15,9 +15,9 @@
 /// A element of text formatting.
 public protocol TextFormat {
 
-    /// The ANSI start code.
-    var startCode: Int { get }
+  /// The ANSI start code.
+  var startCode: Int { get }
 
-    /// The ANSI reset code.
-    static var resetCode: Int { get }
+  /// The ANSI reset code.
+  static var resetCode: Int { get }
 }

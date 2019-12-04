@@ -21,62 +21,77 @@ import SDGCommandLine
 
 enum Fail {
 
-    private static let systemOption = Option(name: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "system"
-        case .deutsch:
-            return "system"
-        }
-    }), description: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "triggers a system error."
-        case .deutsch:
-            return "verursacht einen Systemfehler."
-        }
-    }), type: ArgumentType.boolean)
+  private static let systemOption = Option(
+    name: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "system"
+      case .deutsch:
+        return "system"
+      }
+    }),
+    description: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "triggers a system error."
+      case .deutsch:
+        return "verursacht einen Systemfehler."
+      }
+    }),
+    type: ArgumentType.boolean
+  )
 
-    static let command = Command(name: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "fail"
-        case .deutsch:
-            return "fehlschlagen"
+  static let command = Command(
+    name: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "fail"
+      case .deutsch:
+        return "fehlschlagen"
+      }
+    }),
+    description: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "demonstrates a failure."
+      case .deutsch:
+        return "führt einen Fehlschlag vor."
+      }
+    }),
+    directArguments: [],
+    options: [systemOption],
+    execution: { (_, options: Options, output: Command.Output) throws -> Void in
+      output.print(
+        UserFacing<StrictString, Language>({ localization in
+          switch localization {
+          case .english, .unsupported:
+            return "Trying..."
+          case .deutsch:
+            return "Versucht..."
+          }
+        }).resolved()
+      )
+      if options.value(for: systemOption) {
+        struct StandInError: PresentableError {
+          func presentableDescription() -> StrictString {
+            return "[...]"
+          }
         }
-    }), description: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "demonstrates a failure."
-        case .deutsch:
-            return "führt einen Fehlschlag vor."
-        }
-    }), directArguments: [], options: [systemOption], execution: { (_, options: Options, output: Command.Output) throws -> Void in
-        output.print(UserFacing<StrictString, Language>({ localization in
-            switch localization {
-            case .english, .unsupported:
-                return "Trying..."
-            case .deutsch:
-                return "Versucht..."
-            }
-        }).resolved())
-        if options.value(for: systemOption) {
-            struct StandInError : PresentableError {
-                func presentableDescription() -> StrictString {
-                    return "[...]"
-                }
-            }
-            throw StandInError()
-        }
-        throw Fail.error
-    })
+        throw StandInError()
+      }
+      throw Fail.error
+    }
+  )
 
-    static let error = Command.Error(description: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "Not possible."
-        case .deutsch:
-            return "Nicht möglich."
-        }
-    }), exitCode: 1)
+  static let error = Command.Error(
+    description: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "Not possible."
+      case .deutsch:
+        return "Nicht möglich."
+      }
+    }),
+    exitCode: 1
+  )
 }

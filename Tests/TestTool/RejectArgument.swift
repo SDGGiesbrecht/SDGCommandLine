@@ -19,20 +19,26 @@ import SDGCommandLine
 
 enum RejectArgument {
 
-    static let command = Command(name: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "reject‐argument"
-        case .deutsch:
-            return "argument‐ablehnen"
-        }
-    }), description: UserFacing<StrictString, Language>({ localization in
-        switch localization {
-        case .english, .unsupported:
-            return "demonstrates rejection of an argument."
-        case .deutsch:
-            return "führt die Ablehnung eines Arguments vor."
-        }
-    }), directArguments: [Execute.unsatisfiableArgument], options: [], execution: { (_, _, _) throws -> Void in
-    })
+  static let command = Command(
+    name: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "reject‐argument"
+      case .deutsch:
+        return "argument‐ablehnen"
+      }
+    }),
+    description: UserFacing<StrictString, Language>({ localization in
+      switch localization {
+      case .english, .unsupported:
+        return "demonstrates rejection of an argument."
+      case .deutsch:
+        return "führt die Ablehnung eines Arguments vor."
+      }
+    }),
+    directArguments: [Execute.unsatisfiableArgument],
+    options: [],
+    execution: { (_, _, _) throws -> Void in
+    }
+  )
 }

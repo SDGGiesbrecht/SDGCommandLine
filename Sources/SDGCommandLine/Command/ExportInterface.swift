@@ -21,23 +21,33 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-    private static let exportInterfaceName = UserFacing<StrictString, InterfaceLocalization>({ _ in return "export‐interface" })
+  private static let exportInterfaceName = UserFacing<StrictString, InterfaceLocalization>({ _ in
+    return "export‐interface"
+  })
 
-    private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>({ _ in // @exempt(from: tests) Hidden and unreachable right now.
-        "exports the interface in a machine readable format."
+  private static let exportInterfaceDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { _ in  // @exempt(from: tests) Hidden and unreachable right now.
+      "exports the interface in a machine readable format."
     })
 
-    internal static let exportInterface = Command(name: exportInterfaceName, description: exportInterfaceDescription, directArguments: [], options: [], hidden: true, execution: { (_, _, output: Command.Output) throws -> Void in
+  internal static let exportInterface = Command(
+    name: exportInterfaceName,
+    description: exportInterfaceDescription,
+    directArguments: [],
+    options: [],
+    hidden: true,
+    execution: { (_, _, output: Command.Output) throws -> Void in
 
-        let stack = Command.stack.dropLast() // Ignoring export‐interface.
-        let command = stack.last!
+      let stack = Command.stack.dropLast()  // Ignoring export‐interface.
+      let command = stack.last!
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting.insert(.prettyPrinted)
-        if #available(macOS 10.13, *) { // @exempt(from: unicode)
-            encoder.outputFormatting.insert(.sortedKeys)
-        }
-        let data = try encoder.encode(command)
-        output.print(try String(file: data, origin: nil))
-    })
+      let encoder = JSONEncoder()
+      encoder.outputFormatting.insert(.prettyPrinted)
+      if #available(macOS 10.13, *) {  // @exempt(from: unicode)
+        encoder.outputFormatting.insert(.sortedKeys)
+      }
+      let data = try encoder.encode(command)
+      output.print(try String(file: data, origin: nil))
+    }
+  )
 }

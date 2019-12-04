@@ -19,60 +19,63 @@ import SDGPersistence
 import SDGExternalProcess
 
 /// A command.
-public struct CommandInterface : Decodable {
+public struct CommandInterface: Decodable {
 
-    // MARK: - Static Methods
+  // MARK: - Static Methods
 
-    /// Attempt to load the interface of the tool at the specified URL.
-    ///
-    /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
-    ///
-    /// - Parameters:
-    ///     - tool: The URL of tool executable.
-    ///     - language: A language for the exported descriptions. This parameter accepts the same codes as the `•language` command line option.
-    public static func loadInterface(of tool: URL, in language: String) -> Result<CommandInterface, ExternalProcess.Error> {
-        let process = ExternalProcess(at: tool)
-        switch process.run([
-            "export‐interface",
-            "•language",
-            language]) {
-        case .failure(let error):
-            return .failure(error)
-        case .success(let exported):
-            do {
-                return .success(try CommandInterface(export: exported))
-            } catch {
-                return .failure(.foundationError(error))
-            }
-        }
+  /// Attempt to load the interface of the tool at the specified URL.
+  ///
+  /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
+  ///
+  /// - Parameters:
+  ///     - tool: The URL of tool executable.
+  ///     - language: A language for the exported descriptions. This parameter accepts the same codes as the `•language` command line option.
+  public static func loadInterface(of tool: URL, in language: String) -> Result<
+    CommandInterface, ExternalProcess.Error
+  > {
+    let process = ExternalProcess(at: tool)
+    switch process.run([
+      "export‐interface",
+      "•language",
+      language
+    ]) {
+    case .failure(let error):
+      return .failure(error)
+    case .success(let exported):
+      do {
+        return .success(try CommandInterface(export: exported))
+      } catch {
+        return .failure(.foundationError(error))
+      }
     }
+  }
 
-    // MARK: - Initialization
+  // MARK: - Initialization
 
-    private init(export: String) throws {
-        self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
-    }
+  private init(export: String) throws {
+    self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
+  }
 
-    // MARK: - Properties
+  // MARK: - Properties
 
-    /// An unique identifier that can be compared across localizations to find corresponding commands.
-    public var identifier: StrictString
+  /// An unique identifier that can be compared across localizations to find corresponding commands.
+  public var identifier: StrictString
 
-    /// The name.
-    public var name: StrictString
+  /// The name.
+  public var name: StrictString
 
-    /// The description.
-    public var description: StrictString
+  /// The description.
+  public var description: StrictString
 
-    /// Additional in‐depth information.
-    public var discussion: StrictString?
+  /// Additional in‐depth information.
+  public var discussion: StrictString?
 
-    /// Subcommands.
-    public var subcommands: [CommandInterface]
+  /// Subcommands.
+  public var subcommands: [CommandInterface]
 
-    /// Arguments.
-    public var arguments: [ArgumentInterface]
+  /// Arguments.
+  public var arguments: [ArgumentInterface]
 
-    /// Options.
-    public var options: [OptionInterface]
+  /// Options.
+  public var options: [OptionInterface]
 }

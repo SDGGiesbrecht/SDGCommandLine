@@ -13,16 +13,16 @@
  */
 
 /// An underline.
-public enum Underline : Int, TextFormat {
+public enum Underline: Int, TextFormat {
 
-    /// Underlined.
-    case underlined = 4
+  /// Underlined.
+  case underlined = 4
 
-    // MARK: - TextFormat
+  // MARK: - TextFormat
 
-    public var startCode: Int {
-        return rawValue
-    }
+  public var startCode: Int {
+    return rawValue
+  }
 
-    public static let resetCode: Int = 24
+  public static let resetCode: Int = 24
 }
