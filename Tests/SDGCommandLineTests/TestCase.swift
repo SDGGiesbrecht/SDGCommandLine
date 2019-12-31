@@ -15,6 +15,7 @@
 import Foundation
 
 import SDGLogic
+import SDGExternalProcess
 import SDGVersioning
 
 import SDGSwift
@@ -35,6 +36,12 @@ class TestCase: SDGXCTestUtilities.TestCase {
       ProcessInfo.version = Version(1, 2, 3)
       ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
       Command.Output.testMode = true
+      if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
+        // GitHub Actions do not have Git configured.
+        _ = try? Shell.default.run(command: ["git", "config", "user.name", "John Doe"]).get()
+        _ = try? Shell.default.run(command: ["git", "config", "user.email", "john.doe@example.com"])
+          .get()
+      }
     }
     super.setUp()
   }
