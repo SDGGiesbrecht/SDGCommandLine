@@ -4,7 +4,7 @@
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
 
- Copyright ©2017–2019 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2017–2020 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -23,13 +23,24 @@ import SDGSwift
 
 extension Package {
 
-    // MARK: - Static Properties
+  // MARK: - Static Properties
 
-    private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
+  private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
 
-    // MARK: - Usage
+  // MARK: - Usage
 
-    internal func execute(_ version: Build, of executableNames: Set<StrictString>, with arguments: [StrictString], output: Command.Output) throws {
-        _ = try execute(version, of: executableNames, with: arguments.map({ String($0) }), cacheDirectory: Package.versionsCache, reportProgress: { output.print($0) }).get()
-    }
+  internal func execute(
+    _ version: Build,
+    of executableNames: Set<StrictString>,
+    with arguments: [StrictString],
+    output: Command.Output
+  ) throws {
+    _ = try execute(
+      version,
+      of: executableNames,
+      with: arguments.map({ String($0) }),
+      cacheDirectory: Package.versionsCache,
+      reportProgress: { output.print($0) }
+    ).get()
+  }
 }

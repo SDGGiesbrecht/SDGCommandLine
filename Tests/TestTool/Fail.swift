@@ -4,7 +4,7 @@
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
 
- Copyright ©2017–2019 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2017–2020 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
