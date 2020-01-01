@@ -4,7 +4,7 @@
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
 
- Copyright ©2017–2019 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2017–2020 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -38,9 +38,12 @@ class TestCase: SDGXCTestUtilities.TestCase {
       Command.Output.testMode = true
       if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
         // GitHub Actions do not have Git configured.
-        _ = try? Shell.default.run(command: ["git", "config", "user.name", "John Doe"]).get()
-        _ = try? Shell.default.run(command: ["git", "config", "user.email", "john.doe@example.com"])
-          .get()
+        _ = try? Shell.default.run(command: [
+          "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe"
+        ]).get()
+        _ = try? Shell.default.run(command: [
+          "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com"
+        ]).get()
       }
     }
     super.setUp()
