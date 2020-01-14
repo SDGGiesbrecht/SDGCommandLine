@@ -132,7 +132,7 @@ let package = Package(
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      .upToNextMinor(from: Version(0, 18, 0))
+      .upToNextMinor(from: Version(0, 19, 0))
     )
   ],
   targets: [
