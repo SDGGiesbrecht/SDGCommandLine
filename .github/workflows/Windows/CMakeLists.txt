@@ -13,10 +13,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 option(BUILD_SHARED_LIBS "Use dynamic linking" YES)
 
-add_executable("empty_tool"
-  "../../../Tests/empty‐tool/main.swift"
-)
-
 add_library("SDGControlFlow"
   "../../../.build/SDG/Dependencies/SDGCornerstone/Sources/SDGControlFlow/APILocalization.swift"
   "../../../.build/SDG/Dependencies/SDGCornerstone/Sources/SDGControlFlow/Assert.swift"
@@ -567,14 +563,6 @@ target_link_libraries("TestTool" PRIVATE
   "SDGCommandLine"
   "SDGText"
   "SDGLocalization"
-)
-
-add_executable("test_tool"
-  "../../../Tests/test‐tool/main.swift"
-)
-target_link_libraries("test_tool" PRIVATE
-  "SDGCommandLine"
-  "TestTool"
 )
 
 add_library("SDGSwiftPackageManager"

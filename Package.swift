@@ -254,17 +254,20 @@ let package = Package(
 )
 
 func adjustForWindows() {
-  // #workaround(workspace version 0.30.1, CMake tries to link executables.)
-  let impossibleDependencies: Set<String> = [
+  // #workaround(workspace version 0.30.1, CMake cannot handle Unicode.)
+  let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
     "test‐tool"
   ]
+  package.targets.removeAll(where: { target in
+    impossibleTargets.contains(target.name)
+  })
   for target in package.targets {
     target.dependencies.removeAll(where: { dependency in
       switch dependency {
       case ._byNameItem(let name):
-        return impossibleDependencies.contains(name)
+        return impossibleTargets.contains(name)
       default:
         return false
       }

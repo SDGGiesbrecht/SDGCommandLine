@@ -129,7 +129,9 @@ extension Command {
         return ("[" + type + "]").formattedAsType()
       }
 
-      var commandName = StrictString(stack.map({ $0.localizedName() }).joined(separator: " ".scalars))
+      var commandName = StrictString(
+        stack.map({ $0.localizedName() }).joined(separator: " ".scalars)
+      )
         .formattedAsSubcommand()
       for directArgument in command.directArguments {
         commandName += " " + formatType(directArgument.localizedName())
