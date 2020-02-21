@@ -130,20 +130,22 @@ class InternalTests: TestCase {
     try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
       let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-      let testPackage = try PackageRepository.initializePackage(
-        at: location,
-        named: StrictString(location.lastPathComponent),
-        type: .executable
-      ).get()
-      _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
+      #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
+        let testPackage = try PackageRepository.initializePackage(
+          at: location,
+          named: StrictString(location.lastPathComponent),
+          type: .executable
+        ).get()
+        _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
-      try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
-        to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift")
-      )
-      try testPackage.commitChanges(description: "Version 1.0.0").get()
-      try testPackage.tag(version: Version(1, 0, 0)).get()
+        try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
+          to: testPackage.location.appendingPathComponent("Sources/" + testToolName + "/main.swift")
+        )
+        try testPackage.commitChanges(description: "Version 1.0.0").get()
+        try testPackage.tag(version: Version(1, 0, 0)).get()
 
-      ProcessInfo.packageURL = testPackage.location
+        ProcessInfo.packageURL = testPackage.location
+      #endif
 
       func postprocess(_ output: inout String) {
         output.replaceMatches(for: temporaryDirectory.absoluteString, with: "[Temporary Directory]")
