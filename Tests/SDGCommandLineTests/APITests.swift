@@ -32,7 +32,8 @@ import SDGLocalizationTestUtilities
 import SDGCommandLineTestUtilities
 import TestTool
 
-class APITests: TestCase {
+// #workaround(workspace version 0.30.1, Redundant name for CMake.)
+class SDGCommandLineAPITests: TestCase {
 
   func testArgumentType() {
     testCustomStringConvertibleConformance(

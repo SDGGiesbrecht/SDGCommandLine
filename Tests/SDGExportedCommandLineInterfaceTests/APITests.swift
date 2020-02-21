@@ -20,7 +20,8 @@ import SDGXCTestUtilities
 import SDGExportedCommandLineInterface
 import SDGCommandLineTestUtilities
 
-class APITests: TestCase {
+// #workaround(workspace version 0.30.1, Redundant name for CMake.)
+class SDGExportedCommandLineInterfaceAPITests: TestCase {
 
   let productsDirectory: URL = {
     #if os(macOS)
