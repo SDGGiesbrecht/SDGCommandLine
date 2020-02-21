@@ -252,3 +252,30 @@ let package = Package(
     .target(name: "empty‐tool", path: "Tests/empty‐tool")
   ]
 )
+
+func adjustForWindows() {
+  // #workaround(workspace version 0.30.1, CMake tries to link executables.)
+  let impossibleDependencies: Set<String> = [
+    // SDGCommandLine
+    "empty‐tool",
+    "test‐tool"
+  ]
+  for target in package.targets {
+    target.dependencies.removeAll(where: { dependency in
+      switch dependency {
+      case ._byNameItem(let name):
+        return impossibleDependencies.contains(name)
+      default:
+        return false
+      }
+    })
+  }
+}
+#if os(Windows)
+  adjustForWindows()
+#endif
+import Foundation
+// #workaround(workspace 0.30.1, Until packages work natively on windows.)
+if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
+  adjustForWindows()
+}

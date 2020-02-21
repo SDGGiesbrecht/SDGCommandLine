@@ -541,6 +541,18 @@ target_link_libraries("SDGExportedCommandLineInterface" PRIVATE
   "SDGExternalProcess"
 )
 
+add_library("SDGExportedCommandLineInterfaceTests"
+  "../../../Tests/SDGExportedCommandLineInterfaceTests/APITests.swift"
+)
+set_target_properties("SDGExportedCommandLineInterfaceTests" PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_Swift_MODULE_DIRECTORY})
+target_compile_options("SDGExportedCommandLineInterfaceTests" PRIVATE -enable-testing)
+target_link_libraries("SDGExportedCommandLineInterfaceTests" PRIVATE
+  "SDGExportedCommandLineInterface"
+  "SDGCommandLineTestUtilities"
+  "SDGExternalProcess"
+  "SDGXCTestUtilities"
+)
+
 add_library("TestTool"
   "../../../Tests/TestTool/DemonstrateTextFormatting.swift"
   "../../../Tests/TestTool/Execute.swift"
@@ -563,20 +575,6 @@ add_executable("test_tool"
 target_link_libraries("test_tool" PRIVATE
   "SDGCommandLine"
   "TestTool"
-)
-
-add_library("SDGExportedCommandLineInterfaceTests"
-  "../../../Tests/SDGExportedCommandLineInterfaceTests/APITests.swift"
-)
-set_target_properties("SDGExportedCommandLineInterfaceTests" PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_Swift_MODULE_DIRECTORY})
-target_compile_options("SDGExportedCommandLineInterfaceTests" PRIVATE -enable-testing)
-target_link_libraries("SDGExportedCommandLineInterfaceTests" PRIVATE
-  "SDGExportedCommandLineInterface"
-  "SDGCommandLineTestUtilities"
-  "test_tool"
-  "empty_tool"
-  "SDGExternalProcess"
-  "SDGXCTestUtilities"
 )
 
 add_library("SDGSwiftPackageManager"
