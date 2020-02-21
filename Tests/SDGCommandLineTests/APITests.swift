@@ -36,99 +36,103 @@ import TestTool
 class SDGCommandLineAPITests: TestCase {
 
   func testArgumentType() {
-    testCustomStringConvertibleConformance(
-      of: ArgumentType.string,
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "String",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      testCustomStringConvertibleConformance(
+        of: ArgumentType.string,
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "String",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•iterations", "2"],
-      localizations: Language.self,
-      uniqueTestName: "Integer",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•iterations", "−1"],
-      localizations: Language.self,
-      uniqueTestName: "Invalid Integer",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•iterations", "2"],
+        localizations: Language.self,
+        uniqueTestName: "Integer",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•iterations", "−1"],
+        localizations: Language.self,
+        uniqueTestName: "Invalid Integer",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "/tmp"],
-      localizations: Language.self,
-      uniqueTestName: "Absolute Path",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "~"],
-      localizations: Language.self,
-      uniqueTestName: "Home",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "~/"],
-      localizations: Language.self,
-      uniqueTestName: "Home 2",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "~/.SDG/Test"],
-      localizations: Language.self,
-      uniqueTestName: "User Path",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "tmp"],
-      localizations: Language.self,
-      uniqueTestName: "Path",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "/tmp"],
+        localizations: Language.self,
+        uniqueTestName: "Absolute Path",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "~"],
+        localizations: Language.self,
+        uniqueTestName: "Home",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "~/"],
+        localizations: Language.self,
+        uniqueTestName: "Home 2",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "~/.SDG/Test"],
+        localizations: Language.self,
+        uniqueTestName: "User Path",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "tmp"],
+        localizations: Language.self,
+        uniqueTestName: "Path",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testCommand() {
-    testCustomStringConvertibleConformance(
-      of: Tool.command,
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Tool",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-
-    FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute"],
-        in: temporary,
-        localizations: Language.self,
-        uniqueTestName: "Execution",
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      testCustomStringConvertibleConformance(
+        of: Tool.command,
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Tool",
         overwriteSpecificationInsteadOfFailing: false
       )
-    }
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["fail"],
-      localizations: Language.self,
-      uniqueTestName: "Failure",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute"],
+          in: temporary,
+          localizations: Language.self,
+          uniqueTestName: "Execution",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      }
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["ausführen"],
-      localizations: Language.self,
-      uniqueTestName: "Foreign Command",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["fail"],
+        localizations: Language.self,
+        uniqueTestName: "Failure",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["ausführen"],
+        localizations: Language.self,
+        uniqueTestName: "Foreign Command",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testCommandError() {
@@ -139,55 +143,61 @@ class SDGCommandLineAPITests: TestCase {
         return error
       }
     #else
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["fail", "•system"],
+          localizations: Language.self,
+          uniqueTestName: "System Error",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
+    #endif
+  }
+
+  func testDirectArgument() {
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["fail", "•system"],
-        localizations: Language.self,
-        uniqueTestName: "System Error",
+        with: ["reject‐argument", "..."],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Argument",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "invalid"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Unexpected Argument",
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
   }
 
-  func testDirectArgument() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["reject‐argument", "..."],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Argument",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "invalid"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Unexpected Argument",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-  }
-
   func testEnumerationOption() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "red"],
-      localizations: Language.self,
-      uniqueTestName: "Accept Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "rot"],
-      localizations: Language.self,
-      uniqueTestName: "Accept Foreign Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "none"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "red"],
+        localizations: Language.self,
+        uniqueTestName: "Accept Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "rot"],
+        localizations: Language.self,
+        uniqueTestName: "Accept Foreign Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "none"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testFormatting() throws {
@@ -197,37 +207,41 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testHelp() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "help"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Help",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["reject‐argument", "help"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Help (with Direct Arguments)",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["reject‐argument", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help (with Direct Arguments)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testLanguage() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["help", "•language", "he"],
-      localizations: Language.self,
-      uniqueTestName: "Language Selection by Code",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["help", "•language", "🇬🇷ΕΛ"],
-      localizations: Language.self,
-      uniqueTestName: "Language Selection by Icon",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["help", "•language", "he"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Code",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["help", "•language", "🇬🇷ΕΛ"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Icon",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testLocalizations() {
@@ -247,59 +261,61 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testOption() {
-    testCustomStringConvertibleConformance(
-      of: Execute.textOption,
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Text",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•string", "Changed using an option."],
-      localizations: Language.self,
-      uniqueTestName: "Unicode Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
-      localizations: Language.self,
-      uniqueTestName: "ASCII Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      testCustomStringConvertibleConformance(
+        of: Execute.textOption,
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Text",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•string", "Changed using an option."],
+        localizations: Language.self,
+        uniqueTestName: "Unicode Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
+        localizations: Language.self,
+        uniqueTestName: "ASCII Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•informal"],
-      localizations: Language.self,
-      uniqueTestName: "Flag",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•informal"],
+        localizations: Language.self,
+        uniqueTestName: "Flag",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•invalid"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•invalid"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•string"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Missing Option Argument",
-      allowColour: true,
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•unsatisfiable", "..."],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Option Argument",
-      allowColour: true,
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•string"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Missing Option Argument",
+        allowColour: true,
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•unsatisfiable", "..."],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Option Argument",
+        allowColour: true,
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testVersion() {
