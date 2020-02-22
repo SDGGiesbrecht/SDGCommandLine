@@ -47,7 +47,7 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, Illegal instruction.)
+    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
       testCommand(
         InternalTests.rootCommand,
         with: ["empty‐cache"],
