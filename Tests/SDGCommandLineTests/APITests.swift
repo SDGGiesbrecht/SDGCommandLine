@@ -272,8 +272,10 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testNoColour() throws {
-    let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
-    XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
+      XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #endif
   }
 
   func testOption() {
