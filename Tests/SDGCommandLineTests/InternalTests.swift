@@ -63,24 +63,26 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
-    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-      func postprocess(_ output: inout String) {
-        // macOS & Linux have different JSON whitespace.
-        output.scalars.replaceMatches(
-          for: "\n".scalars
-            + RepetitionPattern(" ".scalars)
-            + "\n".scalars,
-          with: "\n\n".scalars
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
+        func postprocess(_ output: inout String) {
+          // macOS & Linux have different JSON whitespace.
+          output.scalars.replaceMatches(
+            for: "\n".scalars
+              + RepetitionPattern(" ".scalars)
+              + "\n".scalars,
+            with: "\n\n".scalars
+          )
+        }
+        SDGCommandLineTestUtilities.testCommand(
+          InternalTests.rootCommand,
+          with: ["export‐interface"],
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Export Interface",
+          postprocess: postprocess,
+          overwriteSpecificationInsteadOfFailing: false
         )
-      }
-      SDGCommandLineTestUtilities.testCommand(
-        InternalTests.rootCommand,
-        with: ["export‐interface"],
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Export Interface",
-        postprocess: postprocess,
-        overwriteSpecificationInsteadOfFailing: false
-      )
+      #endif
     #endif
   }
 
