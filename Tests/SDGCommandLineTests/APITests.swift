@@ -162,21 +162,23 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testDirectArgument() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["reject‐argument", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Unexpected Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["reject‐argument", "..."],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Argument",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "invalid"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Unexpected Argument",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 

@@ -81,36 +81,37 @@ class InternalTests: TestCase {
   }
 
   func testSetLanguage() throws {
+    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language", "zxx"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
-    testCommand(
-      InternalTests.rootCommand,
-      with: ["set‐language", "zxx"],
-      localizations: APILocalization.self,
-      uniqueTestName: "Set Language",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language to System",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
 
-    testCommand(
-      InternalTests.rootCommand,
-      with: ["set‐language"],
-      localizations: APILocalization.self,
-      uniqueTestName: "Set Language to System",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
-
-    for (language, searchTerm) in [
-      "en": "set‐language"
-    ] as [String: StrictString] {
-      try LocalizationSetting(orderOfPrecedence: [language]).do {
-        let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
-        XCTAssert(
-          output.contains(searchTerm),
-          "Expected output missing from “\(language)”: \(searchTerm)"
-        )
+      for (language, searchTerm) in [
+        "en": "set‐language"
+      ] as [String: StrictString] {
+        try LocalizationSetting(orderOfPrecedence: [language]).do {
+          let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
+          XCTAssert(
+            output.contains(searchTerm),
+            "Expected output missing from “\(language)”: \(searchTerm)"
+          )
+        }
       }
-    }
+    #endif
   }
 
   func testOptions() {
