@@ -219,21 +219,23 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testHelp() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "help"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Help",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["reject‐argument", "help"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Help (with Direct Arguments)",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "help"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Help",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["reject‐argument", "help"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Help (with Direct Arguments)",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
