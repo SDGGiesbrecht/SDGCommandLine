@@ -140,21 +140,23 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testCommandError() {
-    #if os(Linux)  // System error descriptions differ.
-      let result = Tool.command.execute(with: ["fail", "•system"])
-      _ = result.mapError { (error: Command.Error) -> Command.Error in
-        _ = error.localizedDescription
-        return error
-      }
-    #else
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
-          with: ["fail", "•system"],
-          localizations: Language.self,
-          uniqueTestName: "System Error",
-          overwriteSpecificationInsteadOfFailing: false
-        )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if os(Linux)  // System error descriptions differ.
+        let result = Tool.command.execute(with: ["fail", "•system"])
+        _ = result.mapError { (error: Command.Error) -> Command.Error in
+          _ = error.localizedDescription
+          return error
+        }
+      #else
+        #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["fail", "•system"],
+            localizations: Language.self,
+            uniqueTestName: "System Error",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
       #endif
     #endif
   }
