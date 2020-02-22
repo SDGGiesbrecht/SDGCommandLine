@@ -211,9 +211,11 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testFormatting() throws {
-    let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
-    XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
-    XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
+      XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
+      XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
+    #endif
   }
 
   func testHelp() {

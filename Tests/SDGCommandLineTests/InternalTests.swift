@@ -38,12 +38,14 @@ class InternalTests: TestCase {
   static let rootCommand = Tool.command.withRootBehaviour()
 
   func testDirectArguments() {
-    testCustomStringConvertibleConformance(
-      of: DirectArguments(),
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "None",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+      testCustomStringConvertibleConformance(
+        of: DirectArguments(),
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "None",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testEmptyCache() {
@@ -234,7 +236,8 @@ class InternalTests: TestCase {
         // When the cache is empty...
         testCommand(
           Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+          with: [
+            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
           ],
           localizations: APILocalization.self,
           uniqueTestName: "Use Development (Empty Cache)",
@@ -245,7 +248,8 @@ class InternalTests: TestCase {
         // When the cache exists...
         testCommand(
           Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+          with: [
+            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
           ],
           localizations: APILocalization.self,
           uniqueTestName: "Use Development (Cached)",
