@@ -125,7 +125,6 @@ class InternalTests: TestCase {
     let currentPackage = ProcessInfo.packageURL
     defer { ProcessInfo.packageURL = currentPackage }
 
-    var ignored = Command.Output()
     let testToolName = "tool"
     try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
       let location = temporaryDirectory.appendingPathComponent(testToolName)

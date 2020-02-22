@@ -66,18 +66,10 @@ extension InternalTests {
   ]
 }
 
-extension TestCase {
-  static let windowsTests: [XCTestCaseEntry] = [
-    testCase([
-      ])
-  ]
-}
-
 var tests = [XCTestCaseEntry]()
 tests += SDGExportedCommandLineInterfaceAPITests.windowsTests
 tests += SDGCommandLineAPITests.windowsTests
 tests += ReadMeExampleTests.windowsTests
 tests += InternalTests.windowsTests
-tests += TestCase.windowsTests
 
 XCTMain(tests)
