@@ -134,157 +134,159 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
-      FileManager.default.delete(.cache)
-      defer { FileManager.default.delete(.cache) }
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
+        FileManager.default.delete(.cache)
+        defer { FileManager.default.delete(.cache) }
 
-      let currentPackage = ProcessInfo.packageURL
-      defer { ProcessInfo.packageURL = currentPackage }
+        let currentPackage = ProcessInfo.packageURL
+        defer { ProcessInfo.packageURL = currentPackage }
 
-      let testToolName = "tool"
-      try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
-        let location = temporaryDirectory.appendingPathComponent(testToolName)
+        let testToolName = "tool"
+        try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
+          let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
-          let testPackage = try PackageRepository.initializePackage(
-            at: location,
-            named: StrictString(location.lastPathComponent),
-            type: .executable
-          ).get()
-          _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
+          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
+            let testPackage = try PackageRepository.initializePackage(
+              at: location,
+              named: StrictString(location.lastPathComponent),
+              type: .executable
+            ).get()
+            _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
-          try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
-            to: testPackage.location.appendingPathComponent(
-              "Sources/" + testToolName + "/main.swift"
+            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
+              to: testPackage.location.appendingPathComponent(
+                "Sources/" + testToolName + "/main.swift"
+              )
             )
-          )
-          try testPackage.commitChanges(description: "Version 1.0.0").get()
-          try testPackage.tag(version: Version(1, 0, 0)).get()
+            try testPackage.commitChanges(description: "Version 1.0.0").get()
+            try testPackage.tag(version: Version(1, 0, 0)).get()
 
-          ProcessInfo.packageURL = testPackage.location
-        #endif
+            ProcessInfo.packageURL = testPackage.location
+          #endif
 
-        func postprocess(_ output: inout String) {
-          output.replaceMatches(
-            for: temporaryDirectory.absoluteString,
-            with: "[Temporary Directory]"
-          )
-          output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
+          func postprocess(_ output: inout String) {
+            output.replaceMatches(
+              for: temporaryDirectory.absoluteString,
+              with: "[Temporary Directory]"
+            )
+            output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
 
-          let cacheDirectory = FileManager.default.url(in: .cache, at: "File")
-            .deletingLastPathComponent()
-          output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
+            let cacheDirectory = FileManager.default.url(in: .cache, at: "File")
+              .deletingLastPathComponent()
+            output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
 
-          output.scalars.replaceMatches(
-            for: "\n".scalars
-              + RepetitionPattern(
-                ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
-                consumption: .lazy
-              )
-              + "\trefs/heads/master".scalars,
-            with: "\n[Commit Hash]\trefs/heads/master".scalars
+            output.scalars.replaceMatches(
+              for: "\n".scalars
+                + RepetitionPattern(
+                  ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
+                  consumption: .lazy
+                )
+                + "\trefs/heads/master".scalars,
+              with: "\n[Commit Hash]\trefs/heads/master".scalars
+            )
+            output.scalars.replaceMatches(
+              for: "Development/".scalars
+                + RepetitionPattern(
+                  ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
+                  consumption: .lazy
+                )
+                + "/".scalars,
+              with: "Development/[Commit Hash]/".scalars
+            )
+            output.scalars.replaceMatches(
+              for: ".build/".scalars
+                + RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy)
+                + "/release".scalars,
+              with: ".build/[Operating System]/release".scalars
+            )
+            output.scalars.replaceMatches(
+              for: "Cloning into \u{27}".scalars
+                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy)
+                + "\u{27}".scalars,
+              with: "Cloning into \u{27}...\u{27}".scalars
+            )
+            output.scalars.replaceMatches(
+              for: "tool ".scalars
+                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+                + "/tool \u{2D}\u{2D}branch".scalars,
+              with: "tool [...]/tool \u{2D}\u{2D}branch".scalars
+            )
+            output.scalars.replaceMatches(
+              for: "tool ".scalars
+                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+                + "/tool \u{2D}\u{2D}depth".scalars,
+              with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
+            )
+          }
+
+          // When the cache is empty...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Version (Empty Cache)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
-          output.scalars.replaceMatches(
-            for: "Development/".scalars
-              + RepetitionPattern(
-                ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
-                consumption: .lazy
-              )
-              + "/".scalars,
-            with: "Development/[Commit Hash]/".scalars
+
+          // When the cache exists...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Version (Cached)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
-          output.scalars.replaceMatches(
-            for: ".build/".scalars
-              + RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy)
-              + "/release".scalars,
-            with: ".build/[Operating System]/release".scalars
+
+          // When the cache is empty...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Development (Empty Cache)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
-          output.scalars.replaceMatches(
-            for: "Cloning into \u{27}".scalars
-              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy)
-              + "\u{27}".scalars,
-            with: "Cloning into \u{27}...\u{27}".scalars
+
+          // When the cache exists...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Development (Cached)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
-          output.scalars.replaceMatches(
-            for: "tool ".scalars
-              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
-              + "/tool \u{2D}\u{2D}branch".scalars,
-            with: "tool [...]/tool \u{2D}\u{2D}branch".scalars
+
+          // Looking for version when it does not exist...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Without Version",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
-          output.scalars.replaceMatches(
-            for: "tool ".scalars
-              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
-              + "/tool \u{2D}\u{2D}depth".scalars,
-            with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
+
+          // Asking for something which is not a version...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Invalid Version",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
           )
         }
-
-        // When the cache is empty...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Version (Empty Cache)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-
-        // When the cache exists...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Version (Cached)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-
-        // When the cache is empty...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Development (Empty Cache)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-
-        // When the cache exists...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Development (Cached)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-
-        // Looking for version when it does not exist...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Without Version",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-
-        // Asking for something which is not a version...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Invalid Version",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      }
+      #endif
     #endif
   }
 
