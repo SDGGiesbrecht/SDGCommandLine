@@ -240,21 +240,23 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testLanguage() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["help", "•language", "he"],
-        localizations: Language.self,
-        uniqueTestName: "Language Selection by Code",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["help", "•language", "🇬🇷ΕΛ"],
-        localizations: Language.self,
-        uniqueTestName: "Language Selection by Icon",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["help", "•language", "he"],
+          localizations: Language.self,
+          uniqueTestName: "Language Selection by Code",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["help", "•language", "🇬🇷ΕΛ"],
+          localizations: Language.self,
+          uniqueTestName: "Language Selection by Icon",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
