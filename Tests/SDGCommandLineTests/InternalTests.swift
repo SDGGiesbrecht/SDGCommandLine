@@ -49,14 +49,16 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-      testCommand(
-        InternalTests.rootCommand,
-        with: ["empty‐cache"],
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Empty Cache",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
+        testCommand(
+          InternalTests.rootCommand,
+          with: ["empty‐cache"],
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Empty Cache",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
