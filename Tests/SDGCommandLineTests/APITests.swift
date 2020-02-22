@@ -183,28 +183,30 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testEnumerationOption() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "red"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "rot"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Foreign Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "none"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "red"],
+          localizations: Language.self,
+          uniqueTestName: "Accept Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "rot"],
+          localizations: Language.self,
+          uniqueTestName: "Accept Foreign Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "none"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
