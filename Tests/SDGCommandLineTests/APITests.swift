@@ -279,60 +279,62 @@ class SDGCommandLineAPITests: TestCase {
   }
 
   func testOption() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      testCustomStringConvertibleConformance(
-        of: Execute.textOption,
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Text",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "Unicode Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "ASCII Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
+        testCustomStringConvertibleConformance(
+          of: Execute.textOption,
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Text",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•string", "Changed using an option."],
+          localizations: Language.self,
+          uniqueTestName: "Unicode Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
+          localizations: Language.self,
+          uniqueTestName: "ASCII Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•informal"],
-        localizations: Language.self,
-        uniqueTestName: "Flag",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•informal"],
+          localizations: Language.self,
+          uniqueTestName: "Flag",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•invalid"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•string"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Missing Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•unsatisfiable", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•string"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Missing Option Argument",
+          allowColour: true,
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•unsatisfiable", "..."],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Option Argument",
+          allowColour: true,
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
