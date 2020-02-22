@@ -47,13 +47,15 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    testCommand(
-      InternalTests.rootCommand,
-      with: ["empty‐cache"],
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Empty Cache",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, Illegal instruction.)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["empty‐cache"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Empty Cache",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testExportInterface() {
