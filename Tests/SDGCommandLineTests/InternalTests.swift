@@ -291,23 +291,25 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
-    #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
-      ProcessInfo.version = Version(1, 2, 3)
-      testCommand(
-        InternalTests.rootCommand,
-        with: ["version"],
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Version",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      ProcessInfo.version = nil
-      testCommand(
-        InternalTests.rootCommand,
-        with: ["version"],
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Version (None)",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
+        ProcessInfo.version = Version(1, 2, 3)
+        testCommand(
+          InternalTests.rootCommand,
+          with: ["version"],
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Version",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        ProcessInfo.version = nil
+        testCommand(
+          InternalTests.rootCommand,
+          with: ["version"],
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Version (None)",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 }
