@@ -237,7 +237,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     with arguments: [StrictString],
     output: Command.Output? = nil
   ) -> Result<StrictString, Command.Error> {
-    var outputCollector = output ?? Output()
+    let outputCollector = output ?? Output()
     do {
 
       if let packageURL = ProcessInfo.packageURL {

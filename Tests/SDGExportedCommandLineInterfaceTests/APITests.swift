@@ -20,7 +20,8 @@ import SDGXCTestUtilities
 import SDGExportedCommandLineInterface
 import SDGCommandLineTestUtilities
 
-class APITests: TestCase {
+// #workaround(workspace version 0.30.1, Redundant name for CMake.)
+class SDGExportedCommandLineInterfaceAPITests: TestCase {
 
   let productsDirectory: URL = {
     #if os(macOS)
@@ -34,27 +35,29 @@ class APITests: TestCase {
   }()
 
   func testCommandInterface() throws {
-    switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file), in: "en") {
-    case .failure:
-      break  // Expected.
-    case .success:
-      XCTFail("Loaded invalid interface.")
-    }
+    #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
+      switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #file), in: "en") {
+      case .failure:
+        break  // Expected.
+      case .success:
+        XCTFail("Loaded invalid interface.")
+      }
 
-    switch CommandInterface.loadInterface(
-      of: productsDirectory.appendingPathComponent("empty‐tool"),
-      in: "en"
-    ) {
-    case .failure:
-      break  // Expected.
-    case .success:
-      XCTFail("Loaded unexported interface.")
-    }
+      switch CommandInterface.loadInterface(
+        of: productsDirectory.appendingPathComponent("empty‐tool"),
+        in: "en"
+      ) {
+      case .failure:
+        break  // Expected.
+      case .success:
+        XCTFail("Loaded unexported interface.")
+      }
 
-    let interface = try CommandInterface.loadInterface(
-      of: productsDirectory.appendingPathComponent("test‐tool"),
-      in: ""
-    ).get()
-    XCTAssert(interface.options.first?.isFlag == true)
+      let interface = try CommandInterface.loadInterface(
+        of: productsDirectory.appendingPathComponent("test‐tool"),
+        in: ""
+      ).get()
+      XCTAssert(interface.options.first?.isFlag == true)
+    #endif
   }
 }

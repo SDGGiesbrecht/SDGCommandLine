@@ -128,11 +128,11 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(4, 0, 1)
+      from: Version(4, 3, 0)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      .upToNextMinor(from: Version(0, 19, 0))
+      .upToNextMinor(from: Version(0, 19, 2))
     )
   ],
   targets: [
@@ -252,3 +252,33 @@ let package = Package(
     .target(name: "empty‐tool", path: "Tests/empty‐tool")
   ]
 )
+
+func adjustForWindows() {
+  // #workaround(workspace version 0.30.1, CMake cannot handle Unicode.)
+  let impossibleTargets: Set<String> = [
+    // SDGCommandLine
+    "empty‐tool",
+    "test‐tool"
+  ]
+  package.targets.removeAll(where: { target in
+    impossibleTargets.contains(target.name)
+  })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { dependency in
+      switch dependency {
+      case ._byNameItem(let name):
+        return impossibleTargets.contains(name)
+      default:
+        return false
+      }
+    })
+  }
+}
+#if os(Windows)
+  adjustForWindows()
+#endif
+import Foundation
+// #workaround(workspace 0.30.1, Until packages work natively on windows.)
+if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
+  adjustForWindows()
+}

@@ -26,26 +26,28 @@ import XCTest
 
 import SDGXCTestUtilities
 
-class TestCase: SDGXCTestUtilities.TestCase {
+#if true  // #workaround(Hides from generation of WindowsMain.swift.)
+  class TestCase: SDGXCTestUtilities.TestCase {
 
-  static var alreadyInitialized = false
+    static var alreadyInitialized = false
 
-  override func setUp() {
-    if ¬TestCase.alreadyInitialized {
-      TestCase.alreadyInitialized = true
-      ProcessInfo.version = Version(1, 2, 3)
-      ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
-      Command.Output.testMode = true
-      if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
-        // GitHub Actions do not have Git configured.
-        _ = try? Shell.default.run(command: [
-          "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe"
-        ]).get()
-        _ = try? Shell.default.run(command: [
-          "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com"
-        ]).get()
+    override func setUp() {
+      if ¬TestCase.alreadyInitialized {
+        TestCase.alreadyInitialized = true
+        ProcessInfo.version = Version(1, 2, 3)
+        ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
+        Command.Output.testMode = true
+        if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
+          // GitHub Actions do not have Git configured.
+          _ = try? Shell.default.run(command: [
+            "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe"
+          ]).get()
+          _ = try? Shell.default.run(command: [
+            "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com"
+          ]).get()
+        }
       }
+      super.setUp()
     }
-    super.setUp()
   }
-}
+#endif

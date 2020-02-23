@@ -90,7 +90,3 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
-
-// #workaround(SDGCornerstone 4.0.1, Does not support Windows yet.)
-configuration.supportedPlatforms.remove(.windows)
-configuration.supportedPlatforms.remove(.android)
