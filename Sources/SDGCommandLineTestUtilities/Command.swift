@@ -75,7 +75,7 @@ public func testCommand<L>(
 
         var report = ""
         print(
-          "$ \(StrictString(([command.localizedName()] + modifiedArguments).joined(separator: " ".scalars)))",
+          "$ \(([command.localizedName()] + modifiedArguments).joined(separator: " "))",
           to: &report
         )
 
