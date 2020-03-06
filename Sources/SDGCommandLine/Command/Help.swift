@@ -129,9 +129,7 @@ extension Command {
         return ("[" + type + "]").formattedAsType()
       }
 
-      var commandName = StrictString(
-        stack.map({ $0.localizedName() }).joined(separator: " ".scalars)
-      )
+      var commandName = stack.map({ $0.localizedName() }).joined(separator: " ")
         .formattedAsSubcommand()
       for directArgument in command.directArguments {
         commandName += " " + formatType(directArgument.localizedName())
@@ -177,9 +175,11 @@ extension Command {
           }),
           entries: subcommands,
           getHeadword: { $0.localizedName() },
-          getFormattedHeadword: {
-            $0.localizedName().formattedAsSubcommand()
-              + $0.directArguments.map({ " " + formatType($0.localizedName()) }).joined()
+          getFormattedHeadword: { entry in
+            entry.localizedName().formattedAsSubcommand()
+              + entry.directArguments.map({ argument in
+                " " + formatType(argument.localizedName())
+              }).joined()
           },
           getDescription: { $0.localizedDescription() }
         )

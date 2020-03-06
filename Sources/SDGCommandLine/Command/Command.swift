@@ -544,9 +544,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   private static func helpInstructions(for commandStack: [Command]) -> UserFacing<
     StrictString, InterfaceLocalization
   > {
-    var command = StrictString(
-      commandStack.map({ $0.localizedName() }).joined(separator: " ".scalars)
-    )
+    var command = commandStack.map({ $0.localizedName() }).joined(separator: " ")
     command.append(contentsOf: " " + Command.help.localizedName())
     command = command.prepending(contentsOf: "$ ".scalars)
 
