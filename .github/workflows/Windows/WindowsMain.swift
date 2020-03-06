@@ -17,7 +17,7 @@ import XCTest
 @testable import SDGExportedCommandLineInterfaceTests
 @testable import SDGCommandLineTests
 
-extension SDGExportedCommandLineInterfaceAPITests {
+extension SDGExportedCommandLineInterfaceTests.SDGExportedCommandLineInterfaceAPITests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
       ("testCommandInterface", testCommandInterface),
@@ -25,7 +25,7 @@ extension SDGExportedCommandLineInterfaceAPITests {
   ]
 }
 
-extension SDGCommandLineAPITests {
+extension SDGCommandLineTests.SDGCommandLineAPITests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
       ("testArgumentType", testArgumentType),
@@ -44,7 +44,7 @@ extension SDGCommandLineAPITests {
   ]
 }
 
-extension ReadMeExampleTests {
+extension SDGCommandLineTests.ReadMeExampleTests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
       ("testParrot", testParrot),
@@ -52,7 +52,7 @@ extension ReadMeExampleTests {
   ]
 }
 
-extension InternalTests {
+extension SDGCommandLineTests.InternalTests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
       ("testDirectArguments", testDirectArguments),
@@ -67,9 +67,9 @@ extension InternalTests {
 }
 
 var tests = [XCTestCaseEntry]()
-tests += SDGExportedCommandLineInterfaceAPITests.windowsTests
-tests += SDGCommandLineAPITests.windowsTests
-tests += ReadMeExampleTests.windowsTests
-tests += InternalTests.windowsTests
+tests += SDGExportedCommandLineInterfaceTests.SDGExportedCommandLineInterfaceAPITests.windowsTests
+tests += SDGCommandLineTests.SDGCommandLineAPITests.windowsTests
+tests += SDGCommandLineTests.ReadMeExampleTests.windowsTests
+tests += SDGCommandLineTests.InternalTests.windowsTests
 
 XCTMain(tests)
