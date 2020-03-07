@@ -38,19 +38,16 @@ class InternalTests: TestCase {
   static let rootCommand = Tool.command.withRootBehaviour()
 
   func testDirectArguments() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
       testCustomStringConvertibleConformance(
         of: DirectArguments(),
         localizations: InterfaceLocalization.self,
         uniqueTestName: "None",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testEmptyCache() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
         testCommand(
           InternalTests.rootCommand,
           with: ["empty‐cache"],
@@ -58,13 +55,11 @@ class InternalTests: TestCase {
           uniqueTestName: "Empty Cache",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testExportInterface() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
         func postprocess(_ output: inout String) {
           // macOS & Linux have different JSON whitespace.
           output.scalars.replaceMatches(
@@ -82,13 +77,11 @@ class InternalTests: TestCase {
           postprocess: postprocess,
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testSetLanguage() throws {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
         testCommand(
           InternalTests.rootCommand,
           with: ["set‐language", "zxx"],
@@ -118,24 +111,20 @@ class InternalTests: TestCase {
             )
           }
         }
-      #endif
     #endif
   }
 
   func testOptions() {
-    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
       testCustomStringConvertibleConformance(
         of: Options(),
         localizations: InterfaceLocalization.self,
         uniqueTestName: "None",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testVersionSelection() throws {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
 
@@ -286,13 +275,11 @@ class InternalTests: TestCase {
             overwriteSpecificationInsteadOfFailing: false
           )
         }
-      #endif
     #endif
   }
 
   func testVersionSubcommand() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
           InternalTests.rootCommand,
@@ -309,7 +296,6 @@ class InternalTests: TestCase {
           uniqueTestName: "Version (None)",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 }

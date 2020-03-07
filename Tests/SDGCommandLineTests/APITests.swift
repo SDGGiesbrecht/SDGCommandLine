@@ -36,7 +36,6 @@ class APITests: TestCase {
 
   func testArgumentType() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         testCustomStringConvertibleConformance(
           of: ArgumentType.string,
           localizations: InterfaceLocalization.self,
@@ -94,13 +93,11 @@ class APITests: TestCase {
           uniqueTestName: "Path",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testCommand() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         testCustomStringConvertibleConformance(
           of: Tool.command,
           localizations: InterfaceLocalization.self,
@@ -134,7 +131,6 @@ class APITests: TestCase {
           uniqueTestName: "Foreign Command",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
@@ -147,7 +143,6 @@ class APITests: TestCase {
           return error
         }
       #else
-        #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
           SDGCommandLineTestUtilities.testCommand(
             Tool.command,
             with: ["fail", "•system"],
@@ -155,14 +150,12 @@ class APITests: TestCase {
             uniqueTestName: "System Error",
             overwriteSpecificationInsteadOfFailing: false
           )
-        #endif
       #endif
     #endif
   }
 
   func testDirectArgument() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["reject‐argument", "..."],
@@ -177,13 +170,11 @@ class APITests: TestCase {
           uniqueTestName: "Unexpected Argument",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testEnumerationOption() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["execute", "•colour", "red"],
@@ -205,7 +196,6 @@ class APITests: TestCase {
           uniqueTestName: "Invalid Enumeration",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
@@ -219,7 +209,6 @@ class APITests: TestCase {
 
   func testHelp() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["execute", "help"],
@@ -234,13 +223,11 @@ class APITests: TestCase {
           uniqueTestName: "Help (with Direct Arguments)",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testLanguage() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["help", "•language", "he"],
@@ -255,7 +242,6 @@ class APITests: TestCase {
           uniqueTestName: "Language Selection by Icon",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
@@ -279,7 +265,6 @@ class APITests: TestCase {
 
   func testOption() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
         testCustomStringConvertibleConformance(
           of: Execute.textOption,
           localizations: InterfaceLocalization.self,
@@ -333,7 +318,6 @@ class APITests: TestCase {
           allowColour: true,
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
