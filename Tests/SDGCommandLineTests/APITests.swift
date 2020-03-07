@@ -58,15 +58,15 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
 
-    #if !os(Android) // Path is read only.
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•path", "/tmp"],
-        localizations: Language.self,
-        uniqueTestName: "Absolute Path",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "/tmp"],
+          localizations: Language.self,
+          uniqueTestName: "Absolute Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•path", "~"],
@@ -81,24 +81,24 @@ class APITests: TestCase {
         uniqueTestName: "Home 2",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #if !os(Android)  // Path is read only.
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•path", "~/.SDG/Test"],
-        localizations: Language.self,
-        uniqueTestName: "User Path",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
-    #if !os(Android)  // Path is read only.
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•path", "tmp"],
-        localizations: Language.self,
-        uniqueTestName: "Path",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "~/.SDG/Test"],
+          localizations: Language.self,
+          uniqueTestName: "User Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "tmp"],
+          localizations: Language.self,
+          uniqueTestName: "Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
