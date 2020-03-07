@@ -32,8 +32,7 @@ import SDGLocalizationTestUtilities
 import SDGCommandLineTestUtilities
 import TestTool
 
-// #workaround(workspace version 0.30.1, Redundant name for CMake.)
-class SDGCommandLineAPITests: TestCase {
+class APITests: TestCase {
 
   func testArgumentType() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
