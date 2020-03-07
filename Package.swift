@@ -254,7 +254,7 @@ let package = Package(
 )
 
 func adjustForWindows() {
-  // #workaround(workspace version 0.30.1, CMake cannot handle Unicode.)
+  // #workaround(workspace version 0.30.2, CMake cannot handle Unicode.)
   let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
@@ -278,7 +278,7 @@ func adjustForWindows() {
   adjustForWindows()
 #endif
 import Foundation
-// #workaround(workspace 0.30.1, Until packages work natively on windows.)
+// #workaround(workspace 0.30.2, Until packages work natively on windows.)
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
 }
