@@ -38,188 +38,178 @@ class InternalTests: TestCase {
   static let rootCommand = Tool.command.withRootBehaviour()
 
   func testDirectArguments() {
-    #if !os(Android)  // #workaround(workspace version 0.30.1, Emulator lacks permissions.)
-      testCustomStringConvertibleConformance(
-        of: DirectArguments(),
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "None",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+    testCustomStringConvertibleConformance(
+      of: DirectArguments(),
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "None",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testEmptyCache() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["empty‐cache"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Empty Cache",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["empty‐cache"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Empty Cache",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
   func testExportInterface() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-        func postprocess(_ output: inout String) {
-          // macOS & Linux have different JSON whitespace.
-          output.scalars.replaceMatches(
-            for: "\n".scalars
-              + RepetitionPattern(" ".scalars)
-              + "\n".scalars,
-            with: "\n\n".scalars
-          )
-        }
-        SDGCommandLineTestUtilities.testCommand(
-          InternalTests.rootCommand,
-          with: ["export‐interface"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Export Interface",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
+      func postprocess(_ output: inout String) {
+        // macOS & Linux have different JSON whitespace.
+        output.scalars.replaceMatches(
+          for: "\n".scalars
+            + RepetitionPattern(" ".scalars)
+            + "\n".scalars,
+          with: "\n\n".scalars
         )
-      #endif
-    #endif
-  }
-
-  func testSetLanguage() throws {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["set‐language", "zxx"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Set Language",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-        XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
-
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["set‐language"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Set Language to System",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-        XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
-
-        for (language, searchTerm) in [
-          "en": "set‐language"
-        ] as [String: StrictString] {
-          try LocalizationSetting(orderOfPrecedence: [language]).do {
-            let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
-            XCTAssert(
-              output.contains(searchTerm),
-              "Expected output missing from “\(language)”: \(searchTerm)"
-            )
-          }
-        }
-      #endif
-    #endif
-  }
-
-  func testOptions() {
-    #if !os(Android)  // #workaround(Swift 5.1.3, Illegal instruction.)
-      testCustomStringConvertibleConformance(
-        of: Options(),
+      }
+      SDGCommandLineTestUtilities.testCommand(
+        InternalTests.rootCommand,
+        with: ["export‐interface"],
         localizations: InterfaceLocalization.self,
-        uniqueTestName: "None",
+        uniqueTestName: "Export Interface",
+        postprocess: postprocess,
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
   }
 
+  func testSetLanguage() throws {
+    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language", "zxx"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language to System",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+
+      for (language, searchTerm) in [
+        "en": "set‐language"
+      ] as [String: StrictString] {
+        try LocalizationSetting(orderOfPrecedence: [language]).do {
+          let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
+          XCTAssert(
+            output.contains(searchTerm),
+            "Expected output missing from “\(language)”: \(searchTerm)"
+          )
+        }
+      }
+    #endif
+  }
+
+  func testOptions() {
+    testCustomStringConvertibleConformance(
+      of: Options(),
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "None",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+  }
+
   func testVersionSelection() throws {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
-        FileManager.default.delete(.cache)
-        defer { FileManager.default.delete(.cache) }
+      FileManager.default.delete(.cache)
+      defer { FileManager.default.delete(.cache) }
 
-        let currentPackage = ProcessInfo.packageURL
-        defer { ProcessInfo.packageURL = currentPackage }
+      let currentPackage = ProcessInfo.packageURL
+      defer { ProcessInfo.packageURL = currentPackage }
 
-        let testToolName = "tool"
-        try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
-          let location = temporaryDirectory.appendingPathComponent(testToolName)
+      let testToolName = "tool"
+      try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
+        let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
-            let testPackage = try PackageRepository.initializePackage(
-              at: location,
-              named: StrictString(location.lastPathComponent),
-              type: .executable
-            ).get()
-            _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
+        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
+          let testPackage = try PackageRepository.initializePackage(
+            at: location,
+            named: StrictString(location.lastPathComponent),
+            type: .executable
+          ).get()
+          _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
-            try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
-              to: testPackage.location.appendingPathComponent(
-                "Sources/" + testToolName + "/main.swift"
+          try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
+            to: testPackage.location.appendingPathComponent(
+              "Sources/" + testToolName + "/main.swift"
+            )
+          )
+          try testPackage.commitChanges(description: "Version 1.0.0").get()
+          try testPackage.tag(version: Version(1, 0, 0)).get()
+
+          ProcessInfo.packageURL = testPackage.location
+        #endif
+
+        func postprocess(_ output: inout String) {
+          output.replaceMatches(
+            for: temporaryDirectory.absoluteString,
+            with: "[Temporary Directory]"
+          )
+          output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
+
+          let cacheDirectory = FileManager.default.url(in: .cache, at: "File")
+            .deletingLastPathComponent()
+          output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
+
+          output.scalars.replaceMatches(
+            for: "\n".scalars
+              + RepetitionPattern(
+                ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
+                consumption: .lazy
               )
-            )
-            try testPackage.commitChanges(description: "Version 1.0.0").get()
-            try testPackage.tag(version: Version(1, 0, 0)).get()
+              + "\trefs/heads/master".scalars,
+            with: "\n[Commit Hash]\trefs/heads/master".scalars
+          )
+          output.scalars.replaceMatches(
+            for: "Development/".scalars
+              + RepetitionPattern(
+                ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
+                consumption: .lazy
+              )
+              + "/".scalars,
+            with: "Development/[Commit Hash]/".scalars
+          )
+          output.scalars.replaceMatches(
+            for: ".build/".scalars
+              + RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy)
+              + "/release".scalars,
+            with: ".build/[Operating System]/release".scalars
+          )
+          output.scalars.replaceMatches(
+            for: "Cloning into \u{27}".scalars
+              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy)
+              + "\u{27}".scalars,
+            with: "Cloning into \u{27}...\u{27}".scalars
+          )
+          output.scalars.replaceMatches(
+            for: "tool ".scalars
+              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+              + "/tool \u{2D}\u{2D}branch".scalars,
+            with: "tool [...]/tool \u{2D}\u{2D}branch".scalars
+          )
+          output.scalars.replaceMatches(
+            for: "tool ".scalars
+              + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
+              + "/tool \u{2D}\u{2D}depth".scalars,
+            with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
+          )
+        }
 
-            ProcessInfo.packageURL = testPackage.location
-          #endif
-
-          func postprocess(_ output: inout String) {
-            output.replaceMatches(
-              for: temporaryDirectory.absoluteString,
-              with: "[Temporary Directory]"
-            )
-            output.replaceMatches(for: temporaryDirectory.path, with: "[Temporary Directory]")
-
-            let cacheDirectory = FileManager.default.url(in: .cache, at: "File")
-              .deletingLastPathComponent()
-            output.replaceMatches(for: cacheDirectory.path, with: "[Cache]")
-
-            output.scalars.replaceMatches(
-              for: "\n".scalars
-                + RepetitionPattern(
-                  ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
-                  consumption: .lazy
-                )
-                + "\trefs/heads/master".scalars,
-              with: "\n[Commit Hash]\trefs/heads/master".scalars
-            )
-            output.scalars.replaceMatches(
-              for: "Development/".scalars
-                + RepetitionPattern(
-                  ConditionalPattern({ $0 ∉ CharacterSet.whitespaces }),
-                  consumption: .lazy
-                )
-                + "/".scalars,
-              with: "Development/[Commit Hash]/".scalars
-            )
-            output.scalars.replaceMatches(
-              for: ".build/".scalars
-                + RepetitionPattern(ConditionalPattern({ $0 ≠ "/" }), consumption: .lazy)
-                + "/release".scalars,
-              with: ".build/[Operating System]/release".scalars
-            )
-            output.scalars.replaceMatches(
-              for: "Cloning into \u{27}".scalars
-                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\u{27}" }), consumption: .lazy)
-                + "\u{27}".scalars,
-              with: "Cloning into \u{27}...\u{27}".scalars
-            )
-            output.scalars.replaceMatches(
-              for: "tool ".scalars
-                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
-                + "/tool \u{2D}\u{2D}branch".scalars,
-              with: "tool [...]/tool \u{2D}\u{2D}branch".scalars
-            )
-            output.scalars.replaceMatches(
-              for: "tool ".scalars
-                + RepetitionPattern(ConditionalPattern({ $0 ≠ "\n" }), consumption: .lazy)
-                + "/tool \u{2D}\u{2D}depth".scalars,
-              with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
-            )
-          }
-
+        #if !os(Android)  // #workaround(workspace version 0.30.2, Emulator lacks Git.)
           // When the cache is empty...
           testCommand(
             Tool.createCommand(),
@@ -285,31 +275,29 @@ class InternalTests: TestCase {
             postprocess: postprocess,
             overwriteSpecificationInsteadOfFailing: false
           )
-        }
-      #endif
+        #endif
+      }
     #endif
   }
 
   func testVersionSubcommand() {
     #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
-      #if !os(Android)  // #workaround(workspace version 5.1.3, Emulator lacks permissions.)
-        ProcessInfo.version = Version(1, 2, 3)
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["version"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Version",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-        ProcessInfo.version = nil
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["version"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Version (None)",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+      ProcessInfo.version = Version(1, 2, 3)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["version"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Version",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      ProcessInfo.version = nil
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["version"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Version (None)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 }
