@@ -209,71 +209,73 @@ class InternalTests: TestCase {
           )
         }
 
-        // When the cache is empty...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Version (Empty Cache)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+        #if !os(Android)  // #workaround(workspace version 0.30.2, Emulator lacks Git.)
+          // When the cache is empty...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Version (Empty Cache)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
 
-        // When the cache exists...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Version (Cached)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+          // When the cache exists...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Version (Cached)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
 
-        // When the cache is empty...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Development (Empty Cache)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+          // When the cache is empty...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Development (Empty Cache)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
 
-        // When the cache exists...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Development (Cached)",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+          // When the cache exists...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Development (Cached)",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
 
-        // Looking for version when it does not exist...
-        testCommand(
-          Tool.createCommand(),
-          with: ["some‐invalid‐argument", "another‐invalid‐argument"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Without Version",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+          // Looking for version when it does not exist...
+          testCommand(
+            Tool.createCommand(),
+            with: ["some‐invalid‐argument", "another‐invalid‐argument"],
+            localizations: APILocalization.self,
+            uniqueTestName: "Without Version",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
 
-        // Asking for something which is not a version...
-        testCommand(
-          Tool.createCommand(),
-          with: [
-            "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
-          ],
-          localizations: APILocalization.self,
-          uniqueTestName: "Use Invalid Version",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
+          // Asking for something which is not a version...
+          testCommand(
+            Tool.createCommand(),
+            with: [
+              "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
+            ],
+            localizations: APILocalization.self,
+            uniqueTestName: "Use Invalid Version",
+            postprocess: postprocess,
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
       }
     #endif
   }
