@@ -90,3 +90,6 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
+
+// #workaround(For now.)
+configuration.supportedPlatforms.remove(.web)
