@@ -223,8 +223,7 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        "test‐tool",
-        "empty‐tool",
+        // test‐tool, empty‐tool (except Windows; see end of file)
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
       ]
@@ -253,6 +252,19 @@ let package = Package(
   ]
 )
 
+// #workaround(workspace version 0.30.2, CMake cannot handle Unicode.)
+import Foundation
+#if !os(Windows)
+  if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == nil {
+    for target in package.targets where target.name == "SDGExportedCommandLineInterfaceTests" {
+      target.dependencies.append(contentsOf: [
+        "test‐tool",
+        "empty‐tool"
+      ])
+    }
+  }
+#endif
+
 func adjustForWindows() {
   // #workaround(workspace version 0.30.2, CMake cannot handle Unicode.)
   let impossibleTargets: Set<String> = [
@@ -263,16 +275,6 @@ func adjustForWindows() {
   package.targets.removeAll(where: { target in
     impossibleTargets.contains(target.name)
   })
-  for target in package.targets {
-    target.dependencies.removeAll(where: { dependency in
-      switch dependency {
-      case ._byNameItem(let name):
-        return impossibleTargets.contains(name)
-      default:
-        return false
-      }
-    })
-  }
 }
 #if os(Windows)
   adjustForWindows()
