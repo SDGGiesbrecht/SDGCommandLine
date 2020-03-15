@@ -154,9 +154,6 @@ let package = Package(
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGVersioning", package: "SDGCornerstone"),
         .product(name: "SDGSwift", package: "SDGSwift")
-      ],
-      swiftSettings: [
-        .define("INTERFACE_EXPORT", .when(configuration: .debug))
       ]
     ),
 
