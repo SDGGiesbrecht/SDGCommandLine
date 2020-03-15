@@ -200,7 +200,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Command.setLanguage,
       Command.emptyCache
     ])
-    #if INTERFACE_EXPORT
+    #if DEBUG
       copy.subcommands.append(Command.exportInterface)
     #endif
     return copy
