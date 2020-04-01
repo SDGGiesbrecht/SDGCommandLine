@@ -272,6 +272,34 @@ func adjustForWindows() {
   package.targets.removeAll(where: { target in
     impossibleTargets.contains(target.name)
   })
+  // #workaround(Swift 5.2, Triggers assertion failure when generating CMake without these.)
+  package.dependencies.append(contentsOf: [
+      .package(
+        name: "CommonMark",
+        url: "https://github.com/SDGGiesbrecht/swift\u{2D}cmark",
+        .exact(Version(0, 0, 50100))
+      ),
+      .package(
+        name: "llbuild",
+        url: "https://github.com/apple/swift\u{2D}llbuild.git",
+        .exact(Version(0, 3, 0))
+      ),
+      .package(
+        name: "SwiftPM",
+        url: "https://github.com/apple/swift\u{2D}package\u{2D}manager",
+        .exact(Version(0, 6, 0))
+      ),
+      .package(
+        name: "SwiftSyntax",
+        url: "https://github.com/apple/swift\u{2D}syntax",
+        .exact(Version(0, 50200, 0))
+      ),
+      .package(
+        url: "https://github.com/apple/swift\u{2D}tools\u{2D}support\u{2D}core.git",
+        .exact(Version(0, 1, 0))
+      ),
+    ]
+  )
 }
 #if os(Windows)
   adjustForWindows()
