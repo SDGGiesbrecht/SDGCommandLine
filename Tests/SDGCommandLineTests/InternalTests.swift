@@ -234,7 +234,7 @@ class InternalTests: TestCase {
           testCommand(
             Tool.createCommand(),
             with: [
-              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument",
             ],
             localizations: APILocalization.self,
             uniqueTestName: "Use Development (Empty Cache)",
@@ -246,7 +246,7 @@ class InternalTests: TestCase {
           testCommand(
             Tool.createCommand(),
             with: [
-              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument"
+              "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument",
             ],
             localizations: APILocalization.self,
             uniqueTestName: "Use Development (Cached)",
@@ -268,7 +268,7 @@ class InternalTests: TestCase {
           testCommand(
             Tool.createCommand(),
             with: [
-              "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument"
+              "some‐invalid‐argument", "•use‐version", "not‐a‐version", "another‐invalid‐argument",
             ],
             localizations: APILocalization.self,
             uniqueTestName: "Use Invalid Version",

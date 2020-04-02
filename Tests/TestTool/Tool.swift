@@ -40,7 +40,7 @@ public enum Tool {
         }
       }),
       subcommands: [
-        Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command
+        Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command,
       ]
     )
   }

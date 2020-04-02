@@ -123,7 +123,7 @@ let package = Package(
     .library(name: "SDGCommandLineTestUtilities", targets: ["SDGCommandLineTestUtilities"]),
     // @documentation(SDGExportedCommandLineInterface)
     /// Loading a tool’s exported interface for documentation purposes.
-    .library(name: "SDGExportedCommandLineInterface", targets: ["SDGExportedCommandLineInterface"])
+    .library(name: "SDGExportedCommandLineInterface", targets: ["SDGExportedCommandLineInterface"]),
   ],
   dependencies: [
     .package(
@@ -133,7 +133,7 @@ let package = Package(
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
       .upToNextMinor(from: Version(0, 20, 0))
-    )
+    ),
   ],
   targets: [
 
@@ -153,7 +153,7 @@ let package = Package(
         .product(name: "SDGLocalization", package: "SDGCornerstone"),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGVersioning", package: "SDGCornerstone"),
-        .product(name: "SDGSwift", package: "SDGSwift")
+        .product(name: "SDGSwift", package: "SDGSwift"),
       ]
     ),
 
@@ -169,7 +169,7 @@ let package = Package(
         .product(name: "SDGText", package: "SDGCornerstone"),
         .product(name: "SDGLocalization", package: "SDGCornerstone"),
         .product(name: "SDGTesting", package: "SDGCornerstone"),
-        .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone")
+        .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone"),
       ]
     ),
 
@@ -181,7 +181,7 @@ let package = Package(
         "SDGCommandLine",
         .product(name: "SDGText", package: "SDGCornerstone"),
         .product(name: "SDGPersistence", package: "SDGCornerstone"),
-        .product(name: "SDGExternalProcess", package: "SDGCornerstone")
+        .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
       ]
     ),
 
@@ -211,7 +211,7 @@ let package = Package(
         .product(name: "SDGLocalizationTestUtilities", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
         .product(name: "SDGSwift", package: "SDGSwift"),
-        .product(name: "SDGSwiftPackageManager", package: "SDGSwift")
+        .product(name: "SDGSwiftPackageManager", package: "SDGSwift"),
       ]
     ),
 
@@ -222,7 +222,7 @@ let package = Package(
         "SDGCommandLineTestUtilities",
         // test‐tool, empty‐tool (except Windows; see end of file)
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
-        .product(name: "SDGXCTestUtilities", package: "SDGCornerstone")
+        .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
       ]
     ),
 
@@ -231,7 +231,7 @@ let package = Package(
       dependencies: [
         "SDGCommandLine",
         .product(name: "SDGText", package: "SDGCornerstone"),
-        .product(name: "SDGLocalization", package: "SDGCornerstone")
+        .product(name: "SDGLocalization", package: "SDGCornerstone"),
       ],
       path: "Tests/TestTool"
     ),
@@ -240,12 +240,12 @@ let package = Package(
       name: "test‐tool",
       dependencies: [
         "SDGCommandLine",
-        "TestTool"
+        "TestTool",
       ],
       path: "Tests/test‐tool"
     ),
 
-    .target(name: "empty‐tool", path: "Tests/empty‐tool")
+    .target(name: "empty‐tool", path: "Tests/empty‐tool"),
   ]
 )
 
@@ -256,7 +256,7 @@ import Foundation
     for target in package.targets where target.name == "SDGExportedCommandLineInterfaceTests" {
       target.dependencies.append(contentsOf: [
         "test‐tool",
-        "empty‐tool"
+        "empty‐tool",
       ])
     }
   }
@@ -267,38 +267,38 @@ func adjustForWindows() {
   let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
-    "test‐tool"
+    "test‐tool",
   ]
   package.targets.removeAll(where: { target in
     impossibleTargets.contains(target.name)
   })
   // #workaround(Swift 5.2, Triggers assertion failure when generating CMake without these.)
   package.dependencies.append(contentsOf: [
-      .package(
-        name: "CommonMark",
-        url: "https://github.com/SDGGiesbrecht/swift\u{2D}cmark",
-        .exact(Version(0, 0, 50100))
-      ),
-      .package(
-        name: "llbuild",
-        url: "https://github.com/apple/swift\u{2D}llbuild.git",
-        .exact(Version(0, 3, 0))
-      ),
-      .package(
-        name: "SwiftPM",
-        url: "https://github.com/apple/swift\u{2D}package\u{2D}manager",
-        .exact(Version(0, 6, 0))
-      ),
-      .package(
-        name: "SwiftSyntax",
-        url: "https://github.com/apple/swift\u{2D}syntax",
-        .exact(Version(0, 50200, 0))
-      ),
-      .package(
-        url: "https://github.com/apple/swift\u{2D}tools\u{2D}support\u{2D}core.git",
-        .exact(Version(0, 1, 0))
-      ),
-    ]
+    .package(
+      name: "CommonMark",
+      url: "https://github.com/SDGGiesbrecht/swift\u{2D}cmark",
+      .exact(Version(0, 0, 50100))
+    ),
+    .package(
+      name: "llbuild",
+      url: "https://github.com/apple/swift\u{2D}llbuild.git",
+      .exact(Version(0, 3, 0))
+    ),
+    .package(
+      name: "SwiftPM",
+      url: "https://github.com/apple/swift\u{2D}package\u{2D}manager",
+      .exact(Version(0, 6, 0))
+    ),
+    .package(
+      name: "SwiftSyntax",
+      url: "https://github.com/apple/swift\u{2D}syntax",
+      .exact(Version(0, 50200, 0))
+    ),
+    .package(
+      url: "https://github.com/apple/swift\u{2D}tools\u{2D}support\u{2D}core.git",
+      .exact(Version(0, 1, 0))
+    ),
+  ]
   )
 }
 #if os(Windows)

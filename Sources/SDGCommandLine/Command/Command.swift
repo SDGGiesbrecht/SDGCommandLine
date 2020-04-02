@@ -33,7 +33,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   private static var standardOptions: [AnyOption] {
     var options: [AnyOption] = [
       Options.noColour,
-      Options.language
+      Options.language,
     ]
     if ProcessInfo.packageURL ≠ nil {
       options.append(Options.useVersion)
@@ -198,7 +198,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     copy.subcommands.append(contentsOf: [
       Command.version,
       Command.setLanguage,
-      Command.emptyCache
+      Command.emptyCache,
     ])
     #if DEBUG
       copy.subcommands.append(Command.exportInterface)
@@ -327,7 +327,8 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
 
     var remaining: ArraySlice<StrictString> = arguments[arguments.bounds]
     var expected: ArraySlice<AnyArgumentTypeDefinition> = self.directArguments[
-      self.directArguments.bounds]
+      self.directArguments.bounds
+    ]
     while let argument = remaining.popFirst() {
 
       let optionAttempt = parse(

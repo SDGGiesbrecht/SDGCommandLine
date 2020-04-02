@@ -40,10 +40,10 @@ import SDGXCTestUtilities
         if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
           // GitHub Actions do not have Git configured.
           _ = try? Shell.default.run(command: [
-            "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe"
+            "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe",
           ]).get()
           _ = try? Shell.default.run(command: [
-            "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com"
+            "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com",
           ]).get()
         }
       }
