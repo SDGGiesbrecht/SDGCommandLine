@@ -24,7 +24,7 @@ public struct Option<Type>: AnyOption {
   internal static var optionMarkers: [StrictString] {
     return [
       "•",
-      "\u{2D}\u{2D}"
+      "\u{2D}\u{2D}",
     ]
   }
 

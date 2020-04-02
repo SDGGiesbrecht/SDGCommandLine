@@ -37,7 +37,7 @@ public struct CommandInterface: Decodable {
     switch process.run([
       "export‐interface",
       "•language",
-      language
+      language,
     ]) {
     case .failure(let error):
       return .failure(error)

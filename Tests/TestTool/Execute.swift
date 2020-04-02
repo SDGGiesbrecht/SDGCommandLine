@@ -83,7 +83,7 @@ public enum Execute {
             return "blau"
           }
         })
-      )
+      ),
     ]
   )
 
@@ -220,7 +220,7 @@ public enum Execute {
       Execute.informalOption,
       Execute.colourOption,
       Execute.pathOption,
-      Execute.hiddenOption
+      Execute.hiddenOption,
     ],
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
