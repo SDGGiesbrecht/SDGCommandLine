@@ -220,7 +220,8 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        // test‐tool, empty‐tool (except Windows; see end of file)
+        "test‐tool",
+        "empty‐tool",
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
       ]
@@ -249,21 +250,8 @@ let package = Package(
   ]
 )
 
-// #workaround(workspace version 0.30.2, CMake cannot handle Unicode.)
-import Foundation
-#if !os(Windows)
-  if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == nil {
-    for target in package.targets where target.name == "SDGExportedCommandLineInterfaceTests" {
-      target.dependencies.append(contentsOf: [
-        "test‐tool",
-        "empty‐tool",
-      ])
-    }
-  }
-#endif
-
 func adjustForWindows() {
-  // #workaround(workspace version 0.30.2, CMake cannot handle Unicode.)
+  // #workaround(workspace version 0.32.0, CMake cannot handle Unicode.)
   let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
@@ -272,6 +260,13 @@ func adjustForWindows() {
   package.targets.removeAll(where: { target in
     impossibleTargets.contains(target.name)
   })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { dependency in
+      impossibleTargets.contains(where: { impossible in
+        "\(dependency)".contains(impossible)
+      })
+    })
+  }
   // #workaround(Swift 5.2, Triggers assertion failure when generating CMake without these.)
   package.dependencies.append(contentsOf: [
     .package(
@@ -305,7 +300,7 @@ func adjustForWindows() {
   adjustForWindows()
 #endif
 import Foundation
-// #workaround(workspace 0.30.2, Until packages work natively on windows.)
+// #workaround(workspace 0.32.0, Until packages work natively on windows.)
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
 }
