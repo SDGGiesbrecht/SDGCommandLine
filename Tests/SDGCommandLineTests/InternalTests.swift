@@ -209,7 +209,7 @@ class InternalTests: TestCase {
           )
         }
 
-        #if !os(Android)  // #workaround(workspace version 0.30.2, Emulator lacks Git.)
+        #if !os(Android)  // #workaround(workspace version 0.32.0, Emulator lacks Git.)
           // When the cache is empty...
           testCommand(
             Tool.createCommand(),
