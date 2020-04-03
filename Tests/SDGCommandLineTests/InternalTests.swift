@@ -47,7 +47,7 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       testCommand(
         InternalTests.rootCommand,
         with: ["empty‐cache"],
@@ -59,7 +59,7 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       func postprocess(_ output: inout String) {
         // macOS & Linux have different JSON whitespace.
         output.scalars.replaceMatches(
@@ -81,7 +81,7 @@ class InternalTests: TestCase {
   }
 
   func testSetLanguage() throws {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       testCommand(
         InternalTests.rootCommand,
         with: ["set‐language", "zxx"],
@@ -124,7 +124,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       FileManager.default.delete(.cache)
       defer { FileManager.default.delete(.cache) }
 
@@ -135,7 +135,7 @@ class InternalTests: TestCase {
       try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
         let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.19.2, SwiftPM unavailable.)
+        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 0.20.1, SwiftPM unavailable.)
           let testPackage = try PackageRepository.initializePackage(
             at: location,
             named: StrictString(location.lastPathComponent),
@@ -281,7 +281,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
-    #if !os(Windows)  // #workaround(Swift 5.1.3, SegFault)
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       ProcessInfo.version = Version(1, 2, 3)
       testCommand(
         InternalTests.rootCommand,
