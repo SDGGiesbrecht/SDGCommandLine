@@ -307,6 +307,7 @@ if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true"
 
 if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
   // #workaround(SDGSwift 0.20.0, Web not supported yet.)
+  package.dependencies.removeAll(where: { $0.url.hasSuffix("SDGSwift") })
   for target in package.targets {
     target.dependencies.removeAll(where: { dependency in
       return "\(dependency)".contains("SDGSwift")
