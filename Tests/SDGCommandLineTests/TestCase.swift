@@ -26,7 +26,7 @@ import XCTest
 
 import SDGXCTestUtilities
 
-#if true  // #workaround(Hides from generation of WindowsMain.swift.)
+#if true  // #workaround(workspace version 0.32.0, Hides from generation of WindowsMain.swift.)
   class TestCase: SDGXCTestUtilities.TestCase {
 
     static var alreadyInitialized = false
