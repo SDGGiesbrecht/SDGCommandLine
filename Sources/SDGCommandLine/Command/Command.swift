@@ -24,7 +24,10 @@ import SDGCollections
 import SDGText
 import SDGLocalization
 
-import SDGSwift
+// #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+#if !os(WASI)
+  import SDGSwift
+#endif
 
 import SDGCommandLineLocalizations
 
