@@ -12,18 +12,21 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+// #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+#if !os(WASI)
+  import Foundation
 
-import SDGSwift
+  import SDGSwift
 
-extension Build {
+  extension Build {
 
-  // MARK: - Static Properties
+    // MARK: - Static Properties
 
-  internal static let current: Build? = {
-    guard let versionNumber = ProcessInfo.version else {
-      return nil  // @exempt(from: tests)
-    }
-    return .version(versionNumber)
-  }()
-}
+    internal static let current: Build? = {
+      guard let versionNumber = ProcessInfo.version else {
+        return nil  // @exempt(from: tests)
+      }
+      return .version(versionNumber)
+    }()
+  }
+#endif

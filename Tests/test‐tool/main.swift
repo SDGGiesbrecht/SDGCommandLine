@@ -12,14 +12,20 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+#if !os(WASI)
+  import Foundation
+#endif
 
 import SDGCommandLine
 
 import TestTool
 
-ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool"
-ProcessInfo.version = nil
-ProcessInfo.packageURL = nil
+// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+#if !os(WASI)
+  ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool"
+  ProcessInfo.version = nil
+  ProcessInfo.packageURL = nil
+#endif
 
 Tool.command.executeAsMain()
