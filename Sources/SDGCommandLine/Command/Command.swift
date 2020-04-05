@@ -41,9 +41,12 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Options.noColour,
       Options.language,
     ]
-    if ProcessInfo.packageURL ≠ nil {
-      options.append(Options.useVersion)
-    }
+    // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+    #if !os(WASI)
+      if ProcessInfo.packageURL ≠ nil {
+        options.append(Options.useVersion)
+      }
+    #endif
     return options
   }
 
@@ -202,8 +205,13 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   public func withRootBehaviour() -> Command {
     var copy = self
     copy.subcommands.append(contentsOf: [
-      Command.version,
-      Command.setLanguage,
+      Command.version
+    ])
+    // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+    #if !os(WASI)
+      copy.append(Command.setLanguage)
+    #endif
+    copy.subcommands.append(contentsOf: [
       Command.emptyCache,
     ])
     #if DEBUG
