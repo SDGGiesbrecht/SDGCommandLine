@@ -27,7 +27,7 @@ public struct CommandInterface: Decodable {
   // MARK: - Static Methods
 
   // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
-  #if os(WASI)
+  #if !os(WASI)
     /// Attempt to load the interface of the tool at the specified URL.
     ///
     /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
@@ -60,7 +60,7 @@ public struct CommandInterface: Decodable {
   // MARK: - Initialization
 
   // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
-  #if os(WASI)
+  #if !os(WASI)
     private init(export: String) throws {
       self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
     }
