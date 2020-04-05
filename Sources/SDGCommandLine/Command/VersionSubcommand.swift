@@ -15,54 +15,55 @@
 // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
-#endif
 
-import SDGText
-import SDGLocalization
+  import SDGText
+  import SDGLocalization
 
-import SDGCommandLineLocalizations
+  import SDGCommandLineLocalizations
 
-extension Command {
+  extension Command {
 
-  private static let versionName = UserFacing<StrictString, InterfaceLocalization>({ localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
-      .deutschDeutschland:
-      return "version"
-    }
-  })
-
-  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
+    private static let versionName = UserFacing<StrictString, InterfaceLocalization>({
+      localization in
       switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "displays the version in use."
-      case .deutschDeutschland:
-        return "zeigt die verwendete Version an."
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+        .deutschDeutschland:
+        return "version"
       }
     })
 
-  internal static let version = Command(
-    name: versionName,
-    description: versionDescription,
-    directArguments: [],
-    options: [],
-    execution: { (_, _, output: Command.Output) throws -> Void in
+    private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "displays the version in use."
+        case .deutschDeutschland:
+          return "zeigt die verwendete Version an."
+        }
+      })
 
-      if let stable = ProcessInfo.version {
-        output.print(stable.string())
-      } else {
-        output.print(
-          UserFacing<StrictString, InterfaceLocalization>({ localization in
-            switch localization {
-            case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-              return "Not a stable version."
-            case .deutschDeutschland:
-              return "Keine stabile Version."
-            }
-          }).resolved()
-        )
+    internal static let version = Command(
+      name: versionName,
+      description: versionDescription,
+      directArguments: [],
+      options: [],
+      execution: { (_, _, output: Command.Output) throws -> Void in
+
+        if let stable = ProcessInfo.version {
+          output.print(stable.string())
+        } else {
+          output.print(
+            UserFacing<StrictString, InterfaceLocalization>({ localization in
+              switch localization {
+              case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+                return "Not a stable version."
+              case .deutschDeutschland:
+                return "Keine stabile Version."
+              }
+            }).resolved()
+          )
+        }
       }
-    }
-  )
-}
+    )
+  }
+#endif

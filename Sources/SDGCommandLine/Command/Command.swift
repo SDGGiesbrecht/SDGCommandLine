@@ -246,27 +246,30 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let outputCollector = output ?? Output()
     do {
 
-      if let packageURL = ProcessInfo.packageURL {
-        let versionAttempt = parseVersion(from: arguments)
-        switch versionAttempt {
-        case .failure(let error):
-          return .failure(error)
-        case .success(let parsedVersion):
-          if let (version, otherArguments) = parsedVersion,
-            version ≠ Build.current
-          {
+      // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+      #if !os(WASI)
+        if let packageURL = ProcessInfo.packageURL {
+          let versionAttempt = parseVersion(from: arguments)
+          switch versionAttempt {
+          case .failure(let error):
+            return .failure(error)
+          case .success(let parsedVersion):
+            if let (version, otherArguments) = parsedVersion,
+              version ≠ Build.current
+            {
 
-            let package = Package(url: packageURL)
-            try package.execute(
-              version,
-              of: names,
-              with: otherArguments,
-              output: outputCollector
-            )
-            return .success(outputCollector.output)
+              let package = Package(url: packageURL)
+              try package.execute(
+                version,
+                of: names,
+                with: otherArguments,
+                output: outputCollector
+              )
+              return .success(outputCollector.output)
+            }
           }
         }
-      }
+      #endif
 
       Command.stack.append(self)
       defer { Command.stack.removeLast() }
@@ -511,46 +514,49 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     )
   }
 
-  private func parseVersion(from arguments: [StrictString]) -> Result<
-    (version: Build, otherArguments: [StrictString])?, Command.Error
-  > {
+  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  #if !os(WASI)
+    private func parseVersion(
+      from arguments: [StrictString]
+    ) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
 
-    var remaining = arguments[arguments.bounds]
+      var remaining = arguments[arguments.bounds]
 
-    while let argument = remaining.popFirst() {
+      while let argument = remaining.popFirst() {
 
-      if let name = removeOptionMarker(from: argument),
-        Options.useVersion.matches(name: name)
-      {
+        if let name = removeOptionMarker(from: argument),
+          Options.useVersion.matches(name: name)
+        {
 
-        var options = Options()
-        let optionAttempt = parse(
-          possibleOption: argument,
-          remainingArguments: &remaining,
-          parsedOptions: &options
-        )
-        switch optionAttempt {
-        case .failure(let error):
-          return .failure(error)
-        case .success(let isOption):
-          if isOption,
-            let version = options.value(for: Options.useVersion)
-          {
+          var options = Options()
+          let optionAttempt = parse(
+            possibleOption: argument,
+            remainingArguments: &remaining,
+            parsedOptions: &options
+          )
+          switch optionAttempt {
+          case .failure(let error):
+            return .failure(error)
+          case .success(let isOption):
+            if isOption,
+              let version = options.value(for: Options.useVersion)
+            {
 
-            let index = arguments.endIndex − remaining.count − 2
-            let otherArguments = Array(arguments[0..<index]) + Array(remaining)
-            return .success((version: version, otherArguments: otherArguments))
+              let index = arguments.endIndex − remaining.count − 2
+              let otherArguments = Array(arguments[0..<index]) + Array(remaining)
+              return .success((version: version, otherArguments: otherArguments))
+            }
           }
         }
       }
+
+      return .success(nil)
     }
+  #endif
 
-    return .success(nil)
-  }
-
-  private static func helpInstructions(for commandStack: [Command]) -> UserFacing<
-    StrictString, InterfaceLocalization
-  > {
+  private static func helpInstructions(
+    for commandStack: [Command]
+  ) -> UserFacing<StrictString, InterfaceLocalization> {
     var command = commandStack.map({ $0.localizedName() }).joined(separator: " ")
     command.append(contentsOf: " " + Command.help.localizedName())
     command = command.prepending(contentsOf: "$ ".scalars)
