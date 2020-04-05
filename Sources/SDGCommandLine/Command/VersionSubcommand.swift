@@ -15,33 +15,36 @@
 // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
+#endif
 
-  import SDGText
-  import SDGLocalization
+import SDGText
+import SDGLocalization
 
-  import SDGCommandLineLocalizations
+import SDGCommandLineLocalizations
 
-  extension Command {
+extension Command {
 
-    private static let versionName = UserFacing<StrictString, InterfaceLocalization>({
-      localization in
+  private static let versionName = UserFacing<StrictString, InterfaceLocalization>({
+    localization in
+    switch localization {
+    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+      .deutschDeutschland:
+      return "version"
+    }
+  })
+
+  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
       switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
-        .deutschDeutschland:
-        return "version"
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+        return "displays the version in use."
+      case .deutschDeutschland:
+        return "zeigt die verwendete Version an."
       }
     })
 
-    private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
-      { localization in
-        switch localization {
-        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-          return "displays the version in use."
-        case .deutschDeutschland:
-          return "zeigt die verwendete Version an."
-        }
-      })
-
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
     internal static let version = Command(
       name: versionName,
       description: versionDescription,
@@ -65,5 +68,5 @@
         }
       }
     )
-  }
-#endif
+  #endif
+}
