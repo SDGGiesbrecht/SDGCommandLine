@@ -24,14 +24,15 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-  private static let versionName = UserFacing<StrictString, InterfaceLocalization>({
-    localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
-      .deutschDeutschland:
-      return "version"
+  private static let versionName = UserFacing<StrictString, InterfaceLocalization>(
+    { localization in
+      switch localization {
+      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+        .deutschDeutschland:
+        return "version"
+      }
     }
-  })
+  )
 
   private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
     { localization in
