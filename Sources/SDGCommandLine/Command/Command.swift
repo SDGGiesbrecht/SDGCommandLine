@@ -233,9 +233,13 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     case .success:
       exitCode = Error.successCode
     case .failure(let error):
-      FileHandle.standardError.write(
-        (error.presentableDescription().formattedAsError() + "\n").file
-      )
+      let errorDescription = error.presentableDescription().formattedAsError() + "\n"
+      // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+      #if os(WASI)
+        print(errorDescription)
+      #else
+        FileHandle.standardError.write(errorDescription.file)
+      #endif
       exitCode = error.exitCode
     }
     exit(Int32(truncatingIfNeeded: exitCode))
