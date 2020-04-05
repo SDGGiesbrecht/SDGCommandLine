@@ -209,11 +209,11 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     ])
     // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
     #if !os(WASI)
-      copy.append(Command.setLanguage)
+      copy.subcommands.append(contentsOf: [
+        Command.setLanguage,
+        Command.emptyCache,
+      ])
     #endif
-    copy.subcommands.append(contentsOf: [
-      Command.emptyCache,
-    ])
     #if DEBUG
       copy.subcommands.append(Command.exportInterface)
     #endif
