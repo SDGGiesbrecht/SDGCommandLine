@@ -173,15 +173,18 @@ public enum Execute {
     type: unsatisfiableArgument
   )
 
-  private static let pathOption: Option<URL> = Option(
-    name: UserFacing<StrictString, Language>({ _ in
-      return "path"
-    }),
-    description: UserFacing<StrictString, Language>({ _ in
-      return "A directory to run in."
-    }),
-    type: ArgumentType.path
-  )
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    private static let pathOption: Option<URL> = Option(
+      name: UserFacing<StrictString, Language>({ _ in
+        return "path"
+      }),
+      description: UserFacing<StrictString, Language>({ _ in
+        return "A directory to run in."
+      }),
+      type: ArgumentType.path
+    )
+  #endif
 
   private static let hiddenOption = Option(
     name: UserFacing<StrictString, Language>({ _ in "hidden" }),
@@ -227,48 +230,51 @@ public enum Execute {
     ],
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-      try FileManager.default.do(
-        in: options.value(for: Execute.pathOption)
-          ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-      ) {
+      // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+      #if os(WASI)
+        try FileManager.default.do(
+          in: options.value(for: Execute.pathOption)
+            ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+        ) {
 
-        for _ in 1...(options.value(for: Execute.iterationsOption) ?? 1) {
+          for _ in 1...(options.value(for: Execute.iterationsOption) ?? 1) {
 
-          if let text = options.value(for: Execute.textOption) {
-            if let colour = options.value(for: Execute.colourOption) {
-              output.print(text.in(colour))
+            if let text = options.value(for: Execute.textOption) {
+              if let colour = options.value(for: Execute.colourOption) {
+                output.print(text.in(colour))
+              } else {
+                output.print(text)
+              }
             } else {
-              output.print(text)
-            }
-          } else {
-            let greeting: UserFacing<StrictString, Language>
-            if options.value(for: Execute.informalOption) {
-              greeting = UserFacing<StrictString, Language>({ localization in
-                switch localization {
-                case .english, .unsupported:
-                  return "Hi!"
-                case .deutsch:
-                  return "Tag!"
-                }
-              })
-            } else {
-              greeting = UserFacing<StrictString, Language>({ localization in
-                switch localization {
-                case .english, .unsupported:
-                  return "Hello, world!"
-                case .deutsch:
-                  return "Guten Tag, Welt!"
-                }
-              })
-            }
-            if let colour = options.value(for: Execute.colourOption) {
-              output.print(greeting.resolved().in(colour))
-            } else {
-              output.print(greeting.resolved())
+              let greeting: UserFacing<StrictString, Language>
+              if options.value(for: Execute.informalOption) {
+                greeting = UserFacing<StrictString, Language>({ localization in
+                  switch localization {
+                  case .english, .unsupported:
+                    return "Hi!"
+                  case .deutsch:
+                    return "Tag!"
+                  }
+                })
+              } else {
+                greeting = UserFacing<StrictString, Language>({ localization in
+                  switch localization {
+                  case .english, .unsupported:
+                    return "Hello, world!"
+                  case .deutsch:
+                    return "Guten Tag, Welt!"
+                  }
+                })
+              }
+              if let colour = options.value(for: Execute.colourOption) {
+                output.print(greeting.resolved().in(colour))
+              } else {
+                output.print(greeting.resolved())
+              }
             }
           }
         }
-      }
+      #endif
     }
   )
 }
