@@ -243,7 +243,9 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       exitCode = error.exitCode
     }
     // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
-    #if !os(WASI)
+    #if os(WASI)
+      fatalError()
+    #else
       exit(Int32(truncatingIfNeeded: exitCode))
     #endif
   }
