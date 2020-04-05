@@ -238,30 +238,33 @@ public enum ArgumentType {
       }
     })
 
-  /// An argument type representing a file system path.
-  public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
-    name: pathName,
-    syntaxDescription: pathDescription,
-    parse: { (argument: StrictString) -> URL? in
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    /// An argument type representing a file system path.
+    public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
+      name: pathName,
+      syntaxDescription: pathDescription,
+      parse: { (argument: StrictString) -> URL? in
 
-      if argument.hasPrefix("/") {
-        return URL(fileURLWithPath: String(argument))
-      } else if argument == "~" {
-        return URL(fileURLWithPath: NSHomeDirectory())
-      } else if argument.hasPrefix("~/") {
-        let home = URL(fileURLWithPath: NSHomeDirectory())
-        let dropped = String(StrictString(argument.dropFirst(2)))
-        if dropped.isEmpty {
-          return home
+        if argument.hasPrefix("/") {
+          return URL(fileURLWithPath: String(argument))
+        } else if argument == "~" {
+          return URL(fileURLWithPath: NSHomeDirectory())
+        } else if argument.hasPrefix("~/") {
+          let home = URL(fileURLWithPath: NSHomeDirectory())
+          let dropped = String(StrictString(argument.dropFirst(2)))
+          if dropped.isEmpty {
+            return home
+          } else {
+            return home.appendingPathComponent(dropped)
+          }
         } else {
-          return home.appendingPathComponent(dropped)
+          return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            .appendingPathComponent(String(argument))
         }
-      } else {
-        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-          .appendingPathComponent(String(argument))
       }
-    }
-  )  // @exempt(from: tests) Meaningless region.
+    )  // @exempt(from: tests) Meaningless region.
+  #endif
 
   private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>(
     { localization in
@@ -350,21 +353,24 @@ public enum ArgumentType {
       }
     })
 
-  internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
-    name: versionName,
-    syntaxDescription: versionDescription,
-    parse: { (argument: StrictString) -> Build? in
+  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  #if !os(WASI)
+    internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
+      name: versionName,
+      syntaxDescription: versionDescription,
+      parse: { (argument: StrictString) -> Build? in
 
-      if let version = Version(String(argument)) {
-        return Build.version(version)
-      } else {
-        for localization in InterfaceLocalization.allCases {
-          if argument == ArgumentType.developmentCase.resolved(for: localization) {
-            return Build.development
+        if let version = Version(String(argument)) {
+          return Build.version(version)
+        } else {
+          for localization in InterfaceLocalization.allCases {
+            if argument == ArgumentType.developmentCase.resolved(for: localization) {
+              return Build.development
+            }
           }
+          return nil
         }
-        return nil
       }
-    }
-  )  // @exempt(from: tests)
+    )  // @exempt(from: tests)
+  #endif
 }
