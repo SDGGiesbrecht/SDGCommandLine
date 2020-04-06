@@ -219,15 +219,23 @@ public enum Execute {
       }
     }),
     directArguments: [],
-    options: [
-      Execute.textOption,
-      Execute.iterationsOption,
-      Execute.unsatisfiableOption,
-      Execute.informalOption,
-      Execute.colourOption,
-      Execute.pathOption,
-      Execute.hiddenOption,
-    ],
+    options: {
+      var options: [AnyOption] = [
+        Execute.textOption,
+        Execute.iterationsOption,
+        Execute.unsatisfiableOption,
+        Execute.informalOption,
+        Execute.colourOption,
+      ]
+      // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+      #if !os(WASI)
+        options.append(Execute.pathOption)
+      #endif
+      options.append(contentsOf: [
+        Execute.hiddenOption,
+      ])
+      return options
+    }(),
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
       // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
