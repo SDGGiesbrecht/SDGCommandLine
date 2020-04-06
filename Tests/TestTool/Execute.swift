@@ -239,7 +239,7 @@ public enum Execute {
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
       // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
-      #if os(WASI)
+      #if !os(WASI)
         try FileManager.default.do(
           in: options.value(for: Execute.pathOption)
             ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
