@@ -128,7 +128,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(4, 4, 1)
+      from: Version(4, 6, 0)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
@@ -303,4 +303,14 @@ import Foundation
 // #workaround(workspace version 0.32.0, Until packages work natively on windows.)
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
+}
+
+if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
+  // #workaround(SDGSwift 0.20.0, Web not supported yet.)
+  package.dependencies.removeAll(where: { $0.url.hasSuffix("SDGSwift") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { dependency in
+      return "\(dependency)".contains("SDGSwift")
+    })
+  }
 }

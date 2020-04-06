@@ -101,11 +101,14 @@ public struct Options: TransparentWrapper {
       }
     })
 
-  internal static let useVersion = Option(
-    name: useVersionName,
-    description: useVersionDescription,
-    type: ArgumentType.version
-  )
+  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  #if !os(WASI)
+    internal static let useVersion = Option(
+      name: useVersionName,
+      description: useVersionDescription,
+      type: ArgumentType.version
+    )
+  #endif
 
   // MARK: - Initialization
 

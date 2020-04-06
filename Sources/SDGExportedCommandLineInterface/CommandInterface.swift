@@ -12,7 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+#if !os(WASI)
+  import Foundation
+#endif
 
 import SDGText
 import SDGPersistence
@@ -23,38 +26,45 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Static Methods
 
-  /// Attempt to load the interface of the tool at the specified URL.
-  ///
-  /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
-  ///
-  /// - Parameters:
-  ///     - tool: The URL of tool executable.
-  ///     - language: A language for the exported descriptions. This parameter accepts the same codes as the `•language` command line option.
-  public static func loadInterface(of tool: URL, in language: String) -> Result<
-    CommandInterface, ExternalProcess.Error
-  > {
-    let process = ExternalProcess(at: tool)
-    switch process.run([
-      "export‐interface",
-      "•language",
-      language,
-    ]) {
-    case .failure(let error):
-      return .failure(error)
-    case .success(let exported):
-      do {
-        return .success(try CommandInterface(export: exported))
-      } catch {
-        return .failure(.foundationError(error))
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    /// Attempt to load the interface of the tool at the specified URL.
+    ///
+    /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.
+    ///
+    /// - Parameters:
+    ///     - tool: The URL of tool executable.
+    ///     - language: A language for the exported descriptions. This parameter accepts the same codes as the `•language` command line option.
+    public static func loadInterface(
+      of tool: URL,
+      in language: String
+    ) -> Result<CommandInterface, ExternalProcess.Error> {
+      let process = ExternalProcess(at: tool)
+      switch process.run([
+        "export‐interface",
+        "•language",
+        language,
+      ]) {
+      case .failure(let error):
+        return .failure(error)
+      case .success(let exported):
+        do {
+          return .success(try CommandInterface(export: exported))
+        } catch {
+          return .failure(.foundationError(error))
+        }
       }
     }
-  }
+  #endif
 
   // MARK: - Initialization
 
-  private init(export: String) throws {
-    self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
-  }
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    private init(export: String) throws {
+      self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
+    }
+  #endif
 
   // MARK: - Properties
 

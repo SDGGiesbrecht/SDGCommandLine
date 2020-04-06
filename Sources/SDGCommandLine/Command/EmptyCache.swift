@@ -12,7 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+#if !os(WASI)
+  import Foundation
+#endif
 
 import SDGLogic
 import SDGText
@@ -42,18 +45,21 @@ extension Command {
       }
     })
 
-  internal static let emptyCache = Command(
-    name: emptyCacheName,
-    description: emptyCacheDescription,
-    directArguments: [],
-    options: [],
-    execution: { _, _, _ in
+  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    internal static let emptyCache = Command(
+      name: emptyCacheName,
+      description: emptyCacheDescription,
+      directArguments: [],
+      options: [],
+      execution: { _, _, _ in
 
-      if ProcessInfo.possibleApplicationIdentifier ≠ nil {
-        // Otherwise it would crash.
-        // But nothing could have been cached anyway.
-        FileManager.default.delete(.cache)
+        if ProcessInfo.possibleApplicationIdentifier ≠ nil {
+          // Otherwise it would crash.
+          // But nothing could have been cached anyway.
+          FileManager.default.delete(.cache)
+        }
       }
-    }
-  )
+    )
+  #endif
 }
