@@ -42,14 +42,14 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•iterations", "2"],
+      localizations: Language.self,
+      uniqueTestName: "Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
     #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "2"],
-        localizations: Language.self,
-        uniqueTestName: "Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "−1"],
