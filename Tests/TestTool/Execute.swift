@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+// #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -173,7 +173,7 @@ public enum Execute {
     type: unsatisfiableArgument
   )
 
-  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     private static let pathOption: Option<URL> = Option(
       name: UserFacing<StrictString, Language>({ _ in
@@ -238,7 +238,7 @@ public enum Execute {
     }(),
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-      // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+      // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
       #if !os(WASI)
         try FileManager.default.do(
           in: options.value(for: Execute.pathOption)
