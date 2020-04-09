@@ -71,7 +71,9 @@
         }
 
         let specification = testSpecificationDirectory(file).appendingPathComponent("Command")
-          .appendingPathComponent(String(uniqueTestName)).appendingPathComponent(filename + ".txt")
+          .appendingPathComponent(String(uniqueTestName)).appendingPathComponent(
+            filename + ".txt"
+          )
 
         LocalizationSetting(orderOfPrecedence: [localization.code]).do {
 
