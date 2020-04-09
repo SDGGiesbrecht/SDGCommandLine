@@ -35,14 +35,14 @@ import TestTool
 class APITests: TestCase {
 
   func testArgumentType() {
-    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
-      testCustomStringConvertibleConformance(
-        of: ArgumentType.string,
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "String",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    testCustomStringConvertibleConformance(
+      of: ArgumentType.string,
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "String",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
+    #if !os(Windows)  // #workaround(Swift 5.2.1, SegFault)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "2"],
@@ -50,6 +50,8 @@ class APITests: TestCase {
         uniqueTestName: "Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "−1"],
