@@ -35,70 +35,68 @@ import TestTool
 class APITests: TestCase {
 
   func testArgumentType() {
-    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
-      testCustomStringConvertibleConformance(
-        of: ArgumentType.string,
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "String",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    testCustomStringConvertibleConformance(
+      of: ArgumentType.string,
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "String",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "2"],
-        localizations: Language.self,
-        uniqueTestName: "Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "−1"],
-        localizations: Language.self,
-        uniqueTestName: "Invalid Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•iterations", "2"],
+      localizations: Language.self,
+      uniqueTestName: "Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•iterations", "−1"],
+      localizations: Language.self,
+      uniqueTestName: "Invalid Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
-          with: ["execute", "•path", "/tmp"],
-          localizations: Language.self,
-          uniqueTestName: "Absolute Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["execute", "•path", "~"],
+        with: ["execute", "•path", "/tmp"],
         localizations: Language.self,
-        uniqueTestName: "Home",
+        uniqueTestName: "Absolute Path",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•path", "~"],
+      localizations: Language.self,
+      uniqueTestName: "Home",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•path", "~/"],
+      localizations: Language.self,
+      uniqueTestName: "Home 2",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["execute", "•path", "~/"],
+        with: ["execute", "•path", "~/.SDG/Test"],
         localizations: Language.self,
-        uniqueTestName: "Home 2",
+        uniqueTestName: "User Path",
         overwriteSpecificationInsteadOfFailing: false
       )
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
-          with: ["execute", "•path", "~/.SDG/Test"],
-          localizations: Language.self,
-          uniqueTestName: "User Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
-          with: ["execute", "•path", "tmp"],
-          localizations: Language.self,
-          uniqueTestName: "Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+    #endif
+    #if !os(Android)  // Path is read only.
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "tmp"],
+        localizations: Language.self,
+        uniqueTestName: "Path",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
