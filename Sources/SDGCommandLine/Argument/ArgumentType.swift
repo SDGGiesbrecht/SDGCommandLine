@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+// #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -238,7 +238,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet.)
+  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     /// An argument type representing a file system path.
     public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
