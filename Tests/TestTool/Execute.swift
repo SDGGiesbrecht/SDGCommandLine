@@ -227,7 +227,7 @@ public enum Execute {
         Execute.informalOption,
         Execute.colourOption,
       ]
-      // #workaround(workspace version 0.32.0, Web doesn’t have Foundation yet; this list can be a simple literal.)
+      // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet; this list can be a simple literal.)
       #if !os(WASI)
         options.append(Execute.pathOption)
       #endif
