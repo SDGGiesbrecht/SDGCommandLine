@@ -51,15 +51,15 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "−1"],
-        localizations: Language.self,
-        uniqueTestName: "Invalid Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•iterations", "−1"],
+      localizations: Language.self,
+      uniqueTestName: "Invalid Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
+    #if !os(Windows)  // #workaround(workspace version 0.32.0, SegFault)
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
