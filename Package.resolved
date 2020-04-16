@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
           "branch": null,
-          "revision": "740cfdaf31b532493b926c06d2aa84eba0b73887",
-          "version": "4.6.0"
+          "revision": "5732f240ed533ccb354b8b8897ae1eab7ab8358d",
+          "version": "4.6.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
           "branch": null,
-          "revision": "a6d307b80ec4f6e189f25c653cf34c07e73ab088",
-          "version": "0.20.0"
+          "revision": "e8971232d1074b19049f0576a52688c98d024f75",
+          "version": "1.0.0"
         }
       },
       {
@@ -24,17 +24,17 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGWeb",
         "state": {
           "branch": null,
-          "revision": "3e7006e2a5228850053496037f0663b569976ee6",
-          "version": "5.1.1"
+          "revision": "5f0a07f12a84447a7f62819f3fe698b1f68b4051",
+          "version": "5.3.0"
         }
       },
       {
-        "package": "CommonMark",
+        "package": "cmark",
         "repositoryURL": "https://github.com/SDGGiesbrecht/swift-cmark",
         "state": {
           "branch": null,
-          "revision": "e672f7226962eb17803c7cce153d9dc0f935a88e",
-          "version": "0.0.50100"
+          "revision": "bfa95d55b535fa178f75484b5e8f82ae3d8517af",
+          "version": "0.0.50200"
         }
       },
       {
