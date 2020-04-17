@@ -23,10 +23,13 @@ extension Build {
 
   // MARK: - Static Properties
 
-  internal static let current: Build? = {
-    guard let versionNumber = ProcessInfo.version else {
-      return nil  // @exempt(from: tests)
-    }
-    return .version(versionNumber)
-  }()
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+  #if !os(WASI)
+    internal static let current: Build? = {
+      guard let versionNumber = ProcessInfo.version else {
+        return nil  // @exempt(from: tests)
+      }
+      return .version(versionNumber)
+    }()
+  #endif
 }
