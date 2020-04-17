@@ -12,35 +12,38 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
+// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+#if !os(WASI)
+  import Foundation
 
-import SDGLogic
-import SDGCollections
-import SDGText
-import SDGExternalProcess
+  import SDGLogic
+  import SDGCollections
+  import SDGText
+  import SDGExternalProcess
 
-import SDGSwift
+  import SDGSwift
 
-extension Package {
+  extension Package {
 
-  // MARK: - Static Properties
+    // MARK: - Static Properties
 
-  private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
+    private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
 
-  // MARK: - Usage
+    // MARK: - Usage
 
-  internal func execute(
-    _ version: Build,
-    of executableNames: Set<StrictString>,
-    with arguments: [StrictString],
-    output: Command.Output
-  ) throws {
-    _ = try execute(
-      version,
-      of: executableNames,
-      with: arguments.map({ String($0) }),
-      cacheDirectory: Package.versionsCache,
-      reportProgress: { output.print($0) }
-    ).get()
+    internal func execute(
+      _ version: Build,
+      of executableNames: Set<StrictString>,
+      with arguments: [StrictString],
+      output: Command.Output
+    ) throws {
+      _ = try execute(
+        version,
+        of: executableNames,
+        with: arguments.map({ String($0) }),
+        cacheDirectory: Package.versionsCache,
+        reportProgress: { output.print($0) }
+      ).get()
+    }
   }
-}
+#endif
