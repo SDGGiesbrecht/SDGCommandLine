@@ -15,7 +15,7 @@
 #if os(WASI)
   extension Error {
 
-    // #workaround(workspace version 0.32.1, Web is missing this property.)
+    // #workaround(Swift 5.2.2, Web is missing this property.)
     internal var localizedDescription: String {
       return String(describing: self)
     }

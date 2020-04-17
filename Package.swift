@@ -251,7 +251,7 @@ let package = Package(
 )
 
 func adjustForWindows() {
-  // #workaround(workspace version 0.32.1, CMake cannot handle Unicode.)
+  // #workaround(Swift 5.2.2, CMake cannot handle Unicode.)
   let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
@@ -267,7 +267,7 @@ func adjustForWindows() {
       })
     })
   }
-  // #workaround(Swift 5.2, Triggers assertion failure when generating CMake without these.)
+  // #workaround(Swift 5.2.2, Triggers assertion failure when generating CMake without these.)
   package.dependencies.append(contentsOf: [
     .package(
       name: "CommonMark",
@@ -300,17 +300,7 @@ func adjustForWindows() {
   adjustForWindows()
 #endif
 import Foundation
-// #workaround(workspace version 0.32.1, Until packages work natively on windows.)
+// #workaround(Swift 5.2.2, Until packages work natively on windows.)
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
-}
-
-if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
-  // #workaround(SDGSwift 0.20.0, Web not supported yet.)
-  package.dependencies.removeAll(where: { $0.url.hasSuffix("SDGSwift") })
-  for target in package.targets {
-    target.dependencies.removeAll(where: { dependency in
-      return "\(dependency)".contains("SDGSwift")
-    })
-  }
 }
