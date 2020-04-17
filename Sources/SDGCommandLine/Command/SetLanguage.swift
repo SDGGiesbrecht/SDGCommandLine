@@ -41,7 +41,7 @@ extension Command {
       }
     })
 
-  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     internal static let setLanguage = Command(
       name: setLanguageName,

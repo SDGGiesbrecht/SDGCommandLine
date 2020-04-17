@@ -101,7 +101,7 @@ public struct Options: TransparentWrapper {
       }
     })
 
-  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     internal static let useVersion = Option(
       name: useVersionName,

@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -23,10 +23,7 @@ import SDGText
 import SDGLocalization
 import SDGVersioning
 
-// #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
-#if !os(WASI)
-  import SDGSwift
-#endif
+import SDGSwift
 
 import SDGCommandLineLocalizations
 
@@ -238,7 +235,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     /// An argument type representing a file system path.
     public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
@@ -353,7 +350,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
       name: versionName,

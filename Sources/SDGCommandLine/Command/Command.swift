@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -24,10 +24,7 @@ import SDGCollections
 import SDGText
 import SDGLocalization
 
-// #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
-#if !os(WASI)
-  import SDGSwift
-#endif
+import SDGSwift
 
 import SDGCommandLineLocalizations
 
@@ -41,7 +38,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Options.noColour,
       Options.language,
     ]
-    // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+    // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
     #if !os(WASI)
       if ProcessInfo.packageURL ≠ nil {
         options.append(Options.useVersion)
@@ -204,13 +201,13 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   /// - Warning: Calling this method before `executeAsMain()` is redundant. The result is undefined.
   public func withRootBehaviour() -> Command {
     var copy = self
-    // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+    // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
     #if !os(WASI)
       copy.subcommands.append(contentsOf: [
         Command.version
       ])
     #endif
-    // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+    // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
     #if !os(WASI)
       copy.subcommands.append(contentsOf: [
         Command.setLanguage,
@@ -234,7 +231,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       exitCode = Error.successCode
     case .failure(let error):
       let errorDescription = error.presentableDescription().formattedAsError() + "\n"
-      // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+      // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
       #if os(WASI)
         print(errorDescription)
       #else
@@ -242,7 +239,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       #endif
       exitCode = error.exitCode
     }
-    // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+    // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
     #if os(WASI)
       fatalError()
     #else
@@ -266,7 +263,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let outputCollector = output ?? Output()
     do {
 
-      // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+      // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
       #if !os(WASI)
         if let packageURL = ProcessInfo.packageURL {
           let versionAttempt = parseVersion(from: arguments)
@@ -534,7 +531,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     )
   }
 
-  // #workaround(SDGSwift 0.20.1, SDGSwift does not support Web yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     private func parseVersion(
       from arguments: [StrictString]

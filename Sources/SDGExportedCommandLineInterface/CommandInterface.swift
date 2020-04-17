@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -26,7 +26,7 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Static Methods
 
-  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     /// Attempt to load the interface of the tool at the specified URL.
     ///
@@ -59,7 +59,7 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Initialization
 
-  // #workaround(workspace version 0.32.1, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     private init(export: String) throws {
       self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
