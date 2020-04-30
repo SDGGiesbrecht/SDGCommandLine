@@ -135,7 +135,7 @@ class InternalTests: TestCase {
       try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
         let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 1.0.0, SwiftPM unavailable.)
+        #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 1.0.1, SwiftPM unavailable.)
           let testPackage = try PackageRepository.initializePackage(
             at: location,
             named: StrictString(location.lastPathComponent),
