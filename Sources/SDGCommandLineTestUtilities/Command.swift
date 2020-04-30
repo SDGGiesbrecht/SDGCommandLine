@@ -61,7 +61,7 @@
     let modifiedArguments = allowColour ? arguments : arguments + ["•no‐colour"]
 
     for localization in localizations.allCases {
-      autoreleasepool {
+      purgingAutoreleased {
 
         let filename: String
         if let icon = localization.icon {
