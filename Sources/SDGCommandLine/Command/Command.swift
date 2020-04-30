@@ -339,7 +339,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     options: Options,
     output: Command.Output
   ) throws {
-    try autoreleasepool {
+    try purgingAutoreleased {
       try execution(arguments, options, output)
     }
   }
