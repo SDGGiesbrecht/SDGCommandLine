@@ -122,17 +122,24 @@ Simply add SDGCommandLine as a dependency in `Package.swift` and specify which o
 
 ```swift
 let package = Package(
-    name: "MyPackage",
-    dependencies: [
-        .package(url: "https://github.com/SDGGiesbrecht/SDGCommandLine", from: Version(1, 4, 2)),
-    ],
-    targets: [
-        .target(name: "MyTarget", dependencies: [
-            .productItem(name: "SDGCommandLine", package: "SDGCommandLine"),
-            .productItem(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
-            .productItem(name: "SDGExportedCommandLineInterface", package: "SDGCommandLine"),
-        ])
-    ]
+  name: "MyPackage",
+  dependencies: [
+    .package(
+      name: "SDGCommandLine",
+      url: "https://github.com/SDGGiesbrecht/SDGCommandLine",
+      from: Version(1, 4, 2)
+    ),
+  ],
+  targets: [
+    .target(
+      name: "MyTarget",
+      dependencies: [
+        .product(name: "SDGCommandLine", package: "SDGCommandLine"),
+        .product(name: "SDGCommandLineTestUtilities", package: "SDGCommandLine"),
+        .product(name: "SDGExportedCommandLineInterface", package: "SDGCommandLine"),
+      ]
+    )
+  ]
 )
 ```
 
