@@ -232,7 +232,7 @@ public enum Execute {
         options.append(Execute.pathOption)
       #endif
       options.append(contentsOf: [
-        Execute.hiddenOption,
+        Execute.hiddenOption
       ])
       return options
     }(),

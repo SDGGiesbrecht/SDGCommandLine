@@ -20,7 +20,7 @@ import XCTest
 extension SDGExportedCommandLineInterfaceTests.APITests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
-      ("testCommandInterface", testCommandInterface),
+      ("testCommandInterface", testCommandInterface)
     ])
   ]
 }
@@ -47,7 +47,7 @@ extension SDGCommandLineTests.APITests {
 extension SDGCommandLineTests.ReadMeExampleTests {
   static let windowsTests: [XCTestCaseEntry] = [
     testCase([
-      ("testParrot", testParrot),
+      ("testParrot", testParrot)
     ])
   ]
 }
