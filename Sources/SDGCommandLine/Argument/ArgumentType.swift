@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -30,9 +30,9 @@ import SDGCommandLineLocalizations
 /// A standard argument type provided by SDGCommandLine.
 public enum ArgumentType {
 
-  private static func keyOnly(_ key: StrictString) -> UserFacing<
-    StrictString, InterfaceLocalization
-  > {
+  private static func keyOnly(
+    _ key: StrictString
+  ) -> UserFacing<StrictString, InterfaceLocalization> {
     return UserFacing({ _ in
       return key
     })
@@ -79,9 +79,9 @@ public enum ArgumentType {
     }
   )
 
-  private static func enumerationSyntax<L: InputLocalization>(labels: [UserFacing<StrictString, L>])
-    -> UserFacing<StrictString, InterfaceLocalization>
-  {
+  private static func enumerationSyntax<L: InputLocalization>(
+    labels: [UserFacing<StrictString, L>]
+  ) -> UserFacing<StrictString, InterfaceLocalization> {
 
     return UserFacing<StrictString, InterfaceLocalization>({ localization in
 
@@ -235,7 +235,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     /// An argument type representing a file system path.
     public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
@@ -350,7 +350,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
       name: versionName,

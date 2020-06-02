@@ -30,7 +30,7 @@ configuration.documentation.repositoryURL = URL(
   string: "https://github.com/SDGGiesbrecht/SDGCommandLine"
 )!
 
-// #workaround(SDGSwift 1.0.1, SDGSwift cannot support these.)
+// #workaround(SDGSwift 2.0.0, SDGSwift cannot support these.)
 configuration.supportedPlatforms.remove(.iOS)
 configuration.supportedPlatforms.remove(.watchOS)
 configuration.supportedPlatforms.remove(.tvOS)

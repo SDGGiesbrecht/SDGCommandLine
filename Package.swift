@@ -251,7 +251,7 @@ let package = Package(
 )
 
 func adjustForWindows() {
-  // #workaround(Swift 5.2.2, CMake cannot handle Unicode.)
+  // #workaround(Swift 5.2.4, CMake cannot handle Unicode.)
   let impossibleTargets: Set<String> = [
     // SDGCommandLine
     "empty‐tool",
@@ -267,7 +267,7 @@ func adjustForWindows() {
       })
     })
   }
-  // #workaround(Swift 5.2.2, Triggers assertion failure when generating CMake without these.)
+  // #workaround(Swift 5.2.4, Triggers assertion failure when generating CMake without these.)
   package.dependencies.append(contentsOf: [
     .package(
       name: "CommonMark",
@@ -300,7 +300,7 @@ func adjustForWindows() {
   adjustForWindows()
 #endif
 import Foundation
-// #workaround(Swift 5.2.2, Until packages work natively on windows.)
+// #workaround(Swift 5.2.4, Until packages work natively on windows.)
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
 }

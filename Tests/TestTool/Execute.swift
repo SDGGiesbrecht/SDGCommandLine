@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -173,7 +173,7 @@ public enum Execute {
     type: unsatisfiableArgument
   )
 
-  // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     private static let pathOption: Option<URL> = Option(
       name: UserFacing<StrictString, Language>({ _ in
@@ -227,7 +227,7 @@ public enum Execute {
         Execute.informalOption,
         Execute.colourOption,
       ]
-      // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet; this list can be a simple literal.)
+      // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet; this list can be a simple literal.)
       #if !os(WASI)
         options.append(Execute.pathOption)
       #endif
@@ -238,7 +238,7 @@ public enum Execute {
     }(),
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-      // #workaround(Swift 5.2.2, Web doesn’t have Foundation yet.)
+      // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
       #if !os(WASI)
         try FileManager.default.do(
           in: options.value(for: Execute.pathOption)
