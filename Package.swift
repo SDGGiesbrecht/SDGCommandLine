@@ -66,7 +66,7 @@ import PackageDescription
 /// ```swift
 /// import SDGCommandLine
 ///
-/// public let parrot = Command(
+/// let parrot = Command(
 ///   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
 ///   description: UserFacing<StrictString, MyLocalizations>({ _ in "behaves like a parrot." }),
 ///   subcommands: [speak]
@@ -95,8 +95,8 @@ import PackageDescription
 ///
 /// enum MyLocalizations: String, InputLocalization {
 ///   case english = "en"
-///   internal static let cases: [MyLocalizations] = [.english]
-///   internal static let fallbackLocalization: MyLocalizations = .english
+///   static let cases: [MyLocalizations] = [.english]
+///   static let fallbackLocalization: MyLocalizations = .english
 /// }
 /// ```
 ///
@@ -128,11 +128,11 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(5, 0, 0)
+      from: Version(5, 4, 0)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(2, 0, 0)
+      from: Version(2, 0, 2)
     ),
   ],
   targets: [
@@ -208,8 +208,9 @@ let package = Package(
         .product(name: "SDGLocalization", package: "SDGCornerstone"),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGVersioning", package: "SDGCornerstone"),
-        .product(name: "SDGLocalizationTestUtilities", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
+        .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone"),
+        .product(name: "SDGLocalizationTestUtilities", package: "SDGCornerstone"),
         .product(name: "SDGSwift", package: "SDGSwift"),
         .product(name: "SDGSwiftPackageManager", package: "SDGSwift"),
       ]
@@ -304,3 +305,44 @@ import Foundation
 if ProcessInfo.processInfo.environment["GENERATING_CMAKE_FOR_WINDOWS"] == "true" {
   adjustForWindows()
 }
+
+// Windows Tests (Generated automatically by Workspace.)
+import Foundation
+if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true",
+  ProcessInfo.processInfo.environment["GENERATING_TESTS"] == nil
+{
+  var tests: [Target] = []
+  var other: [Target] = []
+  for target in package.targets {
+    if target.type == .test {
+      tests.append(target)
+    } else {
+      other.append(target)
+    }
+  }
+  package.targets = other
+  package.targets.append(
+    contentsOf: tests.map({ test in
+      return .target(
+        name: test.name,
+        dependencies: test.dependencies,
+        path: test.path ?? "Tests/\(test.name)",
+        exclude: test.exclude,
+        sources: test.sources,
+        publicHeadersPath: test.publicHeadersPath,
+        cSettings: test.cSettings,
+        cxxSettings: test.cxxSettings,
+        swiftSettings: test.swiftSettings,
+        linkerSettings: test.linkerSettings
+      )
+    })
+  )
+  package.targets.append(
+    .target(
+      name: "WindowsTests",
+      dependencies: tests.map({ Target.Dependency.target(name: $0.name) }),
+      path: "Tests/WindowsTests"
+    )
+  )
+}
+// End Windows Tests

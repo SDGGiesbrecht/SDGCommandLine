@@ -1,5 +1,5 @@
 /*
- WindowsMain.swift
+ main.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
@@ -14,16 +14,8 @@
 
 import XCTest
 
-@testable import SDGExportedCommandLineInterfaceTests
 @testable import SDGCommandLineTests
-
-extension SDGExportedCommandLineInterfaceTests.APITests {
-  static let windowsTests: [XCTestCaseEntry] = [
-    testCase([
-      ("testCommandInterface", testCommandInterface)
-    ])
-  ]
-}
+@testable import SDGExportedCommandLineInterfaceTests
 
 extension SDGCommandLineTests.APITests {
   static let windowsTests: [XCTestCaseEntry] = [
@@ -66,10 +58,18 @@ extension SDGCommandLineTests.InternalTests {
   ]
 }
 
+extension SDGExportedCommandLineInterfaceTests.APITests {
+  static let windowsTests: [XCTestCaseEntry] = [
+    testCase([
+      ("testCommandInterface", testCommandInterface)
+    ])
+  ]
+}
+
 var tests = [XCTestCaseEntry]()
-tests += SDGExportedCommandLineInterfaceTests.APITests.windowsTests
 tests += SDGCommandLineTests.APITests.windowsTests
 tests += SDGCommandLineTests.ReadMeExampleTests.windowsTests
 tests += SDGCommandLineTests.InternalTests.windowsTests
+tests += SDGExportedCommandLineInterfaceTests.APITests.windowsTests
 
 XCTMain(tests)

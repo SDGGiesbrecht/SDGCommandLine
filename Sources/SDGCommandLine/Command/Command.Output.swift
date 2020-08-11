@@ -18,7 +18,7 @@ import SDGText
 extension Command {
 
   /// The output stream for standard output.
-  public class Output {
+  public class Output {  // @exempt(from: classFinality)
 
     // MARK: - Static Properties
 

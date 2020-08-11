@@ -17,9 +17,9 @@ import SDGLocalization
 
 import SDGCommandLine
 
-enum DemonstrateTextFormatting {
+internal enum DemonstrateTextFormatting {
 
-  static let command = Command(
+  internal static let command = Command(
     name: UserFacing<StrictString, Language>({ localization in
       switch localization {
       case .english, .unsupported:

@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-macOS • Windows • Web • Linux • Android
+macOS • Windows • Web • CentOS • Ubuntu • Android • Amazon Linux
 
 [Documentation](https://sdggiesbrecht.github.io/SDGCommandLine/%F0%9F%87%A8%F0%9F%87%A6EN)
 
@@ -67,7 +67,7 @@ The rest can be anywhere in the project (but putting it in a separate, testable 
 ```swift
 import SDGCommandLine
 
-public let parrot = Command(
+let parrot = Command(
   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
   description: UserFacing<StrictString, MyLocalizations>({ _ in "behaves like a parrot." }),
   subcommands: [speak]
@@ -96,8 +96,8 @@ let phrase = Option<StrictString>(
 
 enum MyLocalizations: String, InputLocalization {
   case english = "en"
-  internal static let cases: [MyLocalizations] = [.english]
-  internal static let fallbackLocalization: MyLocalizations = .english
+  static let cases: [MyLocalizations] = [.english]
+  static let fallbackLocalization: MyLocalizations = .english
 }
 ```
 

@@ -193,7 +193,7 @@ public enum Execute {
     hidden: true
   )
 
-  static let command = Command(
+  internal static let command = Command(
     name: UserFacing<StrictString, Language>({ localization in
       switch localization {
       case .english, .unsupported:
