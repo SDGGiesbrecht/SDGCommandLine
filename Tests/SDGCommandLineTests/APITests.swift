@@ -27,6 +27,7 @@ import SDGCommandLineLocalizations
 
 import XCTest
 
+import SDGPersistenceTestUtilities
 import SDGLocalizationTestUtilities
 
 import SDGCommandLineTestUtilities

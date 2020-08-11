@@ -22,7 +22,7 @@ import SDGLocalization
 
 import SDGCommandLine
 
-private enum Fail {
+internal enum Fail {
 
   private static let systemOption = Option(
     name: UserFacing<StrictString, Language>({ localization in
@@ -44,7 +44,7 @@ private enum Fail {
     type: ArgumentType.boolean
   )
 
-  private static let command = Command(
+  internal static let command = Command(
     name: UserFacing<StrictString, Language>({ localization in
       switch localization {
       case .english, .unsupported:

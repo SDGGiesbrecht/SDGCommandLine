@@ -17,9 +17,9 @@ import SDGLocalization
 
 import SDGCommandLine
 
-private enum RejectArgument {
+internal enum RejectArgument {
 
-  private static let command = Command(
+  internal static let command = Command(
     name: UserFacing<StrictString, Language>({ localization in
       switch localization {
       case .english, .unsupported:
