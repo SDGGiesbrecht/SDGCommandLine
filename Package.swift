@@ -66,7 +66,7 @@ import PackageDescription
 /// ```swift
 /// import SDGCommandLine
 ///
-/// public let parrot = Command(
+/// let parrot = Command(
 ///   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
 ///   description: UserFacing<StrictString, MyLocalizations>({ _ in "behaves like a parrot." }),
 ///   subcommands: [speak]
@@ -95,8 +95,8 @@ import PackageDescription
 ///
 /// enum MyLocalizations: String, InputLocalization {
 ///   case english = "en"
-///   internal static let cases: [MyLocalizations] = [.english]
-///   internal static let fallbackLocalization: MyLocalizations = .english
+///   static let cases: [MyLocalizations] = [.english]
+///   static let fallbackLocalization: MyLocalizations = .english
 /// }
 /// ```
 ///

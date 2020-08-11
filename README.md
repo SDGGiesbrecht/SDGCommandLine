@@ -67,7 +67,7 @@ The rest can be anywhere in the project (but putting it in a separate, testable 
 ```swift
 import SDGCommandLine
 
-public let parrot = Command(
+let parrot = Command(
   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),
   description: UserFacing<StrictString, MyLocalizations>({ _ in "behaves like a parrot." }),
   subcommands: [speak]
@@ -96,8 +96,8 @@ let phrase = Option<StrictString>(
 
 enum MyLocalizations: String, InputLocalization {
   case english = "en"
-  internal static let cases: [MyLocalizations] = [.english]
-  internal static let fallbackLocalization: MyLocalizations = .english
+  static let cases: [MyLocalizations] = [.english]
+  static let fallbackLocalization: MyLocalizations = .english
 }
 ```
 
