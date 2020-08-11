@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
           "branch": null,
-          "revision": "12311eef97c3a38e3849f918fcd366ddfcba01de",
-          "version": "5.0.0"
+          "revision": "5e1778924d6599012c5107c3e0fd934fba078ab6",
+          "version": "5.4.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
           "branch": null,
-          "revision": "933311e870dffd63324e0eb21b9c47e73163e211",
-          "version": "2.0.0"
+          "revision": "3bb8fb18767ecd6538a3f29b721d963293394a4e",
+          "version": "2.0.2"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/apple/swift-numerics",
         "state": {
           "branch": null,
-          "revision": "5dfc460876510988560170cee3702ab01b89587a",
-          "version": "0.0.5"
+          "revision": "110beefe0b9a4af05b09f2d33faf52740d9229a7",
+          "version": "0.0.6"
         }
       },
       {
