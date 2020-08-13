@@ -54,8 +54,7 @@ class APITests: TestCase {
   }
 
   func testArgumentType() {
-    #warning("Debugging")
-    return
+    #warning("Succeeded")
     testCustomStringConvertibleConformance(
       of: ArgumentType.string,
       localizations: InterfaceLocalization.self,
@@ -63,16 +62,16 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #warning("Debugging")
-    return
+    #warning("Here?")
+    return;
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "2"],
-        localizations: Language.self,
-        uniqueTestName: "Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.command,
+      with: ["execute", "•iterations", "2"],
+      localizations: Language.self,
+      uniqueTestName: "Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "−1"],
@@ -80,10 +79,6 @@ class APITests: TestCase {
       uniqueTestName: "Invalid Integer",
       overwriteSpecificationInsteadOfFailing: false
     )
-
-    #warning("Debugging")
-    return
-
     #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
