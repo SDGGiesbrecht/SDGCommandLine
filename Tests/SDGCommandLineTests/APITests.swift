@@ -61,72 +61,62 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #warning("Succeeded here.")
-    print(type(of: Tool.command))
-    #warning("Here?")
-    return;
-    print(type(of: ["execute", "•iterations", "2"]))
-    print(type(of: Language.self))
-    print(type(of: "Integer"))
-    print(type(of: false))
-    #warning("Failed here.")
-    return;
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•iterations", "2"],
-      localizations: Language.self,
-      uniqueTestName: "Integer",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    #warning("Failed here.")
-    return;
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•iterations", "−1"],
-      localizations: Language.self,
-      uniqueTestName: "Invalid Integer",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    #if !os(Android)  // Path is read only.
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["execute", "•path", "/tmp"],
+        with: ["execute", "•iterations", "2"],
         localizations: Language.self,
-        uniqueTestName: "Absolute Path",
+        uniqueTestName: "Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "~"],
-      localizations: Language.self,
-      uniqueTestName: "Home",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•path", "~/"],
-      localizations: Language.self,
-      uniqueTestName: "Home 2",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["execute", "•path", "~/.SDG/Test"],
+        with: ["execute", "•iterations", "−1"],
         localizations: Language.self,
-        uniqueTestName: "User Path",
+        uniqueTestName: "Invalid Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
-    #if !os(Android)  // Path is read only.
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "/tmp"],
+          localizations: Language.self,
+          uniqueTestName: "Absolute Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
-        with: ["execute", "•path", "tmp"],
+        with: ["execute", "•path", "~"],
         localizations: Language.self,
-        uniqueTestName: "Path",
+        uniqueTestName: "Home",
         overwriteSpecificationInsteadOfFailing: false
       )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•path", "~/"],
+        localizations: Language.self,
+        uniqueTestName: "Home 2",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "~/.SDG/Test"],
+          localizations: Language.self,
+          uniqueTestName: "User Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
+      #if !os(Android)  // Path is read only.
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "tmp"],
+          localizations: Language.self,
+          uniqueTestName: "Path",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
