@@ -76,6 +76,9 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
+    #warning("Debugging")
+    return
+
     #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
