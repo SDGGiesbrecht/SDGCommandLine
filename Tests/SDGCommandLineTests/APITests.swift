@@ -121,39 +121,41 @@ class APITests: TestCase {
   }
 
   func testCommand() {
-    testCustomStringConvertibleConformance(
-      of: Tool.command,
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Tool",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-
-    FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute"],
-        in: temporary,
-        localizations: Language.self,
-        uniqueTestName: "Execution",
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      testCustomStringConvertibleConformance(
+        of: Tool.command,
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Tool",
         overwriteSpecificationInsteadOfFailing: false
       )
-    }
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["fail"],
-      localizations: Language.self,
-      uniqueTestName: "Failure",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute"],
+          in: temporary,
+          localizations: Language.self,
+          uniqueTestName: "Execution",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      }
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["ausführen"],
-      localizations: Language.self,
-      uniqueTestName: "Foreign Command",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["fail"],
+        localizations: Language.self,
+        uniqueTestName: "Failure",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["ausführen"],
+        localizations: Language.self,
+        uniqueTestName: "Foreign Command",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testCommandError() {
