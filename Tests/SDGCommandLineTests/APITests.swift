@@ -159,20 +159,22 @@ class APITests: TestCase {
   }
 
   func testCommandError() {
-    #if os(Linux)  // System error descriptions differ.
-      let result = Tool.command.execute(with: ["fail", "•system"])
-      _ = result.mapError { (error: Command.Error) -> Command.Error in
-        _ = error.localizedDescription
-        return error
-      }
-    #else
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["fail", "•system"],
-        localizations: Language.self,
-        uniqueTestName: "System Error",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      #if os(Linux)  // System error descriptions differ.
+        let result = Tool.command.execute(with: ["fail", "•system"])
+        _ = result.mapError { (error: Command.Error) -> Command.Error in
+          _ = error.localizedDescription
+          return error
+        }
+      #else
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["fail", "•system"],
+          localizations: Language.self,
+          uniqueTestName: "System Error",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
