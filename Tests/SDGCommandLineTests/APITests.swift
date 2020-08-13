@@ -54,16 +54,12 @@ class APITests: TestCase {
   }
 
   func testArgumentType() {
-    #warning("Succeeded")
     testCustomStringConvertibleConformance(
       of: ArgumentType.string,
       localizations: InterfaceLocalization.self,
       uniqueTestName: "String",
       overwriteSpecificationInsteadOfFailing: false
     )
-
-    #warning("Here?")
-    return;
 
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
