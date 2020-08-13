@@ -61,8 +61,7 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #warning("Here?")
-    return;
+    #warning("Succeeded here.")
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "2"],
@@ -70,6 +69,8 @@ class APITests: TestCase {
       uniqueTestName: "Integer",
       overwriteSpecificationInsteadOfFailing: false
     )
+    #warning("Here?")
+    return;
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "−1"],
