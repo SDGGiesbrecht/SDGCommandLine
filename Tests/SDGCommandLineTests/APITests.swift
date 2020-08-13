@@ -64,13 +64,13 @@ class APITests: TestCase {
     #warning("Debugging")
     return
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•iterations", "2"],
-      localizations: Language.self,
-      uniqueTestName: "Integer",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•iterations", "2"],
+        localizations: Language.self,
+        uniqueTestName: "Integer",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "−1"],
