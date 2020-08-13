@@ -54,6 +54,8 @@ class APITests: TestCase {
   }
 
   func testArgumentType() {
+    #warning("Debugging")
+    return
     testCustomStringConvertibleConformance(
       of: ArgumentType.string,
       localizations: InterfaceLocalization.self,
