@@ -62,6 +62,13 @@ class APITests: TestCase {
     )
 
     #warning("Succeeded here.")
+    print(type(of: Tool.command))
+    print(type(of: ["execute", "•iterations", "2"]))
+    print(type(of: Language.self))
+    print(type(of: "Integer"))
+    print(type(of: false))
+    #warning("Here?")
+    return;
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "2"],
