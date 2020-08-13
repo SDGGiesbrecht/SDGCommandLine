@@ -61,6 +61,9 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
+    #warning("Debugging")
+    return
+
     SDGCommandLineTestUtilities.testCommand(
       Tool.command,
       with: ["execute", "•iterations", "2"],
