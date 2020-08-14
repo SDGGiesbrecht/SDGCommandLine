@@ -47,7 +47,7 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, SegFault)
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       testCommand(
         InternalTests.rootCommand,
         with: ["empty‐cache"],
@@ -59,7 +59,7 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, SegFault)
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       func postprocess(_ output: inout String) {
         // macOS & Linux have different JSON whitespace.
         output.scalars.replaceMatches(
@@ -81,7 +81,7 @@ class InternalTests: TestCase {
   }
 
   func testSetLanguage() throws {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, SegFault)
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       testCommand(
         InternalTests.rootCommand,
         with: ["set‐language", "zxx"],
@@ -124,7 +124,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, SegFault)
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       FileManager.default.delete(.cache)
       defer { FileManager.default.delete(.cache) }
 
@@ -281,7 +281,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, SegFault)
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       ProcessInfo.version = Version(1, 2, 3)
       testCommand(
         InternalTests.rootCommand,
