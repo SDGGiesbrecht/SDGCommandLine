@@ -179,20 +179,22 @@ class APITests: TestCase {
   }
 
   func testDirectArgument() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["reject‐argument", "..."],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Argument",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "invalid"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Unexpected Argument",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["reject‐argument", "..."],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Argument",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "invalid"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Unexpected Argument",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testEnumerationOption() {
