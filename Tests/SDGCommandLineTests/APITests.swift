@@ -281,64 +281,68 @@ class APITests: TestCase {
   }
 
   func testNoColour() throws {
-    let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
-    XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
+      XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #endif
   }
 
   func testOption() {
-    testCustomStringConvertibleConformance(
-      of: Execute.textOption,
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Text",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•string", "Changed using an option."],
-      localizations: Language.self,
-      uniqueTestName: "Unicode Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
-      localizations: Language.self,
-      uniqueTestName: "ASCII Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      testCustomStringConvertibleConformance(
+        of: Execute.textOption,
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Text",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•string", "Changed using an option."],
+        localizations: Language.self,
+        uniqueTestName: "Unicode Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
+        localizations: Language.self,
+        uniqueTestName: "ASCII Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•informal"],
-      localizations: Language.self,
-      uniqueTestName: "Flag",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•informal"],
+        localizations: Language.self,
+        uniqueTestName: "Flag",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•invalid"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Option",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•invalid"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Option",
+        overwriteSpecificationInsteadOfFailing: false
+      )
 
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•string"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Missing Option Argument",
-      allowColour: true,
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•unsatisfiable", "..."],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Option Argument",
-      allowColour: true,
-      overwriteSpecificationInsteadOfFailing: false
-    )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•string"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Missing Option Argument",
+        allowColour: true,
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•unsatisfiable", "..."],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Option Argument",
+        allowColour: true,
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testVersion() {
