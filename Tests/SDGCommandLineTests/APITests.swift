@@ -198,27 +198,29 @@ class APITests: TestCase {
   }
 
   func testEnumerationOption() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "red"],
-      localizations: Language.self,
-      uniqueTestName: "Accept Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "rot"],
-      localizations: Language.self,
-      uniqueTestName: "Accept Foreign Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "•colour", "none"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Invalid Enumeration",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "red"],
+        localizations: Language.self,
+        uniqueTestName: "Accept Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "rot"],
+        localizations: Language.self,
+        uniqueTestName: "Accept Foreign Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "•colour", "none"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Invalid Enumeration",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testFormatting() throws {
