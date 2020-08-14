@@ -232,37 +232,41 @@ class APITests: TestCase {
   }
 
   func testHelp() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["execute", "help"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Help",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["reject‐argument", "help"],
-      localizations: SystemLocalization.self,
-      uniqueTestName: "Help (with Direct Arguments)",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["execute", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["reject‐argument", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help (with Direct Arguments)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testLanguage() {
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["help", "•language", "he"],
-      localizations: Language.self,
-      uniqueTestName: "Language Selection by Code",
-      overwriteSpecificationInsteadOfFailing: false
-    )
-    SDGCommandLineTestUtilities.testCommand(
-      Tool.command,
-      with: ["help", "•language", "🇬🇷ΕΛ"],
-      localizations: Language.self,
-      uniqueTestName: "Language Selection by Icon",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["help", "•language", "he"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Code",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.command,
+        with: ["help", "•language", "🇬🇷ΕΛ"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Icon",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testLocalizations() {
