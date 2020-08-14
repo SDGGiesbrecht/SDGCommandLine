@@ -47,13 +47,15 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    testCommand(
-      InternalTests.rootCommand,
-      with: ["empty‐cache"],
-      localizations: InterfaceLocalization.self,
-      uniqueTestName: "Empty Cache",
-      overwriteSpecificationInsteadOfFailing: false
-    )
+    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["empty‐cache"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Empty Cache",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testExportInterface() {
