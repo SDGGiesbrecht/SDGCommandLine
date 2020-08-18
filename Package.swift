@@ -128,7 +128,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(5, 4, 0)
+      from: Version(5, 5, 0)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
@@ -253,9 +253,7 @@ let package = Package(
 
 // Windows Tests (Generated automatically by Workspace.)
 import Foundation
-if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true",
-  ProcessInfo.processInfo.environment["GENERATING_TESTS"] == nil
-{
+if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
   var tests: [Target] = []
   var other: [Target] = []
   for target in package.targets {
