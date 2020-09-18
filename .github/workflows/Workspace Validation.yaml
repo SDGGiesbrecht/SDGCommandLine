@@ -30,7 +30,7 @@ jobs:
       shell: bash
       run: |
         set -x
-        sudo xcode-select -switch /Applications/Xcode12.app
+        sudo xcode-select -switch /Applications/Xcode_12.app
         xcodebuild -version
         swift --version
     - name: Validate
