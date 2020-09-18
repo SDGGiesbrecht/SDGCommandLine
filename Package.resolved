@@ -14,9 +14,9 @@
         "package": "SDGSwift",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
-          "branch": null,
-          "revision": "3bb8fb18767ecd6538a3f29b721d963293394a4e",
-          "version": "2.0.2"
+          "branch": "swift‐5.3",
+          "revision": "0996712cc5405a6a43c3d06f4084d9e7a11ee507",
+          "version": null
         }
       },
       {
@@ -41,9 +41,9 @@
         "package": "llbuild",
         "repositoryURL": "https://github.com/apple/swift-llbuild.git",
         "state": {
-          "branch": null,
-          "revision": "fb7ebf0b06c0d7c45ca8e18b3371424503a38b5c",
-          "version": "0.3.0"
+          "branch": "swift-5.3-RELEASE",
+          "revision": "ef2e9ba657fd0a4e6e25fff05051b328bf27aeaf",
+          "version": null
         }
       },
       {
@@ -57,20 +57,20 @@
       },
       {
         "package": "SwiftPM",
-        "repositoryURL": "https://github.com/apple/swift-package-manager",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-package-manager",
         "state": {
-          "branch": null,
-          "revision": "f5ea3972d7d6c574e8bb16a19b2a7bca98ea131b",
-          "version": "0.6.0"
+          "branch": "swift‐5.3",
+          "revision": "a1351c45c7b8a702dee3863912254dbed2d7bbe3",
+          "version": null
         }
       },
       {
         "package": "SwiftSyntax",
         "repositoryURL": "https://github.com/apple/swift-syntax",
         "state": {
-          "branch": null,
-          "revision": "0688b9cfc4c3dd234e4f55f1f056b2affc849873",
-          "version": "0.50200.0"
+          "branch": "swift-5.3-RELEASE",
+          "revision": "e39d380a1877da137d45cc5dcd23676a3fd00476",
+          "version": null
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/apple/swift-tools-support-core.git",
         "state": {
           "branch": null,
-          "revision": "98a5916a811fcaaed770f1ed812e9405be762945",
-          "version": "0.1.0"
+          "revision": "f39fc6c12266697b1585589090f0004903974685",
+          "version": "0.1.10"
         }
       }
     ]

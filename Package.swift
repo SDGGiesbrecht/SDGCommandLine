@@ -133,7 +133,8 @@ let package = Package(
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(2, 0, 2)
+      .branch("swift‐5.3")  // #warning(Temporary branch!)
+      //from: Version(2, 0, 2)
     ),
   ],
   targets: [
