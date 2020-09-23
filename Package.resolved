@@ -5,18 +5,18 @@
         "package": "SDGCornerstone",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
-          "branch": "swift‐5.3",
-          "revision": "1eb1709faca73f65d047ccb6ecd91d5c27c30198",
-          "version": null
+          "branch": null,
+          "revision": "e91e93e92b3ea7e99b6d24fcf10f2ed8eb69aef4",
+          "version": "6.0.0"
         }
       },
       {
         "package": "SDGSwift",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
-          "branch": "swift‐5.3",
-          "revision": "0996712cc5405a6a43c3d06f4084d9e7a11ee507",
-          "version": null
+          "branch": null,
+          "revision": "8e6d20b014d7e2553120c1454f6258fb171494f5",
+          "version": "3.0.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGWeb",
         "state": {
           "branch": null,
-          "revision": "96ddf3ced8f5e302aaef85894312628d84309676",
-          "version": "5.3.1"
+          "revision": "c6baf912a20ff62993761a8cb26eea4e6308994f",
+          "version": "5.4.1"
         }
       },
       {
@@ -39,11 +39,11 @@
       },
       {
         "package": "llbuild",
-        "repositoryURL": "https://github.com/apple/swift-llbuild.git",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-llbuild.git",
         "state": {
-          "branch": "swift-5.3-RELEASE",
+          "branch": null,
           "revision": "ef2e9ba657fd0a4e6e25fff05051b328bf27aeaf",
-          "version": null
+          "version": "0.50300.0"
         }
       },
       {
@@ -59,18 +59,18 @@
         "package": "SwiftPM",
         "repositoryURL": "https://github.com/SDGGiesbrecht/swift-package-manager",
         "state": {
-          "branch": "swift‐5.3",
-          "revision": "a1351c45c7b8a702dee3863912254dbed2d7bbe3",
-          "version": null
+          "branch": null,
+          "revision": "a5eb4046e2330c99005c3fcd647354a98ff83475",
+          "version": "0.50300.0"
         }
       },
       {
         "package": "SwiftSyntax",
         "repositoryURL": "https://github.com/apple/swift-syntax",
         "state": {
-          "branch": "swift-5.3-RELEASE",
-          "revision": "e39d380a1877da137d45cc5dcd23676a3fd00476",
-          "version": null
+          "branch": null,
+          "revision": "844574d683f53d0737a9c6d706c3ef31ed2955eb",
+          "version": "0.50300.0"
         }
       },
       {
