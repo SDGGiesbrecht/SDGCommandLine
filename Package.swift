@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 /*
  Package.swift
@@ -128,11 +128,11 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(5, 5, 0)
+      from: Version(6, 0, 0)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(2, 0, 2)
+      from: Version(3, 0, 0)
     ),
   ],
   targets: [
