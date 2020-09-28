@@ -52,7 +52,7 @@
     allowColour: Bool = false,
     postprocess: (_ output: inout String) -> Void = { _ in },
     overwriteSpecificationInsteadOfFailing: Bool,
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line
   ) where L: InputLocalization {
 

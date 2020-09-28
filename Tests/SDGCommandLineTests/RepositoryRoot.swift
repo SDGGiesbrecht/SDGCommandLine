@@ -15,7 +15,7 @@
 import Foundation
 
 let repositoryRoot: URL = {
-  var result = URL(fileURLWithPath: #file)
+  var result = URL(fileURLWithPath: #filePath)
   for _ in 1...3 {
     result.deleteLastPathComponent()
   }
