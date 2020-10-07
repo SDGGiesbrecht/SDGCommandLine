@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
+// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
 #if !os(WASI)
   import Foundation
 #endif
@@ -235,7 +235,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     /// An argument type representing a file system path.
     public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
@@ -350,7 +350,7 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet.)
+  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
   #if !os(WASI)
     internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
       name: versionName,
