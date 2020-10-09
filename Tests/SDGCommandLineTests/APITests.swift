@@ -44,7 +44,7 @@ class APITests: TestCase {
         let driveLetter = directory.removeFirst()
         directory.prepend(contentsOf: "\(driveLetter.uppercased()):")
         let url = URL(fileURLWithPath: directory)
-        setTestSpecificationDirectory(to: url)
+        //setTestSpecificationDirectory(to: url)
       }
     #endif
   }()
