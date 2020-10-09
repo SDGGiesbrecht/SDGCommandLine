@@ -16,8 +16,8 @@
   extension Error {
 
     // #workaround(Swift 5.2.4, Web is missing this property.)
-    internal var localizedDescription: String {
+    /*internal var localizedDescription: String {
       return String(describing: self)
-    }
+    }*/
   }
 #endif
