@@ -15,7 +15,7 @@
 #if os(WASI)
   extension Error {
 
-    // #workaround(Swift 5.2.4, Web is missing this property.)
+    // #workaround(Swift 5.3, Web is missing this property from Foundation.)
     internal var localizedDescription: String {
       return String(describing: self)
     }
