@@ -43,7 +43,7 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    //#if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "2"],
@@ -99,7 +99,7 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
+    //#endif
   }
 
   func testCommand() {
