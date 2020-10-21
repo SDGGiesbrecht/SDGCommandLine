@@ -227,7 +227,7 @@ public enum Execute {
         Execute.informalOption,
         Execute.colourOption,
       ]
-      // #workaround(Swift 5.2.4, Web doesn’t have Foundation yet; this list can be a simple literal.)
+      // #workaround(Swift 5.3, Web doesn’t have Foundation yet; this list can be a simple literal.)
       #if !os(WASI)
         options.append(Execute.pathOption)
       #endif
