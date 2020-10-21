@@ -43,7 +43,7 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    //#if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "2"],
@@ -99,11 +99,11 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    //#endif
+    #endif
   }
 
   func testCommand() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       testCustomStringConvertibleConformance(
         of: Tool.command,
         localizations: InterfaceLocalization.self,
@@ -141,7 +141,7 @@ class APITests: TestCase {
   }
 
   func testCommandError() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       #if os(Linux)  // System error descriptions differ.
         let result = Tool.command.execute(with: ["fail", "•system"])
         _ = result.mapError { (error: Command.Error) -> Command.Error in
@@ -161,7 +161,7 @@ class APITests: TestCase {
   }
 
   func testDirectArgument() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["reject‐argument", "..."],
@@ -180,7 +180,7 @@ class APITests: TestCase {
   }
 
   func testEnumerationOption() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•colour", "red"],
@@ -206,7 +206,7 @@ class APITests: TestCase {
   }
 
   func testFormatting() throws {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
       XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
       XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
@@ -214,7 +214,7 @@ class APITests: TestCase {
   }
 
   func testHelp() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "help"],
@@ -233,7 +233,7 @@ class APITests: TestCase {
   }
 
   func testLanguage() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["help", "•language", "he"],
@@ -263,14 +263,14 @@ class APITests: TestCase {
   }
 
   func testNoColour() throws {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
       XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
     #endif
   }
 
   func testOption() {
-    #if !os(Windows)  // #workaround(Swift 5.2.4, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3, Segmentation fault.)
       testCustomStringConvertibleConformance(
         of: Execute.textOption,
         localizations: InterfaceLocalization.self,
