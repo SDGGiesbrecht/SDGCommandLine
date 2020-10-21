@@ -34,7 +34,7 @@ class APITests: TestCase {
   }()
 
   func testCommandInterface() throws {
-    #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 2.0.2, SwiftPM unavailable.)
+    #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
       switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
       case .failure:
         break  // Expected.
