@@ -25,16 +25,19 @@ import XCTest
 
 func main() {
   // @example(main.swift🇨🇦EN)
-  ProcessInfo.applicationIdentifier = "tld.Developper.Parrot"
-  ProcessInfo.version = Version(1, 0, 0)
-  ProcessInfo.packageURL = URL(string: "https://website.tld/Parrot")
-
-  parrot.executeAsMain()
+  Parrot.main()
   // @endExample
 }
 
 // @example(parrotLibrary🇨🇦EN)
 import SDGCommandLine
+
+struct Parrot: Tool {
+  static let applicationIdentifier: StrictString = "tld.Developper.Parrot"
+  static let version: Version? = Version(1, 0, 0)
+  static let packageURL: URL? = URL(string: "https://website.tld/Parrot")
+  static let rootCommand: Command = parrot
+}
 
 let parrot = Command(
   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),

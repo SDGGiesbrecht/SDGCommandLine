@@ -51,20 +51,23 @@ import PackageDescription
 /// Hello, world!
 /// ```
 ///
-/// `main.swift` must consist of the following lines:
+/// `main.swift` must consist of the following:
 ///
 /// ```swift
-/// ProcessInfo.applicationIdentifier = "tld.Developper.Parrot"
-/// ProcessInfo.version = Version(1, 0, 0)
-/// ProcessInfo.packageURL = URL(string: "https://website.tld/Parrot")
-///
-/// parrot.executeAsMain()
+/// Parrot.main()
 /// ```
 ///
 /// The rest can be anywhere in the project (but putting it in a separate, testable library module is recommended):
 ///
 /// ```swift
 /// import SDGCommandLine
+///
+/// struct Parrot: Tool {
+///   static let applicationIdentifier: StrictString = "tld.Developper.Parrot"
+///   static let version: Version? = Version(1, 0, 0)
+///   static let packageURL: URL? = URL(string: "https://website.tld/Parrot")
+///   static let rootCommand: Command = parrot
+/// }
 ///
 /// let parrot = Command(
 ///   name: UserFacing<StrictString, MyLocalizations>({ _ in "parrot" }),

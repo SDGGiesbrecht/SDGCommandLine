@@ -39,7 +39,7 @@ extension Tool {
   /// Initializes and runs the tool.
   ///
   /// This method never returns. It is only marked `Void` for compatibility with `@main`.
-  public static func main() -> Void {
+  public static func main() {
     ProcessInfo.applicationIdentifier = String(applicationIdentifier)
     if let version = version {
       ProcessInfo.version = version
