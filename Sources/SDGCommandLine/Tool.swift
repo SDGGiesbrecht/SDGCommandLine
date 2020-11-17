@@ -44,10 +44,14 @@ extension Tool {
   public static func main() {
     ProcessInfo.applicationIdentifier = String(applicationIdentifier)
     if let version = version {
-      ProcessInfo.version = version
+      #if !os(WASI)  // #workaround(Swift 5.3.1, Web lacks ProcessInfo.)
+        ProcessInfo.version = version
+      #endif
     }
     if let packageURL = packageURL {
-      ProcessInfo.packageURL = packageURL
+      #if !os(WASI)  // #workaround(Swift 5.3.1, Web lacks ProcessInfo.)
+        ProcessInfo.packageURL = packageURL
+      #endif
     }
     rootCommand.executeAsMain()
   }
