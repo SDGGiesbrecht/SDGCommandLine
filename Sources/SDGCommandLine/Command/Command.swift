@@ -346,8 +346,9 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
 
   // MARK: - Argument Parsing
 
-  private func parse(arguments: [StrictString]) -> Result<(DirectArguments, Options), Command.Error>
-  {
+  private func parse(
+    arguments: [StrictString]
+  ) -> Result<(DirectArguments, Options), Command.Error> {
     var directArguments = DirectArguments()
     var options = Options()
 
