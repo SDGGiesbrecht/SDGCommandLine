@@ -19,6 +19,8 @@ import SDGText
 import SDGVersioning
 
 /// A command line tool.
+///
+/// `@main` can be applied to conforming types.
 public protocol Tool {
 
   /// The application identifier.
