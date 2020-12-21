@@ -22,41 +22,43 @@ import SDGCommandLineTestUtilities
 
 class APITests: TestCase {
 
-  let productsDirectory: URL = {
-    #if os(macOS)
-      for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-        return bundle.bundleURL.deletingLastPathComponent()
-      }
-      fatalError("Failed to find the products directory.")
-    #else
-      return Bundle.main.bundleURL
-    #endif
-  }()
+  #if !os(WASI)  // #workaround(Temporary exception.)
+    let productsDirectory: URL = {
+      #if os(macOS)
+        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
+          return bundle.bundleURL.deletingLastPathComponent()
+        }
+        fatalError("Failed to find the products directory.")
+      #else
+        return Bundle.main.bundleURL
+      #endif
+    }()
 
-  func testCommandInterface() throws {
-    #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
-      switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
-      case .failure:
-        break  // Expected.
-      case .success:
-        XCTFail("Loaded invalid interface.")
-      }
+    func testCommandInterface() throws {
+      #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
+        switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
+        case .failure:
+          break  // Expected.
+        case .success:
+          XCTFail("Loaded invalid interface.")
+        }
 
-      switch CommandInterface.loadInterface(
-        of: productsDirectory.appendingPathComponent("empty‐tool"),
-        in: "en"
-      ) {
-      case .failure:
-        break  // Expected.
-      case .success:
-        XCTFail("Loaded unexported interface.")
-      }
+        switch CommandInterface.loadInterface(
+          of: productsDirectory.appendingPathComponent("empty‐tool"),
+          in: "en"
+        ) {
+        case .failure:
+          break  // Expected.
+        case .success:
+          XCTFail("Loaded unexported interface.")
+        }
 
-      let interface = try CommandInterface.loadInterface(
-        of: productsDirectory.appendingPathComponent("test‐tool"),
-        in: ""
-      ).get()
-      XCTAssert(interface.options.first?.isFlag == true)
-    #endif
-  }
+        let interface = try CommandInterface.loadInterface(
+          of: productsDirectory.appendingPathComponent("test‐tool"),
+          in: ""
+        ).get()
+        XCTAssert(interface.options.first?.isFlag == true)
+      #endif
+    }
+  #endif
 }
