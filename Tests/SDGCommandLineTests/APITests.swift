@@ -43,61 +43,63 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "2"],
-        localizations: Language.self,
-        uniqueTestName: "Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•iterations", "−1"],
-        localizations: Language.self,
-        uniqueTestName: "Invalid Integer",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      #if !os(Android)  // Path is read only.
+    #if !os(WASI)  // #workaround(Temporary exception.)
+      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
-          with: ["execute", "•path", "/tmp"],
+          with: ["execute", "•iterations", "2"],
           localizations: Language.self,
-          uniqueTestName: "Absolute Path",
+          uniqueTestName: "Integer",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•path", "~"],
-        localizations: Language.self,
-        uniqueTestName: "Home",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•path", "~/"],
-        localizations: Language.self,
-        uniqueTestName: "Home 2",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
-          with: ["execute", "•path", "~/.SDG/Test"],
+          with: ["execute", "•iterations", "−1"],
           localizations: Language.self,
-          uniqueTestName: "User Path",
+          uniqueTestName: "Invalid Integer",
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
-      #if !os(Android)  // Path is read only.
+        #if !os(Android)  // Path is read only.
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["execute", "•path", "/tmp"],
+            localizations: Language.self,
+            uniqueTestName: "Absolute Path",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
-          with: ["execute", "•path", "tmp"],
+          with: ["execute", "•path", "~"],
           localizations: Language.self,
-          uniqueTestName: "Path",
+          uniqueTestName: "Home",
           overwriteSpecificationInsteadOfFailing: false
         )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•path", "~/"],
+          localizations: Language.self,
+          uniqueTestName: "Home 2",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        #if !os(Android)  // Path is read only.
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["execute", "•path", "~/.SDG/Test"],
+            localizations: Language.self,
+            uniqueTestName: "User Path",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
+        #if !os(Android)  // Path is read only.
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["execute", "•path", "tmp"],
+            localizations: Language.self,
+            uniqueTestName: "Path",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
       #endif
     #endif
   }
@@ -111,32 +113,34 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
 
-      FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+      #if !os(WASI)  // #workaround(Temporary exception.)
+        FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["execute"],
+            in: temporary,
+            localizations: Language.self,
+            uniqueTestName: "Execution",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        }
+
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
-          with: ["execute"],
-          in: temporary,
+          with: ["fail"],
           localizations: Language.self,
-          uniqueTestName: "Execution",
+          uniqueTestName: "Failure",
           overwriteSpecificationInsteadOfFailing: false
         )
-      }
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["fail"],
-        localizations: Language.self,
-        uniqueTestName: "Failure",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["ausführen"],
-        localizations: Language.self,
-        uniqueTestName: "Foreign Command",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["ausführen"],
+          localizations: Language.self,
+          uniqueTestName: "Foreign Command",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
@@ -149,59 +153,65 @@ class APITests: TestCase {
           return error
         }
       #else
+        #if !os(WASI)  // #workaround(Temporary exception.)
+          SDGCommandLineTestUtilities.testCommand(
+            Tool.command,
+            with: ["fail", "•system"],
+            localizations: Language.self,
+            uniqueTestName: "System Error",
+            overwriteSpecificationInsteadOfFailing: false
+          )
+        #endif
+      #endif
+    #endif
+  }
+
+  func testDirectArgument() {
+    #if !os(WASI)  // #workaround(Temporary exception.)
+      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
-          with: ["fail", "•system"],
-          localizations: Language.self,
-          uniqueTestName: "System Error",
+          with: ["reject‐argument", "..."],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Argument",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "invalid"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Unexpected Argument",
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
     #endif
   }
 
-  func testDirectArgument() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["reject‐argument", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Unexpected Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
-  }
-
   func testEnumerationOption() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "red"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "rot"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Foreign Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•colour", "none"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(WASI)  // #workaround(Temporary exception.)
+      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "red"],
+          localizations: Language.self,
+          uniqueTestName: "Accept Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "rot"],
+          localizations: Language.self,
+          uniqueTestName: "Accept Foreign Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•colour", "none"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Enumeration",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
@@ -214,40 +224,44 @@ class APITests: TestCase {
   }
 
   func testHelp() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "help"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Help",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["reject‐argument", "help"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Help (with Direct Arguments)",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(WASI)  // #workaround(Temporary exception.)
+      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "help"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Help",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["reject‐argument", "help"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Help (with Direct Arguments)",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
   func testLanguage() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["help", "•language", "he"],
-        localizations: Language.self,
-        uniqueTestName: "Language Selection by Code",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["help", "•language", "🇬🇷ΕΛ"],
-        localizations: Language.self,
-        uniqueTestName: "Language Selection by Icon",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !os(WASI)  // #workaround(Temporary exception.)
+      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["help", "•language", "he"],
+          localizations: Language.self,
+          uniqueTestName: "Language Selection by Code",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["help", "•language", "🇬🇷ΕΛ"],
+          localizations: Language.self,
+          uniqueTestName: "Language Selection by Icon",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
@@ -277,53 +291,55 @@ class APITests: TestCase {
         uniqueTestName: "Text",
         overwriteSpecificationInsteadOfFailing: false
       )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "Unicode Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "ASCII Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+      #if !os(WASI)  // #workaround(Temporary exception.)
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•string", "Changed using an option."],
+          localizations: Language.self,
+          uniqueTestName: "Unicode Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
+          localizations: Language.self,
+          uniqueTestName: "ASCII Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•informal"],
-        localizations: Language.self,
-        uniqueTestName: "Flag",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•informal"],
+          localizations: Language.self,
+          uniqueTestName: "Flag",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•invalid"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Option",
+          overwriteSpecificationInsteadOfFailing: false
+        )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•string"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Missing Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
-        with: ["execute", "•unsatisfiable", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•string"],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Missing Option Argument",
+          allowColour: true,
+          overwriteSpecificationInsteadOfFailing: false
+        )
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.command,
+          with: ["execute", "•unsatisfiable", "..."],
+          localizations: SystemLocalization.self,
+          uniqueTestName: "Invalid Option Argument",
+          allowColour: true,
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
