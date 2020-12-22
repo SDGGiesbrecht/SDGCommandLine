@@ -12,10 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
   import Foundation
-#endif
 
 import SDGText
 import SDGLocalization
@@ -173,8 +170,6 @@ public enum Execute {
     type: unsatisfiableArgument
   )
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
     private static let pathOption: Option<URL> = Option(
       name: UserFacing<StrictString, Language>({ _ in
         return "path"
@@ -184,7 +179,6 @@ public enum Execute {
       }),
       type: ArgumentType.path
     )
-  #endif
 
   private static let hiddenOption = Option(
     name: UserFacing<StrictString, Language>({ _ in "hidden" }),
@@ -219,26 +213,18 @@ public enum Execute {
       }
     }),
     directArguments: [],
-    options: {
-      var options: [AnyOption] = [
+    options: [
         Execute.textOption,
         Execute.iterationsOption,
         Execute.unsatisfiableOption,
         Execute.informalOption,
         Execute.colourOption,
-      ]
-      // #workaround(Swift 5.3, Web doesn’t have Foundation yet; this list can be a simple literal.)
-      #if !os(WASI)
-        options.append(Execute.pathOption)
-      #endif
-      options.append(contentsOf: [
+        Execute.pathOption,
         Execute.hiddenOption
-      ])
-      return options
-    }(),
+      ],
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-      // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
+      // #workaround(Swift 5.3.2, Web lacks FileManager.)
       #if !os(WASI)
         try FileManager.default.do(
           in: options.value(for: Execute.pathOption)

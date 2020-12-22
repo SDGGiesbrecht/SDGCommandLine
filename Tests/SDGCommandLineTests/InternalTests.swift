@@ -47,7 +47,6 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         testCommand(
           InternalTests.rootCommand,
@@ -57,7 +56,6 @@ class InternalTests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testExportInterface() {
@@ -71,7 +69,6 @@ class InternalTests: TestCase {
           with: "\n\n".scalars
         )
       }
-      #if !os(WASI)  // #workaround(Temporary exception.)
         SDGCommandLineTestUtilities.testCommand(
           InternalTests.rootCommand,
           with: ["export‐interface"],
@@ -80,12 +77,10 @@ class InternalTests: TestCase {
           postprocess: postprocess,
           overwriteSpecificationInsteadOfFailing: false
         )
-      #endif
     #endif
   }
 
   func testSetLanguage() throws {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         testCommand(
           InternalTests.rootCommand,
@@ -117,7 +112,6 @@ class InternalTests: TestCase {
           }
         }
       #endif
-    #endif
   }
 
   func testOptions() {
@@ -130,7 +124,6 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
@@ -286,11 +279,9 @@ class InternalTests: TestCase {
           #endif
         }
       #endif
-    #endif
   }
 
   func testVersionSubcommand() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
@@ -309,6 +300,5 @@ class InternalTests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 }

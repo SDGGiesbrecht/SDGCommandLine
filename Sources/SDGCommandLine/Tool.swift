@@ -42,16 +42,16 @@ extension Tool {
   ///
   /// This method never returns. It is only marked `Void` for compatibility with `@main`.
   public static func main() {  // @exempt(from: tests)
-    #if !os(WASI)  // #workaround(Swift 5.3.1, Web lacks ProcessInfo.)
+    #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
       ProcessInfo.applicationIdentifier = String(applicationIdentifier)
     #endif
     if let version = version {
-      #if !os(WASI)  // #workaround(Swift 5.3.1, Web lacks ProcessInfo.)
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
         ProcessInfo.version = version
       #endif
     }
     if let packageURL = packageURL {
-      #if !os(WASI)  // #workaround(Swift 5.3.1, Web lacks ProcessInfo.)
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
         ProcessInfo.packageURL = packageURL
       #endif
     }

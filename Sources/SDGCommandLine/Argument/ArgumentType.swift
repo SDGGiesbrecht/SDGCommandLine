@@ -12,10 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
   import Foundation
-#endif
 
 import SDGControlFlow
 import SDGCollections
@@ -235,8 +232,6 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
     /// An argument type representing a file system path.
     public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
       name: pathName,
@@ -260,8 +255,7 @@ public enum ArgumentType {
             .appendingPathComponent(String(argument))
         }
       }
-    )  // @exempt(from: tests) Meaningless region.
-  #endif
+    )
 
   private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>(
     { localization in
@@ -350,8 +344,6 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
     internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
       name: versionName,
       syntaxDescription: versionDescription,
@@ -368,6 +360,5 @@ public enum ArgumentType {
           return nil
         }
       }
-    )  // @exempt(from: tests)
-  #endif
+    )
 }

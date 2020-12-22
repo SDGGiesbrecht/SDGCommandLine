@@ -22,7 +22,6 @@ import SDGCommandLineTestUtilities
 
 class APITests: TestCase {
 
-  #if !os(WASI)  // #workaround(Temporary exception.)
     let productsDirectory: URL = {
       #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
@@ -60,5 +59,4 @@ class APITests: TestCase {
         XCTAssert(interface.options.first?.isFlag == true)
       #endif
     }
-  #endif
 }

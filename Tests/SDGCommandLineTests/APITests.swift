@@ -43,7 +43,6 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -101,7 +100,6 @@ class APITests: TestCase {
           )
         #endif
       #endif
-    #endif
   }
 
   func testCommand() {
@@ -113,7 +111,6 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
 
-      #if !os(WASI)  // #workaround(Temporary exception.)
         FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
           SDGCommandLineTestUtilities.testCommand(
             Tool.command,
@@ -141,7 +138,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testCommandError() {
@@ -153,7 +149,6 @@ class APITests: TestCase {
           return error
         }
       #else
-        #if !os(WASI)  // #workaround(Temporary exception.)
           SDGCommandLineTestUtilities.testCommand(
             Tool.command,
             with: ["fail", "•system"],
@@ -161,13 +156,11 @@ class APITests: TestCase {
             uniqueTestName: "System Error",
             overwriteSpecificationInsteadOfFailing: false
           )
-        #endif
       #endif
     #endif
   }
 
   func testDirectArgument() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -184,11 +177,9 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testEnumerationOption() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -212,7 +203,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testFormatting() throws {
@@ -224,7 +214,6 @@ class APITests: TestCase {
   }
 
   func testHelp() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -241,11 +230,9 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testLanguage() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -262,7 +249,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testLocalizations() {
@@ -291,7 +277,6 @@ class APITests: TestCase {
         uniqueTestName: "Text",
         overwriteSpecificationInsteadOfFailing: false
       )
-      #if !os(WASI)  // #workaround(Temporary exception.)
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["execute", "•string", "Changed using an option."],
@@ -340,7 +325,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testVersion() {
