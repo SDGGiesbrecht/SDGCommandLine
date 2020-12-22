@@ -252,16 +252,6 @@ let package = Package(
     ),
 
     .target(name: "empty‐tool", path: "Tests/empty‐tool"),
-
-    // #warning(Debugging.)
-    .testTarget(
-      name: "DebugTests",
-      dependencies: [
-        "SDGCommandLine",
-        "SDGCommandLineTestUtilities",
-        "SDGExportedCommandLineInterface"
-      ]
-    )
   ]
 )
 
@@ -272,7 +262,7 @@ if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
     // "SDGCommandLineTestUtilities",
     // "SDGExportedCommandLineInterface",
     // "SDGCommandLineLocalizations",
-    "SDGCommandLineTests",
+    // "SDGCommandLineTests",
     "SDGExportedCommandLineInterfaceTests",
     // "TestTool",
     // "test‐tool",
