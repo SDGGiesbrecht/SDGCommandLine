@@ -237,7 +237,10 @@ public enum ArgumentType {
       name: pathName,
       syntaxDescription: pathDescription,
       parse: { (argument: StrictString) -> URL? in
-
+        // #workaround(Swift 5.3.2, Web lacks FileManager.)
+        #if os(WASI)
+        return URL(fileURLWithPath: String(argument))
+        #else
         if argument.hasPrefix("/") {
           return URL(fileURLWithPath: String(argument))
         } else if argument == "~" {
@@ -254,6 +257,7 @@ public enum ArgumentType {
           return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(String(argument))
         }
+        #endif
       }
     )
 
