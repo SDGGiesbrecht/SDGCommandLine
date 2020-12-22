@@ -101,11 +101,11 @@ public struct Options: TransparentWrapper {
       }
     })
 
-    internal static let useVersion = Option(
-      name: useVersionName,
-      description: useVersionDescription,
-      type: ArgumentType.version
-    )
+  internal static let useVersion = Option(
+    name: useVersionName,
+    description: useVersionDescription,
+    type: ArgumentType.version
+  )
 
   // MARK: - Initialization
 

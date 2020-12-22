@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-  import Foundation
+import Foundation
 
 import SDGText
 import SDGPersistence
@@ -56,9 +56,9 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Initialization
 
-    private init(export: String) throws {
-      self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
-    }
+  private init(export: String) throws {
+    self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
+  }
 
   // MARK: - Properties
 

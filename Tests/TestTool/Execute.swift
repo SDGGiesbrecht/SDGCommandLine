@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-  import Foundation
+import Foundation
 
 import SDGText
 import SDGLocalization
@@ -170,15 +170,15 @@ public enum Execute {
     type: unsatisfiableArgument
   )
 
-    private static let pathOption: Option<URL> = Option(
-      name: UserFacing<StrictString, Language>({ _ in
-        return "path"
-      }),
-      description: UserFacing<StrictString, Language>({ _ in
-        return "A directory to run in."
-      }),
-      type: ArgumentType.path
-    )
+  private static let pathOption: Option<URL> = Option(
+    name: UserFacing<StrictString, Language>({ _ in
+      return "path"
+    }),
+    description: UserFacing<StrictString, Language>({ _ in
+      return "A directory to run in."
+    }),
+    type: ArgumentType.path
+  )
 
   private static let hiddenOption = Option(
     name: UserFacing<StrictString, Language>({ _ in "hidden" }),
@@ -214,14 +214,14 @@ public enum Execute {
     }),
     directArguments: [],
     options: [
-        Execute.textOption,
-        Execute.iterationsOption,
-        Execute.unsatisfiableOption,
-        Execute.informalOption,
-        Execute.colourOption,
-        Execute.pathOption,
-        Execute.hiddenOption
-      ],
+      Execute.textOption,
+      Execute.iterationsOption,
+      Execute.unsatisfiableOption,
+      Execute.informalOption,
+      Execute.colourOption,
+      Execute.pathOption,
+      Execute.hiddenOption,
+    ],
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
       // #workaround(Swift 5.3.2, Web lacks FileManager.)
