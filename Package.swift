@@ -274,9 +274,9 @@ if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
     // "SDGCommandLineLocalizations",
     "SDGCommandLineTests",
     "SDGExportedCommandLineInterfaceTests",
-    "TestTool",
-    "test‐tool",
-    "empty‐tool"
+    // "TestTool",
+    // "test‐tool",
+    // "empty‐tool"
   ]).contains($0.name) })
   package.products.removeAll()
 }
