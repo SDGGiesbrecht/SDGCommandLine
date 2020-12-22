@@ -198,9 +198,12 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   /// - Warning: Calling this method before `executeAsMain()` is redundant. The result is undefined.
   public func withRootBehaviour() -> Command {
     var copy = self
+    // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
+    #if !os(WASI)
       copy.subcommands.append(contentsOf: [
         Command.version
       ])
+    #endif
     // #workaround(Swift 5.3.2, Web lacks FileManager.)
     #if !os(WASI)
       copy.subcommands.append(contentsOf: [
