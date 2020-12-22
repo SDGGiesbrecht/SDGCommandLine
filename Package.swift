@@ -266,10 +266,10 @@ let package = Package(
 // #warning("Debugging.")
 if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
   package.targets.removeAll(where: { Set([
-    "SDGCommandLine",
+    // "SDGCommandLine",
     // "SDGCommandLineTestUtilities",
     // "SDGExportedCommandLineInterface",
-    "SDGCommandLineLocalizations",
+    // "SDGCommandLineLocalizations",
     "SDGCommandLineTests",
     "SDGExportedCommandLineInterfaceTests",
     "TestTool",
