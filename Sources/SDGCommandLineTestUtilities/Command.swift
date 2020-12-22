@@ -82,6 +82,10 @@
           )
 
           var result: Result<StrictString, Command.Error> = .success("")
+          // #workaround(Swift 5.3.2, Web lacks FileManager.)
+          #if os(WASI)
+            result = command.execute(with: modifiedArguments)
+          #else
           if let location = workingDirectory {
             try! FileManager.default.do(in: location) {
               result = command.execute(with: modifiedArguments)
@@ -89,6 +93,7 @@
           } else {
             result = command.execute(with: modifiedArguments)
           }
+          #endif
           var output: StrictString = ""
           var error: StrictString = ""
           var exitCode: Int = Command.Error.successCode
