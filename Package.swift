@@ -252,6 +252,9 @@ let package = Package(
     ),
 
     .target(name: "empty‐tool", path: "Tests/empty‐tool"),
+
+    // #warning(Debugging.)
+    .testTarget(name: "DebugTests")
   ]
 )
 
