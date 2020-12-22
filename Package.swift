@@ -268,6 +268,7 @@ if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
     "test‐tool",
     "empty‐tool"
   ]).contains($0.name) })
+  package.products.removeAll()
 }
 
 // Windows Tests (Generated automatically by Workspace.)
