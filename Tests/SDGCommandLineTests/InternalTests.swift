@@ -89,7 +89,9 @@ class InternalTests: TestCase {
           uniqueTestName: "Set Language",
           overwriteSpecificationInsteadOfFailing: false
         )
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+      #endif
 
         testCommand(
           InternalTests.rootCommand,
@@ -98,7 +100,9 @@ class InternalTests: TestCase {
           uniqueTestName: "Set Language to System",
           overwriteSpecificationInsteadOfFailing: false
         )
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+      #endif
 
         for (language, searchTerm) in [
           "en": "set‐language"

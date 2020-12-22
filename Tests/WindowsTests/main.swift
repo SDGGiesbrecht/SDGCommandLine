@@ -58,9 +58,18 @@ extension SDGCommandLineTests.InternalTests {
   ]
 }
 
+extension SDGExportedCommandLineInterfaceTests.APITests {
+  static let windowsTests: [XCTestCaseEntry] = [
+    testCase([
+      ("testCommandInterface", testCommandInterface)
+    ])
+  ]
+}
+
 var tests = [XCTestCaseEntry]()
 tests += SDGCommandLineTests.APITests.windowsTests
 tests += SDGCommandLineTests.ReadMeExampleTests.windowsTests
 tests += SDGCommandLineTests.InternalTests.windowsTests
+tests += SDGExportedCommandLineInterfaceTests.APITests.windowsTests
 
 XCTMain(tests)
