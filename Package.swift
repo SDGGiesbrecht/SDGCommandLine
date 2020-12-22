@@ -258,6 +258,7 @@ let package = Package(
       name: "DebugTests",
       dependencies: [
         "SDGCommandLine",
+        "SDGCommandLineTestUtilities"
       ]
     )
   ]
