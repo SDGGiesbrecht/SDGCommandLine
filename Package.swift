@@ -264,7 +264,7 @@ if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
     "SDGCommandLine",
     "SDGCommandLineTestUtilities",
     "SDGExportedCommandLineInterface",
-    "SDGCommandLineLocalizations",
+    // "SDGCommandLineLocalizations",
     "SDGCommandLineTests",
     "SDGExportedCommandLineInterfaceTests",
     "TestTool",
