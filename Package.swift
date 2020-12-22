@@ -254,7 +254,12 @@ let package = Package(
     .target(name: "empty‐tool", path: "Tests/empty‐tool"),
 
     // #warning(Debugging.)
-    .testTarget(name: "DebugTests")
+    .testTarget(
+      name: "DebugTests",
+      dependencies: [
+        "SDGCommandLine",
+      ]
+    )
   ]
 )
 
@@ -262,8 +267,8 @@ let package = Package(
 if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
   package.targets.removeAll(where: { Set([
     // "SDGCommandLine",
-    "SDGCommandLineTestUtilities",
-    "SDGExportedCommandLineInterface",
+    // "SDGCommandLineTestUtilities",
+    // "SDGExportedCommandLineInterface",
     // "SDGCommandLineLocalizations",
     "SDGCommandLineTests",
     "SDGExportedCommandLineInterfaceTests",
