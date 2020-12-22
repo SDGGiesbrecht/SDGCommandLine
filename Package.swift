@@ -255,6 +255,21 @@ let package = Package(
   ]
 )
 
+// #warning("Debugging.")
+if ProcessInfo.processInfo.environment["TARGETING_WEB"] == "true" {
+  package.targets.removeAll(where: { Set([
+    "SDGCommandLine",
+    "SDGCommandLineTestUtilities",
+    "SDGExportedCommandLineInterface",
+    "SDGCommandLineLocalizations",
+    "SDGCommandLineTests",
+    "SDGExportedCommandLineInterfaceTests",
+    "TestTool",
+    "test‐tool",
+    "empty‐tool"
+  ]).contains($0.name) })
+}
+
 // Windows Tests (Generated automatically by Workspace.)
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
