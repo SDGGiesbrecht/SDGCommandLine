@@ -125,13 +125,18 @@ class InternalTests: TestCase {
 
   func testVersionSelection() throws {
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      // #workaround(Swift 5.3.2, Web lacks FileManager.)
+      #if !os(WASI)
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
+      #endif
 
         let currentPackage = ProcessInfo.packageURL
         defer { ProcessInfo.packageURL = currentPackage }
 
         let testToolName = "tool"
+      // #workaround(Swift 5.3.2, Web lacks FileManager.)
+      #if !os(WASI)
         try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
           let location = temporaryDirectory.appendingPathComponent(testToolName)
 
@@ -279,10 +284,13 @@ class InternalTests: TestCase {
           #endif
         }
       #endif
+      #endif
   }
 
   func testVersionSubcommand() {
       #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
+      #if !os(WASI)
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
           InternalTests.rootCommand,
@@ -299,6 +307,7 @@ class InternalTests: TestCase {
           uniqueTestName: "Version (None)",
           overwriteSpecificationInsteadOfFailing: false
         )
+      #endif
       #endif
   }
 }

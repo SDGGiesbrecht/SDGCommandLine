@@ -111,6 +111,8 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
 
+    // #workaround(Swift 5.3.2, Web lacks FileManager.)
+    #if !os(WASI)
         FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
           SDGCommandLineTestUtilities.testCommand(
             Tool.command,
@@ -121,6 +123,7 @@ class APITests: TestCase {
             overwriteSpecificationInsteadOfFailing: false
           )
         }
+    #endif
 
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
