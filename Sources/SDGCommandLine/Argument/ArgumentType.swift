@@ -257,7 +257,7 @@ public enum ArgumentType {
           return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(String(argument))
         }
-      #endif
+      #endif  // @exempt(from: tests)
     }
   )
 
