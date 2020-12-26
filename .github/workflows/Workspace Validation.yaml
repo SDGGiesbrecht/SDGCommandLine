@@ -237,8 +237,7 @@ jobs:
       run: |
         set -x
         export TARGETING_WEB=true
-        carton --help
-        carton test --verbose
+        carton test
   CentOS:
     name: CentOS
     runs-on: ubuntu-20.04
