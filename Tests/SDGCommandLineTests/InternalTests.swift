@@ -111,7 +111,7 @@ class InternalTests: TestCase {
           let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
           XCTAssert(
             output.contains(searchTerm),
-            "Expected output missing from “\(language)”: \(searchTerm)"
+            "Expected output missing from “\(language)”: \(searchTerm)\n\(output)"
           )
         }
       }
