@@ -12,19 +12,19 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
-  import Foundation
+import Foundation
 
-  import SDGLogic
-  import SDGCollections
-  import SDGText
-  import SDGExternalProcess
+import SDGLogic
+import SDGCollections
+import SDGText
+import SDGExternalProcess
 
-  import SDGSwift
+import SDGSwift
 
-  extension Package {
+extension Package {
 
+  // #workaround(Swift 5.3.2, Web lacks FileManager.)
+  #if !os(WASI)
     // MARK: - Static Properties
 
     private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")
@@ -45,5 +45,5 @@
         reportProgress: { output.print($0) }
       ).get()
     }
-  }
-#endif
+  #endif
+}

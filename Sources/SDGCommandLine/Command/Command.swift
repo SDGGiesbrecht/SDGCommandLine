@@ -12,10 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
-  import Foundation
-#endif
+import Foundation
 
 import SDGControlFlow
 import SDGLogic
@@ -38,7 +35,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Options.noColour,
       Options.language,
     ]
-    // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
+    // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
     #if !os(WASI)
       if ProcessInfo.packageURL ≠ nil {
         options.append(Options.useVersion)
@@ -201,21 +198,21 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   /// - Warning: Calling this method before `executeAsMain()` is redundant. The result is undefined.
   public func withRootBehaviour() -> Command {
     var copy = self
-    // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
+    // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
     #if !os(WASI)
       copy.subcommands.append(contentsOf: [
         Command.version
       ])
     #endif
-    // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
+    // #workaround(Swift 5.3.2, Web lacks FileManager.)
     #if !os(WASI)
       copy.subcommands.append(contentsOf: [
         Command.setLanguage,
         Command.emptyCache,
       ])
-      #if DEBUG
-        copy.subcommands.append(Command.exportInterface)
-      #endif
+    #endif
+    #if DEBUG
+      copy.subcommands.append(Command.exportInterface)
     #endif
     return copy
   }
@@ -231,20 +228,10 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       exitCode = Error.successCode
     case .failure(let error):
       let errorDescription = error.presentableDescription().formattedAsError() + "\n"
-      // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-      #if os(WASI)
-        print(errorDescription)
-      #else
-        FileHandle.standardError.write(errorDescription.file)
-      #endif
+      FileHandle.standardError.write(errorDescription.file)
       exitCode = error.exitCode
     }
-    // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-    #if os(WASI)
-      fatalError()
-    #else
-      exit(Int32(truncatingIfNeeded: exitCode))
-    #endif
+    exit(Int32(truncatingIfNeeded: exitCode))
   }
 
   /// Executes the command without exiting.
@@ -263,7 +250,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let outputCollector = output ?? Output()
     do {
 
-      // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
+      // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
       #if !os(WASI)
         if let packageURL = ProcessInfo.packageURL {
           let versionAttempt = parseVersion(from: arguments)
@@ -532,45 +519,42 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     )
   }
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
-    private func parseVersion(
-      from arguments: [StrictString]
-    ) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
+  private func parseVersion(
+    from arguments: [StrictString]
+  ) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
 
-      var remaining = arguments[arguments.bounds]
+    var remaining = arguments[arguments.bounds]
 
-      while let argument = remaining.popFirst() {
+    while let argument = remaining.popFirst() {
 
-        if let name = removeOptionMarker(from: argument),
-          Options.useVersion.matches(name: name)
-        {
+      if let name = removeOptionMarker(from: argument),
+        Options.useVersion.matches(name: name)
+      {
 
-          var options = Options()
-          let optionAttempt = parse(
-            possibleOption: argument,
-            remainingArguments: &remaining,
-            parsedOptions: &options
-          )
-          switch optionAttempt {
-          case .failure(let error):
-            return .failure(error)
-          case .success(let isOption):
-            if isOption,
-              let version = options.value(for: Options.useVersion)
-            {
+        var options = Options()
+        let optionAttempt = parse(
+          possibleOption: argument,
+          remainingArguments: &remaining,
+          parsedOptions: &options
+        )
+        switch optionAttempt {
+        case .failure(let error):
+          return .failure(error)
+        case .success(let isOption):
+          if isOption,
+            let version = options.value(for: Options.useVersion)
+          {
 
-              let index = arguments.endIndex − remaining.count − 2
-              let otherArguments = Array(arguments[0..<index]) + Array(remaining)
-              return .success((version: version, otherArguments: otherArguments))
-            }
+            let index = arguments.endIndex − remaining.count − 2
+            let otherArguments = Array(arguments[0..<index]) + Array(remaining)
+            return .success((version: version, otherArguments: otherArguments))
           }
         }
       }
-
-      return .success(nil)
     }
-  #endif
+
+    return .success(nil)
+  }
 
   private static func helpInstructions(
     for commandStack: [Command]

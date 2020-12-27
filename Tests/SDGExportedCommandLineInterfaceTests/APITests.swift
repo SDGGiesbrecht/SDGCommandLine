@@ -22,7 +22,7 @@ import SDGCommandLineTestUtilities
 
 class APITests: TestCase {
 
-  #if !os(WASI)  // #workaround(Temporary exception.)
+  #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks Bundle)
     let productsDirectory: URL = {
       #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
@@ -33,8 +33,10 @@ class APITests: TestCase {
         return Bundle.main.bundleURL
       #endif
     }()
+  #endif
 
-    func testCommandInterface() throws {
+  func testCommandInterface() throws {
+    #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks Process)
       #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
         case .failure:
@@ -59,6 +61,6 @@ class APITests: TestCase {
         ).get()
         XCTAssert(interface.options.first?.isFlag == true)
       #endif
-    }
-  #endif
+    #endif
+  }
 }

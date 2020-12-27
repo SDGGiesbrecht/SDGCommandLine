@@ -12,10 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
-  import Foundation
-#endif
+import Foundation
 
 import SDGControlFlow
 import SDGCollections
@@ -235,14 +232,15 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
-    /// An argument type representing a file system path.
-    public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
-      name: pathName,
-      syntaxDescription: pathDescription,
-      parse: { (argument: StrictString) -> URL? in
-
+  /// An argument type representing a file system path.
+  public static let path: ArgumentTypeDefinition<URL> = ArgumentTypeDefinition(
+    name: pathName,
+    syntaxDescription: pathDescription,
+    parse: { (argument: StrictString) -> URL? in
+      // #workaround(Swift 5.3.2, Web lacks FileManager.)
+      #if os(WASI)
+        return URL(fileURLWithPath: String(argument))
+      #else
         if argument.hasPrefix("/") {
           return URL(fileURLWithPath: String(argument))
         } else if argument == "~" {
@@ -259,9 +257,9 @@ public enum ArgumentType {
           return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(String(argument))
         }
-      }
-    )  // @exempt(from: tests) Meaningless region.
-  #endif
+      #endif  // @exempt(from: tests)
+    }
+  )
 
   private static let languagePreferenceName = UserFacing<StrictString, InterfaceLocalization>(
     { localization in
@@ -350,24 +348,21 @@ public enum ArgumentType {
       }
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
-    internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
-      name: versionName,
-      syntaxDescription: versionDescription,
-      parse: { (argument: StrictString) -> Build? in
+  internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
+    name: versionName,
+    syntaxDescription: versionDescription,
+    parse: { (argument: StrictString) -> Build? in
 
-        if let version = Version(String(argument)) {
-          return Build.version(version)
-        } else {
-          for localization in InterfaceLocalization.allCases {
-            if argument == ArgumentType.developmentCase.resolved(for: localization) {
-              return Build.development
-            }
+      if let version = Version(String(argument)) {
+        return Build.version(version)
+      } else {
+        for localization in InterfaceLocalization.allCases {
+          if argument == ArgumentType.developmentCase.resolved(for: localization) {
+            return Build.development
           }
-          return nil
         }
+        return nil
       }
-    )  // @exempt(from: tests)
-  #endif
+    }
+  )
 }

@@ -47,16 +47,14 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
-      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["empty‐cache"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Empty Cache",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["empty‐cache"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Empty Cache",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
@@ -71,52 +69,54 @@ class InternalTests: TestCase {
           with: "\n\n".scalars
         )
       }
-      #if !os(WASI)  // #workaround(Temporary exception.)
-        SDGCommandLineTestUtilities.testCommand(
-          InternalTests.rootCommand,
-          with: ["export‐interface"],
-          localizations: InterfaceLocalization.self,
-          uniqueTestName: "Export Interface",
-          postprocess: postprocess,
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+      SDGCommandLineTestUtilities.testCommand(
+        InternalTests.rootCommand,
+        with: ["export‐interface"],
+        localizations: InterfaceLocalization.self,
+        uniqueTestName: "Export Interface",
+        postprocess: postprocess,
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
   func testSetLanguage() throws {
-    #if !os(WASI)  // #workaround(Temporary exception.)
-      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["set‐language", "zxx"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Set Language",
-          overwriteSpecificationInsteadOfFailing: false
-        )
+    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language", "zxx"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+      #endif
 
-        testCommand(
-          InternalTests.rootCommand,
-          with: ["set‐language"],
-          localizations: APILocalization.self,
-          uniqueTestName: "Set Language to System",
-          overwriteSpecificationInsteadOfFailing: false
-        )
+      testCommand(
+        InternalTests.rootCommand,
+        with: ["set‐language"],
+        localizations: APILocalization.self,
+        uniqueTestName: "Set Language to System",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
+      #endif
 
-        for (language, searchTerm) in [
-          "en": "set‐language"
-        ] as [String: StrictString] {
-          try LocalizationSetting(orderOfPrecedence: [language]).do {
-            let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
+      for (language, searchTerm) in [
+        "en": "set‐language"
+      ] as [String: StrictString] {
+        try LocalizationSetting(orderOfPrecedence: [language]).do {
+          let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
+          #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
             XCTAssert(
               output.contains(searchTerm),
-              "Expected output missing from “\(language)”: \(searchTerm)"
+              "Expected output missing from “\(language)”: \(searchTerm)\n\(output)"
             )
-          }
+          #endif
         }
-      #endif
+      }
     #endif
   }
 
@@ -130,8 +130,9 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(WASI)  // #workaround(Temporary exception.)
-      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      // #workaround(Swift 5.3.2, Web lacks FileManager.)
+      #if !os(WASI)
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
 
@@ -290,8 +291,9 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
-    #if !os(WASI)  // #workaround(Temporary exception.)
-      #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+      // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
+      #if !os(WASI)
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
           InternalTests.rootCommand,

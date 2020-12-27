@@ -12,10 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-#if !os(WASI)
-  import Foundation
-#endif
+import Foundation
 
 import SDGText
 import SDGLocalization
@@ -33,27 +30,24 @@ extension Command {
       "exports the interface in a machine readable format."
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
-    internal static let exportInterface = Command(
-      name: exportInterfaceName,
-      description: exportInterfaceDescription,
-      directArguments: [],
-      options: [],
-      hidden: true,
-      execution: { (_, _, output: Command.Output) throws -> Void in
+  internal static let exportInterface = Command(
+    name: exportInterfaceName,
+    description: exportInterfaceDescription,
+    directArguments: [],
+    options: [],
+    hidden: true,
+    execution: { (_, _, output: Command.Output) throws -> Void in
 
-        let stack = Command.stack.dropLast()  // Ignoring export‐interface.
-        let command = stack.last!
+      let stack = Command.stack.dropLast()  // Ignoring export‐interface.
+      let command = stack.last!
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting.insert(.prettyPrinted)
-        if #available(macOS 10.13, *) {  // @exempt(from: unicode)
-          encoder.outputFormatting.insert(.sortedKeys)
-        }
-        let data = try encoder.encode(command)
-        output.print(try String(file: data, origin: nil))
+      let encoder = JSONEncoder()
+      encoder.outputFormatting.insert(.prettyPrinted)
+      if #available(macOS 10.13, *) {  // @exempt(from: unicode)
+        encoder.outputFormatting.insert(.sortedKeys)
       }
-    )
-  #endif
+      let data = try encoder.encode(command)
+      output.print(try String(file: data, origin: nil))
+    }
+  )
 }

@@ -101,14 +101,11 @@ public struct Options: TransparentWrapper {
       }
     })
 
-  // #workaround(Swift 5.3, Web doesn’t have Foundation yet.)
-  #if !os(WASI)
-    internal static let useVersion = Option(
-      name: useVersionName,
-      description: useVersionDescription,
-      type: ArgumentType.version
-    )
-  #endif
+  internal static let useVersion = Option(
+    name: useVersionName,
+    description: useVersionDescription,
+    type: ArgumentType.version
+  )
 
   // MARK: - Initialization
 
