@@ -109,11 +109,12 @@ class InternalTests: TestCase {
       ] as [String: StrictString] {
         try LocalizationSetting(orderOfPrecedence: [language]).do {
           let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
-          /* Debugging: */ fatalError("Expected output missing from “\(language)”: \(searchTerm)\n\(output)")
-          XCTAssert(
-            output.contains(searchTerm),
-            "Expected output missing from “\(language)”: \(searchTerm)\n\(output)"
-          )
+          #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
+            XCTAssert(
+              output.contains(searchTerm),
+              "Expected output missing from “\(language)”: \(searchTerm)\n\(output)"
+            )
+          #endif
         }
       }
     #endif
