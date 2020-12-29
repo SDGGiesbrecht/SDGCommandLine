@@ -143,7 +143,7 @@ class InternalTests: TestCase {
         try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
           let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
+          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
             let testPackage = try PackageRepository.initializePackage(
               at: location,
               named: StrictString(location.lastPathComponent),
@@ -217,7 +217,7 @@ class InternalTests: TestCase {
             )
           }
 
-          #if !os(Android)  // #workaround(workspace version 0.35.3, Emulator lacks Git.)
+          #if !os(Android)  // #workaround(workspace version 0.36.0, Emulator lacks Git.)
             // When the cache is empty...
             testCommand(
               Tool.createCommand(),

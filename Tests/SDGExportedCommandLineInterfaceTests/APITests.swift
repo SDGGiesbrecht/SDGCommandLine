@@ -37,7 +37,7 @@ class APITests: TestCase {
 
   func testCommandInterface() throws {
     #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks Process)
-      #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
+      #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
         case .failure:
           break  // Expected.
