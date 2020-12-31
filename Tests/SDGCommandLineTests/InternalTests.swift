@@ -47,7 +47,7 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       testCommand(
         InternalTests.rootCommand,
         with: ["empty‐cache"],
@@ -59,7 +59,7 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       func postprocess(_ output: inout String) {
         // macOS & Linux have different JSON whitespace.
         output.scalars.replaceMatches(
@@ -81,7 +81,7 @@ class InternalTests: TestCase {
   }
 
   func testSetLanguage() throws {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       testCommand(
         InternalTests.rootCommand,
         with: ["set‐language", "zxx"],
@@ -130,7 +130,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       // #workaround(Swift 5.3.2, Web lacks FileManager.)
       #if !os(WASI)
         FileManager.default.delete(.cache)
@@ -143,7 +143,7 @@ class InternalTests: TestCase {
         try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
           let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 3.0.0, SwiftPM unavailable.)
+          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
             let testPackage = try PackageRepository.initializePackage(
               at: location,
               named: StrictString(location.lastPathComponent),
@@ -217,7 +217,7 @@ class InternalTests: TestCase {
             )
           }
 
-          #if !os(Android)  // #workaround(workspace version 0.35.3, Emulator lacks Git.)
+          #if !os(Android)  // #workaround(workspace version 0.36.0, Emulator lacks Git.)
             // When the cache is empty...
             testCommand(
               Tool.createCommand(),
@@ -291,7 +291,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
-    #if !os(Windows)  // #workaround(Swift 5.3.1, Segmentation fault.)
+    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
       #if !os(WASI)
         ProcessInfo.version = Version(1, 2, 3)
