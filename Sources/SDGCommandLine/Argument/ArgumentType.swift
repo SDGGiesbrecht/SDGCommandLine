@@ -237,8 +237,7 @@ public enum ArgumentType {
     name: pathName,
     syntaxDescription: pathDescription,
     parse: { (argument: StrictString) -> URL? in
-      // #workaround(Swift 5.3.2, Web lacks FileManager.)
-      #if os(WASI)
+      #if PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         return URL(fileURLWithPath: String(argument))
       #else
         if argument.hasPrefix("/") {

@@ -23,8 +23,7 @@ import SDGSwift
 
 extension Package {
 
-  // #workaround(Swift 5.3.2, Web lacks FileManager.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
     // MARK: - Static Properties
 
     private static let versionsCache = FileManager.default.url(in: .cache, at: "Versions")

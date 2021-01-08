@@ -41,8 +41,7 @@ extension Command {
       }
     })
 
-  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
     internal static let version = Command(
       name: versionName,
       description: versionDescription,

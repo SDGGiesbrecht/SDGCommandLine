@@ -16,7 +16,7 @@
 
 import PackageDescription
 
-// #example(2, main.swift🇨🇦EN) #example(3, parrotLibrary🇨🇦EN) #example(4, parrotTests🇨🇦EN)
+// #example(2, main.swift🇨🇦EN) #example(3, parrotLibrary🇨🇦EN) #example(4, parrotTests🇨🇦EN) #example(5, conditions)
 /// SDGCommandLine provides tools for implementing a command line interface.
 ///
 /// > [יְהַלְלוּ אֶת־שֵׁם יהוה כִּי הוּא צִוָּה וְנִבְרָאוּ׃](https://www.biblegateway.com/passage/?search=Psalm+148&version=WLC;NIV)
@@ -114,6 +114,13 @@ import PackageDescription
 ///     XCTFail("The parrot is not co‐operating.")
 ///   }
 /// }
+/// ```
+///
+/// Some platforms lack certain features. The compilation conditions which appear throughout the documentation are defined as follows:
+///
+/// ```swift
+/// .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi])),
+/// .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
 /// ```
 let package = Package(
   name: "SDGCommandLine",
@@ -254,6 +261,31 @@ let package = Package(
     .target(name: "empty‐tool", path: "Tests/empty‐tool"),
   ]
 )
+
+for target in package.targets {
+  var swiftSettings = target.swiftSettings ?? []
+  defer { target.swiftSettings = swiftSettings }
+  swiftSettings.append(contentsOf: [
+    // #workaround(workspace 0.36.0, Bug prevents centralization of windows conditions.)
+    // #workaround(Swift 5.3.2, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.3.2, Web lacks Foundation.ProcessInfo.)
+    // @example(conditions)
+    .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi])),
+    .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
+    // @endExample
+
+    // Internal‐only:
+    // #workaround(Swift 5.3.2, Web lacks Foundation.Bundle.)
+    .define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.3.2, Web lacks Foundation.FileManager.)
+    .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.3.2, Web lacks Foundation.UserDefaults.)
+    .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
+    // #workaround(workspace 0.36.0, Android Emulator lacks Git.)
+    .define("PLATFORM_LACKS_GIT", .when(platforms: [.android])),
+    .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
+  ])
+}
 
 // Windows Tests (Generated automatically by Workspace.)
 import Foundation

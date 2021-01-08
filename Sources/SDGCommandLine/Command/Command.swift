@@ -35,8 +35,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Options.noColour,
       Options.language,
     ]
-    // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-    #if !os(WASI)
+    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       if ProcessInfo.packageURL ≠ nil {
         options.append(Options.useVersion)
       }
@@ -198,14 +197,12 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   /// - Warning: Calling this method before `executeAsMain()` is redundant. The result is undefined.
   public func withRootBehaviour() -> Command {
     var copy = self
-    // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-    #if !os(WASI)
+    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       copy.subcommands.append(contentsOf: [
         Command.version
       ])
     #endif
-    // #workaround(Swift 5.3.2, Web lacks FileManager.)
-    #if !os(WASI)
+    #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
       copy.subcommands.append(contentsOf: [
         Command.setLanguage,
         Command.emptyCache,
@@ -250,8 +247,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let outputCollector = output ?? Output()
     do {
 
-      // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-      #if !os(WASI)
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         if let packageURL = ProcessInfo.packageURL {
           let versionAttempt = parseVersion(from: arguments)
           switch versionAttempt {

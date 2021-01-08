@@ -22,9 +22,9 @@ import SDGCommandLineTestUtilities
 
 class APITests: TestCase {
 
-  #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks Bundle)
+  #if !PLATFORM_LACKS_FOUNDATION_BUNDLE
     let productsDirectory: URL = {
-      #if os(macOS)
+      #if PLATFORM_USES_SEPARATE_TEST_BUNDLE
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
           return bundle.bundleURL.deletingLastPathComponent()
         }
@@ -36,7 +36,7 @@ class APITests: TestCase {
   #endif
 
   func testCommandInterface() throws {
-    #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks Process)
+    #if !PLATFORM_LACKS_FOUNDATION_PROCESS
       #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
         case .failure:

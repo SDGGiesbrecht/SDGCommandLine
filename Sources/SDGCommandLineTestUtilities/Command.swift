@@ -82,8 +82,7 @@ public func testCommand<L>(
         )
 
         var result: Result<StrictString, Command.Error> = .success("")
-        // #workaround(Swift 5.3.2, Web lacks FileManager.)
-        #if os(WASI)
+        #if PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
           result = command.execute(with: modifiedArguments)
         #else
           if let location = workingDirectory {

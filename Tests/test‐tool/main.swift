@@ -18,8 +18,7 @@ import SDGCommandLine
 
 import TestTool
 
-// #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-#if !os(WASI)
+#if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
   ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool"
   ProcessInfo.version = nil
   ProcessInfo.packageURL = nil

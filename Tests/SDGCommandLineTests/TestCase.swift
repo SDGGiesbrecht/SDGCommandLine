@@ -33,12 +33,12 @@ class TestCase: SDGXCTestUtilities.TestCase {
   override func setUp() {
     if ¬TestCase.alreadyInitialized {
       TestCase.alreadyInitialized = true
-      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = Version(1, 2, 3)
         ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
       #endif
       Command.Output.testMode = true
-      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
           // GitHub Actions do not have Git configured.
           _ = try? Shell.default.run(command: [

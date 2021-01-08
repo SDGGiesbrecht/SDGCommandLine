@@ -89,7 +89,7 @@ class InternalTests: TestCase {
         uniqueTestName: "Set Language",
         overwriteSpecificationInsteadOfFailing: false
       )
-      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
+      #if !PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS
         XCTAssertEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
       #endif
 
@@ -100,7 +100,7 @@ class InternalTests: TestCase {
         uniqueTestName: "Set Language to System",
         overwriteSpecificationInsteadOfFailing: false
       )
-      #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
+      #if !PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS
         XCTAssertNotEqual(LocalizationSetting.current.value.resolved() as Language, .unsupported)
       #endif
 
@@ -109,7 +109,7 @@ class InternalTests: TestCase {
       ] as [String: StrictString] {
         try LocalizationSetting(orderOfPrecedence: [language]).do {
           let output = try InternalTests.rootCommand.execute(with: ["help"]).get()
-          #if !os(WASI)  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
+          #if !PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS
             XCTAssert(
               output.contains(searchTerm),
               "Expected output missing from “\(language)”: \(searchTerm)\n\(output)"
@@ -131,8 +131,7 @@ class InternalTests: TestCase {
 
   func testVersionSelection() throws {
     #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
-      // #workaround(Swift 5.3.2, Web lacks FileManager.)
-      #if !os(WASI)
+      #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
 
@@ -217,7 +216,7 @@ class InternalTests: TestCase {
             )
           }
 
-          #if !os(Android)  // #workaround(workspace version 0.36.0, Emulator lacks Git.)
+          #if !PLATFORM_LACKS_GIT
             // When the cache is empty...
             testCommand(
               Tool.createCommand(),
@@ -292,8 +291,7 @@ class InternalTests: TestCase {
 
   func testVersionSubcommand() {
     #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
-      // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-      #if !os(WASI)
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
           InternalTests.rootCommand,
