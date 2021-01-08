@@ -42,8 +42,7 @@ extension Command {
       }
     })
 
-  // #workaround(Swift 5.3.2, Web lacks FileManager.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
     internal static let emptyCache = Command(
       name: emptyCacheName,
       description: emptyCacheDescription,

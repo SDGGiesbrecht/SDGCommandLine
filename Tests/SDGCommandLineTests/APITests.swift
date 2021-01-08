@@ -111,8 +111,7 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
 
-      // #workaround(Swift 5.3.2, Web lacks FileManager.)
-      #if !os(WASI)
+      #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
           SDGCommandLineTestUtilities.testCommand(
             Tool.command,

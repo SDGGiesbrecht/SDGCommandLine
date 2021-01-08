@@ -20,8 +20,7 @@ extension Build {
 
   // MARK: - Static Properties
 
-  // #workaround(Swift 5.3.2, Web lacks ProcessInfo.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
     internal static let current: Build? = {
       guard let versionNumber = ProcessInfo.version else {
         return nil  // @exempt(from: tests)

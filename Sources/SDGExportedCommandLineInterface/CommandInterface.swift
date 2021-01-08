@@ -23,8 +23,7 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Static Methods
 
-  // #workaround(Swift 5.3.2, Web lacks Process.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS
     /// Attempt to load the interface of the tool at the specified URL.
     ///
     /// The tool must use `SDGCommandLine` and it must have been built in the debug configuration.

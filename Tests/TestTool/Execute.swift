@@ -224,8 +224,7 @@ public enum Execute {
     ],
     execution: { (_, options: Options, output: Command.Output) throws -> Void in
 
-      // #workaround(Swift 5.3.2, Web lacks FileManager.)
-      #if !os(WASI)
+      #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         try FileManager.default.do(
           in: options.value(for: Execute.pathOption)
             ?? URL(fileURLWithPath: FileManager.default.currentDirectoryPath)

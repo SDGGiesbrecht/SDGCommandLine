@@ -41,8 +41,7 @@ extension Command {
       }
     })
 
-  // #workaround(Swift 5.3.2, Web lacks UserDefaults.)
-  #if !os(WASI)
+  #if !PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS
     internal static let setLanguage = Command(
       name: setLanguageName,
       description: setLanguageDescription,
