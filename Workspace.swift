@@ -30,11 +30,6 @@ configuration.documentation.repositoryURL = URL(
   string: "https://github.com/SDGGiesbrecht/SDGCommandLine"
 )!
 
-// #workaround(Swift 5.3, SDGSwift cannot support these, and conditional dependencies do not work.)
-configuration.supportedPlatforms.remove(.iOS)
-configuration.supportedPlatforms.remove(.watchOS)
-configuration.supportedPlatforms.remove(.tvOS)
-
 configuration.documentation.localizations = ["🇨🇦EN"]
 
 configuration._applySDGOverrides()
