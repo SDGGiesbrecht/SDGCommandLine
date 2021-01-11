@@ -142,7 +142,8 @@ class InternalTests: TestCase {
         try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
           let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-          #if os(Windows) || os(tvOS) || os(iOS) || os(Android) || os(watchOS)  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
+          // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
+          #if os(Windows) || os(tvOS) || os(iOS) || os(Android) || os(watchOS)
             // To match other platforms to satisfy the compiler.
             func doSomethingThatCanThrow() throws {}
             try doSomethingThatCanThrow()
