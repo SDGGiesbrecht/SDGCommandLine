@@ -35,7 +35,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       Options.noColour,
       Options.language,
     ]
-    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO && !PLATFORM_LACKS_FOUNDATION_PROCESS
       if ProcessInfo.packageURL ≠ nil {
         options.append(Options.useVersion)
       }
@@ -247,7 +247,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     let outputCollector = output ?? Output()
     do {
 
-      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO && !PLATFORM_LACKS_FOUNDATION_PROCESS
         if let packageURL = ProcessInfo.packageURL {
           let versionAttempt = parseVersion(from: arguments)
           switch versionAttempt {

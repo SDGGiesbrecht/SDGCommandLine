@@ -142,7 +142,11 @@ class InternalTests: TestCase {
         try FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporaryDirectory in
           let location = temporaryDirectory.appendingPathComponent(testToolName)
 
-          #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
+          #if os(Windows) || os(tvOS) || os(iOS) || os(Android) || os(watchOS)  // #workaround(SDGSwift 4.0.0, SwiftPM unavailable.)
+            // To match other platforms to satisfy the compiler.
+            func doSomethingThatCanThrow() throws {}
+            try doSomethingThatCanThrow()
+          #else
             let testPackage = try PackageRepository.initializePackage(
               at: location,
               named: StrictString(location.lastPathComponent),
