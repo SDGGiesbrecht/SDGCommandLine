@@ -43,7 +43,7 @@ extension Command {
 
       let encoder = JSONEncoder()
       encoder.outputFormatting.insert(.prettyPrinted)
-      if #available(macOS 10.13, *) {  // @exempt(from: unicode)
+      if #available(macOS 10.13, iOS 11, *) {  // @exempt(from: unicode)
         encoder.outputFormatting.insert(.sortedKeys)
       }
       let data = try encoder.encode(command)
