@@ -69,14 +69,16 @@ class InternalTests: TestCase {
           with: "\n\n".scalars
         )
       }
-      SDGCommandLineTestUtilities.testCommand(
-        InternalTests.rootCommand,
-        with: ["export‐interface"],
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Export Interface",
-        postprocess: postprocess,
-        overwriteSpecificationInsteadOfFailing: false
-      )
+      #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+        SDGCommandLineTestUtilities.testCommand(
+          InternalTests.rootCommand,
+          with: ["export‐interface"],
+          localizations: InterfaceLocalization.self,
+          uniqueTestName: "Export Interface",
+          postprocess: postprocess,
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      #endif
     #endif
   }
 
@@ -222,49 +224,57 @@ class InternalTests: TestCase {
           }
 
           #if !PLATFORM_LACKS_GIT
-            // When the cache is empty...
-            testCommand(
-              Tool.createCommand(),
-              with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-              localizations: APILocalization.self,
-              uniqueTestName: "Use Version (Empty Cache)",
-              postprocess: postprocess,
-              overwriteSpecificationInsteadOfFailing: false
-            )
+            #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+              // When the cache is empty...
+              testCommand(
+                Tool.createCommand(),
+                with: [
+                  "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
+                ],
+                localizations: APILocalization.self,
+                uniqueTestName: "Use Version (Empty Cache)",
+                postprocess: postprocess,
+                overwriteSpecificationInsteadOfFailing: false
+              )
 
-            // When the cache exists...
-            testCommand(
-              Tool.createCommand(),
-              with: ["some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument"],
-              localizations: APILocalization.self,
-              uniqueTestName: "Use Version (Cached)",
-              postprocess: postprocess,
-              overwriteSpecificationInsteadOfFailing: false
-            )
+              // When the cache exists...
+              testCommand(
+                Tool.createCommand(),
+                with: [
+                  "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
+                ],
+                localizations: APILocalization.self,
+                uniqueTestName: "Use Version (Cached)",
+                postprocess: postprocess,
+                overwriteSpecificationInsteadOfFailing: false
+              )
 
-            // When the cache is empty...
-            testCommand(
-              Tool.createCommand(),
-              with: [
-                "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument",
-              ],
-              localizations: APILocalization.self,
-              uniqueTestName: "Use Development (Empty Cache)",
-              postprocess: postprocess,
-              overwriteSpecificationInsteadOfFailing: false
-            )
+              // When the cache is empty...
+              testCommand(
+                Tool.createCommand(),
+                with: [
+                  "some‐invalid‐argument", "•use‐version", "development",
+                  "another‐invalid‐argument",
+                ],
+                localizations: APILocalization.self,
+                uniqueTestName: "Use Development (Empty Cache)",
+                postprocess: postprocess,
+                overwriteSpecificationInsteadOfFailing: false
+              )
 
-            // When the cache exists...
-            testCommand(
-              Tool.createCommand(),
-              with: [
-                "some‐invalid‐argument", "•use‐version", "development", "another‐invalid‐argument",
-              ],
-              localizations: APILocalization.self,
-              uniqueTestName: "Use Development (Cached)",
-              postprocess: postprocess,
-              overwriteSpecificationInsteadOfFailing: false
-            )
+              // When the cache exists...
+              testCommand(
+                Tool.createCommand(),
+                with: [
+                  "some‐invalid‐argument", "•use‐version", "development",
+                  "another‐invalid‐argument",
+                ],
+                localizations: APILocalization.self,
+                uniqueTestName: "Use Development (Cached)",
+                postprocess: postprocess,
+                overwriteSpecificationInsteadOfFailing: false
+              )
+            #endif
 
             // Looking for version when it does not exist...
             testCommand(
@@ -276,18 +286,20 @@ class InternalTests: TestCase {
               overwriteSpecificationInsteadOfFailing: false
             )
 
-            // Asking for something which is not a version...
-            testCommand(
-              Tool.createCommand(),
-              with: [
-                "some‐invalid‐argument", "•use‐version", "not‐a‐version",
-                "another‐invalid‐argument",
-              ],
-              localizations: APILocalization.self,
-              uniqueTestName: "Use Invalid Version",
-              postprocess: postprocess,
-              overwriteSpecificationInsteadOfFailing: false
-            )
+            #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+              // Asking for something which is not a version...
+              testCommand(
+                Tool.createCommand(),
+                with: [
+                  "some‐invalid‐argument", "•use‐version", "not‐a‐version",
+                  "another‐invalid‐argument",
+                ],
+                localizations: APILocalization.self,
+                uniqueTestName: "Use Invalid Version",
+                postprocess: postprocess,
+                overwriteSpecificationInsteadOfFailing: false
+              )
+            #endif
           #endif
         }
       #endif
