@@ -69,7 +69,9 @@ class InternalTests: TestCase {
           with: "\n\n".scalars
         )
       }
-      #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+        InternalTests.rootCommand.execute(with: ["export‐interface"])
+      #else
         SDGCommandLineTestUtilities.testCommand(
           InternalTests.rootCommand,
           with: ["export‐interface"],
