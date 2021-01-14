@@ -287,13 +287,13 @@ for target in package.targets {
   ])
 }
 
-//if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
-// #workaround(xcodebuild -version 12.3, Tool targets don’t work on tvOS.) @exempt(from: unicode)
-package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
-for target in package.targets {
-  target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
+  // #workaround(xcodebuild -version 12.3, Tool targets don’t work on tvOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+  }
 }
-//}
 
 if ProcessInfo.processInfo.environment["TARGETING_IOS"] == "true" {
   // #workaround(xcodebuild -version 12.3, Tool targets don’t work on iOS.) @exempt(from: unicode)
