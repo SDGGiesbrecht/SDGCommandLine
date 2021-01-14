@@ -19,29 +19,29 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-  private static let setLanguageName = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "set‐language"
-      case .deutschDeutschland:
-        return "sprache‐einstellen"
-      }
-    })
-
-  private static let setLanguageDescription = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return
-          "sets the language preference. (Omit the argument to revert to the system preferences.)"
-      case .deutschDeutschland:
-        return
-          "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)"
-      }
-    })
-
   #if !PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS
+    private static let setLanguageName = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "set‐language"
+        case .deutschDeutschland:
+          return "sprache‐einstellen"
+        }
+      })
+
+    private static let setLanguageDescription = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return
+            "sets the language preference. (Omit the argument to revert to the system preferences.)"
+        case .deutschDeutschland:
+          return
+            "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)"
+        }
+      })
+
     internal static let setLanguage = Command(
       name: setLanguageName,
       description: setLanguageDescription,

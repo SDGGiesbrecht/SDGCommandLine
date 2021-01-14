@@ -515,42 +515,44 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     )
   }
 
-  private func parseVersion(
-    from arguments: [StrictString]
-  ) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS
+    private func parseVersion(
+      from arguments: [StrictString]
+    ) -> Result<(version: Build, otherArguments: [StrictString])?, Command.Error> {
 
-    var remaining = arguments[arguments.bounds]
+      var remaining = arguments[arguments.bounds]
 
-    while let argument = remaining.popFirst() {
+      while let argument = remaining.popFirst() {
 
-      if let name = removeOptionMarker(from: argument),
-        Options.useVersion.matches(name: name)
-      {
+        if let name = removeOptionMarker(from: argument),
+          Options.useVersion.matches(name: name)
+        {
 
-        var options = Options()
-        let optionAttempt = parse(
-          possibleOption: argument,
-          remainingArguments: &remaining,
-          parsedOptions: &options
-        )
-        switch optionAttempt {
-        case .failure(let error):
-          return .failure(error)
-        case .success(let isOption):
-          if isOption,
-            let version = options.value(for: Options.useVersion)
-          {
+          var options = Options()
+          let optionAttempt = parse(
+            possibleOption: argument,
+            remainingArguments: &remaining,
+            parsedOptions: &options
+          )
+          switch optionAttempt {
+          case .failure(let error):
+            return .failure(error)
+          case .success(let isOption):
+            if isOption,
+              let version = options.value(for: Options.useVersion)
+            {
 
-            let index = arguments.endIndex − remaining.count − 2
-            let otherArguments = Array(arguments[0..<index]) + Array(remaining)
-            return .success((version: version, otherArguments: otherArguments))
+              let index = arguments.endIndex − remaining.count − 2
+              let otherArguments = Array(arguments[0..<index]) + Array(remaining)
+              return .success((version: version, otherArguments: otherArguments))
+            }
           }
         }
       }
-    }
 
-    return .success(nil)
-  }
+      return .success(nil)
+    }
+  #endif
 
   private static func helpInstructions(
     for commandStack: [Command]

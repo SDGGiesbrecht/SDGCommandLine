@@ -20,7 +20,7 @@ extension Build {
 
   // MARK: - Static Properties
 
-  #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO && !PLATFORM_LACKS_FOUNDATION_PROCESS
     internal static let current: Build? = {
       guard let versionNumber = ProcessInfo.version else {
         return nil  // @exempt(from: tests)

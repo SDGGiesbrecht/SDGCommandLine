@@ -51,13 +51,13 @@ public struct CommandInterface: Decodable {
         }
       }
     }
+
+    // MARK: - Initialization
+
+    private init(export: String) throws {
+      self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
+    }
   #endif
-
-  // MARK: - Initialization
-
-  private init(export: String) throws {
-    self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
-  }
 
   // MARK: - Properties
 
