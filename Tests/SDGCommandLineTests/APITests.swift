@@ -252,7 +252,13 @@ class APITests: TestCase {
 
   func testLanguage() {
     #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
-      #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+        for localization in SystemLocalization.allCases {
+          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+            Tool.command.execute(with: ["help", "•language", "he"])
+          }
+        }
+      #else
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["help", "•language", "he"],
@@ -260,6 +266,14 @@ class APITests: TestCase {
           uniqueTestName: "Language Selection by Code",
           overwriteSpecificationInsteadOfFailing: false
         )
+      #endif
+      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+        for localization in SystemLocalization.allCases {
+          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+            Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
+          }
+        }
+      #else
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
           with: ["help", "•language", "🇬🇷ΕΛ"],
