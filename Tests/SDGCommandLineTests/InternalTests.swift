@@ -70,7 +70,11 @@ class InternalTests: TestCase {
         )
       }
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-        InternalTests.rootCommand.execute(with: ["export‐interface"])
+        for localization in InterfaceLocalization.allCases {
+          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+            InternalTests.rootCommand.execute(with: ["export‐interface"])
+          }
+        }
       #else
         SDGCommandLineTestUtilities.testCommand(
           InternalTests.rootCommand,
