@@ -316,15 +316,15 @@ public enum ArgumentType {
     )
 
   #if !PLATFORM_LACKS_FOUNDATION_PROCESS
-    private static let versionName = UserFacing<StrictString, InterfaceLocalization>({
-      localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "version"
-      case .deutschDeutschland:
-        return "Version"
-      }
-    })
+    private static let versionName = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "version"
+        case .deutschDeutschland:
+          return "Version"
+        }
+      })
 
     private static let developmentCase = UserFacing<StrictString, InterfaceLocalization>(
       { localization in
