@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  -->
 
-macOS • Windows • Web • CentOS • Ubuntu • Android • Amazon Linux
+macOS • Windows • Web • CentOS • Ubuntu • tvOS • iOS • Android • Amazon Linux • watchOS
 
 [Documentation](https://sdggiesbrecht.github.io/SDGCommandLine/%F0%9F%87%A8%F0%9F%87%A6EN)
 
@@ -120,7 +120,7 @@ func testParrot() {
 Some platforms lack certain features. The compilation conditions which appear throughout the documentation are defined as follows:
 
 ```swift
-.define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi])),
+.define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
 .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
 ```
 

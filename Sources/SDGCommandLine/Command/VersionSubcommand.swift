@@ -21,27 +21,27 @@ import SDGCommandLineLocalizations
 
 extension Command {
 
-  private static let versionName = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
-        .deutschDeutschland:
-        return "version"
-      }
-    }
-  )
-
-  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "displays the version in use."
-      case .deutschDeutschland:
-        return "zeigt die verwendete Version an."
-      }
-    })
-
   #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+    private static let versionName = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
+          .deutschDeutschland:
+          return "version"
+        }
+      }
+    )
+
+    private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "displays the version in use."
+        case .deutschDeutschland:
+          return "zeigt die verwendete Version an."
+        }
+      })
+
     internal static let version = Command(
       name: versionName,
       description: versionDescription,

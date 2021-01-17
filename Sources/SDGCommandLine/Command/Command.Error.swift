@@ -46,7 +46,7 @@ extension Command {
       assert(
         exitCode ≠ Error.successCode,
         UserFacing<StrictString, APILocalization>({ localization in  // @exempt(from: tests)
-          switch localization {
+          switch localization {  // @exempt(from: tests)
           case .englishCanada:
             return "\(Error.successCode.inDigits()) is invalid as a failing exit code."
           }

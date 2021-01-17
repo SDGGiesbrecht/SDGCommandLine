@@ -315,53 +315,56 @@ public enum ArgumentType {
       }
     )
 
-  private static let versionName = UserFacing<StrictString, InterfaceLocalization>({ localization in
-    switch localization {
-    case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-      return "version"
-    case .deutschDeutschland:
-      return "Version"
-    }
-  })
-
-  private static let developmentCase = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "development"
-      case .deutschDeutschland:
-        return "entwicklung"
-      }
-    })
-
-  private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      let development = ArgumentType.developmentCase.resolved(for: localization)
-      switch localization {
-      case .englishUnitedKingdom:
-        return "A version number or ‘\(development)’."
-      case .englishUnitedStates, .englishCanada:
-        return "A version number or “\(development)”."
-      case .deutschDeutschland:
-        return "Eine Versionsnummer oder „\(development)“."
-      }
-    })
-
-  internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
-    name: versionName,
-    syntaxDescription: versionDescription,
-    parse: { (argument: StrictString) -> Build? in
-
-      if let version = Version(String(argument)) {
-        return Build.version(version)
-      } else {
-        for localization in InterfaceLocalization.allCases {
-          if argument == ArgumentType.developmentCase.resolved(for: localization) {
-            return Build.development
-          }
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS
+    private static let versionName = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "version"
+        case .deutschDeutschland:
+          return "Version"
         }
-        return nil
+      })
+
+    private static let developmentCase = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "development"
+        case .deutschDeutschland:
+          return "entwicklung"
+        }
+      })
+
+    private static let versionDescription = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        let development = ArgumentType.developmentCase.resolved(for: localization)
+        switch localization {
+        case .englishUnitedKingdom:
+          return "A version number or ‘\(development)’."
+        case .englishUnitedStates, .englishCanada:
+          return "A version number or “\(development)”."
+        case .deutschDeutschland:
+          return "Eine Versionsnummer oder „\(development)“."
+        }
+      })
+
+    internal static let version: ArgumentTypeDefinition<Build> = ArgumentTypeDefinition(
+      name: versionName,
+      syntaxDescription: versionDescription,
+      parse: { (argument: StrictString) -> Build? in
+
+        if let version = Version(String(argument)) {
+          return Build.version(version)
+        } else {
+          for localization in InterfaceLocalization.allCases {
+            if argument == ArgumentType.developmentCase.resolved(for: localization) {
+              return Build.development
+            }
+          }
+          return nil
+        }
       }
-    }
-  )
+    )
+  #endif
 }

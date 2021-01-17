@@ -119,7 +119,7 @@ import PackageDescription
 /// Some platforms lack certain features. The compilation conditions which appear throughout the documentation are defined as follows:
 ///
 /// ```swift
-/// .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi])),
+/// .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
 /// .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
 /// ```
 let package = Package(
@@ -270,7 +270,7 @@ for target in package.targets {
     // #workaround(Swift 5.3.2, Web lacks Foundation.Process.)
     // #workaround(Swift 5.3.2, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
-    .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi])),
+    .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
@@ -285,6 +285,32 @@ for target in package.targets {
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.android])),
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
+}
+
+if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
+  // #workaround(xcodebuild -version 12.3, Tool targets don’t work on tvOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+  }
+}
+
+if ProcessInfo.processInfo.environment["TARGETING_IOS"] == "true" {
+  // #workaround(xcodebuild -version 12.3, Tool targets don’t work on iOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+  }
+}
+
+if ProcessInfo.processInfo.environment["TARGETING_WATCHOS"] == "true" {
+  // #workaround(xcodebuild -version 12.3, Test targets don’t work on watchOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.isTest })
+  // #workaround(xcodebuild -version 12.3, Tool targets don’t work on watchOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+  }
 }
 
 // Windows Tests (Generated automatically by Workspace.)

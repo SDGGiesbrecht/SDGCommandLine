@@ -40,13 +40,15 @@ class TestCase: SDGXCTestUtilities.TestCase {
       Command.Output.testMode = true
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] ≠ nil {
-          // GitHub Actions do not have Git configured.
-          _ = try? Shell.default.run(command: [
-            "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe",
-          ]).get()
-          _ = try? Shell.default.run(command: [
-            "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com",
-          ]).get()
+          #if !PLATFORM_LACKS_FOUNDATION_PROCESS
+            // GitHub Actions do not have Git configured.
+            _ = try? Shell.default.run(command: [
+              "git", "config", "\u{2D}\u{2D}global", "user.name", "John Doe",
+            ]).get()
+            _ = try? Shell.default.run(command: [
+              "git", "config", "\u{2D}\u{2D}global", "user.email", "john.doe@example.com",
+            ]).get()
+          #endif
         }
       #endif
     }

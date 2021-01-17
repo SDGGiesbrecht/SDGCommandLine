@@ -79,33 +79,35 @@ public struct Options: TransparentWrapper {
     type: ArgumentType.languagePreference
   )
 
-  internal static let useVersionName = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return "use‐version"
-      case .deutschDeutschland:
-        return "version‐verwenden"
-      }
-    })
+  #if !PLATFORM_LACKS_FOUNDATION_PROCESS
+    internal static let useVersionName = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return "use‐version"
+        case .deutschDeutschland:
+          return "version‐verwenden"
+        }
+      })
 
-  private static let useVersionDescription = UserFacing<StrictString, InterfaceLocalization>(
-    { localization in
-      switch localization {
-      case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
-        return
-          "Attempts to download and temporarily use the specified version insead of the one which is installed."
-      case .deutschDeutschland:
-        return
-          "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist."
-      }
-    })
+    private static let useVersionDescription = UserFacing<StrictString, InterfaceLocalization>(
+      { localization in
+        switch localization {
+        case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+          return
+            "Attempts to download and temporarily use the specified version insead of the one which is installed."
+        case .deutschDeutschland:
+          return
+            "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist."
+        }
+      })
 
-  internal static let useVersion = Option(
-    name: useVersionName,
-    description: useVersionDescription,
-    type: ArgumentType.version
-  )
+    internal static let useVersion = Option(
+      name: useVersionName,
+      description: useVersionDescription,
+      type: ArgumentType.version
+    )
+  #endif
 
   // MARK: - Initialization
 
