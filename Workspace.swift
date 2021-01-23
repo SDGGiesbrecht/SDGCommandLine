@@ -86,6 +86,3 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
-
-// #workaround(workspace version 0.36.0, NDK changed.)
-configuration.continuousIntegration.manage = false
