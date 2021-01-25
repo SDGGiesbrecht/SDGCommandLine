@@ -266,7 +266,7 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #workaround(workspace version 0.36.0, Bug prevents centralization of windows conditions.)
+    // #workaround(workspace version 0.36.1, Bug prevents centralization of windows conditions.)
     // #workaround(Swift 5.3.2, Web lacks Foundation.Process.)
     // #workaround(Swift 5.3.2, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
@@ -281,7 +281,7 @@ for target in package.targets {
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
     // #workaround(Swift 5.3.2, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
-    // #workaround(workspace version 0.36.0, Android Emulator lacks Git.)
+    // #workaround(workspace version 0.36.1, Android Emulator lacks Git.)
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.android])),
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
