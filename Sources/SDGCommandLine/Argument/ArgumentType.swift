@@ -35,7 +35,7 @@ public enum ArgumentType {
     })
   }
   private static let unused = UserFacing<StrictString, InterfaceLocalization>({ _ in
-    unreachable()
+    return ""
   })
 
   internal static let booleanIdentifier: StrictString = "Boolean"
