@@ -34,9 +34,10 @@ public enum ArgumentType {
       return key
     })
   }
-  private static let unused = UserFacing<StrictString, InterfaceLocalization>({ _ in
-    return ""  // @exempt(from: tests)
-  })
+  private static let unused = UserFacing<StrictString, InterfaceLocalization>(
+    { _ in  // @exempt(from: tests)
+      return ""
+    })
 
   internal static let booleanIdentifier: StrictString = "Boolean"
   /// A Boolean flag.
