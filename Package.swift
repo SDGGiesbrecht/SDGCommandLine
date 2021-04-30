@@ -138,11 +138,11 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
-      from: Version(7, 0, 0)
+      from: Version(7, 2, 2)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(5, 1, 1)
+      from: Version(6, 0, 0)
     ),
   ],
   targets: [
