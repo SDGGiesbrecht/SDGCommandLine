@@ -115,11 +115,6 @@ public func testCommand<L>(
         }
         print(exitCode, to: &report)
 
-        #warning("Debugging.")
-        print("[Start]")
-        print(report)
-        print("[End]")
-
         postprocess(&report)
 
         SDGPersistenceTestUtilities.compare(

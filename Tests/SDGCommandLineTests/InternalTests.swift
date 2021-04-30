@@ -161,6 +161,10 @@ class InternalTests: TestCase {
               named: StrictString(location.lastPathComponent),
               type: .executable
             ).get()
+            // #workaround(Swift 5.3.3, Older compiler requires LinuxMain.swift.)
+            try "".save(
+              to: location.appendingPathComponent("Tests").appendingPathComponent("LinuxMain.swift")
+            )
             _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
             try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
