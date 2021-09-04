@@ -231,6 +231,8 @@ class InternalTests: TestCase {
                 + "/tool \u{2D}\u{2D}depth".scalars,
               with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
             )
+            // Spurious
+            output = String(LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) })))
           }
 
           #if !PLATFORM_LACKS_GIT
