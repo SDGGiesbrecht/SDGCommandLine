@@ -287,6 +287,14 @@ for target in package.targets {
   ])
 }
 
+#if os(Windows)
+  // #workaround(Swift 5.4.2, Unable to build from Windows.)
+  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  for target in package.targets {
+    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+  }
+#endif
+
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
   // #workaround(xcodebuild -version 12.4, Tool targets don’t work on tvOS.) @exempt(from: unicode)
