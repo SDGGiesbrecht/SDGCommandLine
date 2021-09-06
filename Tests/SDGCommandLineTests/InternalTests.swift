@@ -240,7 +240,7 @@ class InternalTests: TestCase {
               for: "[2/2] Linking tool".scalars,
               with: "[2/2] Build complete!".scalars
             )
-            output.scalars.replaceMatches(for: "* Build Completed!\n".scalars, with: "".scalars)
+            output.scalars.replaceMatches(for: "* Build Completed!\n\n".scalars, with: "".scalars)
           }
 
           #if !PLATFORM_LACKS_GIT
