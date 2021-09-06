@@ -5,7 +5,7 @@ Cloning into '...'...
 
 $ swift build --configuration release
 [1/2] Compiling tool main.swift
-[2/2] Linking tool
+[2/2] Build complete!
 [2/2] Build complete!
 
 $ tool some‐invalid‐argument another‐invalid‐argument •no‐colour
