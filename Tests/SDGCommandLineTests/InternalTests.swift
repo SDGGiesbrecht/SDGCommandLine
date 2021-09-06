@@ -232,9 +232,14 @@ class InternalTests: TestCase {
               with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
             )
             // Spurious
-            output = String(LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) })))
+            output = String(
+              LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) }))
+            )
             // Differ accross patches
-            output.scalars.replaceMatches(for: "[2/2] Linking tool".scalars, with: "[2/2] Build complete!".scalars)
+            output.scalars.replaceMatches(
+              for: "[2/2] Linking tool".scalars,
+              with: "[2/2] Build complete!".scalars
+            )
             output.scalars.replaceMatches(for: "* Build Completed!\n".scalars, with: "".scalars)
           }
 
