@@ -26,7 +26,12 @@ import XCTest
 
 import SDGXCTestUtilities
 
-class TestCase: SDGXCTestUtilities.TestCase {
+#if PLATFORM_LACKS_SDG_CORNERSTONE_TEST_CASE
+  typealias Base = XCTestCase
+#else
+  typealias Base = SDGXCTestUtilities.TestCase
+#endif
+class TestCase: Base {
 
   static var alreadyInitialized = false
 
