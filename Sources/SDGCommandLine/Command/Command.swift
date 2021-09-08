@@ -286,7 +286,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       switch argumentsAttempt {
       case .failure(let error):
         return .failure(error)
-      case .success(let (parsedArguments, parsedOptions)):
+      case .success((let parsedArguments, let parsedOptions)):
         directArguments = parsedArguments
         options = parsedOptions
       }
