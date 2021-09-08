@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 
 /*
  Package.swift
@@ -249,7 +249,7 @@ let package = Package(
       path: "Tests/TestTool"
     ),
 
-    .target(
+    .executableTarget(
       name: "test‐tool",
       dependencies: [
         "SDGCommandLine",
@@ -258,7 +258,7 @@ let package = Package(
       path: "Tests/test‐tool"
     ),
 
-    .target(name: "empty‐tool", path: "Tests/empty‐tool"),
+    .executableTarget(name: "empty‐tool", path: "Tests/empty‐tool"),
   ]
 )
 
