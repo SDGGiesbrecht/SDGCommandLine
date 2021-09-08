@@ -267,56 +267,54 @@ for target in package.targets {
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
     // #workaround(workspace version 0.36.3, Bug prevents centralization of windows conditions.)
-    // #workaround(Swift 5.3.2, Web lacks Foundation.Process.)
-    // #workaround(Swift 5.3.2, Web lacks Foundation.ProcessInfo.)
+    // #workaround(Swift 5.4.2, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.4.2, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
-    // #workaround(Swift 5.3.2, Web lacks Foundation.Bundle.)
+    // #workaround(Swift 5.4.2, Web lacks Foundation.Bundle.)
     .define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.3.2, Web lacks Foundation.FileManager.)
+    // #workaround(Swift 5.4.2, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.3.2, Web lacks Foundation.UserDefaults.)
+    // #workaround(Swift 5.4.2, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
-    // #workaround(workspace version 0.36.3, Android Emulator lacks Git.)
-    .define("PLATFORM_LACKS_GIT", .when(platforms: [.android])),
     // #workaround(SDGCornerstone 7.2.4, Web lacks TestCase.)
     .define("PLATFORM_LACKS_SDG_CORNERSTONE_TEST_CASE", .when(platforms: [.watchOS])),
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
 }
 
-#if os(Windows)
+import Foundation
+if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
   // #workaround(Swift 5.4.2, Unable to build from Windows.)
   package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
   }
-#endif
+}
 
-import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
-  // #workaround(xcodebuild -version 12.4, Tool targets don’t work on tvOS.) @exempt(from: unicode)
-  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  // #workaround(xcodebuild -version 12.5.1, Tool targets don’t work on tvOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
   }
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_IOS"] == "true" {
-  // #workaround(xcodebuild -version 12.4, Tool targets don’t work on iOS.) @exempt(from: unicode)
-  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  // #workaround(xcodebuild -version 12.5.1, Tool targets don’t work on iOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
   }
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_WATCHOS"] == "true" {
-  // #workaround(xcodebuild -version 12.4, Tool targets don’t work on watchOS.) @exempt(from: unicode)
-  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  // #workaround(xcodebuild -version 12.5.1, Tool targets don’t work on watchOS.) @exempt(from: unicode)
+  package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
   }
