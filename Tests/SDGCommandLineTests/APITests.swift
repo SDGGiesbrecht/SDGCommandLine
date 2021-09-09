@@ -43,6 +43,7 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "2"],
@@ -98,9 +99,11 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 
   func testCommand() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       testCustomStringConvertibleConformance(
         of: Tool.command,
         localizations: InterfaceLocalization.self,
@@ -136,9 +139,11 @@ class APITests: TestCase {
         uniqueTestName: "Foreign Command",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
   }
 
   func testCommandError() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if os(Linux)  // System error descriptions differ.
         let result = Tool.command.execute(with: ["fail", "•system"])
         _ = result.mapError { (error: Command.Error) -> Command.Error in
@@ -154,9 +159,11 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 
   func testDirectArgument() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["reject‐argument", "..."],
@@ -171,9 +178,11 @@ class APITests: TestCase {
         uniqueTestName: "Unexpected Argument",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
   }
 
   func testEnumerationOption() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•colour", "red"],
@@ -195,15 +204,19 @@ class APITests: TestCase {
         uniqueTestName: "Invalid Enumeration",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
   }
 
   func testFormatting() throws {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
       XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
       XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
+    #endif
   }
 
   func testHelp() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
@@ -234,9 +247,11 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 
   func testLanguage() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
@@ -267,6 +282,7 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 
   func testLocalizations() {
@@ -281,11 +297,14 @@ class APITests: TestCase {
   }
 
   func testNoColour() throws {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
       XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #endif
   }
 
   func testOption() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       testCustomStringConvertibleConformance(
         of: Execute.textOption,
         localizations: InterfaceLocalization.self,
@@ -339,6 +358,7 @@ class APITests: TestCase {
         allowColour: true,
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
   }
 
   func testVersion() {
