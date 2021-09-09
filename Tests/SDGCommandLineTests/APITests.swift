@@ -43,7 +43,6 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "2"],
@@ -99,11 +98,9 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testCommand() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       testCustomStringConvertibleConformance(
         of: Tool.command,
         localizations: InterfaceLocalization.self,
@@ -139,11 +136,9 @@ class APITests: TestCase {
         uniqueTestName: "Foreign Command",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testCommandError() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       #if os(Linux)  // System error descriptions differ.
         let result = Tool.command.execute(with: ["fail", "•system"])
         _ = result.mapError { (error: Command.Error) -> Command.Error in
@@ -159,11 +154,9 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testDirectArgument() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["reject‐argument", "..."],
@@ -178,11 +171,9 @@ class APITests: TestCase {
         uniqueTestName: "Unexpected Argument",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testEnumerationOption() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•colour", "red"],
@@ -204,19 +195,15 @@ class APITests: TestCase {
         uniqueTestName: "Invalid Enumeration",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testFormatting() throws {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
       XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
       XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
-    #endif
   }
 
   func testHelp() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
@@ -247,11 +234,9 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testLanguage() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
@@ -282,7 +267,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-    #endif
   }
 
   func testLocalizations() {
@@ -297,14 +281,11 @@ class APITests: TestCase {
   }
 
   func testNoColour() throws {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
       XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
-    #endif
   }
 
   func testOption() {
-    #if !os(Windows)  // #workaround(Swift 5.3.2, Segmentation fault.)
       testCustomStringConvertibleConformance(
         of: Execute.textOption,
         localizations: InterfaceLocalization.self,
@@ -358,7 +339,6 @@ class APITests: TestCase {
         allowColour: true,
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
   }
 
   func testVersion() {
