@@ -47,6 +47,7 @@ class InternalTests: TestCase {
   }
 
   func testEmptyCache() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       testCommand(
         InternalTests.rootCommand,
         with: ["empty‐cache"],
@@ -54,6 +55,7 @@ class InternalTests: TestCase {
         uniqueTestName: "Empty Cache",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
   }
 
   func testExportInterface() {
