@@ -59,6 +59,7 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       func postprocess(_ output: inout String) {
         // macOS & Linux have different JSON whitespace.
         output.scalars.replaceMatches(
@@ -84,6 +85,7 @@ class InternalTests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 
   func testSetLanguage() throws {
