@@ -138,6 +138,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSelection() throws {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         FileManager.default.delete(.cache)
         defer { FileManager.default.delete(.cache) }
@@ -322,6 +323,7 @@ class InternalTests: TestCase {
           #endif
         }
       #endif
+    #endif
   }
 
   func testVersionSubcommand() {
