@@ -89,6 +89,7 @@ class InternalTests: TestCase {
   }
 
   func testSetLanguage() throws {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       testCommand(
         InternalTests.rootCommand,
         with: ["set‐language", "zxx"],
@@ -124,6 +125,7 @@ class InternalTests: TestCase {
           #endif
         }
       }
+    #endif
   }
 
   func testOptions() {
