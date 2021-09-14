@@ -327,6 +327,7 @@ class InternalTests: TestCase {
   }
 
   func testVersionSubcommand() {
+    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = Version(1, 2, 3)
         testCommand(
@@ -345,5 +346,6 @@ class InternalTests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
+    #endif
   }
 }
