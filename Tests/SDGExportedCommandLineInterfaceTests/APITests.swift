@@ -40,7 +40,7 @@ class APITests: TestCase {
 
   func testCommandInterface() throws {
     #if !PLATFORM_LACKS_FOUNDATION_PROCESS
-      #if !(os(Windows) || os(Android))  // #workaround(SDGSwift 5.3.4, SwiftPM unavailable.)
+      #if !PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM
         switch CommandInterface.loadInterface(of: URL(fileURLWithPath: #filePath), in: "en") {
         case .failure:
           break  // Expected.
