@@ -151,8 +151,9 @@ class InternalTests: TestCase {
           defer { ProcessInfo.packageURL = currentPackage }
 
           let testToolName = "tool"
-          try FileManager.default.withTemporaryDirectory(appropriateFor: nil) {
-            temporaryDirectory in
+          try FileManager.default.withTemporaryDirectory(
+            appropriateFor: nil
+          ) { temporaryDirectory in
             let location = temporaryDirectory.appendingPathComponent(testToolName)
 
             #if PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM
