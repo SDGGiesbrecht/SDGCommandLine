@@ -93,8 +93,6 @@ public func testCommand<L>(
             result = command.execute(with: modifiedArguments)
           }
         #endif
-        // #warning(Debugging...)
-        #if false
         var output: StrictString = ""
         var error: StrictString = ""
         var exitCode: Int = Command.Error.successCode
@@ -126,7 +124,6 @@ public func testCommand<L>(
           file: file,
           line: line
         )
-        #endif
       }
     }
   }
