@@ -57,6 +57,12 @@ class APITests: TestCase {
       )
       // #warning(Debugging...)
       print("C")
+      print(["execute", "•iterations", "−1"])
+      print(Language.self)
+      print("Invalid Integer")
+      print(false)
+    // #warning(Debugging...)
+    #if false
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "−1"],
@@ -66,8 +72,6 @@ class APITests: TestCase {
       )
       // #warning(Debugging...)
       print("D")
-    // #warning(Debugging...)
-    #if false
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
