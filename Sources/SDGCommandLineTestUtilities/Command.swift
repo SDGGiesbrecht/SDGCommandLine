@@ -53,6 +53,8 @@ public func testCommand<L>(
   file: StaticString = #filePath,
   line: UInt = #line
 ) where L: InputLocalization {
+  // #warning(Debugging...)
+  #if false
 
   Command.Output.testMode = true
 
@@ -127,4 +129,5 @@ public func testCommand<L>(
       }
     }
   }
+#endif
 }
