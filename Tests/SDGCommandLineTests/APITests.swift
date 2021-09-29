@@ -47,6 +47,8 @@ class APITests: TestCase {
     // #warning(Debugging...)
     print("B")
 
+    // #warning(Debugging...)
+    #if false
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
@@ -117,6 +119,7 @@ class APITests: TestCase {
       #endif
       // #warning(Debugging...)
       print("I")
+    #endif
     #endif
   }
 
