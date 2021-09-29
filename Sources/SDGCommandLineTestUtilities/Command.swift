@@ -53,8 +53,6 @@ public func testCommand<L>(
   file: StaticString = #filePath,
   line: UInt = #line
 ) where L: InputLocalization {
-  // #warning(Debugging...)
-  #if false
 
   Command.Output.testMode = true
 
@@ -84,6 +82,8 @@ public func testCommand<L>(
         )
 
         var result: Result<StrictString, Command.Error> = .success("")
+        // #warning(Debugging...)
+        #if false
         #if PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
           result = command.execute(with: modifiedArguments)
         #else
@@ -126,8 +126,8 @@ public func testCommand<L>(
           file: file,
           line: line
         )
+        #endif
       }
     }
   }
-#endif
 }
