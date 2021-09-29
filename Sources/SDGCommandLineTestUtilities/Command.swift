@@ -82,8 +82,6 @@ public func testCommand<L>(
         )
 
         var result: Result<StrictString, Command.Error> = .success("")
-        // #warning(Debugging...)
-        #if false
         #if PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
           result = command.execute(with: modifiedArguments)
         #else
@@ -95,6 +93,8 @@ public func testCommand<L>(
             result = command.execute(with: modifiedArguments)
           }
         #endif
+        // #warning(Debugging...)
+        #if false
         var output: StrictString = ""
         var error: StrictString = ""
         var exitCode: Int = Command.Error.successCode
