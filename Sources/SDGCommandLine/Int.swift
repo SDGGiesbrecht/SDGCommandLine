@@ -29,7 +29,7 @@ extension Int {
       negative = true
       string.removeFirst()
     }
-    return parse(decimal, base: 10).map { result in
+    return parse(string, base: 10).map { result in
       if negative {
         return -result  // @exempt(from: unicode)
       } else {
