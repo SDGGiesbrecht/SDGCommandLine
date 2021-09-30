@@ -236,6 +236,15 @@ class InternalTests: TestCase {
               output = String(
                 LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) }))
               )
+              // Differs accross platforms
+              output.scalars.replaceMatches(
+                for: "[3/3] Linking tool".scalars,
+                with: "[2/2] Linking tool".scalars
+              )
+              output.scalars.replaceMatches(
+                for: "[3/3] Build complete!".scalars,
+                with: "[2/2] Build complete!".scalars
+              )
             }
 
             #if !PLATFORM_LACKS_GIT
