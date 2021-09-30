@@ -66,8 +66,6 @@ class APITests: TestCase {
       )
       // #warning(Debugging...)
       print("D")
-    // #warning(Debugging...)
-    #if false
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -119,7 +117,6 @@ class APITests: TestCase {
       #endif
       // #warning(Debugging...)
       print("I")
-    #endif
     #endif
   }
 
