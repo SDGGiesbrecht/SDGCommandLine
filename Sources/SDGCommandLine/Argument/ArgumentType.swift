@@ -196,7 +196,6 @@ public enum ArgumentType {
         name: integerName(range: range),
         syntaxDescription: integerDescription(range: range),
         parse: { (argument: StrictString) -> Int? in
-
           if let integer = try? Int.parse(possibleDecimal: argument).get(),
             integer ∈ range
           {
