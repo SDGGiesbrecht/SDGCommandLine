@@ -36,16 +36,12 @@ import TestTool
 class APITests: TestCase {
 
   func testArgumentType() {
-    // #warning(Debugging...)
-    print("A")
     testCustomStringConvertibleConformance(
       of: ArgumentType.string,
       localizations: InterfaceLocalization.self,
       uniqueTestName: "String",
       overwriteSpecificationInsteadOfFailing: false
     )
-    // #warning(Debugging...)
-    print("B")
 
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
@@ -55,8 +51,6 @@ class APITests: TestCase {
         uniqueTestName: "Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
-      // #warning(Debugging...)
-      print("C")
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•iterations", "−1"],
@@ -64,8 +58,6 @@ class APITests: TestCase {
         uniqueTestName: "Invalid Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
-      // #warning(Debugging...)
-      print("D")
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -75,8 +67,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-      // #warning(Debugging...)
-      print("E")
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•path", "~"],
@@ -84,8 +74,6 @@ class APITests: TestCase {
         uniqueTestName: "Home",
         overwriteSpecificationInsteadOfFailing: false
       )
-      // #warning(Debugging...)
-      print("F")
       SDGCommandLineTestUtilities.testCommand(
         Tool.command,
         with: ["execute", "•path", "~/"],
@@ -93,8 +81,6 @@ class APITests: TestCase {
         uniqueTestName: "Home 2",
         overwriteSpecificationInsteadOfFailing: false
       )
-      // #warning(Debugging...)
-      print("G")
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -104,8 +90,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-      // #warning(Debugging...)
-      print("H")
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
           Tool.command,
@@ -115,8 +99,6 @@ class APITests: TestCase {
           overwriteSpecificationInsteadOfFailing: false
         )
       #endif
-      // #warning(Debugging...)
-      print("I")
     #endif
   }
 
