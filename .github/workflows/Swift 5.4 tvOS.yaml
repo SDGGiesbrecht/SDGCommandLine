@@ -69,4 +69,5 @@ jobs:
       shell: bash
       run: |
         set -x
+        export TARGETING_TVOS=true
         xcodebuild test -destination 'name=Apple TV 4K (2nd generation)' -scheme SDGCommandLine-Package
