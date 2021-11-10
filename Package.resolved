@@ -1,95 +1,151 @@
 {
-  "object" : {
-    "pins" : [
+  "object": {
+    "pins": [
       {
-        "package" : "SDGCornerstone",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/SDGCornerstone",
-        "state" : {
-          "revision" : "dcd9283b504b651ce43b3f3b8bdc8ac333fc5b99",
-          "version" : "7.2.5"
+        "package": "SDGCornerstone",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
+        "state": {
+          "branch": null,
+          "revision": "9e3d5bcb91ee6698c39143ede1fa2396003e72c9",
+          "version": "7.2.3"
         }
       },
       {
-        "package" : "SDGSwift",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/SDGSwift",
-        "state" : {
-          "revision" : "c5822cff0f5ca8e70ec39e7938a7b8a36b2e5dc3",
-          "version" : "8.0.2"
+        "package": "SDGSwift",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
+        "state": {
+          "branch": null,
+          "revision": "6116fe0fc99bf5909a8d50d1db7b6b5e2d6a2e6d",
+          "version": "8.0.0"
         }
       },
       {
-        "package" : "swift-argument-parser",
-        "repositoryURL" : "https://github.com/apple/swift-argument-parser.git",
-        "state" : {
-          "revision" : "d2930e8fcf9c33162b9fcc1d522bc975e2d4179b",
-          "version" : "1.0.1"
+        "package": "SDGWeb",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/SDGWeb",
+        "state": {
+          "branch": null,
+          "revision": "a9904e27aeeb88a7ad4727ea6536931c9ab56bd0",
+          "version": "5.5.2"
         }
       },
       {
-        "package" : "swift-collections",
-        "repositoryURL" : "https://github.com/apple/swift-collections",
-        "state" : {
-          "revision" : "2d33a0ea89c961dcb2b3da2157963d9c0370347e",
-          "version" : "1.0.1"
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
+        "state": {
+          "branch": null,
+          "revision": "83b23d940471b313427da226196661856f6ba3e0",
+          "version": "0.4.4"
         }
       },
       {
-        "package" : "swift-crypto",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/swift-crypto.git",
-        "state" : {
-          "revision" : "c52a081f4b12d772872daf78e18b9c9c493b1ab3",
-          "version" : "0.10106.0"
+        "package": "cmark",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-cmark",
+        "state": {
+          "branch": null,
+          "revision": "1168665f6b36be747ffe6b7b90bc54cfc17f42b7",
+          "version": "0.50302.0"
         }
       },
       {
-        "package" : "swift-driver",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/swift-driver.git",
-        "state" : {
-          "revision" : "8d6a841ca8a3e115aa616e872f92911592c38675",
-          "version" : "0.50500.2"
+        "package": "swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections",
+        "state": {
+          "branch": null,
+          "revision": "2d719d75a2065f213e58a5164384a3d2fcf9b59a",
+          "version": "0.0.2"
         }
       },
       {
-        "package" : "llbuild",
-        "repositoryURL" : "https://github.com/apple/swift-llbuild.git",
-        "state" : {
-          "revision" : "5cd4df550b31301508a77064e3dfaa5c5628780e",
-          "version" : "0.5.0"
+        "package": "swift-collections-benchmark",
+        "repositoryURL": "https://github.com/apple/swift-collections-benchmark",
+        "state": {
+          "branch": null,
+          "revision": "665cbb154a55f45bcedd2ab4faf17b1b7ac06de3",
+          "version": "0.0.2"
         }
       },
       {
-        "package" : "swift-numerics",
-        "repositoryURL" : "https://github.com/apple/swift-numerics",
-        "state" : {
-          "revision" : "0a23770641f65a4de61daf5425a37ae32a3fd00d",
-          "version" : "1.0.1"
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "c52a081f4b12d772872daf78e18b9c9c493b1ab3",
+          "version": "0.10106.0"
         }
       },
       {
-        "package" : "SwiftPM",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/swift-package-manager",
-        "state" : {
-          "revision" : "9f049ba4ec8a83a4f5358bae270d4dd2fe564e64",
-          "version" : "0.50500.2"
+        "package": "swift-driver",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-driver.git",
+        "state": {
+          "branch": null,
+          "revision": "6b1ad6f6fa574239fb7a8fcaa100ae1fe6516aaf",
+          "version": "0.50500.1"
         }
       },
       {
-        "package" : "swift-tools-support-core",
-        "repositoryURL" : "https://github.com/SDGGiesbrecht/swift-tools-support-core",
-        "state" : {
-          "revision" : "1b21e2ce36891ed4f458421a83b5d9e886acd4cd",
-          "version" : "0.50500.0"
+        "package": "llbuild",
+        "repositoryURL": "https://github.com/apple/swift-llbuild.git",
+        "state": {
+          "branch": null,
+          "revision": "5cd4df550b31301508a77064e3dfaa5c5628780e",
+          "version": "0.5.0"
         }
       },
       {
-        "package" : "Yams",
-        "repositoryURL" : "https://github.com/jpsim/Yams.git",
-        "state" : {
-          "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-          "version" : "4.0.6"
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "6583ac70c326c3ee080c1d42d9ca3361dca816cd",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "SwiftPM",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-package-manager",
+        "state": {
+          "branch": null,
+          "revision": "dae60383644b19defc4228b187ad19f46f384423",
+          "version": "0.50500.1"
+        }
+      },
+      {
+        "package": "SwiftSyntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax",
+        "state": {
+          "branch": null,
+          "revision": "75e60475d9d8fd5bbc16a12e0eaa2cb01b0c322e",
+          "version": "0.50500.0"
+        }
+      },
+      {
+        "package": "swift-system",
+        "repositoryURL": "https://github.com/apple/swift-system",
+        "state": {
+          "branch": null,
+          "revision": "8ffa04c0a0592e6f4f9c30926dedd8fa1c5371f9",
+          "version": "0.0.1"
+        }
+      },
+      {
+        "package": "swift-tools-support-core",
+        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-tools-support-core",
+        "state": {
+          "branch": null,
+          "revision": "1b21e2ce36891ed4f458421a83b5d9e886acd4cd",
+          "version": "0.50500.0"
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams.git",
+        "state": {
+          "branch": null,
+          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+          "version": "4.0.6"
         }
       }
     ]
   },
-  "version" : 1
+  "version": 1
 }
