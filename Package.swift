@@ -245,6 +245,7 @@ let package = Package(
         "SDGCommandLine",
         .product(name: "SDGText", package: "SDGCornerstone"),
         .product(name: "SDGLocalization", package: "SDGCornerstone"),
+        .product(name: "SDGVersioning", package: "SDGCornerstone"),
       ],
       path: "Tests/TestTool"
     ),

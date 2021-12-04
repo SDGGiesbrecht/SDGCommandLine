@@ -1,5 +1,5 @@
 /*
- main.swift
+ Tool.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
@@ -12,16 +12,6 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import Foundation
-
-import SDGCommandLine
-
 import TestTool
 
-#if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
-  ProcessInfo.applicationIdentifier = "ca.solideogloria.SDGCommandLine.test‐tool"
-  ProcessInfo.version = nil
-  ProcessInfo.packageURL = nil
-#endif
-
-Tool.command.executeAsMain()
+@main extension TestTool.Tool {}
