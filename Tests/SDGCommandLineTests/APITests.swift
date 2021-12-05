@@ -220,7 +220,7 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["execute", "help"])
+            Tool.rootCommand.execute(with: ["execute", "help"])
           }
         }
       #else
@@ -235,7 +235,7 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["reject‐argument", "help"])
+            Tool.rootCommand.execute(with: ["reject‐argument", "help"])
           }
         }
       #else
@@ -255,7 +255,7 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["help", "•language", "he"])
+            Tool.rootCommand.execute(with: ["help", "•language", "he"])
           }
         }
       #else
@@ -270,7 +270,7 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
+            Tool.rootCommand.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
           }
         }
       #else

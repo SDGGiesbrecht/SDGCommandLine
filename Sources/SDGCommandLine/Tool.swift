@@ -45,12 +45,12 @@ extension Tool {
     #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       ProcessInfo.applicationIdentifier = String(applicationIdentifier)
     #endif
-    if let version = version {
+    if let version = version {  // @exempt(from: tests)
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = version
       #endif
     }
-    if let packageURL = packageURL {
+    if let packageURL = packageURL {  // @exempt(from: tests)
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.packageURL = packageURL
       #endif
