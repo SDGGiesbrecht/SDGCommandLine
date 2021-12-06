@@ -1,5 +1,5 @@
 /*
- main.swift
+ Empty.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
@@ -12,4 +12,8 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-print("Hello, world!")
+@main enum Empty {
+  static func main() {
+    print("Hello, world!")
+  }
+}

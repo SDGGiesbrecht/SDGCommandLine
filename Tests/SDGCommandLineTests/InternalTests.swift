@@ -35,7 +35,7 @@ import TestTool
 
 class InternalTests: TestCase {
 
-  static let rootCommand = Tool.command.withRootBehaviour()
+  static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
   func testDirectArguments() {
     testCustomStringConvertibleConformance(
@@ -251,7 +251,7 @@ class InternalTests: TestCase {
               #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
                 // When the cache is empty...
                 testCommand(
-                  Tool.createCommand(),
+                  Tool.rootCommand,
                   with: [
                     "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
                   ],
@@ -263,7 +263,7 @@ class InternalTests: TestCase {
 
                 // When the cache exists...
                 testCommand(
-                  Tool.createCommand(),
+                  Tool.rootCommand,
                   with: [
                     "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
                   ],
@@ -275,7 +275,7 @@ class InternalTests: TestCase {
 
                 // When the cache is empty...
                 testCommand(
-                  Tool.createCommand(),
+                  Tool.rootCommand,
                   with: [
                     "some‐invalid‐argument", "•use‐version", "development",
                     "another‐invalid‐argument",
@@ -288,7 +288,7 @@ class InternalTests: TestCase {
 
                 // When the cache exists...
                 testCommand(
-                  Tool.createCommand(),
+                  Tool.rootCommand,
                   with: [
                     "some‐invalid‐argument", "•use‐version", "development",
                     "another‐invalid‐argument",
@@ -302,7 +302,7 @@ class InternalTests: TestCase {
 
               // Looking for version when it does not exist...
               testCommand(
-                Tool.createCommand(),
+                Tool.rootCommand,
                 with: ["some‐invalid‐argument", "another‐invalid‐argument"],
                 localizations: APILocalization.self,
                 uniqueTestName: "Without Version",
@@ -313,7 +313,7 @@ class InternalTests: TestCase {
               #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
                 // Asking for something which is not a version...
                 testCommand(
-                  Tool.createCommand(),
+                  Tool.rootCommand,
                   with: [
                     "some‐invalid‐argument", "•use‐version", "not‐a‐version",
                     "another‐invalid‐argument",

@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.5
 
 /*
  Package.swift
@@ -232,8 +232,15 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        "test‐tool",
-        "empty‐tool",
+        // #workaround(Swift 5.5.1, Web is unable to link dependency executables.)
+        .target(
+          name: "test‐tool",
+          condition: .when(platforms: [.macOS, .windows, .linux, .tvOS, .iOS, .android, .watchOS])
+        ),
+        .target(
+          name: "empty‐tool",
+          condition: .when(platforms: [.macOS, .windows, .linux, .tvOS, .iOS, .android, .watchOS])
+        ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
       ]
@@ -245,6 +252,7 @@ let package = Package(
         "SDGCommandLine",
         .product(name: "SDGText", package: "SDGCornerstone"),
         .product(name: "SDGLocalization", package: "SDGCornerstone"),
+        .product(name: "SDGVersioning", package: "SDGCornerstone"),
       ],
       path: "Tests/TestTool"
     ),

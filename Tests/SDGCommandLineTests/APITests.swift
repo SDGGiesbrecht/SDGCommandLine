@@ -45,14 +45,14 @@ class APITests: TestCase {
 
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•iterations", "2"],
         localizations: Language.self,
         uniqueTestName: "Integer",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•iterations", "−1"],
         localizations: Language.self,
         uniqueTestName: "Invalid Integer",
@@ -60,7 +60,7 @@ class APITests: TestCase {
       )
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["execute", "•path", "/tmp"],
           localizations: Language.self,
           uniqueTestName: "Absolute Path",
@@ -68,14 +68,14 @@ class APITests: TestCase {
         )
       #endif
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•path", "~"],
         localizations: Language.self,
         uniqueTestName: "Home",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•path", "~/"],
         localizations: Language.self,
         uniqueTestName: "Home 2",
@@ -83,7 +83,7 @@ class APITests: TestCase {
       )
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["execute", "•path", "~/.SDG/Test"],
           localizations: Language.self,
           uniqueTestName: "User Path",
@@ -92,7 +92,7 @@ class APITests: TestCase {
       #endif
       #if !os(Android)  // Path is read only.
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["execute", "•path", "tmp"],
           localizations: Language.self,
           uniqueTestName: "Path",
@@ -105,7 +105,7 @@ class APITests: TestCase {
   func testCommand() {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       testCustomStringConvertibleConformance(
-        of: Tool.command,
+        of: Tool.rootCommand,
         localizations: InterfaceLocalization.self,
         uniqueTestName: "Tool",
         overwriteSpecificationInsteadOfFailing: false
@@ -114,7 +114,7 @@ class APITests: TestCase {
       #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
         FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
           SDGCommandLineTestUtilities.testCommand(
-            Tool.command,
+            Tool.rootCommand,
             with: ["execute"],
             in: temporary,
             localizations: Language.self,
@@ -125,7 +125,7 @@ class APITests: TestCase {
       #endif
 
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["fail"],
         localizations: Language.self,
         uniqueTestName: "Failure",
@@ -133,7 +133,7 @@ class APITests: TestCase {
       )
 
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["ausführen"],
         localizations: Language.self,
         uniqueTestName: "Foreign Command",
@@ -145,14 +145,14 @@ class APITests: TestCase {
   func testCommandError() {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       #if os(Linux)  // System error descriptions differ.
-        let result = Tool.command.execute(with: ["fail", "•system"])
+        let result = Tool.rootCommand.execute(with: ["fail", "•system"])
         _ = result.mapError { (error: Command.Error) -> Command.Error in
           _ = error.localizedDescription
           return error
         }
       #else
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["fail", "•system"],
           localizations: Language.self,
           uniqueTestName: "System Error",
@@ -165,14 +165,14 @@ class APITests: TestCase {
   func testDirectArgument() {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["reject‐argument", "..."],
         localizations: SystemLocalization.self,
         uniqueTestName: "Invalid Argument",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "invalid"],
         localizations: SystemLocalization.self,
         uniqueTestName: "Unexpected Argument",
@@ -184,21 +184,21 @@ class APITests: TestCase {
   func testEnumerationOption() {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•colour", "red"],
         localizations: Language.self,
         uniqueTestName: "Accept Enumeration",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•colour", "rot"],
         localizations: Language.self,
         uniqueTestName: "Accept Foreign Enumeration",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•colour", "none"],
         localizations: SystemLocalization.self,
         uniqueTestName: "Invalid Enumeration",
@@ -209,7 +209,7 @@ class APITests: TestCase {
 
   func testFormatting() throws {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      let output = try Tool.command.execute(with: ["demonstrate‐text‐formatting"]).get()
+      let output = try Tool.rootCommand.execute(with: ["demonstrate‐text‐formatting"]).get()
       XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
       XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
     #endif
@@ -220,12 +220,12 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["execute", "help"])
+            Tool.rootCommand.execute(with: ["execute", "help"])
           }
         }
       #else
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["execute", "help"],
           localizations: SystemLocalization.self,
           uniqueTestName: "Help",
@@ -235,12 +235,12 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["reject‐argument", "help"])
+            Tool.rootCommand.execute(with: ["reject‐argument", "help"])
           }
         }
       #else
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["reject‐argument", "help"],
           localizations: SystemLocalization.self,
           uniqueTestName: "Help (with Direct Arguments)",
@@ -255,12 +255,12 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["help", "•language", "he"])
+            Tool.rootCommand.execute(with: ["help", "•language", "he"])
           }
         }
       #else
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["help", "•language", "he"],
           localizations: Language.self,
           uniqueTestName: "Language Selection by Code",
@@ -270,12 +270,12 @@ class APITests: TestCase {
       #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
         for localization in SystemLocalization.allCases {
           LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.command.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
+            Tool.rootCommand.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
           }
         }
       #else
         SDGCommandLineTestUtilities.testCommand(
-          Tool.command,
+          Tool.rootCommand,
           with: ["help", "•language", "🇬🇷ΕΛ"],
           localizations: Language.self,
           uniqueTestName: "Language Selection by Icon",
@@ -298,7 +298,7 @@ class APITests: TestCase {
 
   func testNoColour() throws {
     #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      let output = try Tool.command.execute(with: ["help", "•no‐colour"]).get()
+      let output = try Tool.rootCommand.execute(with: ["help", "•no‐colour"]).get()
       XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
     #endif
   }
@@ -312,14 +312,14 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•string", "Changed using an option."],
         localizations: Language.self,
         uniqueTestName: "Unicode Option",
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
         localizations: Language.self,
         uniqueTestName: "ASCII Option",
@@ -327,7 +327,7 @@ class APITests: TestCase {
       )
 
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•informal"],
         localizations: Language.self,
         uniqueTestName: "Flag",
@@ -335,7 +335,7 @@ class APITests: TestCase {
       )
 
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•invalid"],
         localizations: SystemLocalization.self,
         uniqueTestName: "Invalid Option",
@@ -343,7 +343,7 @@ class APITests: TestCase {
       )
 
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•string"],
         localizations: SystemLocalization.self,
         uniqueTestName: "Missing Option Argument",
@@ -351,7 +351,7 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
       SDGCommandLineTestUtilities.testCommand(
-        Tool.command,
+        Tool.rootCommand,
         with: ["execute", "•unsatisfiable", "..."],
         localizations: SystemLocalization.self,
         uniqueTestName: "Invalid Option Argument",
