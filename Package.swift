@@ -289,8 +289,6 @@ for target in package.targets {
     // #workaround(Swift 5.5.1, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(SDGCornerstone 7.2.4, Web lacks TestCase.)
-    .define("PLATFORM_LACKS_SDG_CORNERSTONE_TEST_CASE", .when(platforms: [.watchOS])),
     // #workaround(Swift 5.5.1, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
