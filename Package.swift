@@ -274,29 +274,29 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #workaround(Swift 5.4.2, Web lacks Foundation.Process.)
-    // #workaround(Swift 5.4.2, Web lacks Foundation.ProcessInfo.)
+    // #workaround(Swift 5.5.1, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.5.1, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
-    // #workaround(Swift 5.4.2, Web lacks Foundation.Bundle.)
+    // #workaround(Swift 5.5.1, Web lacks Foundation.Bundle.)
     .define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.4.2, Web lacks Foundation.FileManager.)
+    // #workaround(Swift 5.5.1, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.4.2, Web lacks Foundation.UserDefaults.)
+    // #workaround(Swift 5.5.1, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
     // #workaround(SDGCornerstone 7.2.4, Web lacks TestCase.)
     .define("PLATFORM_LACKS_SDG_CORNERSTONE_TEST_CASE", .when(platforms: [.watchOS])),
-    // #workaround(Swift 5.4.2, SwiftPM does not compile on Windows.)
+    // #workaround(Swift 5.5.1, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
     ),
-    // #workaround(SDGCornerstone 7.2.4, Windows suffers unexplained segmentation faults.)
+    // #workaround(SDGCornerstone 8.0.1, Windows suffers unexplained segmentation faults.)
     .define("PLATFORM_SUFFERS_SEGMENTATION_FAULTS", .when(platforms: [.windows])),
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
@@ -304,7 +304,7 @@ for target in package.targets {
 
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
-  // #workaround(Swift 5.4.2, Unable to build from Windows.)
+  // #workaround(Swift 5.5.1, Unable to build from Windows.)
   package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
