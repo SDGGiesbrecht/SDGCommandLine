@@ -19,8 +19,8 @@ import SDGLocalization
 
 extension Int {
 
-  // #workaround(SDGCornerstone 7.2.3, This is redundant, but dodges a compiler bug.)
-  internal static func parse(
+  // #warning(SDGCornerstone 7.2.3, This is redundant, but dodges a compiler bug.)
+  /*internal static func parse(
     possibleDecimal decimal: StrictString
   ) -> Result<Self, TextConvertibleNumberParseError> {
     var negative = false
@@ -36,5 +36,5 @@ extension Int {
         return result
       }
     }
-  }
+  }*/
 }
