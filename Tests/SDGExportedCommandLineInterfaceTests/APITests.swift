@@ -20,9 +20,6 @@ import SDGXCTestUtilities
 import SDGExportedCommandLineInterface
 import SDGCommandLineTestUtilities
 
-#if PLATFORM_LACKS_SDG_CORNERSTONE_TEST_CASE
-  typealias TestCase = XCTestCase
-#endif
 class APITests: TestCase {
 
   #if !PLATFORM_LACKS_FOUNDATION_BUNDLE
