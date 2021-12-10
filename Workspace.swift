@@ -86,8 +86,3 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
-
-// #workaround(Some tests require Swift 5.5 to be present.)
-#if compiler(<5.5)
-  configuration.testing.enforceCoverage = false
-#endif
