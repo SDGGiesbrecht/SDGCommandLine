@@ -137,7 +137,7 @@ let package = Package(
     .package(
       name: "SDGCommandLine",
       url: "https://github.com/SDGGiesbrecht/SDGCommandLine",
-      from: Version(1, 7, 7)
+      from: Version(1, 7, 8)
     ),
   ],
   targets: [
