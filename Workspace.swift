@@ -4,7 +4,7 @@
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
 
- Copyright ©2018–2021 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2018–2022 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -86,3 +86,5 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
+
+configuration.supportedPlatforms.remove(.centOS)
