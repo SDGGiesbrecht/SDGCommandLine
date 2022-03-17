@@ -142,7 +142,9 @@ let package = Package(
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(8, 0, 3)
+      // #warning(Branch.)
+      .branch("swift‐5.6")
+      //from: Version(8, 0, 3)
     ),
   ],
   targets: [
