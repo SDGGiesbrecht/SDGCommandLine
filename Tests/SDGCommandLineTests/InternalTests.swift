@@ -228,6 +228,12 @@ class InternalTests: TestCase {
                 + "/tool \u{2D}\u{2D}depth".scalars,
               with: "tool [...]/tool \u{2D}\u{2D}depth".scalars
             )
+            output.scalars.replaceMatches(
+              for: "(".scalars
+                + RepetitionPattern(ConditionalPattern({ $0 ∈ CharacterSet.decimalDigits ∪ ["."] }), consumption: .lazy)
+                + "s)".scalars,
+              with: "([duration]s)".scalars
+            )
             // Spurious
             output = String(
               LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) }))
