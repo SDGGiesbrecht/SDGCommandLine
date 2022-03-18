@@ -230,7 +230,10 @@ class InternalTests: TestCase {
             )
             output.scalars.replaceMatches(
               for: "(".scalars
-                + RepetitionPattern(ConditionalPattern({ $0 ∈ CharacterSet.decimalDigits ∪ ["."] }), consumption: .lazy)
+                + RepetitionPattern(
+                  ConditionalPattern({ $0 ∈ CharacterSet.decimalDigits ∪ ["."] }),
+                  consumption: .lazy
+                )
                 + "s)".scalars,
               with: "([duration]s)".scalars
             )
