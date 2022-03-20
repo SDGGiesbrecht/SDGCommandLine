@@ -88,3 +88,6 @@ configuration.documentation.api.ignoredDependencies = [
 ]
 
 configuration.supportedPlatforms.remove(.centOS)
+
+// #workaround(Disabled while stradling versions.)
+configuration.testing.enforceCoverage = false
