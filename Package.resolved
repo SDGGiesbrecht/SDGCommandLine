@@ -6,17 +6,17 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGCornerstone",
         "state": {
           "branch": null,
-          "revision": "617eb1d411f92005bc0b40da1214b239ab9c42f4",
-          "version": "8.0.0"
+          "revision": "5ab7d7449d9c9bea201bbe536b8d51fb1ebc4106",
+          "version": "9.0.0"
         }
       },
       {
         "package": "SDGSwift",
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGSwift",
         "state": {
-          "branch": "swift‐5.6",
-          "revision": "501a737a3b54541cdcfbdde01bf8f07f7eb3a6e0",
-          "version": null
+          "branch": null,
+          "revision": "daec126d3abd5e13ac4c748615e0f7c93049b779",
+          "version": "9.0.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/SDGWeb",
         "state": {
           "branch": null,
-          "revision": "7b8819b63aab6eb55a02139d9c510ce42db62124",
-          "version": "5.5.4"
+          "revision": "c21b18dea008fa1d91a259b14a004a1cb77df602",
+          "version": "6.0.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/swift-driver",
         "state": {
           "branch": null,
-          "revision": "0bbd7509847303870ddf16bc5b6c93dbd4333710",
-          "version": "0.50600.1"
+          "revision": "5864885ffd1e732cc1c186f4241686b190aa5cbf",
+          "version": "0.50600.2"
         }
       },
       {
@@ -96,17 +96,17 @@
         "repositoryURL": "https://github.com/SDGGiesbrecht/swift-package-manager",
         "state": {
           "branch": null,
-          "revision": "2105b7697de6ea09bcd231ae471db68fec59d0b8",
-          "version": "0.50600.1"
+          "revision": "62cbf6cd5aed417fd485b8a0a4990f8b452f4e09",
+          "version": "0.50600.3"
         }
       },
       {
         "package": "SwiftSyntax",
-        "repositoryURL": "https://github.com/SDGGiesbrecht/swift-syntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax",
         "state": {
           "branch": null,
-          "revision": "ec5daa84f88236b7c198783e51091a05f3f79362",
-          "version": "0.0.506000"
+          "revision": "0b6c22b97f8e9320bca62e82cdbee601cf37ad3f",
+          "version": "0.50600.1"
         }
       },
       {
