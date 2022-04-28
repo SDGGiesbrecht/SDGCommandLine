@@ -307,7 +307,7 @@ if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
     target.dependencies = target.dependencies.filter { dependency in
       switch dependency {
       case .targetItem(let name, condition: _):
-        return !name.hasSuffix("‐tool") // @exempt(from: unicode)
+        return !name.hasSuffix("‐tool")  // @exempt(from: unicode)
       default:
         return true
       }
