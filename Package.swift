@@ -307,7 +307,7 @@ if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
     target.name = target.name.replacingOccurrences(of: "‐", with: "_")
     target.dependencies = target.dependencies.map { dependency in
       switch dependency {
-      case .byNameItem(let name, let condition):
+      case .targetItem(let name, let condition):
         return .byNameItem(
           name: name.replacingOccurrences(of: "‐", with: "_"),
           condition: condition
