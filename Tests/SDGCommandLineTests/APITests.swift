@@ -43,245 +43,229 @@ class APITests: TestCase {
       overwriteSpecificationInsteadOfFailing: false
     )
 
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•iterations", "2"],
+      localizations: Language.self,
+      uniqueTestName: "Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•iterations", "−1"],
+      localizations: Language.self,
+      uniqueTestName: "Invalid Integer",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.rootCommand,
-        with: ["execute", "•iterations", "2"],
+        with: ["execute", "•path", "/tmp"],
         localizations: Language.self,
-        uniqueTestName: "Integer",
+        uniqueTestName: "Absolute Path",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•path", "~"],
+      localizations: Language.self,
+      uniqueTestName: "Home",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•path", "~/"],
+      localizations: Language.self,
+      uniqueTestName: "Home 2",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.rootCommand,
-        with: ["execute", "•iterations", "−1"],
+        with: ["execute", "•path", "~/.SDG/Test"],
         localizations: Language.self,
-        uniqueTestName: "Invalid Integer",
+        uniqueTestName: "User Path",
         overwriteSpecificationInsteadOfFailing: false
       )
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["execute", "•path", "/tmp"],
-          localizations: Language.self,
-          uniqueTestName: "Absolute Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+    #endif
+    #if !os(Android)  // Path is read only.
       SDGCommandLineTestUtilities.testCommand(
         Tool.rootCommand,
-        with: ["execute", "•path", "~"],
+        with: ["execute", "•path", "tmp"],
         localizations: Language.self,
-        uniqueTestName: "Home",
+        uniqueTestName: "Path",
         overwriteSpecificationInsteadOfFailing: false
       )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•path", "~/"],
-        localizations: Language.self,
-        uniqueTestName: "Home 2",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["execute", "•path", "~/.SDG/Test"],
-          localizations: Language.self,
-          uniqueTestName: "User Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
-      #if !os(Android)  // Path is read only.
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["execute", "•path", "tmp"],
-          localizations: Language.self,
-          uniqueTestName: "Path",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
     #endif
   }
 
   func testCommand() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      testCustomStringConvertibleConformance(
-        of: Tool.rootCommand,
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Tool",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    testCustomStringConvertibleConformance(
+      of: Tool.rootCommand,
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "Tool",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
-        FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
-          SDGCommandLineTestUtilities.testCommand(
-            Tool.rootCommand,
-            with: ["execute"],
-            in: temporary,
-            localizations: Language.self,
-            uniqueTestName: "Execution",
-            overwriteSpecificationInsteadOfFailing: false
-          )
-        }
-      #endif
-
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["fail"],
-        localizations: Language.self,
-        uniqueTestName: "Failure",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["ausführen"],
-        localizations: Language.self,
-        uniqueTestName: "Foreign Command",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
+      FileManager.default.withTemporaryDirectory(appropriateFor: nil) { temporary in
+        SDGCommandLineTestUtilities.testCommand(
+          Tool.rootCommand,
+          with: ["execute"],
+          in: temporary,
+          localizations: Language.self,
+          uniqueTestName: "Execution",
+          overwriteSpecificationInsteadOfFailing: false
+        )
+      }
     #endif
+
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["fail"],
+      localizations: Language.self,
+      uniqueTestName: "Failure",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["ausführen"],
+      localizations: Language.self,
+      uniqueTestName: "Foreign Command",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testCommandError() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      #if os(Linux)  // System error descriptions differ.
-        let result = Tool.rootCommand.execute(with: ["fail", "•system"])
-        _ = result.mapError { (error: Command.Error) -> Command.Error in
-          _ = error.localizedDescription
-          return error
-        }
-      #else
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["fail", "•system"],
-          localizations: Language.self,
-          uniqueTestName: "System Error",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+    #if os(Linux)  // System error descriptions differ.
+      let result = Tool.rootCommand.execute(with: ["fail", "•system"])
+      _ = result.mapError { (error: Command.Error) -> Command.Error in
+        _ = error.localizedDescription
+        return error
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["fail", "•system"],
+        localizations: Language.self,
+        uniqueTestName: "System Error",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
   func testDirectArgument() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["reject‐argument", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Unexpected Argument",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["reject‐argument", "..."],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Invalid Argument",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "invalid"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Unexpected Argument",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testEnumerationOption() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•colour", "red"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•colour", "rot"],
-        localizations: Language.self,
-        uniqueTestName: "Accept Foreign Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•colour", "none"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Enumeration",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•colour", "red"],
+      localizations: Language.self,
+      uniqueTestName: "Accept Enumeration",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•colour", "rot"],
+      localizations: Language.self,
+      uniqueTestName: "Accept Foreign Enumeration",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•colour", "none"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Invalid Enumeration",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testFormatting() throws {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      let output = try Tool.rootCommand.execute(with: ["demonstrate‐text‐formatting"]).get()
-      XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
-      XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
-    #endif
+    let output = try Tool.rootCommand.execute(with: ["demonstrate‐text‐formatting"]).get()
+    XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
+    XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
   }
 
   func testHelp() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-        for localization in SystemLocalization.allCases {
-          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.rootCommand.execute(with: ["execute", "help"])
-          }
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["execute", "help"])
         }
-      #else
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["execute", "help"],
-          localizations: SystemLocalization.self,
-          uniqueTestName: "Help",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
-      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-        for localization in SystemLocalization.allCases {
-          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.rootCommand.execute(with: ["reject‐argument", "help"])
-          }
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["execute", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["reject‐argument", "help"])
         }
-      #else
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["reject‐argument", "help"],
-          localizations: SystemLocalization.self,
-          uniqueTestName: "Help (with Direct Arguments)",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["reject‐argument", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help (with Direct Arguments)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
   func testLanguage() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-        for localization in SystemLocalization.allCases {
-          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.rootCommand.execute(with: ["help", "•language", "he"])
-          }
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["help", "•language", "he"])
         }
-      #else
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["help", "•language", "he"],
-          localizations: Language.self,
-          uniqueTestName: "Language Selection by Code",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
-      #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-        for localization in SystemLocalization.allCases {
-          LocalizationSetting(orderOfPrecedence: [localization.code]).do {
-            Tool.rootCommand.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
-          }
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["help", "•language", "he"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Code",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["help", "•language", "🇬🇷ΕΛ"])
         }
-      #else
-        SDGCommandLineTestUtilities.testCommand(
-          Tool.rootCommand,
-          with: ["help", "•language", "🇬🇷ΕΛ"],
-          localizations: Language.self,
-          uniqueTestName: "Language Selection by Icon",
-          overwriteSpecificationInsteadOfFailing: false
-        )
-      #endif
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["help", "•language", "🇬🇷ΕΛ"],
+        localizations: Language.self,
+        uniqueTestName: "Language Selection by Icon",
+        overwriteSpecificationInsteadOfFailing: false
+      )
     #endif
   }
 
@@ -297,68 +281,64 @@ class APITests: TestCase {
   }
 
   func testNoColour() throws {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      let output = try Tool.rootCommand.execute(with: ["help", "•no‐colour"]).get()
-      XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
-    #endif
+    let output = try Tool.rootCommand.execute(with: ["help", "•no‐colour"]).get()
+    XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
   }
 
   func testOption() {
-    #if !PLATFORM_SUFFERS_SEGMENTATION_FAULTS
-      testCustomStringConvertibleConformance(
-        of: Execute.textOption,
-        localizations: InterfaceLocalization.self,
-        uniqueTestName: "Text",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "Unicode Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
-        localizations: Language.self,
-        uniqueTestName: "ASCII Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    testCustomStringConvertibleConformance(
+      of: Execute.textOption,
+      localizations: InterfaceLocalization.self,
+      uniqueTestName: "Text",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•string", "Changed using an option."],
+      localizations: Language.self,
+      uniqueTestName: "Unicode Option",
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "\u{2D}\u{2D}string", "Changed using an option."],
+      localizations: Language.self,
+      uniqueTestName: "ASCII Option",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•informal"],
-        localizations: Language.self,
-        uniqueTestName: "Flag",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•informal"],
+      localizations: Language.self,
+      uniqueTestName: "Flag",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•invalid"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option",
-        overwriteSpecificationInsteadOfFailing: false
-      )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•invalid"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Invalid Option",
+      overwriteSpecificationInsteadOfFailing: false
+    )
 
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•string"],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Missing Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
-      SDGCommandLineTestUtilities.testCommand(
-        Tool.rootCommand,
-        with: ["execute", "•unsatisfiable", "..."],
-        localizations: SystemLocalization.self,
-        uniqueTestName: "Invalid Option Argument",
-        allowColour: true,
-        overwriteSpecificationInsteadOfFailing: false
-      )
-    #endif
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•string"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Missing Option Argument",
+      allowColour: true,
+      overwriteSpecificationInsteadOfFailing: false
+    )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["execute", "•unsatisfiable", "..."],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Invalid Option Argument",
+      allowColour: true,
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testVersion() {
