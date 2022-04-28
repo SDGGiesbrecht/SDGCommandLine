@@ -286,8 +286,8 @@ for target in package.targets {
     //.define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
     // #workaround(Swift 5.6, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #warning(Swift 5.5.1, Web lacks Foundation.UserDefaults.)
-    //.define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.6, Web lacks Foundation.UserDefaults.)
+    .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
     // #workaround(Swift 5.6, SwiftPM does not compile on Windows.)
     .define(
