@@ -289,7 +289,7 @@ for target in package.targets {
     // #workaround(Swift 5.6, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(workspace version 0.39.1, Windows cannot find Git on CI.)
+    // #workaround(SDGSwift 9.0.0, Windows cannot find Git on CI.)
     .define("PLATFORM_CANNOT_LOCATE_GIT", .when(platforms: [.windows])),
     // #workaround(Swift 5.6, SwiftPM does not compile on Windows.)
     .define(
