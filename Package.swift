@@ -295,8 +295,8 @@ for target in package.targets {
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
     ),
     // #warning(SDGCornerstone 8.0.1, Windows suffers unexplained segmentation faults.)
-    //.define("PLATFORM_SUFFERS_SEGMENTATION_FAULTS", .when(platforms: [.windows])),
-    .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
+    //.define("PLATFORM_SUFFERS_SEGMENTATION_FAU/Users/Jeremy/Documents/Programming/Projects/SDGCommandLineLTS", .when(platforms: [.windows])),
+    .define("PLATFORM_USES_SEPARATE_TEST_BU/Users/Jeremy/Documents/Programming/Projects/SDGCommandLineNDLE", .when(platforms: [.macOS])),
   ])
 }
 
@@ -305,11 +305,8 @@ if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
   // #workaround(Swift 5.6, Unable to build from Windows.)
   for target in package.targets
   where target.name.contains("‐") {
-    let name = target.name.replacingOccurrences(of: "‐", with: "_")
-    var path = target.path ?? "Sources/\(target.name)"
-    path.removeLast(target.name.count)
-    target.path = path.appending(name)
-    target.name = name
+    target.path = target.path ?? "Sources/\(target.name)"
+    target.name = target.name.replacingOccurrences(of: "‐", with: "_")
   }
 }
 
