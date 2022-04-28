@@ -274,18 +274,18 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #warning(Swift 5.5.1, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.6, Web lacks Foundation.Process.)
     // #workaround(Swift 5.6, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
-    //.define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
+    .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
     // #warning(Swift 5.5.1, Web lacks Foundation.Bundle.)
     //.define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
-    // #warning(Swift 5.5.1, Web lacks Foundation.FileManager.)
-    //.define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.6, Web lacks Foundation.FileManager.)
+    .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
     // #warning(Swift 5.5.1, Web lacks Foundation.UserDefaults.)
     //.define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
