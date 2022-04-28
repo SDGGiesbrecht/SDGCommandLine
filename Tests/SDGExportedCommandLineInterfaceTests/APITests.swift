@@ -22,7 +22,7 @@ import SDGCommandLineTestUtilities
 
 class APITests: TestCase {
 
-  #if !PLATFORM_LACKS_FOUNDATION_BUNDLE
+  #if !PLATFORM_LACKS_FOUNDATION_BUNDLE_BUNDLE_URL
     let productsDirectory: URL = {
       #if PLATFORM_USES_SEPARATE_TEST_BUNDLE
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {

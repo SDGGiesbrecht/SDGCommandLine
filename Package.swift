@@ -282,8 +282,8 @@ for target in package.targets {
     // @endExample
 
     // Internal‐only:
-    // #warning(Swift 5.5.1, Web lacks Foundation.Bundle.)
-    //.define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.6, Web lacks Foundation.Bundle.)
+    .define("PLATFORM_LACKS_FOUNDATION_BUNDLE_BUNDLE_URL", .when(platforms: [.wasi])),
     // #workaround(Swift 5.6, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
     // #workaround(Swift 5.6, Web lacks Foundation.UserDefaults.)
