@@ -302,11 +302,15 @@ for target in package.targets {
 
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
-  // #warning(Swift 5.5.1, Unable to build from Windows.)
-  /*package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
-  for target in package.targets {
-    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
-  }*/
+  // #workaround(Swift 5.6, Unable to build from Windows.)
+  for target in package.targets
+  where target.name.contains("‐") {
+    let name = target.name.replacingOccurrences(of: "‐", with: "_")
+    var path = target.path ?? "Sources/\(target.name)"
+    path.removeLast(target.name.count)
+    target.path = path.appending(name)
+    target.name = name
+  }
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
