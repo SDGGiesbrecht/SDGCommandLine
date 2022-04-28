@@ -263,10 +263,10 @@ let package = Package(
         "SDGCommandLine",
         "TestTool",
       ],
-      path: "Tests/test‐tool"
+      path: "Tests/test_tool"
     ),
 
-    .executableTarget(name: "empty‐tool", path: "Tests/empty‐tool"),
+    .executableTarget(name: "empty‐tool", path: "Tests/empty_tool"),
   ]
 )
 
@@ -295,18 +295,27 @@ for target in package.targets {
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
     ),
     // #warning(SDGCornerstone 8.0.1, Windows suffers unexplained segmentation faults.)
-    //.define("PLATFORM_SUFFERS_SEGMENTATION_FAU/Users/Jeremy/Documents/Programming/Projects/SDGCommandLineLTS", .when(platforms: [.windows])),
-    .define("PLATFORM_USES_SEPARATE_TEST_BU/Users/Jeremy/Documents/Programming/Projects/SDGCommandLineNDLE", .when(platforms: [.macOS])),
+    //.define("PLATFORM_SUFFERS_SEGMENTATION_FAULTS", .when(platforms: [.windows])),
+    .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
 }
 
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
-  // #workaround(Swift 5.6, Unable to build from Windows.)
-  for target in package.targets
-  where target.name.contains("‐") {
-    target.path = target.path ?? "Sources/\(target.name)"
+  // #workaround(Swift 5.6, Windows cannot handle Unicode name.)
+  for target in package.targets {
     target.name = target.name.replacingOccurrences(of: "‐", with: "_")
+    target.dependencies = target.dependencies.map { dependency in
+      switch dependency {
+      case .byNameItem(let name, let condition):
+        return .byNameItem(
+          name: name.replacingOccurrences(of: "‐", with: "_"),
+          condition: condition
+        )
+      default:
+        return dependency
+      }
+    }
   }
 }
 
