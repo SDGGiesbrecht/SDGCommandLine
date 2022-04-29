@@ -1,10 +1,10 @@
 /*
- Tool.swift
+ Empty.swift
 
  This source file is part of the SDGCommandLine open source project.
  https://sdggiesbrecht.github.io/SDGCommandLine
 
- Copyright ©2018–2022 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
+ Copyright ©2019–2022 Jeremy David Giesbrecht and the SDGCommandLine project contributors.
 
  Soli Deo gloria.
 
@@ -12,6 +12,10 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import TestTool
+// #workaround(Swift 5.6, Directory should be “empty‐tool” but for Windows bug.)
 
-@main extension TestTool.Tool {}
+@main enum Empty {
+  static func main() {
+    print("Hello, world!")
+  }
+}

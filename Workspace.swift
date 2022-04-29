@@ -86,6 +86,3 @@ configuration.documentation.api.ignoredDependencies = [
   "Workspace",
   "Xcodeproj",
 ]
-
-// #workaround(Disabled while stradling versions.)
-configuration.testing.enforceCoverage = false

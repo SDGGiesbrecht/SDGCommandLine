@@ -263,10 +263,10 @@ let package = Package(
         "SDGCommandLine",
         "TestTool",
       ],
-      path: "Tests/test‐tool"
+      path: "Tests/test_tool"
     ),
 
-    .executableTarget(name: "empty‐tool", path: "Tests/empty‐tool"),
+    .executableTarget(name: "empty‐tool", path: "Tests/empty_tool"),
   ]
 )
 
@@ -274,43 +274,65 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #workaround(Swift 5.5.1, Web lacks Foundation.Process.)
-    // #workaround(Swift 5.5.1, Web lacks Foundation.ProcessInfo.)
+    // #workaround(Swift 5.6, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.6, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
-    // #workaround(Swift 5.5.1, Web lacks Foundation.Bundle.)
-    .define("PLATFORM_LACKS_FOUNDATION_BUNDLE", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.5.1, Web lacks Foundation.FileManager.)
+    // #workaround(Swift 5.6, Web lacks Foundation.Bundle.)
+    .define("PLATFORM_LACKS_FOUNDATION_BUNDLE_BUNDLE_URL", .when(platforms: [.wasi])),
+    // #workaround(Swift 5.6, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.5.1, Web lacks Foundation.UserDefaults.)
+    // #workaround(Swift 5.6, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(Swift 5.5.1, SwiftPM does not compile on Windows.)
+    // #workaround(SDGSwift 9.0.0, Windows cannot find Git on CI.)
+    .define("PLATFORM_CANNOT_LOCATE_GIT", .when(platforms: [.windows])),
+    // #workaround(Swift 5.6, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
     ),
-    // #workaround(SDGCornerstone 8.0.1, Windows suffers unexplained segmentation faults.)
-    .define("PLATFORM_SUFFERS_SEGMENTATION_FAULTS", .when(platforms: [.windows])),
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
 }
 
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
-  // #workaround(Swift 5.5.1, Unable to build from Windows.)
-  package.targets.removeAll(where: { $0.name.hasSuffix("‐tool") })
+  // #workaround(Swift 5.6, Windows cannot link executables.)
   for target in package.targets {
-    target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
+    target.dependencies = target.dependencies.filter { dependency in
+      switch dependency {
+      case .targetItem(let name, condition: _):
+        return !name.hasSuffix("‐tool")  // @exempt(from: unicode)
+      default:
+        return true
+      }
+    }
+  }
+
+  // #workaround(Swift 5.6, Windows cannot handle Unicode name.)
+  for target in package.targets {
+    target.name = target.name.replacingOccurrences(of: "‐", with: "_")
+    target.dependencies = target.dependencies.map { dependency in
+      switch dependency {
+      case .targetItem(let name, let condition):
+        return .targetItem(
+          name: name.replacingOccurrences(of: "‐", with: "_"),
+          condition: condition
+        )
+      default:
+        return dependency
+      }
+    }
   }
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
-  // #workaround(xcodebuild -version 13.1, Tool targets don’t work on tvOS.) @exempt(from: unicode)
+  // #workaround(xcodebuild -version 13.3.1, Tool targets don’t work on tvOS.) @exempt(from: unicode)
   package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
@@ -318,7 +340,7 @@ if ProcessInfo.processInfo.environment["TARGETING_TVOS"] == "true" {
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_IOS"] == "true" {
-  // #workaround(xcodebuild -version 13.1, Tool targets don’t work on iOS.) @exempt(from: unicode)
+  // #workaround(xcodebuild -version 13.3.1, Tool targets don’t work on iOS.) @exempt(from: unicode)
   package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
@@ -326,7 +348,7 @@ if ProcessInfo.processInfo.environment["TARGETING_IOS"] == "true" {
 }
 
 if ProcessInfo.processInfo.environment["TARGETING_WATCHOS"] == "true" {
-  // #workaround(xcodebuild -version 13.1, Tool targets don’t work on watchOS.) @exempt(from: unicode)
+  // #workaround(xcodebuild -version 13.3.1, Tool targets don’t work on watchOS.) @exempt(from: unicode)
   package.targets.removeAll(where: { $0.type == .executable })
   for target in package.targets {
     target.dependencies.removeAll(where: { "\($0)".contains("‐tool") })
