@@ -232,14 +232,15 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
+        // #workaround(Swift 5.6, Windows is unable to link dependency executables.)
         // #workaround(Swift 5.5.1, Web is unable to link dependency executables.)
         .target(
           name: "test‐tool",
-          condition: .when(platforms: [.macOS, .windows, .linux, .tvOS, .iOS, .android, .watchOS])
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .target(
           name: "empty‐tool",
-          condition: .when(platforms: [.macOS, .windows, .linux, .tvOS, .iOS, .android, .watchOS])
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
@@ -302,17 +303,6 @@ for target in package.targets {
 
 import Foundation
 if ProcessInfo.processInfo.environment["TARGETING_WINDOWS"] == "true" {
-  // #workaround(Swift 5.6, Windows cannot link executables.)
-  for target in package.targets {
-    target.dependencies = target.dependencies.filter { dependency in
-      switch dependency {
-      case .targetItem(let name, condition: _):
-        return !name.hasSuffix("‐tool")  // @exempt(from: unicode)
-      default:
-        return true
-      }
-    }
-  }
 
   // #workaround(Swift 5.6, Windows cannot handle Unicode name.)
   for target in package.targets {
