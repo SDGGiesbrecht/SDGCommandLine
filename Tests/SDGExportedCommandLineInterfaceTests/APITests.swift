@@ -46,7 +46,7 @@ class APITests: TestCase {
         }
 
         switch CommandInterface.loadInterface(
-          of: productsDirectory.appendingPathComponent("empty‐tool"),
+          of: productsDirectory.appendingPathComponent("empty_tool"),
           in: "en"
         ) {
         case .failure:
@@ -56,7 +56,7 @@ class APITests: TestCase {
         }
 
         let interface = try CommandInterface.loadInterface(
-          of: productsDirectory.appendingPathComponent("test‐tool"),
+          of: productsDirectory.appendingPathComponent("test_tool"),
           in: ""
         ).get()
         XCTAssert(interface.options.first?.isFlag == true)
