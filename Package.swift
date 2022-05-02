@@ -233,14 +233,14 @@ let package = Package(
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
         // #workaround(Swift 5.6, Windows is unable to link dependency executables.)
-        // #warning(Swift 5.5.1, Web is unable to link dependency executables.)
+        // #workaround(Swift 5.6, Web is unable to link dependency executables.)
         .target(
           name: "test_tool",
-          condition: .when(platforms: [.macOS, .wasi, .linux, .tvOS, .iOS, .android, .watchOS])
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .target(
           name: "empty_tool",
-          condition: .when(platforms: [.macOS, .wasi, .linux, .tvOS, .iOS, .android, .watchOS])
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
