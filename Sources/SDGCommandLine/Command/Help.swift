@@ -118,6 +118,7 @@ extension Command {
     description: helpDescription,
     discussion: nil,
     directArguments: [],
+    infiniteFinalArgument: false,
     options: [],
     execution: { _, _, output in
       output.print("")
