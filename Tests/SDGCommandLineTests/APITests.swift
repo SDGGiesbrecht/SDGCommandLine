@@ -171,6 +171,13 @@ class APITests: TestCase {
       uniqueTestName: "Unexpected Argument",
       overwriteSpecificationInsteadOfFailing: false
     )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["demonstrate‐repeated‐argument", "skip", "1", "2", "3"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Repeated Argument",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testEnumerationOption() {
