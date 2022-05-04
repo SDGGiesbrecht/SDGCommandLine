@@ -243,6 +243,7 @@ let package = Package(
           condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
+        .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone"),
         .product(name: "SDGXCTestUtilities", package: "SDGCornerstone"),
       ]
     ),
