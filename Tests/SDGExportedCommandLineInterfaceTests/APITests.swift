@@ -64,13 +64,12 @@ class APITests: TestCase {
         ).get()
         XCTAssert(interface.options.first?.isFlag == true)
       #endif
-
-      let version1 = try Data(
-        from: testSpecificationDirectory()
-          .appendingPathComponent("Exports")
-          .appendingPathComponent("Version 1.json")
-      )
-      _ = try JSONDecoder().decode(CommandInterface.self, from: version1)
     #endif
+    let version1 = try Data(
+      from: testSpecificationDirectory()
+        .appendingPathComponent("Exports")
+        .appendingPathComponent("Version 1.json")
+    )
+    _ = try JSONDecoder().decode(CommandInterface.self, from: version1)
   }
 }
