@@ -1,0 +1,22 @@
+$ werkzeug demonstrate‐repeated‐argument help •no‐colour
+
+werkzeug wiederholtes‐argument‐vorführen [Zeichenkette] [1–10 ...] führt ein wiederholtes Argument vor.
+
+Unterbefehle
+
+hilfe zeigt Gebrauchsinformationen an.
+
+Optionen
+
+•ohne‐farben Blendet Farben aus der Ausgabe aus.
+•sprache [Spracheinstellung] Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.
+•version‐verwenden [Version] Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist.
+
+Argumentarte
+
+[1–10] Eine ganze Zahl zwischen 1 und 10 einschließlich.
+[Spracheinstellung] Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch
+[Version] Eine Versionsnummer oder „entwicklung“.
+[Zeichenkette] Eine beliebige Zeichenkette.
+
+0

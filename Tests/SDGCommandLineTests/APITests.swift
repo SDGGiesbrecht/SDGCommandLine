@@ -241,6 +241,21 @@ class APITests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["demonstrate‐repeated‐argument", "help"])
+        }
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["demonstrate‐repeated‐argument", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help (with Repeated Arguments)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
   }
 
   func testLanguage() {
