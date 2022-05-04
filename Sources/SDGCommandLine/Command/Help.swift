@@ -126,14 +126,31 @@ extension Command {
       let stack = Command.stack.dropLast()  // Ignoring help.
       let command = stack.last!
 
-      let formatType = { (type: StrictString) -> StrictString in
-        return ("[" + type + "]").formattedAsType()
+      func formatType(type: StrictString, variadic: Bool) -> StrictString {
+        let contents: StrictString
+        if variadic {
+          switch InterfaceLocalization.resolved() {
+          case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:
+            contents = "\(type)..."
+          case .deutschDeutschland:
+            contents = "\(type) ..."
+          }
+        } else {
+          contents = type
+        }
+        return ("[\(contents)]" as StrictString).formattedAsType()
       }
 
       var commandName = stack.map({ $0.localizedName() }).joined(separator: " ")
         .formattedAsSubcommand()
-      for directArgument in command.directArguments {
-        commandName += " " + formatType(directArgument.localizedName())
+      for index in command.directArguments.indices {
+        let directArgument = command.directArguments[index]
+        commandName +=
+          " "
+          + formatType(
+            type: directArgument.localizedName(),
+            variadic: command.infiniteFinalArgument ∧ index == command.directArguments.indices.last
+          )
       }
       output.print(commandName + " " + command.localizedDescription())
 
@@ -178,8 +195,14 @@ extension Command {
           getHeadword: { $0.localizedName() },
           getFormattedHeadword: { entry in
             entry.localizedName().formattedAsSubcommand()
-              + entry.directArguments.map({ argument in
-                " " + formatType(argument.localizedName())
+              + entry.directArguments.indices.map({ index in
+                let argument = entry.directArguments[index]
+                return " "
+                  + formatType(
+                    type: argument.localizedName(),
+                    variadic: entry.infiniteFinalArgument ∧ index
+                      == entry.directArguments.indices.last
+                  )
               }).joined()
           },
           getDescription: { $0.localizedDescription() }
@@ -191,7 +214,7 @@ extension Command {
         let formatOption = { (option: AnyOption) -> StrictString in
           var result = ("•" + option.localizedName()).formattedAsOption()
           if option.type().identifier() ≠ ArgumentType.booleanIdentifier {
-            result += " " + formatType(option.type().localizedName())
+            result += " " + formatType(type: option.type().localizedName(), variadic: false)
           }
           return result
         }
@@ -231,7 +254,7 @@ extension Command {
           }),
           entries: Array(argumentTypes.values),
           getHeadword: { $0.type },
-          getFormattedHeadword: { formatType($0.type) },
+          getFormattedHeadword: { formatType(type: $0.type, variadic: false) },
           getDescription: { $0.description }
         )
       }
