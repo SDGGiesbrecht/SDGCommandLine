@@ -361,7 +361,8 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
           let directArgumentAttempt = parse(
             possibleDirectArgument: argument,
             parsedDirectArguments: &directArguments,
-            expectedDirectArguments: &expected
+            expectedDirectArguments: &expected,
+            extendedArgument: infiniteFinalArgument ? self.directArguments.last : nil
           )
           switch directArgumentAttempt {
           case .failure(let error):
@@ -396,10 +397,16 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   private func parse(
     possibleDirectArgument: StrictString,
     parsedDirectArguments: inout DirectArguments,
-    expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>
+    expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>,
+    extendedArgument: AnyArgumentTypeDefinition?
   ) -> Result<Bool, Command.Error> {
 
-    guard let definition = expectedDirectArguments.popFirst() else {
+    let definition: AnyArgumentTypeDefinition
+    if let next = expectedDirectArguments.popFirst() {
+      definition = next
+    } else if let extended = extendedArgument {
+      definition = extended
+    } else {
       return .success(false)  // Not a direct argument.
     }
 
