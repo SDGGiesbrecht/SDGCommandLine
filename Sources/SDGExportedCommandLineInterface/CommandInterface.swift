@@ -79,6 +79,9 @@ public struct CommandInterface: Decodable {
   /// Arguments.
   public var arguments: [ArgumentInterface]
 
+  /// Whether or not the command accepts an infinite number of arguments, with the final argument type extended to apply to those at higher indices.
+  public var infiniteFinalArgument: Bool
+
   /// Options.
   public var options: [OptionInterface]
 }
