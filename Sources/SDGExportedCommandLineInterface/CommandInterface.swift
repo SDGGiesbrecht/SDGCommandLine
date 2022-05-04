@@ -51,24 +51,24 @@ public struct CommandInterface: Decodable {
         }
       }
     }
-
-    // MARK: - Initialization
-
-    private init(export: String) throws {
-      self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
-    }
-
-    private init<Decoded>(from decoded: Decoded) where Decoded: DecodedCommandInterface {
-      self.identifier = decoded.identifier
-      self.name = decoded.name
-      self.description = decoded.description
-      self.discussion = decoded.discussion
-      self.subcommands = decoded.subcommands
-      self.arguments = decoded.arguments
-      self.infiniteFinalArgument = decoded.infiniteFinalArgument
-      self.options = decoded.options
-    }
   #endif
+
+  // MARK: - Initialization
+
+  private init(export: String) throws {
+    self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
+  }
+
+  private init<Decoded>(from decoded: Decoded) where Decoded: DecodedCommandInterface {
+    self.identifier = decoded.identifier
+    self.name = decoded.name
+    self.description = decoded.description
+    self.discussion = decoded.discussion
+    self.subcommands = decoded.subcommands
+    self.arguments = decoded.arguments
+    self.infiniteFinalArgument = decoded.infiniteFinalArgument
+    self.options = decoded.options
+  }
 
   // MARK: - Properties
 
