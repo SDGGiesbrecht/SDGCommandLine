@@ -47,7 +47,11 @@ public enum Tool: SDGCommandLine.Tool {
       }
     }),
     subcommands: [
-      Execute.command, Fail.command, DemonstrateTextFormatting.command, RejectArgument.command,
+      Execute.command,
+      Fail.command,
+      DemonstrateTextFormatting.command,
+      RejectArgument.command,
+      DemonstrateRepeatedArgument.command,
     ]
   )
 }

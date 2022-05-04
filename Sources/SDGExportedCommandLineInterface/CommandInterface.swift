@@ -57,6 +57,17 @@ public struct CommandInterface: Decodable {
     private init(export: String) throws {
       self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
     }
+
+    private init<Decoded>(from decoded: Decoded) where Decoded: DecodedCommandInterface {
+      self.identifier = decoded.identifier
+      self.name = decoded.name
+      self.description = decoded.description
+      self.discussion = decoded.discussion
+      self.subcommands = decoded.subcommands
+      self.arguments = decoded.arguments
+      self.infiniteFinalArgument = decoded.infiniteFinalArgument
+      self.options = decoded.options
+    }
   #endif
 
   // MARK: - Properties
@@ -84,4 +95,14 @@ public struct CommandInterface: Decodable {
 
   /// Options.
   public var options: [OptionInterface]
+
+  // MARK: - Decodable
+
+  public init(from decoder: Decoder) throws {
+    if let decoded = try? Version2(from: decoder) {
+      self.init(from: decoded)
+    } else {
+      self.init(from: try Version1(from: decoder))
+    }
+  }
 }
