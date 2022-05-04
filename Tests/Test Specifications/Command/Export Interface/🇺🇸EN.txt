@@ -6,6 +6,7 @@ $ tool export‐interface •no‐colour
   "description" : "serves as an example tool.",
   "discussion" : null,
   "identifier" : "tool",
+  "infiniteFinalArgument" : false,
   "name" : "tool",
   "options" : [
     {
@@ -47,6 +48,7 @@ $ tool export‐interface •no‐colour
       "description" : "demonstrates successful execution.",
       "discussion" : "There are several options.",
       "identifier" : "execute",
+      "infiniteFinalArgument" : false,
       "name" : "execute",
       "options" : [
         {
@@ -148,6 +150,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -194,6 +197,7 @@ $ tool export‐interface •no‐colour
       "description" : "demonstrates a failure.",
       "discussion" : null,
       "identifier" : "fail",
+      "infiniteFinalArgument" : false,
       "name" : "fail",
       "options" : [
         {
@@ -245,6 +249,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -291,6 +296,7 @@ $ tool export‐interface •no‐colour
       "description" : "demonstrates text formatting.",
       "discussion" : null,
       "identifier" : "demonstrate‐text‐formatting",
+      "infiniteFinalArgument" : false,
       "name" : "demonstrate‐text‐formatting",
       "options" : [
         {
@@ -332,6 +338,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -382,6 +389,7 @@ $ tool export‐interface •no‐colour
       "description" : "demonstrates rejection of an argument.",
       "discussion" : null,
       "identifier" : "reject‐argument",
+      "infiniteFinalArgument" : false,
       "name" : "reject‐argument",
       "options" : [
         {
@@ -423,6 +431,105 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
+          "name" : "help",
+          "options" : [
+            {
+              "description" : "Removes color from the output.",
+              "identifier" : "no‐colour",
+              "name" : "no‐color",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "A language to use instead of the one specified in preferences.",
+              "identifier" : "language",
+              "name" : "language",
+              "type" : {
+                "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
+                "identifier" : "language preference",
+                "name" : "language preference"
+              }
+            },
+            {
+              "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
+              "identifier" : "use‐version",
+              "name" : "use‐version",
+              "type" : {
+                "description" : "A version number or “development”.",
+                "identifier" : "version",
+                "name" : "version"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "An arbitrary string.",
+          "identifier" : "string",
+          "name" : "string"
+        },
+        {
+          "description" : "An integer between 1 and 10 inclusive.",
+          "identifier" : "1–10",
+          "name" : "1–10"
+        }
+      ],
+      "description" : "demonstrates a repeated argument.",
+      "discussion" : null,
+      "identifier" : "demonstrate‐repeated‐argument",
+      "infiniteFinalArgument" : true,
+      "name" : "demonstrate‐repeated‐argument",
+      "options" : [
+        {
+          "description" : "Removes color from the output.",
+          "identifier" : "no‐colour",
+          "name" : "no‐color",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "A language to use instead of the one specified in preferences.",
+          "identifier" : "language",
+          "name" : "language",
+          "type" : {
+            "description" : "A list of IETF language tags or SDGCornerstone language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: “en-US” or “🇺🇸EN” → American English, “nv,en;es” → both Navajo and English, otherwise Spanish",
+            "identifier" : "language preference",
+            "name" : "language preference"
+          }
+        },
+        {
+          "description" : "Attempts to download and temporarily use the specified version insead of the one which is installed.",
+          "identifier" : "use‐version",
+          "name" : "use‐version",
+          "type" : {
+            "description" : "A version number or “development”.",
+            "identifier" : "version",
+            "name" : "version"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "displays usage information.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -469,6 +576,7 @@ $ tool export‐interface •no‐colour
       "description" : "displays usage information.",
       "discussion" : null,
       "identifier" : "עזרה",
+      "infiniteFinalArgument" : false,
       "name" : "help",
       "options" : [
         {
@@ -513,6 +621,7 @@ $ tool export‐interface •no‐colour
       "description" : "displays the version in use.",
       "discussion" : null,
       "identifier" : "version",
+      "infiniteFinalArgument" : false,
       "name" : "version",
       "options" : [
         {
@@ -554,6 +663,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -604,6 +714,7 @@ $ tool export‐interface •no‐colour
       "description" : "sets the language preference. (Omit the argument to revert to the system preferences.)",
       "discussion" : null,
       "identifier" : "set‐language",
+      "infiniteFinalArgument" : false,
       "name" : "set‐language",
       "options" : [
         {
@@ -645,6 +756,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {
@@ -691,6 +803,7 @@ $ tool export‐interface •no‐colour
       "description" : "removes any cached data.",
       "discussion" : null,
       "identifier" : "empty‐cache",
+      "infiniteFinalArgument" : false,
       "name" : "empty‐cache",
       "options" : [
         {
@@ -732,6 +845,7 @@ $ tool export‐interface •no‐colour
           "description" : "displays usage information.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "help",
           "options" : [
             {

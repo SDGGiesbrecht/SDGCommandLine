@@ -4,6 +4,7 @@ tool serves as an example tool.
 
 Subcommands
 
+demonstrate‐repeated‐argument [string] [1–10...] demonstrates a repeated argument.
 demonstrate‐text‐formatting demonstrates text formatting.
 execute demonstrates successful execution.
 fail demonstrates a failure.
