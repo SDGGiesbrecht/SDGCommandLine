@@ -40,8 +40,8 @@ internal enum DemonstrateRepeatedArgument {
     infiniteFinalArgument: true,
     options: [],
     execution: { (arguments, _, output) throws -> Void in
-      _ = arguments.argument(at: 1, as: ArgumentType.string)
-      for integer in arguments.arguments(from: 2, as: ArgumentType.integer(in: 1...10)) {
+      _ = arguments.argument(at: 0, as: ArgumentType.string)
+      for integer in arguments.arguments(from: 1, as: ArgumentType.integer(in: 1...10)) {
         output.print(integer.inDigits())
       }
     }
