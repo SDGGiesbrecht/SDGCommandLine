@@ -18,7 +18,6 @@ import SDGExportedCommandLineInterface
 
 import XCTest
 
-import SDGPersistenceTestUtilities
 import SDGXCTestUtilities
 
 import SDGCommandLineTestUtilities
@@ -65,11 +64,5 @@ class APITests: TestCase {
         XCTAssert(interface.options.first?.isFlag == true)
       #endif
     #endif
-    let version1 = try Data(
-      from: testSpecificationDirectory()
-        .appendingPathComponent("Exports")
-        .appendingPathComponent("Version 1.json")
-    )
-    _ = try JSONDecoder().decode(CommandInterface.self, from: version1)
   }
 }

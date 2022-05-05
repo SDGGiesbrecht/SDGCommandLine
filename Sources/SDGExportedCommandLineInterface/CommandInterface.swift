@@ -55,7 +55,7 @@ public struct CommandInterface: Decodable {
 
   // MARK: - Initialization
 
-  private init(export: String) throws {
+  internal init(export: String) throws {
     self = try JSONDecoder().decode(CommandInterface.self, from: export.file)
   }
 
