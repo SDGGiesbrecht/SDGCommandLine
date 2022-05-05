@@ -16,9 +16,29 @@
 
 import XCTest
 
+import SDGPersistenceTestUtilities
 import SDGXCTestUtilities
 
 class InternalTests: TestCase {
+
+  func testCommandInterface() throws {
+    #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
+      _ = try CommandInterface(
+        export: try String(
+          from: testSpecificationDirectory()
+            .appendingPathComponent("Exports")
+            .appendingPathComponent("Version 1.json")
+        )
+      )
+      _ = try CommandInterface(
+        export: String(
+          from: testSpecificationDirectory()
+            .appendingPathComponent("Exports")
+            .appendingPathComponent("Version 2.json")
+        )
+      )
+    #endif
+  }
 
   func testOptionInterface() {
     let option = OptionInterface(

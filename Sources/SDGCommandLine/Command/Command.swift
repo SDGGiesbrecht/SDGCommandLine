@@ -54,6 +54,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   ///     - description: A brief description. (Printed by the `help` subcommand.)
   ///     - discussion: Optional. Additional in‐depth information. (Printed by the `help` subcommand.)
   ///     - directArguments: A list of direct command line arguments to accept.
+  ///     - infiniteFinalArgument: Optional. Enables the command to accept an infinite number of arguments, with the final argument type extended to apply to those at higher indices.
   ///     - options: A list of command line options to accept.
   ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
   ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
@@ -65,6 +66,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     description: UserFacing<StrictString, D>,
     discussion: UserFacing<StrictString, D>? = nil,
     directArguments: [AnyArgumentTypeDefinition],
+    infiniteFinalArgument: Bool = false,
     options: [AnyOption],
     hidden: Bool = false,
     execution: @escaping (
@@ -79,6 +81,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       description: description,
       discussion: discussion,
       directArguments: directArguments,
+      infiniteFinalArgument: infiniteFinalArgument,
       options: options,
       hidden: hidden,
       execution: execution,
@@ -111,6 +114,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       description: description,
       discussion: discussion,
       directArguments: defaultSubcommand?.directArguments ?? [],
+      infiniteFinalArgument: defaultSubcommand?.infiniteFinalArgument ?? false,
       options: defaultSubcommand?.options ?? [],
       hidden: hidden,
       execution: defaultSubcommand?.execution,
@@ -123,6 +127,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     description: UserFacing<StrictString, D>,
     discussion: UserFacing<StrictString, D>?,
     directArguments: [AnyArgumentTypeDefinition],
+    infiniteFinalArgument: Bool,
     options: [AnyOption],
     hidden: Bool = false,
     execution: (
@@ -160,6 +165,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     self.execution = execution ?? { _, _, _ in _ = try Command.help.execute(with: []).get() }
     self.subcommands = actualSubcommands
     self.directArguments = directArguments
+    self.infiniteFinalArgument = infiniteFinalArgument
     self.options = options.appending(
       contentsOf: Command.standardOptions.filter({ standard in
         return ¬options.contains(where: { option in
@@ -186,6 +192,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
       throws -> Void
   internal var subcommands: [Command]
   internal let directArguments: [AnyArgumentTypeDefinition]
+  internal let infiniteFinalArgument: Bool
   internal let options: [AnyOption]
 
   // MARK: - Execution
@@ -354,7 +361,8 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
           let directArgumentAttempt = parse(
             possibleDirectArgument: argument,
             parsedDirectArguments: &directArguments,
-            expectedDirectArguments: &expected
+            expectedDirectArguments: &expected,
+            extendedArgument: infiniteFinalArgument ? self.directArguments.last : nil
           )
           switch directArgumentAttempt {
           case .failure(let error):
@@ -389,10 +397,16 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
   private func parse(
     possibleDirectArgument: StrictString,
     parsedDirectArguments: inout DirectArguments,
-    expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>
+    expectedDirectArguments: inout ArraySlice<AnyArgumentTypeDefinition>,
+    extendedArgument: AnyArgumentTypeDefinition?
   ) -> Result<Bool, Command.Error> {
 
-    guard let definition = expectedDirectArguments.popFirst() else {
+    let definition: AnyArgumentTypeDefinition
+    if let next = expectedDirectArguments.popFirst() {
+      definition = next
+    } else if let extended = extendedArgument {
+      definition = extended
+    } else {
       return .success(false)  // Not a direct argument.
     }
 
@@ -636,6 +650,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     case discussion
     case subcommands
     case arguments
+    case infiniteFinalArgument
     case options
   }
 
@@ -647,6 +662,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     try container.encode(localizedDiscussion(), forKey: .discussion)
     try container.encode(subcommands.filter({ ¬$0.isHidden }), forKey: .subcommands)
     try container.encode(directArguments.map({ $0.interface() }), forKey: .arguments)
+    try container.encode(infiniteFinalArgument, forKey: .infiniteFinalArgument)
     try container.encode(options.filter({ ¬$0.isHidden }).map({ $0.interface() }), forKey: .options)
   }
 }

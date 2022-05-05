@@ -1,0 +1,614 @@
+{
+  "arguments" : [
+
+  ],
+  "description" : "dient als Beilspielswerkzeug.",
+  "discussion" : null,
+  "identifier" : "tool",
+  "name" : "werkzeug",
+  "options" : [
+    {
+      "description" : "Blendet Farben aus der Ausgabe aus.",
+      "identifier" : "no‐colour",
+      "name" : "ohne‐farben",
+      "type" : {
+        "description" : "",
+        "identifier" : "Boolean",
+        "name" : "Boolean"
+      }
+    },
+    {
+      "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+      "identifier" : "language",
+      "name" : "sprache",
+      "type" : {
+        "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+        "identifier" : "language preference",
+        "name" : "Spracheinstellung"
+      }
+    }
+  ],
+  "subcommands" : [
+    {
+      "arguments" : [
+
+      ],
+      "description" : "führt eine erfolgreiche Ausführung vor.",
+      "discussion" : "Es gibt ein paar Optionen.",
+      "identifier" : "execute",
+      "name" : "ausführen",
+      "options" : [
+        {
+          "description" : "Text zum Zeigen.",
+          "identifier" : "string",
+          "name" : "zeichenkette",
+          "type" : {
+            "description" : "Eine beliebige Zeichenkette.",
+            "identifier" : "string",
+            "name" : "Zeichenkette"
+          }
+        },
+        {
+          "description" : "Die Anzahl der Wiederholungen.",
+          "identifier" : "iterations",
+          "name" : "wiederholungen",
+          "type" : {
+            "description" : "Eine ganze Zahl zwischen 1 und 5 einschließlich.",
+            "identifier" : "1–5",
+            "name" : "1–5"
+          }
+        },
+        {
+          "description" : "An option that always fails to parse.",
+          "identifier" : "unsatisfiable",
+          "name" : "unsatisfiable",
+          "type" : {
+            "description" : "An argument type that always fails to parse.",
+            "identifier" : "unsatisfiable",
+            "name" : "unsatisfiable"
+          }
+        },
+        {
+          "description" : "verwendet eine informelle Begrüßung.",
+          "identifier" : "informal",
+          "name" : "informell",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Farbe für den Text.",
+          "identifier" : "colour",
+          "name" : "farbe",
+          "type" : {
+            "description" : "„blau“, „grün“ oder „rot“.",
+            "identifier" : "colour",
+            "name" : "Farbe"
+          }
+        },
+        {
+          "description" : "A directory to run in.",
+          "identifier" : "path",
+          "name" : "path",
+          "type" : {
+            "description" : "Ein Pfadname. Die Form „\/...“ gibt einen vollständigen Pfad an. Die Form „~\/...“ gibt einen relativen Pfad an, ausgehend von dem Benutzerverzeichnis. Alles andere gilt als relativer Pfad, ausgehened vom aktuellen Arbeitsverzeichnis.",
+            "identifier" : "path",
+            "name" : "Pfad"
+          }
+        },
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "führt einen Fehlschlag vor.",
+      "discussion" : null,
+      "identifier" : "fail",
+      "name" : "fehlschlagen",
+      "options" : [
+        {
+          "description" : "verursacht einen Systemfehler.",
+          "identifier" : "system",
+          "name" : "system",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "führt Textgestaltung vor.",
+      "discussion" : null,
+      "identifier" : "demonstrate‐text‐formatting",
+      "name" : "textgestaltung‐vorführen",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "An argument type that always fails to parse.",
+          "identifier" : "unsatisfiable",
+          "name" : "unsatisfiable"
+        }
+      ],
+      "description" : "führt die Ablehnung eines Arguments vor.",
+      "discussion" : null,
+      "identifier" : "reject‐argument",
+      "name" : "argument‐ablehnen",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "zeigt Gebrauchsinformationen an.",
+      "discussion" : null,
+      "identifier" : "עזרה",
+      "name" : "עזרה",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "zeigt die verwendete Version an.",
+      "discussion" : null,
+      "identifier" : "version",
+      "name" : "version",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+          "identifier" : "language preference",
+          "name" : "Spracheinstellung"
+        }
+      ],
+      "description" : "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)",
+      "discussion" : null,
+      "identifier" : "set‐language",
+      "name" : "sprache‐einstellen",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+
+      ],
+      "description" : "entfernt zwischengespeicherte Daten.",
+      "discussion" : null,
+      "identifier" : "empty‐cache",
+      "name" : "zwischenspeicher‐leeren",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "name" : "עזרה",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    }
+  ]
+}

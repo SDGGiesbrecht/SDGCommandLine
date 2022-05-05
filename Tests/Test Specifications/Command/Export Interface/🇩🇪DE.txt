@@ -6,6 +6,7 @@ $ werkzeug export‐interface •no‐colour
   "description" : "dient als Beilspielswerkzeug.",
   "discussion" : null,
   "identifier" : "tool",
+  "infiniteFinalArgument" : false,
   "name" : "werkzeug",
   "options" : [
     {
@@ -47,6 +48,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "führt eine erfolgreiche Ausführung vor.",
       "discussion" : "Es gibt ein paar Optionen.",
       "identifier" : "execute",
+      "infiniteFinalArgument" : false,
       "name" : "ausführen",
       "options" : [
         {
@@ -148,6 +150,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -194,6 +197,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "führt einen Fehlschlag vor.",
       "discussion" : null,
       "identifier" : "fail",
+      "infiniteFinalArgument" : false,
       "name" : "fehlschlagen",
       "options" : [
         {
@@ -245,6 +249,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -291,6 +296,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "führt Textgestaltung vor.",
       "discussion" : null,
       "identifier" : "demonstrate‐text‐formatting",
+      "infiniteFinalArgument" : false,
       "name" : "textgestaltung‐vorführen",
       "options" : [
         {
@@ -332,6 +338,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -382,6 +389,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "führt die Ablehnung eines Arguments vor.",
       "discussion" : null,
       "identifier" : "reject‐argument",
+      "infiniteFinalArgument" : false,
       "name" : "argument‐ablehnen",
       "options" : [
         {
@@ -423,6 +431,105 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
+          "name" : "hilfe",
+          "options" : [
+            {
+              "description" : "Blendet Farben aus der Ausgabe aus.",
+              "identifier" : "no‐colour",
+              "name" : "ohne‐farben",
+              "type" : {
+                "description" : "",
+                "identifier" : "Boolean",
+                "name" : "Boolean"
+              }
+            },
+            {
+              "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+              "identifier" : "language",
+              "name" : "sprache",
+              "type" : {
+                "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+                "identifier" : "language preference",
+                "name" : "Spracheinstellung"
+              }
+            },
+            {
+              "description" : "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist.",
+              "identifier" : "use‐version",
+              "name" : "version‐verwenden",
+              "type" : {
+                "description" : "Eine Versionsnummer oder „entwicklung“.",
+                "identifier" : "version",
+                "name" : "Version"
+              }
+            }
+          ],
+          "subcommands" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "arguments" : [
+        {
+          "description" : "Eine beliebige Zeichenkette.",
+          "identifier" : "string",
+          "name" : "Zeichenkette"
+        },
+        {
+          "description" : "Eine ganze Zahl zwischen 1 und 10 einschließlich.",
+          "identifier" : "1–10",
+          "name" : "1–10"
+        }
+      ],
+      "description" : "führt ein wiederholtes Argument vor.",
+      "discussion" : null,
+      "identifier" : "demonstrate‐repeated‐argument",
+      "infiniteFinalArgument" : true,
+      "name" : "wiederholtes‐argument‐vorführen",
+      "options" : [
+        {
+          "description" : "Blendet Farben aus der Ausgabe aus.",
+          "identifier" : "no‐colour",
+          "name" : "ohne‐farben",
+          "type" : {
+            "description" : "",
+            "identifier" : "Boolean",
+            "name" : "Boolean"
+          }
+        },
+        {
+          "description" : "Eine Sprache anstelle deren zu verwenden, die in den Einstellungen angegeben ist.",
+          "identifier" : "language",
+          "name" : "sprache",
+          "type" : {
+            "description" : "Eine Liste IETF Sprachbezeichnungen oder SDGCornerstone‐Sprachsymbole. Doppelpunkte geben die Ersatzreihenfolge an. Kommata geben an, dass mehrere Sprachen verwendet werden sollen. Beispiele: „de-DE“ oder „🇩🇪DE“ → Deutsch aus Deutschland, “bar,de;fr” → beide Bairisch und Deutsch, sonst Französisch",
+            "identifier" : "language preference",
+            "name" : "Spracheinstellung"
+          }
+        },
+        {
+          "description" : "Versucht die angegebene Version herunterzuladen und vorübergehend anstelle deren zu verwenden, die installiert ist.",
+          "identifier" : "use‐version",
+          "name" : "version‐verwenden",
+          "type" : {
+            "description" : "Eine Versionsnummer oder „entwicklung“.",
+            "identifier" : "version",
+            "name" : "Version"
+          }
+        }
+      ],
+      "subcommands" : [
+        {
+          "arguments" : [
+
+          ],
+          "description" : "zeigt Gebrauchsinformationen an.",
+          "discussion" : null,
+          "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -469,6 +576,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "zeigt Gebrauchsinformationen an.",
       "discussion" : null,
       "identifier" : "עזרה",
+      "infiniteFinalArgument" : false,
       "name" : "hilfe",
       "options" : [
         {
@@ -513,6 +621,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "zeigt die verwendete Version an.",
       "discussion" : null,
       "identifier" : "version",
+      "infiniteFinalArgument" : false,
       "name" : "version",
       "options" : [
         {
@@ -554,6 +663,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -604,6 +714,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "stellt die Spracheinstellung ein. (Das Argument weglassen, um an die Systemeinstellungen zurückzufallen.)",
       "discussion" : null,
       "identifier" : "set‐language",
+      "infiniteFinalArgument" : false,
       "name" : "sprache‐einstellen",
       "options" : [
         {
@@ -645,6 +756,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {
@@ -691,6 +803,7 @@ $ werkzeug export‐interface •no‐colour
       "description" : "entfernt zwischengespeicherte Daten.",
       "discussion" : null,
       "identifier" : "empty‐cache",
+      "infiniteFinalArgument" : false,
       "name" : "zwischenspeicher‐leeren",
       "options" : [
         {
@@ -732,6 +845,7 @@ $ werkzeug export‐interface •no‐colour
           "description" : "zeigt Gebrauchsinformationen an.",
           "discussion" : null,
           "identifier" : "עזרה",
+          "infiniteFinalArgument" : false,
           "name" : "hilfe",
           "options" : [
             {

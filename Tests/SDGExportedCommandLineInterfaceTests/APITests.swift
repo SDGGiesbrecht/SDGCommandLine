@@ -12,12 +12,14 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-import XCTest
-
 import SDGExternalProcess
-import SDGXCTestUtilities
 
 import SDGExportedCommandLineInterface
+
+import XCTest
+
+import SDGXCTestUtilities
+
 import SDGCommandLineTestUtilities
 
 class APITests: TestCase {

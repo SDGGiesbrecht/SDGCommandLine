@@ -46,6 +46,18 @@ public struct DirectArguments: TransparentWrapper {
     return arguments[index] as? T
   }
 
+  /// Returns the values of all arguments from a particular index onwards.
+  ///
+  /// - Parameters:
+  ///   - index: The first index.
+  ///   - type: The type to attempt to cast to.
+  public func arguments<T>(from index: Int, as type: ArgumentTypeDefinition<T>) -> [T] {
+    let startIndex = min(arguments.endIndex, index)
+    return (startIndex..<arguments.endIndex).compactMap { index in
+      return argument(at: index, as: type)
+    }
+  }
+
   // MARK: - TransparentWrapper
 
   public var wrappedInstance: Any {

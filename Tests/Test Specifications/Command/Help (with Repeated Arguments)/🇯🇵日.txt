@@ -1,0 +1,22 @@
+$ tool demonstrate‐repeated‐argument help •no‐colour
+
+tool demonstrate‐repeated‐argument [string] [1–10...] demonstrates a repeated argument.
+
+Subcommands
+
+ヘルプ displays usage information.
+
+Options
+
+•language [language preference] A language to use instead of the one specified in preferences.
+•no‐colour Removes colour from the output.
+•use‐version [version] Attempts to download and temporarily use the specified version insead of the one which is installed.
+
+Argument Types
+
+[1–10] An integer between 1 and 10 inclusive.
+[language preference] A list of IETF language tags or language icons. Semicolons indicate fallback order. Commas indicate that multiple languages should be used. Examples: ‘en-GB’ or ‘🇬🇧EN’ → British English, ‘cy,en;fr’ → both Welsh and English, otherwise French
+[string] An arbitrary string.
+[version] A version number or ‘development’.
+
+0

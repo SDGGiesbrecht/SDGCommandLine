@@ -171,6 +171,13 @@ class APITests: TestCase {
       uniqueTestName: "Unexpected Argument",
       overwriteSpecificationInsteadOfFailing: false
     )
+    SDGCommandLineTestUtilities.testCommand(
+      Tool.rootCommand,
+      with: ["demonstrate‐repeated‐argument", "skip", "1", "2", "3"],
+      localizations: SystemLocalization.self,
+      uniqueTestName: "Repeated Argument",
+      overwriteSpecificationInsteadOfFailing: false
+    )
   }
 
   func testEnumerationOption() {
@@ -231,6 +238,21 @@ class APITests: TestCase {
         with: ["reject‐argument", "help"],
         localizations: SystemLocalization.self,
         uniqueTestName: "Help (with Direct Arguments)",
+        overwriteSpecificationInsteadOfFailing: false
+      )
+    #endif
+    #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
+      for localization in SystemLocalization.allCases {
+        LocalizationSetting(orderOfPrecedence: [localization.code]).do {
+          Tool.rootCommand.execute(with: ["demonstrate‐repeated‐argument", "help"])
+        }
+      }
+    #else
+      SDGCommandLineTestUtilities.testCommand(
+        Tool.rootCommand,
+        with: ["demonstrate‐repeated‐argument", "help"],
+        localizations: SystemLocalization.self,
+        uniqueTestName: "Help (with Repeated Arguments)",
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif

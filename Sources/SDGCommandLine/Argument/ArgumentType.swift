@@ -158,9 +158,9 @@ public enum ArgumentType {
     )
   }
 
-  private static func integerName(range: CountableClosedRange<Int>) -> UserFacing<
-    StrictString, InterfaceLocalization
-  > {
+  private static func integerName(
+    range: CountableClosedRange<Int>
+  ) -> UserFacing<StrictString, InterfaceLocalization> {
     return UserFacing<StrictString, InterfaceLocalization>({ localization in
       switch localization {
       case .englishUnitedKingdom, .englishUnitedStates, .englishCanada,
@@ -170,9 +170,9 @@ public enum ArgumentType {
     })
   }
 
-  private static func integerDescription(range: CountableClosedRange<Int>) -> UserFacing<
-    StrictString, InterfaceLocalization
-  > {
+  private static func integerDescription(
+    range: CountableClosedRange<Int>
+  ) -> UserFacing<StrictString, InterfaceLocalization> {
     return UserFacing<StrictString, InterfaceLocalization>({ localization in
       switch localization {
       case .englishUnitedKingdom, .englishUnitedStates, .englishCanada:

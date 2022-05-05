@@ -1,0 +1,5 @@
+$ tool demonstrate‐repeated‐argument skip 1 2 3 •no‐colour
+1
+2
+3
+0
