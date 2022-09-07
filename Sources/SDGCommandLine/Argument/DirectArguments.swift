@@ -18,7 +18,7 @@ import SDGCollections
 /// Parsed direct (ordered) arguments.
 ///
 /// - SeeAlso: `Options`
-public struct DirectArguments: TransparentWrapper {
+public struct DirectArguments: Sendable, TransparentWrapper {
 
   // MARK: - Initialization
 
@@ -26,11 +26,11 @@ public struct DirectArguments: TransparentWrapper {
 
   // MARK: - Properties
 
-  private var arguments: [Any] = []
+  private var arguments: [Sendable] = []
 
   // MARK: - Usage
 
-  internal mutating func add(value: Any) {
+  internal mutating func add(value: Sendable) {
     arguments.append(value)
   }
 

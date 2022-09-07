@@ -16,8 +16,8 @@ import SDGControlFlow
 import SDGText
 
 /// A type‐erased argument definition.
-public protocol AnyArgumentTypeDefinition: TextualPlaygroundDisplay {
-  func _parse(argument: StrictString) -> Any?
+public protocol AnyArgumentTypeDefinition: Sendable, TextualPlaygroundDisplay {
+  func _parse(argument: StrictString) -> Sendable?
   func _identifier() -> StrictString
   func _localizedName() -> StrictString
   func _localizedDescription() -> StrictString
@@ -26,7 +26,7 @@ public protocol AnyArgumentTypeDefinition: TextualPlaygroundDisplay {
 
 extension AnyArgumentTypeDefinition {
 
-  internal func parse(argument: StrictString) -> Any? {
+  internal func parse(argument: StrictString) -> Sendable? {
     return _parse(argument: argument)
   }
 

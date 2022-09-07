@@ -17,7 +17,7 @@ import SDGText
 import SDGLocalization
 
 /// A command line option.
-public struct Option<Type>: AnyOption {
+public struct Option<Type>: AnyOption where Type: Sendable {
 
   // MARK: - Static Properties
 
@@ -46,13 +46,15 @@ public struct Option<Type>: AnyOption {
 
     identifier = name.resolved(for: N.fallbackLocalization)
     names = Command.list(names: name)
-    localizedName = {
+    let sendableName: @Sendable () -> StrictString = {
       return Command.normalizeToUnicode(
         name.resolved(),
         in: LocalizationSetting.current.value.resolved() as N
       )
     }
-    localizedDescription = { return description.resolved() }
+    localizedName = sendableName
+    let sendableDescription: @Sendable () -> StrictString = { description.resolved() }
+    localizedDescription = sendableDescription
     self.type = type
     self.isHidden = hidden
   }
@@ -61,8 +63,8 @@ public struct Option<Type>: AnyOption {
 
   internal let identifier: StrictString
   private let names: Set<StrictString>
-  private let localizedName: () -> StrictString
-  private let localizedDescription: () -> StrictString
+  private let localizedName: @Sendable () -> StrictString
+  private let localizedDescription: @Sendable () -> StrictString
   private let isHidden: Bool
 
   private let type: ArgumentTypeDefinition<Type>

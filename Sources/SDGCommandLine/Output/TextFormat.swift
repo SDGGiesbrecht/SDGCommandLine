@@ -13,7 +13,7 @@
  */
 
 /// A element of text formatting.
-public protocol TextFormat {
+public protocol TextFormat: Sendable {
 
   /// The ANSI start code.
   var startCode: Int { get }

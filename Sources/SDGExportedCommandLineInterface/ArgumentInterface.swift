@@ -15,7 +15,7 @@
 import SDGText
 
 /// An argument.
-public struct ArgumentInterface: Decodable {
+public struct ArgumentInterface: Decodable, Sendable {
 
   /// A unique identifier that can be compared across localizations to find corresponding arguments.
   public var identifier: StrictString

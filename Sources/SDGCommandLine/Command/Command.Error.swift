@@ -21,7 +21,7 @@ import SDGCommandLineLocalizations
 extension Command {
 
   /// A command line failure.
-  public struct Error: PresentableError {
+  public struct Error: PresentableError, Sendable {
 
     // MARK: - Static Properties
 
@@ -80,7 +80,7 @@ extension Command {
 
     // MARK: - Output
 
-    private let describeClosure: () -> StrictString
+    private let describeClosure: @Sendable () -> StrictString
 
     // MARK: - PresentableError
 

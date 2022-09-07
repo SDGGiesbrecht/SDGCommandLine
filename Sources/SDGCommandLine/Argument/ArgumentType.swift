@@ -152,7 +152,7 @@ public enum ArgumentType {
     return ArgumentTypeDefinition(
       name: name,
       syntaxDescription: enumerationSyntax(labels: syntaxLabels),
-      parse: { (argument: StrictString) -> T? in
+      parse: { [entries] (argument: StrictString) -> T? in
         return entries[argument]
       }
     )

@@ -19,7 +19,7 @@ import SDGLocalization
 import SDGCommandLineLocalizations
 
 /// Parsed options.
-public struct Options: TransparentWrapper {
+public struct Options: Sendable, TransparentWrapper {
 
   // MARK: - Static Properties
 
@@ -115,11 +115,11 @@ public struct Options: TransparentWrapper {
 
   // MARK: - Properties
 
-  private var options: [StrictString: Any] = [:]
+  private var options: [StrictString: Sendable] = [:]
 
   // MARK: - Usage
 
-  internal mutating func add(value: Any, for option: AnyOption) {
+  internal mutating func add(value: Sendable, for option: AnyOption) {
     options[option.identifier] = value
   }
 
