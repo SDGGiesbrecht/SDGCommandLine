@@ -206,8 +206,8 @@ class APITests: TestCase {
 
   func testFormatting() throws {
     let output = try Tool.rootCommand.execute(with: ["demonstrate‐text‐formatting"]).get()
-    XCTAssert(output.contains("\u{1B}[1m".scalars), "Bold formatting missing.")
-    XCTAssert(output.contains("\u{1B}[22m".scalars), "Bold formatting never reset.")
+    XCTAssert(output.contains("\u{1B}[1m".scalars.literal()), "Bold formatting missing.")
+    XCTAssert(output.contains("\u{1B}[22m".scalars.literal()), "Bold formatting never reset.")
   }
 
   func testHelp() {

@@ -232,7 +232,7 @@ class InternalTests: TestCase {
           )
           // Spurious
           output = String(
-            LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars) }))
+            LineView(output.lines.filter({ ¬$0.line.contains("misuse at line".scalars.literal()) }))
           )
           // Differs accross platforms
           output.scalars.replaceMatches(
