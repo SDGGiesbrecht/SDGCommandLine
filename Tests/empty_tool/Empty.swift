@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.6, Directory should be “empty‐tool” but for Windows bug.)
+// #workaround(Swift 5.6.1, Directory should be “empty‐tool” but for Windows bug.)
 
 @main enum Empty {
   static func main() {

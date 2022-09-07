@@ -232,8 +232,8 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        // #workaround(Swift 5.6, Windows is unable to link dependency executables.)
-        // #workaround(Swift 5.6, Web is unable to link dependency executables.)
+        // #workaround(Swift 5.6.1, Windows is unable to link dependency executables.)
+        // #workaround(Swift 5.6.1, Web is unable to link dependency executables.)
         .target(
           name: "test_tool",
           condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
@@ -260,7 +260,7 @@ let package = Package(
     ),
 
     .executableTarget(
-      // #workaround(Swift 5.6, Windows cannot handle Unicode name.)
+      // #workaround(Swift 5.6.1, Windows cannot handle Unicode name.)
       name: "test_tool",
       dependencies: [
         "SDGCommandLine",
@@ -270,7 +270,7 @@ let package = Package(
     ),
 
     .executableTarget(
-      // #workaround(Swift 5.6, Windows cannot handle Unicode name.)
+      // #workaround(Swift 5.6.1, Windows cannot handle Unicode name.)
       name: "empty_tool",
       path: "Tests/empty_tool"
     ),
@@ -281,24 +281,24 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #workaround(Swift 5.6, Web lacks Foundation.Process.)
-    // #workaround(Swift 5.6, Web lacks Foundation.ProcessInfo.)
+    // #workaround(Swift 5.6.1, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.6.1, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
-    // #workaround(Swift 5.6, Web lacks Foundation.Bundle.)
+    // #workaround(Swift 5.6.1, Web lacks Foundation.Bundle.)
     .define("PLATFORM_LACKS_FOUNDATION_BUNDLE_BUNDLE_URL", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.6, Web lacks Foundation.FileManager.)
+    // #workaround(Swift 5.6.1, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.6, Web lacks Foundation.UserDefaults.)
+    // #workaround(Swift 5.6.1, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(SDGSwift 9.0.0, Windows cannot find Git on CI.)
-    .define("PLATFORM_CANNOT_LOCATE_GIT", .when(platforms: [.windows])),
-    // #workaround(Swift 5.6, SwiftPM does not compile on Windows.)
+    // #warning(SDGSwift 9.0.0, Windows cannot find Git on CI.)
+    //.define("PLATFORM_CANNOT_LOCATE_GIT", .when(platforms: [.windows])),
+    // #workaround(Swift 5.6.1, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
@@ -309,7 +309,7 @@ for target in package.targets {
 
 import Foundation
 
-// #workaround(xcodebuild -version 13.3.1, Tool targets don’t work on tvOS, etc.) @exempt(from: unicode)
+// #workaround(xcodebuild -version 13.4.1, Tool targets don’t work on tvOS, etc.) @exempt(from: unicode)
 if ["TVOS", "IOS", "WATCHOS"]
   .contains(where: { ProcessInfo.processInfo.environment["TARGETING_\($0)"] == "true" })
 {
