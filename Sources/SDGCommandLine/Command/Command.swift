@@ -188,7 +188,9 @@ public struct Command: Encodable, Sendable, TextualPlaygroundDisplay {
   internal let identifier: StrictString
 
   private let execution:
-    @Sendable (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output)
+    @Sendable (
+      _ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output
+    )
       throws -> Void
   internal var subcommands: [Command]
   internal let directArguments: [AnyArgumentTypeDefinition]
