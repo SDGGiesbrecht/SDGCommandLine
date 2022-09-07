@@ -17,7 +17,7 @@ import SDGControlFlow
 import SDGText
 
 /// A type‐erased option.
-public protocol AnyOption: TextualPlaygroundDisplay {
+public protocol AnyOption: Sendable, TextualPlaygroundDisplay {
 
   var _identifier: StrictString { get }
   var _isHidden: Bool { get }

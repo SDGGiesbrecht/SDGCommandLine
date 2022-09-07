@@ -14,7 +14,7 @@
 
 import SDGText
 
-public struct _ArgumentInterface: Encodable {
+public struct _ArgumentInterface: Encodable, Sendable {
   internal var identifier: StrictString
   internal var name: StrictString
   internal var description: StrictString

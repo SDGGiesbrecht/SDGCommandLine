@@ -14,7 +14,7 @@
 
 import SDGText
 
-public struct _OptionInterface: Encodable {
+public struct _OptionInterface: Encodable, Sendable {
   internal var identifier: StrictString
   internal var name: StrictString
   internal var description: StrictString

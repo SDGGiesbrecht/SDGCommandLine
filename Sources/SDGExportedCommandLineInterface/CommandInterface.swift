@@ -19,7 +19,7 @@ import SDGPersistence
 import SDGExternalProcess
 
 /// A command.
-public struct CommandInterface: Decodable {
+public struct CommandInterface: Decodable, Sendable {
 
   // MARK: - Static Methods
 

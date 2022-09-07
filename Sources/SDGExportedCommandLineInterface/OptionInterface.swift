@@ -17,7 +17,7 @@ import SDGText
 import SDGCommandLine
 
 /// An option.
-public struct OptionInterface: Decodable {
+public struct OptionInterface: Decodable, Sendable {
 
   /// A unique identifier that can be compared across localizations to find corresponding options.
   public var identifier: StrictString

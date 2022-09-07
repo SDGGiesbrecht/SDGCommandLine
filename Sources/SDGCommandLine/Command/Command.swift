@@ -26,7 +26,7 @@ import SDGSwift
 import SDGCommandLineLocalizations
 
 /// A command.
-public struct Command: Encodable, TextualPlaygroundDisplay {
+public struct Command: Encodable, Sendable, TextualPlaygroundDisplay {
 
   // MARK: - Static Properties
 
@@ -69,7 +69,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     infiniteFinalArgument: Bool = false,
     options: [AnyOption],
     hidden: Bool = false,
-    execution: @escaping (
+    execution: @Sendable @escaping (
       _ parsedDirectArguments: DirectArguments,
       _ parsedOptions: Options,
       _ output: Command.Output
@@ -131,7 +131,7 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
     options: [AnyOption],
     hidden: Bool = false,
     execution: (
-      (
+      @Sendable (
         _ parsedDirectArguments: DirectArguments,
         _ parsedOptions: Options,
         _ output: Command.Output
@@ -181,14 +181,16 @@ public struct Command: Encodable, TextualPlaygroundDisplay {
 
   private let names: Set<StrictString>
   /// Returns the localized name of the command.
-  public let localizedName: () -> StrictString
-  internal let localizedDescription: () -> StrictString
-  internal let localizedDiscussion: () -> StrictString?
+  public let localizedName: @Sendable () -> StrictString
+  internal let localizedDescription: @Sendable () -> StrictString
+  internal let localizedDiscussion: @Sendable () -> StrictString?
   internal let isHidden: Bool
   internal let identifier: StrictString
 
   private let execution:
-    (_ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output)
+    @Sendable (
+      _ parsedDirectArguments: DirectArguments, _ parsedOptions: Options, _ output: Command.Output
+    )
       throws -> Void
   internal var subcommands: [Command]
   internal let directArguments: [AnyArgumentTypeDefinition]
