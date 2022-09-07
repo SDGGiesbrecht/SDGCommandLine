@@ -299,9 +299,9 @@ public enum ArgumentType {
         let groups = argument.components(
           separatedBy: ConditionalPattern({ $0 ∈ Set<UnicodeScalar>([";", "·"]) })
         ).map({ StrictString($0.contents) })
-        let languages = groups.map({
-          $0.components(separatedBy: [","])
-            .map({ (component: PatternMatch<StrictString>) -> String in
+        let languages = groups.map({ group in
+          return group.components(separatedBy: [","].literal())
+            .map({ (component) -> String in
 
               let iconOrCode = StrictString(component.contents)
               if let code = InterfaceLocalization.code(for: iconOrCode) {

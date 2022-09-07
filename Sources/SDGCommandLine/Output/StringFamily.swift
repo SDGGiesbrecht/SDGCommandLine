@@ -73,14 +73,15 @@ extension StringFamily {
   }
 
   internal mutating func removeCommandLineFormatting() {
+    let escape = [Self.escape].literal(for: ScalarView.self)
     let any = RepetitionPattern(
-      ConditionalPattern<Unicode.Scalar>({ _ in true }),
+      ConditionalPattern<ScalarView>({ _ in true }),
       consumption: .lazy
     )
     scalars.replaceMatches(
-      for: [Self.escape]
+      for: escape
         + any
-        + [Self.endOfCode],
+        + [Self.endOfCode].literal(for: ScalarView.self),
       with: []
     )
   }
