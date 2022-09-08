@@ -247,8 +247,9 @@ class InternalTests: TestCase {
 
         #if !PLATFORM_LACKS_GIT
           #if !PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
-            // When the cache is empty...
-            #if !PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM  // external package not initialized (see above)
+            // Without SwiftPM, the external package is not initialized. (See above.)
+            #if !PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM
+              // When the cache is empty...
               testCommand(
                 Tool.rootCommand,
                 with: [
