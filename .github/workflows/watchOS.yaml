@@ -69,4 +69,4 @@ jobs:
       shell: bash
       run: |
         set -x
-        xcodebuild test -destination 'name=platform=watchOS Simulator,Apple Watch Series 6 - 40mm' -scheme SDGCommandLine-Package
+        xcodebuild test -destination 'platform=watchOS Simulator,name=Apple Watch Series 6 - 40mm' -scheme SDGCommandLine-Package
