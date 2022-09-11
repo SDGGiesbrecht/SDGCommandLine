@@ -24,5 +24,5 @@ public enum Underline: Int, TextFormat {
     return rawValue
   }
 
-  public static let resetCode: Int = 24
+  public static var resetCode: Int { 24 }
 }
