@@ -27,5 +27,5 @@ public enum FontWeight: Int, TextFormat {
     return rawValue
   }
 
-  public static let resetCode: Int = 22
+  public static var resetCode: Int { 22 }
 }

@@ -69,5 +69,5 @@ public enum Colour: Int, TextFormat {
     return rawValue
   }
 
-  public static let resetCode: Int = 39
+  public static var resetCode: Int { 39 }
 }
