@@ -155,6 +155,16 @@ class InternalTests: TestCase {
             named: StrictString(location.lastPathComponent),
             type: .executable
           ).get()
+          // #workaround(While stradling versions.)
+          #if compiler(<5.7)
+            let manifestLocation = testPackage.location.appendingPathComponent("Package.swift")
+            var manifest = try String(from: manifestLocation)
+            manifest.replaceMatches(
+              for: "swift-tools-version: 5.7",
+              with: "swift-tools-version: 5.6"
+            )
+            try manifest.save(to: manifestLocation)
+          #endif
           _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
           try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
