@@ -160,8 +160,8 @@ class InternalTests: TestCase {
             let manifestLocation = testPackage.location.appendingPathComponent("Package.swift")
             var manifest = try String(from: manifestLocation)
             manifest.replaceMatches(
-              for: "swift-tools-version: 5.7",
-              with: "swift-tools-version: 5.6"
+              for: "swift\u{2D}tools\u{2D}version: 5.7",
+              with: "swift\u{2D}tools\u{2D}version: 5.6"
             )
             try manifest.save(to: manifestLocation)
           #endif
