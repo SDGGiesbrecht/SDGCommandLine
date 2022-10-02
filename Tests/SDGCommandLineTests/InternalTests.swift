@@ -252,12 +252,8 @@ class InternalTests: TestCase {
           )
           // Differs accross platforms
           output.scalars.replaceMatches(
-            for: "[3/3] Linking tool".scalars,
-            with: "[2/2] Linking tool".scalars
-          )
-          output.scalars.replaceMatches(
-            for: "[3/3] Build complete!".scalars,
-            with: "[2/2] Build complete!".scalars
+            for: "[2/3] Linking tool".scalars,
+            with: "[1/2] Linking tool".scalars
           )
         }
 
