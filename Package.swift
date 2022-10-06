@@ -304,15 +304,3 @@ for target in package.targets {
     .define("PLATFORM_USES_SEPARATE_TEST_BUNDLE", .when(platforms: [.macOS])),
   ])
 }
-
-import Foundation
-
-// #workaround(xcodebuild -version 13.4.1, Tool targets don’t work on tvOS, etc.) @exempt(from: unicode)
-if ["TVOS", "IOS", "WATCHOS"]
-  .contains(where: { ProcessInfo.processInfo.environment["TARGETING_\($0)"] == "true" })
-{
-  package.targets.removeAll(where: { $0.type == .executable })
-  for target in package.targets {
-    target.dependencies.removeAll(where: { "\($0)".contains("_tool") })
-  }
-}
