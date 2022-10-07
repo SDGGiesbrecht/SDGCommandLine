@@ -232,8 +232,8 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        // #workaround(Swift 5.6.1, Windows is unable to link dependency executables.)
-        // #workaround(Swift 5.6.1, Web is unable to link dependency executables.)
+        // #workaround(Swift 5.7, Windows is unable to link dependency executables.)
+        // #workaround(Swift 5.7, Web is unable to link dependency executables.)
         .target(
           name: "test_tool",
           condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
