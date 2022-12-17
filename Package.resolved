@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDGGiesbrecht/SDGSwift",
       "state" : {
-        "revision" : "7d85f1baeedc769b22ecf9aea92af2e64da76216",
-        "version" : "11.0.0"
+        "revision" : "b898b510e8f06aae1fbc683310e6b2d4bfda6944",
+        "version" : "12.0.0"
       }
     },
     {
@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDGGiesbrecht/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "8682202025906dce29a8b04f9263f40ba87b89d8",
+        "version" : "0.50700.0"
+      }
+    },
+    {
       "identity" : "swift-driver",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDGGiesbrecht/swift-driver",
@@ -104,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax",
       "state" : {
-        "revision" : "0b6c22b97f8e9320bca62e82cdbee601cf37ad3f",
-        "version" : "0.50600.1"
+        "revision" : "04d4497be6b88e524a71778d828790e9589ae1c4",
+        "version" : "0.50700.0"
       }
     },
     {
