@@ -29,7 +29,6 @@ where Type: Sendable {
   ///     - name: The name of the type.
   ///     - syntaxDescription: A description of the argument syntax. (Printed by the `help` subcommand.)
   ///     - parse: A closure that parses an argument and returns its value. The closure should return `nil` if the argument is invalid.
-  ///     - argument: An argument string to parse.
   public init<N: InputLocalization, D: Localization>(
     name: UserFacing<StrictString, N>,
     syntaxDescription: UserFacing<StrictString, D>,
