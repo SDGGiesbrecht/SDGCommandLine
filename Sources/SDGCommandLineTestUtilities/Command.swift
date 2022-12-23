@@ -37,7 +37,6 @@ import SDGPersistenceTestUtilities
 ///     - uniqueTestName: A unique name for the test. This is used in the path to the persistent test specifications.
 ///     - allowColour: Optional. Set to `true` to include colour in the specification. `false` by default.
 ///     - postprocess: Optional. A closure to postprocess the output before comparing against the specification. Use this to keep elements which vary out of the specification, such as by cleaning the user’s home directory out of any printed paths.
-///     - output: The output to postprocess.
 ///     - overwriteSpecificationInsteadOfFailing: Set to `false` for normal behaviour. Set to `true` temporarily to update the specification.
 ///     - file: Optional. A different file to report as the failure location.
 ///     - line: Optional. A different line to report as the failure location.

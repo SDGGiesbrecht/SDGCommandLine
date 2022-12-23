@@ -133,8 +133,6 @@ public enum ArgumentType {
   /// - Parameters:
   ///     - name: The name of the option.
   ///     - cases: An array of enumeration options. Specify each option as a tuple containing the option’s name (for the command line) and the option’s value (for within Swift).
-  ///     - value: The value of the enumeration case.
-  ///     - label: The label for the enumeration case.
   public static func enumeration<T, N: InputLocalization, L: InputLocalization>(
     name: UserFacing<StrictString, N>,
     cases: [(value: T, label: UserFacing<StrictString, L>)]

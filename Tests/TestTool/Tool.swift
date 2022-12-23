@@ -29,7 +29,7 @@ public enum Tool: SDGCommandLine.Tool {
   public static let version: Version? = nil
   public static let packageURL: URL? = nil
 
-  public static var rootCommand = Command(
+  public static var rootCommand: Command = Command(
     name: UserFacing<StrictString, Language>({ localization in
       switch localization {
       case .english, .unsupported:

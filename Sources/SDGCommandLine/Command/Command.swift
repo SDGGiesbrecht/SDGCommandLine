@@ -57,10 +57,7 @@ public struct Command: Encodable, Sendable, TextualPlaygroundDisplay {
   ///     - infiniteFinalArgument: Optional. Enables the command to accept an infinite number of arguments, with the final argument type extended to apply to those at higher indices.
   ///     - options: A list of command line options to accept.
   ///     - hidden: Optional. Set to `true` to hide the command from the “help” lists.
-  ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.)
-  ///     - parsedDirectArguments: The parsed direct arguments.
-  ///     - parsedOptions: The parsed options.
-  ///     - output: The stream for standard output. Use `output.print(...)` for everything intendend for standard output. Anything printed by other means will not be filtered by `•no‐colour`, not be captured for the return value of `execute()` and not be available to any other specialized handling.
+  ///     - execution: A closure to run for the command’s execution. The closure should indicate success by merely returning, and failure by throwing an instance of `Command.Error`. (Do not call `exit()` or other `Never`‐returning functions.) To print to standard ouput, use `.print(...)` on the third parameter. Anything printed by other means will not be filtered by `•no‐colour`, nor be captured for the return value of `execute()`, nor be available to any other specialized handling.
   public init<N: InputLocalization, D: Localization>(
     name: UserFacing<StrictString, N>,
     description: UserFacing<StrictString, D>,
