@@ -12,7 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
-// #workaround(Swift 5.7, Directory should be “test‐tool” but for Windows bug.)
+// #workaround(Swift 5.7.2, Directory should be “test‐tool” but for Windows bug.)
 
 import TestTool
 
