@@ -157,15 +157,9 @@ class InternalTests: TestCase {
           ).get()
           _ = try Shell.default.run(command: ["git", "init"], in: testPackage.location).get()
 
-          try? FileManager.default.removeItem(
-            at: testPackage.location
-              .appendingPathComponent("Sources")
-              .appendingPathComponent(testToolName)
-              .appendingPathComponent("\(testToolName).swift")
-          )
           try "print(CommandLine.arguments.dropFirst().joined(separator: \u{22} \u{22}))".save(
             to: testPackage.location.appendingPathComponent(
-              "Sources/" + testToolName + "/main.swift"
+              "Sources/main.swift"
             )
           )
           try testPackage.commitChanges(description: "Version 1.0.0").get()
