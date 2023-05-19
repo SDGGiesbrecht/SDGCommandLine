@@ -138,6 +138,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
+      // #warning("Is this necessary?")
       from: Version(10, 0, 1)
     ),
     .package(
