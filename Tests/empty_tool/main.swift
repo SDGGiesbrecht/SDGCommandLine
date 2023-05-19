@@ -13,4 +13,4 @@
  */
 
 // #workaround(Swift 5.8, Windows objects to @main.)
-try Empty.main()
+Empty.main()
