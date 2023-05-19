@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDGGiesbrecht/SDGCornerstone",
       "state" : {
-        "revision" : "b97d9262f7ad9d14d65dc598a41abeef3403ab97",
-        "version" : "10.0.1"
+        "revision" : "29af45cb8466488cc25c914f6ed81ff8cb7dde77",
+        "version" : "10.0.2"
       }
     },
     {

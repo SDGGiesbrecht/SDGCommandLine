@@ -139,7 +139,7 @@ let package = Package(
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGCornerstone",
       // #warning("Is this necessary?")
-      from: Version(10, 0, 1)
+      from: Version(10, 0, 2)
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
