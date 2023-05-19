@@ -14,7 +14,7 @@
 
 // #workaround(Swift 5.7.2, Directory should be “empty‐tool” but for Windows bug.)
 
-@main enum Empty {
+/*@main*/ enum Empty {
   static func main() {
     print("Hello, world!")
   }
