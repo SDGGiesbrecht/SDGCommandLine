@@ -12,5 +12,7 @@
  See http://www.apache.org/licenses/LICENSE-2.0 for licence information.
  */
 
+import TestTool
+
 // #workaround(Swift 5.8, Windows objects to @main.)
-Empty.main()
+TestTool.Tool.main()
