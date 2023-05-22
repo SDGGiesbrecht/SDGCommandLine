@@ -315,7 +315,7 @@ package.products = []
 let skippedTargets: Set<String> = [
   //"SDGCommandLine",
   //"SDGCommandLineLocalizations",
-  "SDGCommandLineTestUtilities",
+  //"SDGCommandLineTestUtilities",
   "SDGExportedCommandLineInterface",
   "empty_tool",
   "SDGCommandLineTests",
