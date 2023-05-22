@@ -332,7 +332,7 @@ package.targets = package.targets.map { target in
       "InternalTests.swift",
       "RepositoryRoot.swift",
       //"TestCase.swift",
-    ])
+    ], swiftSettings: target.swiftSettings)
   } else {
     return target
   }
