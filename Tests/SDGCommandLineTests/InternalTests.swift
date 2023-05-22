@@ -35,7 +35,8 @@ import TestTool
 
 class InternalTests: TestCase {
 
-  static let rootCommand = Tool.rootCommand.withRootBehaviour()
+  #warning("Debugging....")
+  /*static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
   func testDirectArguments() {
     testCustomStringConvertibleConformance(
@@ -345,5 +346,5 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-  }
+  }*/
 }

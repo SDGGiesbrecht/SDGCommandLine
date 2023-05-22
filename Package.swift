@@ -325,7 +325,6 @@ package.targets = package.targets.map { target in
       "Examples",
       "APITests.swift",
       "InternalTests.swift",
-      //"RepositoryRoot.swift",
     ], swiftSettings: target.swiftSettings)
   } else {
     return target
