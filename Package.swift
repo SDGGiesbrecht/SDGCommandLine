@@ -313,10 +313,10 @@ for target in package.targets {
 #warning("Debugging...")
 package.products = []
 let skippedTargets: Set<String> = [
-  "SDGCommandLine",
+  //"SDGCommandLine",
   //"SDGCommandLineLocalizations",
   "SDGCommandLineTestUtilities",
-  //"SDGExportedCommandLineInterface",
+  "SDGExportedCommandLineInterface",
   "empty_tool",
   "SDGCommandLineTests",
   "SDGExportedCommandLineInterfaceTests",
