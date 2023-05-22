@@ -313,15 +313,10 @@ for target in package.targets {
 #warning("Debugging...")
 package.products = []
 let skippedTargets: Set<String> = [
-  //"SDGCommandLine",
-  //"SDGCommandLineLocalizations",
-  //"SDGCommandLineTestUtilities",
   "SDGExportedCommandLineInterface",
   "empty_tool",
-  //"SDGCommandLineTests",
   "SDGExportedCommandLineInterfaceTests",
   "test_tool",
-  //"TestTool"
 ]
 package.targets.removeAll(where: { skippedTargets.contains($0.name) })
 package.targets = package.targets.map { target in
@@ -329,9 +324,8 @@ package.targets = package.targets.map { target in
     return .testTarget(name: target.name, dependencies: target.dependencies, exclude: [
       "Examples",
       "APITests.swift",
-      "InternalTests.swift",
-      "RepositoryRoot.swift",
-      //"TestCase.swift",
+      //"InternalTests.swift",
+      //"RepositoryRoot.swift",
     ], swiftSettings: target.swiftSettings)
   } else {
     return target
