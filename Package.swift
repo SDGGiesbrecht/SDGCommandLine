@@ -324,7 +324,7 @@ package.targets = package.targets.map { target in
     return .testTarget(name: target.name, dependencies: target.dependencies, exclude: [
       "Examples",
       "APITests.swift",
-      //"InternalTests.swift",
+      "InternalTests.swift",
       //"RepositoryRoot.swift",
     ], swiftSettings: target.swiftSettings)
   } else {
