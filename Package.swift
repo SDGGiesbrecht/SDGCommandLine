@@ -324,3 +324,16 @@ let skippedTargets: Set<String> = [
   //"TestTool"
 ]
 package.targets.removeAll(where: { skippedTargets.contains($0.name) })
+package.targets = package.targets.map { target in
+  if target.name == "SDGCommandLineTests" {
+    return .testTarget(name: target.name, dependencies: target.dependencies, exclude: [
+      "Examples",
+      "APITests.swift",
+      "InternalTests.swift",
+      "RepositoryRoot.swift",
+      //"TestCase.swift",
+    ])
+  } else {
+    return target
+  }
+}
