@@ -321,6 +321,6 @@ let skippedTargets: Set<String> = [
   "SDGCommandLineTests",
   "SDGExportedCommandLineInterfaceTests",
   "test_tool",
-  "TestTool"
+  //"TestTool"
 ]
 package.targets.removeAll(where: { skippedTargets.contains($0.name) })
