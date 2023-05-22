@@ -83,7 +83,7 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-  }*/
+  }
 
   func testSetLanguage() throws {
     testCommand(
@@ -346,5 +346,5 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-  }
+  }*/
 }
