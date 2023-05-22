@@ -316,7 +316,7 @@ let skippedTargets: Set<String> = [
   "SDGCommandLine",
   //"SDGCommandLineLocalizations",
   "SDGCommandLineTestUtilities",
-  "SDGExportedCommandLineInterface",
+  //"SDGExportedCommandLineInterface",
   "empty_tool",
   "SDGCommandLineTests",
   "SDGExportedCommandLineInterfaceTests",
