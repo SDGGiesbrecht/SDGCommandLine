@@ -83,7 +83,7 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-  }
+  }*/
 
   func testSetLanguage() throws {
     testCommand(
@@ -130,7 +130,7 @@ class InternalTests: TestCase {
       uniqueTestName: "None",
       overwriteSpecificationInsteadOfFailing: false
     )
-  }*/
+  }
 
   func testVersionSelection() throws {
     #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
