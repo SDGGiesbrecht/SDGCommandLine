@@ -28,7 +28,8 @@ import SDGXCTestUtilities
 
 class TestCase: SDGXCTestUtilities.TestCase {
 
-  static var alreadyInitialized = false
+  #warning("Debugging....")
+  //static var alreadyInitialized = false
 
   #warning("Debugging....")
   /*override func setUp() {
