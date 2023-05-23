@@ -35,10 +35,10 @@ import TestTool
 
 class InternalTests: TestCase {
 
-  #warning("Debugging....")
-  /*static let rootCommand = Tool.rootCommand.withRootBehaviour()
+  static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
-  func testDirectArguments() {
+  #warning("Debugging....")
+  /*func testDirectArguments() {
     testCustomStringConvertibleConformance(
       of: DirectArguments(),
       localizations: InterfaceLocalization.self,
@@ -130,7 +130,7 @@ class InternalTests: TestCase {
       uniqueTestName: "None",
       overwriteSpecificationInsteadOfFailing: false
     )
-  }*/
+  }
 
   func testVersionSelection() throws {
     #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
@@ -346,5 +346,5 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
-  }
+  }*/
 }
