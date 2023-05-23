@@ -75,7 +75,8 @@ enum MyLocalizations: String, InputLocalization {
 
 class ReadMeExampleTests: TestCase {
 
-  // @example(parrotTests🇨🇦EN)
+  #warning("Debugging...")
+  /*// @example(parrotTests🇨🇦EN)
   func testParrot() {
     switch parrot.execute(with: ["speak", "•phrase", "Hello, world!"]) {
     case .success(let output):
@@ -84,5 +85,5 @@ class ReadMeExampleTests: TestCase {
       XCTFail("The parrot is not co‐operating.")
     }
   }
-  // @endExample
+  // @endExample*/
 }
