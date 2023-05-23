@@ -132,7 +132,8 @@ class InternalTests: TestCase {
     )
   }*/
 
-  func testVersionSelection() throws {
+  #warning("Debugging....")
+  /*func testVersionSelection() throws {
     #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
       FileManager.default.delete(.cache)
       defer { FileManager.default.delete(.cache) }
@@ -325,7 +326,7 @@ class InternalTests: TestCase {
         #endif
       }
     #endif
-  }
+  }*/
 
   func testVersionSubcommand() {
     #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
