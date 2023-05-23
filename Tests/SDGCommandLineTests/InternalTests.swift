@@ -37,17 +37,18 @@ class InternalTests: TestCase {
 
   static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
-  #warning("Debugging....")
-  /*func testDirectArguments() {
-    testCustomStringConvertibleConformance(
+  func testDirectArguments() {
+    #warning("Debugging....")
+    /*testCustomStringConvertibleConformance(
       of: DirectArguments(),
       localizations: InterfaceLocalization.self,
       uniqueTestName: "None",
       overwriteSpecificationInsteadOfFailing: false
-    )
+    )*/
   }
 
-  func testEmptyCache() {
+  #warning("Debugging....")
+  /*func testEmptyCache() {
     testCommand(
       InternalTests.rootCommand,
       with: ["empty‐cache"],
