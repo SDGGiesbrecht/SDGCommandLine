@@ -33,7 +33,7 @@ import SDGLocalizationTestUtilities
 import SDGCommandLineTestUtilities
 import TestTool
 
-class InternalTests: TestCase {
+class InternalTests: SDGCommandLineTests.TestCase {
 
   static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
