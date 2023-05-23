@@ -30,7 +30,8 @@ class TestCase: SDGXCTestUtilities.TestCase {
 
   static var alreadyInitialized = false
 
-  override func setUp() {
+  #warning("Debugging....")
+  /*override func setUp() {
     if ¬TestCase.alreadyInitialized {
       TestCase.alreadyInitialized = true
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
@@ -53,7 +54,7 @@ class TestCase: SDGXCTestUtilities.TestCase {
       #endif
     }
     super.setUp()
-  }
+  }*/
 
   #warning("Debugging....")
   func testTesting() {}
