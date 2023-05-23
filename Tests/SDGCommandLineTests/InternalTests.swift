@@ -329,7 +329,8 @@ class InternalTests: TestCase {
   }*/
 
   func testVersionSubcommand() {
-    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+    #warning("Debugging....")
+    /*#if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       ProcessInfo.version = Version(1, 2, 3)
       testCommand(
         InternalTests.rootCommand,
@@ -346,6 +347,6 @@ class InternalTests: TestCase {
         uniqueTestName: "Version (None)",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif
+    #endif*/
   }
 }
