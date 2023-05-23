@@ -328,7 +328,8 @@ class InternalTests: TestCase {
     #endif
   }*/
 
-  func testVersionSubcommand() {
+  #warning("Debugging....")
+  /*func testVersionSubcommand() {
     #warning("Debugging....")
     /*#if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       ProcessInfo.version = Version(1, 2, 3)
@@ -348,5 +349,5 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif*/
-  }
+  }*/
 }
