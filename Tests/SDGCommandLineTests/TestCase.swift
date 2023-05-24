@@ -26,7 +26,8 @@ import XCTest
 
 import SDGXCTestUtilities
 
-class TestCase: SDGXCTestUtilities.TestCase {
+#warning("Debugging....")
+class TestCase: /*SDGXCTestUtilities.TestCase*/ XCTestCase {
 
   #warning("Debugging....")
   //static var alreadyInitialized = false
