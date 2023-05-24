@@ -73,7 +73,7 @@ enum MyLocalizations: String, InputLocalization {
 }
 // @endExample
 
-class ReadMeExampleTests: TestCase {
+class ReadMeExampleTests: CommandLineTestCase {
 
   #warning("Debugging...")
   /*// @example(parrotTests🇨🇦EN)
