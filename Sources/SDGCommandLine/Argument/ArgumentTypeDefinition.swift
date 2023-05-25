@@ -34,7 +34,8 @@ where Type: Sendable {
     syntaxDescription: UserFacing<StrictString, D>,
     parse: @Sendable @escaping (_ argument: StrictString) -> Type?
   ) {
-    #warning("Debugging...")
+    // #warning("Debugging...")
+    print("Boo!")
     print("Starting", #function, name.resolved(), syntaxDescription.resolved(), parse)
     defer { print("Finishing", #function, name.resolved(), syntaxDescription.resolved(), parse) }
 
