@@ -35,16 +35,20 @@ where Type: Sendable {
     parse: @Sendable @escaping (_ argument: StrictString) -> Type?
   ) {
     // #warning("Debugging...")
-    print("Boo!")
-    print("Starting", #function, name.resolved(), syntaxDescription.resolved(), parse)
-    defer { print("Finishing", #function, name.resolved(), syntaxDescription.resolved(), parse) }
+    identifier = ""
+    let strictString: @Sendable () -> StrictString = { return "" }
+    localizedName = strictString
+    localizedDescription = strictString
+    let type: @Sendable (StrictString) -> Type? = { _ in return nil }
+    self.parse = type
 
-    identifier = name.resolved(for: N.fallbackLocalization)
+    // #warning("Debugging...")
+    /*identifier = name.resolved(for: N.fallbackLocalization)
     let sendableName: @Sendable () -> StrictString = { name.resolved() }
     localizedName = sendableName
     let sendableDescription: @Sendable () -> StrictString = { syntaxDescription.resolved() }
     localizedDescription = sendableDescription
-    self.parse = parse
+    self.parse = parse*/
   }
 
   // MARK: - Properties
