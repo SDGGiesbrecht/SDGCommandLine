@@ -5,7 +5,8 @@ Cloning into '...'...
 
 $ swift build --configuration release
 Building for production...
-remark: Incremental compilation has been disabled: it is not compatible with whole module optimization[1/2] Compiling tool main.swift
+remark: Incremental compilation has been disabled: it is not compatible with whole module optimization
+[1/2] Compiling tool main.swift
 [1/2] Linking tool
 Build complete! ([duration]s)
 
