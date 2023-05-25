@@ -33,7 +33,7 @@ import SDGLocalizationTestUtilities
 import SDGCommandLineTestUtilities
 import TestTool
 
-class APITests: TestCase {
+class APITests: CommandLineTestCase {
 
   func testArgumentType() {
     testCustomStringConvertibleConformance(
