@@ -34,6 +34,9 @@ where Type: Sendable {
     syntaxDescription: UserFacing<StrictString, D>,
     parse: @Sendable @escaping (_ argument: StrictString) -> Type?
   ) {
+    #warning("Debugging...")
+    print("Starting", #function, name.resolved(), syntaxDescription.resolved(), parse)
+    defer { print("Finishing", #function, name.resolved(), syntaxDescription.resolved(), parse) }
 
     identifier = name.resolved(for: N.fallbackLocalization)
     let sendableName: @Sendable () -> StrictString = { name.resolved() }
