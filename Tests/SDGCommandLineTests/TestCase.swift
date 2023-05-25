@@ -31,7 +31,7 @@ class CommandLineTestCase: SDGXCTestUtilities.TestCase {
   static var alreadyInitialized = false
 
   override func setUp() {
-    if CommandLineTestCase.alreadyInitialized {
+    if ¬CommandLineTestCase.alreadyInitialized {
       CommandLineTestCase.alreadyInitialized = true
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = Version(1, 2, 3)
