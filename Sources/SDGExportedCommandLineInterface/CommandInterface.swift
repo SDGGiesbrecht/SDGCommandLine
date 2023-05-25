@@ -44,8 +44,6 @@ public struct CommandInterface: Decodable, Sendable {
       case .failure(let error):
         return .failure(error)
       case .success(let exported):
-        // #warning(Debugging...)
-        print("“\(exported)”")
         do {
           return .success(try CommandInterface(export: exported))
         } catch {
