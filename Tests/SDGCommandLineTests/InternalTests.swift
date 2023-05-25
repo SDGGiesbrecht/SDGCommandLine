@@ -37,18 +37,16 @@ class InternalTests: CommandLineTestCase {
 
   static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
-  #warning("Debugging....")
-  /*func testDirectArguments() {
+  func testDirectArguments() {
     testCustomStringConvertibleConformance(
       of: DirectArguments(),
       localizations: InterfaceLocalization.self,
       uniqueTestName: "None",
       overwriteSpecificationInsteadOfFailing: false
     )
-  }*/
+  }
 
-  #warning("Debugging....")
-  /*func testEmptyCache() {
+  func testEmptyCache() {
     testCommand(
       InternalTests.rootCommand,
       with: ["empty‐cache"],
@@ -131,10 +129,9 @@ class InternalTests: CommandLineTestCase {
       uniqueTestName: "None",
       overwriteSpecificationInsteadOfFailing: false
     )
-  }*/
+  }
 
-  #warning("Debugging....")
-  /*func testVersionSelection() throws {
+  func testVersionSelection() throws {
     #if !PLATFORM_LACKS_FOUNDATION_FILE_MANAGER
       FileManager.default.delete(.cache)
       defer { FileManager.default.delete(.cache) }
@@ -327,12 +324,10 @@ class InternalTests: CommandLineTestCase {
         #endif
       }
     #endif
-  }*/
+  }
 
-  #warning("Debugging....")
-  /*func testVersionSubcommand() {
-    #warning("Debugging....")
-    /*#if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
+  func testVersionSubcommand() {
+    #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
       ProcessInfo.version = Version(1, 2, 3)
       testCommand(
         InternalTests.rootCommand,
@@ -349,6 +344,6 @@ class InternalTests: CommandLineTestCase {
         uniqueTestName: "Version (None)",
         overwriteSpecificationInsteadOfFailing: false
       )
-    #endif*/
-  }*/
+    #endif
+  }
 }

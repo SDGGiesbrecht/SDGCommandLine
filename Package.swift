@@ -309,24 +309,3 @@ for target in package.targets {
 #if compiler(<5.8) && !os(macOS)
   #error("Swift 5.7 is only supported on macOS, tvOS, iOS and watchOS; elsewhere, please use Swift 5.8 or select an older version of SDGCommandLine.")
 #endif
-
-#warning("Debugging...")
-package.products = []
-let skippedTargets: Set<String> = [
-  "SDGExportedCommandLineInterface",
-  "empty_tool",
-  "SDGExportedCommandLineInterfaceTests",
-  "test_tool",
-]
-package.targets.removeAll(where: { skippedTargets.contains($0.name) })
-package.targets = package.targets.map { target in
-  if target.name == "SDGCommandLineTests" {
-    return .testTarget(name: target.name, dependencies: target.dependencies, exclude: [
-      //"Examples",
-      "APITests.swift",
-      //"InternalTests.swift",
-    ], swiftSettings: target.swiftSettings)
-  } else {
-    return target
-  }
-}
