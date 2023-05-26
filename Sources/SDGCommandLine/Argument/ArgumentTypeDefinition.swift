@@ -18,8 +18,9 @@ import SDGLocalization
 /// An argument type definition.
 ///
 /// For standard definitions provided by SDGCommandLine, see `ArgumentType`.
-public struct ArgumentTypeDefinition<Type>: AnyArgumentTypeDefinition
-where Type: Sendable {
+public struct ArgumentTypeDefinition<ParsedType>: AnyArgumentTypeDefinition
+where ParsedType: Sendable {
+  // #warning(Debugging...           ↑)
 
   // MARK: - Initialization
 
@@ -32,7 +33,7 @@ where Type: Sendable {
   public init<N: InputLocalization, D: Localization>(
     name: UserFacing<StrictString, N>,
     syntaxDescription: UserFacing<StrictString, D>,
-    parse: @Sendable @escaping (_ argument: StrictString) -> Type?
+    parse: @Sendable @escaping (_ argument: StrictString) -> ParsedType?
   ) {
     identifier = name.resolved(for: N.fallbackLocalization)
     let sendableName: @Sendable () -> StrictString = { name.resolved() }
@@ -40,8 +41,8 @@ where Type: Sendable {
     let sendableDescription: @Sendable () -> StrictString = { syntaxDescription.resolved() }
     localizedDescription = sendableDescription
 
-    // #workaround(Debugging...)
-    let sendableParse: @Sendable (StrictString) -> Type? = { parse($0) }
+    // #warning(Debugging...)
+    let sendableParse: @Sendable (StrictString) -> ParsedType? = { parse($0) }
     self.parse = sendableParse
   }
 
@@ -51,7 +52,7 @@ where Type: Sendable {
   internal let localizedName: @Sendable () -> StrictString
   internal let localizedDescription: @Sendable () -> StrictString
 
-  internal let parse: @Sendable (_ argument: StrictString) -> Type?
+  internal let parse: @Sendable (_ argument: StrictString) -> ParsedType?
 
   // MARK: - AnyArgumentTypeDefinition
 
