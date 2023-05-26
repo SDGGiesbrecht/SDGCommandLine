@@ -262,6 +262,8 @@ class APITests: CommandLineTestCase {
   }
 
   func testLanguage() {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     #if PLATFORM_LACKS_FOUNDATION_PROCESS  // •use‐version unavailable.
       for localization in SystemLocalization.allCases {
         LocalizationSetting(orderOfPrecedence: [localization.code]).do {
@@ -291,6 +293,7 @@ class APITests: CommandLineTestCase {
         uniqueTestName: "Language Selection by Icon",
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
     #endif
   }
 
