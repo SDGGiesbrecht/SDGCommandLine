@@ -39,7 +39,10 @@ where Type: Sendable {
     localizedName = sendableName
     let sendableDescription: @Sendable () -> StrictString = { syntaxDescription.resolved() }
     localizedDescription = sendableDescription
-    self.parse = parse
+
+    // #workaround(Debugging...)
+    let sendableParse: @Sendable (StrictString) -> Type? = { parse($0) }
+    self.parse = sendableParse
   }
 
   // MARK: - Properties
