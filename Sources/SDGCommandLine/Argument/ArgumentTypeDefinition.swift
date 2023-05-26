@@ -37,14 +37,12 @@ where Type: Sendable {
     identifier = name.resolved(for: N.fallbackLocalization)
     let sendableName: @Sendable () -> StrictString = { name.resolved() }
     localizedName = sendableName
-    // #warning("Debugging...")
-    /*let sendableDescription: @Sendable () -> StrictString = { syntaxDescription.resolved() }
+    let sendableDescription: @Sendable () -> StrictString = { syntaxDescription.resolved() }
     localizedDescription = sendableDescription
-    self.parse = parse*/
+    // #warning("Debugging...")
+    /*self.parse = parse*/
 
     // #warning("Debugging...")
-    let strictString: @Sendable () -> StrictString = { return "" }
-    localizedDescription = strictString
     let type: @Sendable (StrictString) -> Type? = { _ in return nil }
     self.parse = type
   }
