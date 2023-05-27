@@ -309,8 +309,11 @@ class APITests: CommandLineTestCase {
   }
 
   func testNoColour() throws {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     let output = try Tool.rootCommand.execute(with: ["help", "•no‐colour"]).get()
     XCTAssert(¬output.contains("\u{1B}"), "Failed to disable colour.")
+    #endif
   }
 
   func testOption() {
