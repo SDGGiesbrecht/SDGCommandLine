@@ -88,6 +88,8 @@ class InternalTests: CommandLineTestCase {
   }
 
   func testSetLanguage() throws {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     testCommand(
       InternalTests.rootCommand,
       with: ["set‐language", "zxx"],
@@ -123,6 +125,7 @@ class InternalTests: CommandLineTestCase {
         #endif
       }
     }
+    #endif
   }
 
   func testOptions() {
