@@ -281,7 +281,7 @@ class InternalTests: CommandLineTestCase {
                 "some‐invalid‐argument", "•use‐version", "development",
                 "another‐invalid‐argument",
               ])
-              #endif
+              #else
               testCommand(
                 Tool.rootCommand,
                 with: [
