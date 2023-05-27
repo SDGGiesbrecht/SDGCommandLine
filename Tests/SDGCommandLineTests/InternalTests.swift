@@ -57,6 +57,8 @@ class InternalTests: CommandLineTestCase {
   }
 
   func testExportInterface() {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     func postprocess(_ output: inout String) {
       // macOS & Linux have different JSON whitespace.
       output.scalars.replaceMatches(
@@ -81,6 +83,7 @@ class InternalTests: CommandLineTestCase {
         postprocess: postprocess,
         overwriteSpecificationInsteadOfFailing: false
       )
+    #endif
     #endif
   }
 
