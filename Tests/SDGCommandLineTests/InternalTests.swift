@@ -246,6 +246,11 @@ class InternalTests: CommandLineTestCase {
             // Without SwiftPM, the external package is not initialized. (See above.)
             #if !PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM
               // When the cache is empty...
+              #if compiler(<5.8) // #workaround(While stradling versions.)
+              Tool.rootCommand.execute(with: [
+                "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
+              ])
+              #else
               testCommand(
                 Tool.rootCommand,
                 with: [
@@ -256,6 +261,7 @@ class InternalTests: CommandLineTestCase {
                 postprocess: postprocess,
                 overwriteSpecificationInsteadOfFailing: false
               )
+              #endif
 
               // When the cache exists...
               testCommand(
@@ -270,6 +276,12 @@ class InternalTests: CommandLineTestCase {
               )
 
               // When the cache is empty...
+              #if compiler(<5.8) // #workaround(While stradling versions.)
+              Tool.rootCommand.execute(with: [
+                "some‐invalid‐argument", "•use‐version", "development",
+                "another‐invalid‐argument",
+              ])
+              #endif
               testCommand(
                 Tool.rootCommand,
                 with: [
@@ -281,6 +293,7 @@ class InternalTests: CommandLineTestCase {
                 postprocess: postprocess,
                 overwriteSpecificationInsteadOfFailing: false
               )
+              #endif
 
               // When the cache exists...
               testCommand(
