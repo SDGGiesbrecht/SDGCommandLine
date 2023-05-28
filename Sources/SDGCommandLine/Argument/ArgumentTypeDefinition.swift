@@ -34,7 +34,6 @@ where Type: Sendable {
     syntaxDescription: UserFacing<StrictString, D>,
     parse: @Sendable @escaping (_ argument: StrictString) -> Type?
   ) {
-
     identifier = name.resolved(for: N.fallbackLocalization)
     let sendableName: @Sendable () -> StrictString = { name.resolved() }
     localizedName = sendableName

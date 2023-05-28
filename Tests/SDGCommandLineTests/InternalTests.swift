@@ -33,7 +33,7 @@ import SDGLocalizationTestUtilities
 import SDGCommandLineTestUtilities
 import TestTool
 
-class InternalTests: TestCase {
+class InternalTests: CommandLineTestCase {
 
   static let rootCommand = Tool.rootCommand.withRootBehaviour()
 
@@ -57,6 +57,8 @@ class InternalTests: TestCase {
   }
 
   func testExportInterface() {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     func postprocess(_ output: inout String) {
       // macOS & Linux have different JSON whitespace.
       output.scalars.replaceMatches(
@@ -82,9 +84,12 @@ class InternalTests: TestCase {
         overwriteSpecificationInsteadOfFailing: false
       )
     #endif
+    #endif
   }
 
   func testSetLanguage() throws {
+    // #workaround(Swift 5.8.0, Web compiler bug leads to out of bounds memory access.)
+    #if !os(WASI)
     testCommand(
       InternalTests.rootCommand,
       with: ["set‐language", "zxx"],
@@ -120,6 +125,7 @@ class InternalTests: TestCase {
         #endif
       }
     }
+    #endif
   }
 
   func testOptions() {
@@ -246,6 +252,11 @@ class InternalTests: TestCase {
             // Without SwiftPM, the external package is not initialized. (See above.)
             #if !PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM
               // When the cache is empty...
+              #if compiler(<5.8) // #workaround(While stradling versions.)
+              Tool.rootCommand.execute(with: [
+                "some‐invalid‐argument", "•use‐version", "1.0.0", "another‐invalid‐argument",
+              ])
+              #else
               testCommand(
                 Tool.rootCommand,
                 with: [
@@ -256,6 +267,7 @@ class InternalTests: TestCase {
                 postprocess: postprocess,
                 overwriteSpecificationInsteadOfFailing: false
               )
+              #endif
 
               // When the cache exists...
               testCommand(
@@ -270,6 +282,12 @@ class InternalTests: TestCase {
               )
 
               // When the cache is empty...
+              #if compiler(<5.8) // #workaround(While stradling versions.)
+              Tool.rootCommand.execute(with: [
+                "some‐invalid‐argument", "•use‐version", "development",
+                "another‐invalid‐argument",
+              ])
+              #else
               testCommand(
                 Tool.rootCommand,
                 with: [
@@ -281,6 +299,7 @@ class InternalTests: TestCase {
                 postprocess: postprocess,
                 overwriteSpecificationInsteadOfFailing: false
               )
+              #endif
 
               // When the cache exists...
               testCommand(

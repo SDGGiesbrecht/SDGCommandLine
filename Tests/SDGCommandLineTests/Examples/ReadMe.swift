@@ -73,7 +73,7 @@ enum MyLocalizations: String, InputLocalization {
 }
 // @endExample
 
-class ReadMeExampleTests: TestCase {
+class ReadMeExampleTests: CommandLineTestCase {
 
   // @example(parrotTests🇨🇦EN)
   func testParrot() {

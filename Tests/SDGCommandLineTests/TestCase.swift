@@ -26,13 +26,13 @@ import XCTest
 
 import SDGXCTestUtilities
 
-class TestCase: SDGXCTestUtilities.TestCase {
+class CommandLineTestCase: SDGXCTestUtilities.TestCase {
 
   static var alreadyInitialized = false
 
   override func setUp() {
-    if ¬TestCase.alreadyInitialized {
-      TestCase.alreadyInitialized = true
+    if ¬CommandLineTestCase.alreadyInitialized {
+      CommandLineTestCase.alreadyInitialized = true
       #if !PLATFORM_LACKS_FOUNDATION_PROCESS_INFO
         ProcessInfo.version = Version(1, 2, 3)
         ProcessInfo.packageURL = URL(string: "https://domain.tld/Package")!
