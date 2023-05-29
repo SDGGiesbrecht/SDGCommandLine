@@ -232,15 +232,15 @@ let package = Package(
       dependencies: [
         "SDGExportedCommandLineInterface",
         "SDGCommandLineTestUtilities",
-        // #workaround(Swift 5.7.2, Windows is unable to link dependency executables.)
-        // #workaround(Swift 5.7.2, Web is unable to link dependency executables.)
+        // #warning(Swift 5.7.2, Windows is unable to link dependency executables.)
+        // #warning(Swift 5.7.2, Web is unable to link dependency executables.)
         .target(
-          name: "test_tool",
-          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
+          name: "test_tool"/*,
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])*/
         ),
         .target(
-          name: "empty_tool",
-          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
+          name: "empty_tool"/*,
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])*/
         ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone"),
@@ -260,7 +260,7 @@ let package = Package(
     ),
 
     .executableTarget(
-      // #workaround(Swift 5.7.2, Windows cannot handle Unicode name.)
+      // #workaround(Swift 5.8.0, Windows cannot handle Unicode name.)
       name: "test_tool",
       dependencies: [
         "SDGCommandLine",
@@ -270,7 +270,7 @@ let package = Package(
     ),
 
     .executableTarget(
-      // #workaround(Swift 5.7.2, Windows cannot handle Unicode name.)
+      // #workaround(Swift 5.8.0, Windows cannot handle Unicode name.)
       name: "empty_tool",
       path: "Tests/empty_tool"
     ),
@@ -281,22 +281,22 @@ for target in package.targets {
   var swiftSettings = target.swiftSettings ?? []
   defer { target.swiftSettings = swiftSettings }
   swiftSettings.append(contentsOf: [
-    // #workaround(Swift 5.7.2, Web lacks Foundation.Process.)
-    // #workaround(Swift 5.7.2, Web lacks Foundation.ProcessInfo.)
+    // #workaround(Swift 5.8.0, Web lacks Foundation.Process.)
+    // #workaround(Swift 5.8.0, Web lacks Foundation.ProcessInfo.)
     // @example(conditions)
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS", .when(platforms: [.wasi, .tvOS, .iOS, .watchOS])),
     .define("PLATFORM_LACKS_FOUNDATION_PROCESS_INFO", .when(platforms: [.wasi])),
     // @endExample
 
     // Internal‐only:
-    // #workaround(Swift 5.7.2, Web lacks Foundation.Bundle.)
+    // #workaround(Swift 5.8.0, Web lacks Foundation.Bundle.)
     .define("PLATFORM_LACKS_FOUNDATION_BUNDLE_BUNDLE_URL", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.7.2, Web lacks Foundation.FileManager.)
+    // #workaround(Swift 5.8.0, Web lacks Foundation.FileManager.)
     .define("PLATFORM_LACKS_FOUNDATION_FILE_MANAGER", .when(platforms: [.wasi])),
-    // #workaround(Swift 5.7.2, Web lacks Foundation.UserDefaults.)
+    // #workaround(Swift 5.8.0, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(Swift 5.7.2, SwiftPM does not compile on Windows.)
+    // #workaround(SDGSwift 13.0.1, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
