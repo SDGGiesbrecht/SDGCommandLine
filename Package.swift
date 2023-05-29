@@ -235,12 +235,12 @@ let package = Package(
         // #workaround(Swift 5.8.0, Windows is unable to link dependency executables.)
         // #workaround(Swift 5.8.0, Web is unable to link dependency executables.)
         .target(
-          name: "test_tool"/*,
-          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])*/
+          name: "test_tool",
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .target(
-          name: "empty_tool"/*,
-          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])*/
+          name: "empty_tool",
+          condition: .when(platforms: [.macOS, .linux, .tvOS, .iOS, .android, .watchOS])
         ),
         .product(name: "SDGExternalProcess", package: "SDGCornerstone"),
         .product(name: "SDGPersistenceTestUtilities", package: "SDGCornerstone"),
