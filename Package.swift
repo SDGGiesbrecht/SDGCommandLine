@@ -142,7 +142,7 @@ let package = Package(
     ),
     .package(
       url: "https://github.com/SDGGiesbrecht/SDGSwift",
-      from: Version(13, 0, 0)
+      from: Version(14, 0, 0)
     ),
   ],
   targets: [
@@ -296,7 +296,7 @@ for target in package.targets {
     // #workaround(Swift 5.8.0, Web lacks Foundation.UserDefaults.)
     .define("PLATFORM_LACKS_FOUNDATION_USER_DEFAULTS", .when(platforms: [.wasi])),
     .define("PLATFORM_LACKS_GIT", .when(platforms: [.tvOS, .iOS, .android, .watchOS])),
-    // #workaround(SDGSwift 13.0.1, SwiftPM does not compile on Windows.)
+    // #workaround(SDGSwift 14.0.0, SwiftPM does not compile on Windows.)
     .define(
       "PLATFORM_NOT_SUPPORTED_BY_SWIFT_PM",
       .when(platforms: [.windows, .wasi, .tvOS, .iOS, .android, .watchOS])
