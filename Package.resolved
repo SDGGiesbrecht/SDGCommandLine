@@ -14,17 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDGGiesbrecht/SDGSwift",
       "state" : {
-        "revision" : "1e1030cb760517036ca7c0f66bba18992ece8f6c",
-        "version" : "13.0.0"
-      }
-    },
-    {
-      "identity" : "sdgweb",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDGGiesbrecht/SDGWeb",
-      "state" : {
-        "revision" : "73576316d62fc5ef38dbf30b5e232c59fa2ce832",
-        "version" : "6.1.0"
+        "revision" : "f61ef2bf0bebc6fd0876c36fb25392a07ce66934",
+        "version" : "14.0.0"
       }
     },
     {
@@ -87,6 +78,15 @@
       "location" : "https://github.com/SDGGiesbrecht/swift-llbuild",
       "state" : {
         "revision" : "14d9618f53db8ca57ed46ed7b4587155c2a03390",
+        "version" : "0.50800.0"
+      }
+    },
+    {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDGGiesbrecht/swift-markdown",
+      "state" : {
+        "revision" : "f02c1d1e44fb3280b1df5cd57f0f3bd994354525",
         "version" : "0.50800.0"
       }
     },
